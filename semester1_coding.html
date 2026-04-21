@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prototype / PoC — Semester 1 | Online Food Delivery System</title>
+  <link rel="stylesheet" href="child_page_styles.css">
+</head>
+<body>
+<div class="page-wrap">
+  <nav class="breadcrumb">
+    <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+    <span class="sep">›</span><span>Semester 1</span>
+    <span class="sep">›</span><span>Coding — Prototype / PoC</span>
+  </nav>
+  <header class="page-header">
+    <div class="sem-badge sem-1">Semester 1 — Foundation</div>
+    <h1>Prototype &amp; Proof of Concept</h1>
+    <div class="project-tag">Example Project: <strong>Online Food Delivery System</strong></div>
+    <p class="header-desc">In Semester 1, coding is limited to building a small prototype or Proof of Concept (PoC) to validate key technical decisions — not to build the full system.</p>
+  </header>
+
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon icon-purple">🧪</div>
+      <div class="section-title-group">
+        <h2>Why Build a Prototype First?</h2>
+        <p>Reduce technical uncertainty before committing to full development</p>
+      </div>
+    </div>
+    <p>A <strong>Proof of Concept (PoC)</strong> is a small piece of code that proves a critical technical idea works. It is <em>throwaway code</em> — not production quality. Its purpose is to answer one or two high-risk technical questions before full development begins in Semester 2.</p>
+    <div class="info-box purple">
+      <div class="info-box-title">PoC vs. Prototype vs. MVP</div>
+      <ul style="margin:0">
+        <li><strong>PoC:</strong> "Can this technology work for us at all?" — small, focused, throwaway.</li>
+        <li><strong>Prototype:</strong> "What will this look/feel like?" — slightly bigger, may include UI mockups. Still throwaway.</li>
+        <li><strong>MVP (Minimum Viable Product):</strong> "Can users use a minimal version?" — production-quality, but minimal features. This is your Semester 2/3 goal.</li>
+      </ul>
+    </div>
+    <h3>Recommended Semester 1 PoC Goals</h3>
+    <p>For the Online Food Delivery System, your Semester 1 PoC should answer these questions:</p>
+    <table>
+      <thead><tr><th>Technical Question</th><th>PoC Goal</th><th>Expected Output</th></tr></thead>
+      <tbody>
+        <tr><td>Does our chosen backend framework (Express.js/Express/Spring) serve REST APIs correctly?</td><td>Create a single <code class="code-inline">/api/restaurants</code> endpoint that returns a JSON list of 3 hardcoded restaurants.</td><td>Postman screenshot showing 200 OK with JSON response</td></tr>
+        <tr><td>Can we connect the backend to a PostgreSQL database?</td><td>Create a <code class="code-inline">Restaurant</code> table, insert 2 rows, and return them via the API.</td><td>Data shown in response comes from DB, not hardcoded</td></tr>
+        <tr><td>Can our frontend call the backend API and render the result?</td><td>A simple HTML page that fetches restaurant names from the API and displays them in a list.</td><td>Browser screenshot showing data rendered from API</td></tr>
+        <tr><td>Does user authentication (JWT/session) work?</td><td>A login endpoint that returns a JWT, and a protected endpoint that requires the JWT.</td><td>401 without token, 200 with valid token — shown in Postman</td></tr>
+      </tbody>
+    </table>
+    <h3>Sample PoC File Structure</h3>
+    <div class="code-block">food_delivery_poc/
+├── backend/
+│   ├── app.py              # Flask/Express.js app entry point
+│   ├── models.py           # Restaurant model
+│   ├── routes/
+│   │   └── restaurants.py  # GET /api/restaurants
+│   └── package.json
+├── frontend/
+│   └── index.html          # Fetch API call to backend
+└── README.md               # "How to run this PoC"</div>
+    <div class="info-box green">
+      <div class="info-box-title">Key Rule</div>
+      <p style="margin:0">Keep the PoC simple. Two or three API endpoints and a single HTML page is enough. The goal is confidence in your tech choices, not a feature-complete system. Full development starts in Semester 2.</p>
+    </div>
+  </section>
+
+  <footer>
+    <a href="semester1_design.html">← Design (TDD)</a>
+    <nav class="footer-nav">
+      <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+      <a href="semester2_coding.html">Next: Coding Sem 2 →</a>
+    </nav>
+  </footer>
+</div>
+</body>
+</html>

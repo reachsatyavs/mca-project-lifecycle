@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deployment &amp; CI/CD — Semester 3 | Online Food Delivery System</title>
+  <link rel="stylesheet" href="child_page_styles.css">
+</head>
+<body>
+<div class="page-wrap">
+  <nav class="breadcrumb">
+    <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+    <span class="sep">›</span><span>Semester 3</span>
+    <span class="sep">›</span><span>Deployment &amp; CI/CD</span>
+  </nav>
+  <header class="page-header">
+    <div class="sem-badge sem-3">Semester 3 — Deliver</div>
+    <h1>Deployment &amp; CI/CD — Pipeline, Staging &amp; Docker</h1>
+    <div class="project-tag">Example Project: <strong>Online Food Delivery System</strong></div>
+    <p class="header-desc">Semester 3 introduces a full CI/CD pipeline: automated testing on every push, containerisation with Docker, and automated deployment to a staging environment.</p>
+  </header>
+  <nav class="topic-nav orange-nav">
+    <div class="topic-nav-label">Jump to section</div>
+    <a href="#ci">1. CI Pipeline (GitHub Actions)</a>
+    <a href="#staging">2. Staging Environment</a>
+    <a href="#docker">3. Docker Containers</a>
+    <a href="#auto-deploy">4. Automated Deploys</a>
+  </nav>
+
+  <section class="section" id="ci">
+    <div class="section-header">
+      <div class="section-icon icon-orange">⚙️</div>
+      <div class="section-title-group">
+        <h2>1. CI Pipeline — GitHub Actions</h2>
+        <p>Running tests automatically on every Pull Request</p>
+      </div>
+    </div>
+    <p>A <strong>Continuous Integration (CI)</strong> pipeline automatically runs your tests every time code is pushed to GitHub. If tests fail, the PR is blocked from merging — preventing broken code from reaching the main branch.</p>
+    <h3>GitHub Actions Workflow</h3>
+    <div class="code-block"># .github/workflows/ci.yml
+name: CI — Test &amp; Lint
+
+on:
+  push:
+    branches: [develop, main]
+  pull_request:
+    branches: [develop]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: fooddelivery_test
+          POSTGRES_USER: testuser
+          POSTGRES_PASSWORD: testpass
+        ports: ['5432:5432']
+        options: --health-cmd pg_isready --health-interval 10s
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install -r package.json
+          pip install jest-cov
+
+      - name: Run linter (flake8)
+        run: flake8 apps/ --max-line-length=100
+
+      - name: Run tests with coverage
+        env:
+          DATABASE_URL: postgresql://testuser:testpass@localhost:5432/fooddelivery_test
+          SECRET_KEY: test-secret-key
+          DJANGO_SETTINGS_MODULE: config.settings.testing
+        run: |
+          jest --cov=apps --cov-fail-under=70 --cov-report=xml
+
+      - name: Upload coverage report
+        uses: codecov/codecov-action@v4</div>
+    <p>This workflow runs lint + all tests on every PR. A red ❌ on the CI check tells the reviewer not to merge. A green ✅ means the code is safe to review.</p>
+  </section>
+
+  <section class="section" id="staging">
+    <div class="section-header">
+      <div class="section-icon icon-orange">🏗️</div>
+      <div class="section-title-group">
+        <h2>2. Staging Environment</h2>
+        <p>A production-mirror for testing before the real release</p>
+      </div>
+    </div>
+    <p>The <strong>staging environment</strong> mirrors production as closely as possible. Beta testers and the faculty guide use staging. Production is only updated when staging is stable.</p>
+    <h3>Environment Comparison</h3>
+    <table>
+      <thead><tr><th>Aspect</th><th>Local Dev</th><th>Staging</th><th>Production</th></tr></thead>
+      <tbody>
+        <tr><td>URL</td><td>localhost:8000</td><td>food-staging.render.com</td><td>food-delivery.render.com</td></tr>
+        <tr><td>Database</td><td>Local PostgreSQL</td><td>Supabase staging DB</td><td>Supabase production DB</td></tr>
+        <tr><td>Data</td><td>Developer's test data</td><td>Seeded test data (anonymised)</td><td>Real user data</td></tr>
+        <tr><td>Payment</td><td>Sandbox</td><td>Sandbox</td><td>Live (or sandbox for student)</td></tr>
+        <tr><td>Deployment trigger</td><td>Manual (docker-compose up)</td><td>Auto on develop branch push</td><td>Manual approval</td></tr>
+        <tr><td>Debug mode</td><td>ON</td><td>OFF (errors hidden from users)</td><td>OFF</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section" id="docker">
+    <div class="section-header">
+      <div class="section-icon icon-orange">🐳</div>
+      <div class="section-title-group">
+        <h2>3. Docker Containers</h2>
+        <p>Packaging the application for consistent deployment</p>
+      </div>
+    </div>
+    <p><strong>Docker</strong> packages your application and all its dependencies into a container — a lightweight, isolated environment that runs identically on any machine or cloud server.</p>
+    <h3>Dockerfile (Express.js Backend)</h3>
+    <div class="code-block">FROM python:3.11-slim
+
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update &amp;&amp; apt-get install -y \
+    libpq-dev gcc &amp;&amp; \
+    rm -rf /var/lib/apt/lists/*
+
+# Install Python dependencies
+COPY package.json .
+RUN pip install --no-cache-dir -r package.json
+
+# Copy application code
+COPY . .
+
+# Collect static files
+RUN python manage.py collectstatic --noinput
+
+# Run with pm2 (production WSGI server)
+CMD ["pm2", "config.wsgi:application", \
+     "--bind", "0.0.0.0:8000", \
+     "--workers", "2", \
+     "--timeout", "60"]</div>
+    <div class="info-box orange">
+      <div class="info-box-title">Container Best Practices</div>
+      <ul style="margin:0">
+        <li>Add <code class="code-inline">.dockerignore</code> to exclude <code class="code-inline">.env</code>, <code class="code-inline">node_modules/</code>, <code class="code-inline">__pycache__/</code>.</li>
+        <li>Never bake secrets into the Docker image — pass them as environment variables at runtime.</li>
+        <li>Use a non-root user inside the container for security.</li>
+        <li>Keep the image small: use <code class="code-inline">python:3.11-slim</code> not <code class="code-inline">python:3.11</code>.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="auto-deploy">
+    <div class="section-header">
+      <div class="section-icon icon-orange">🔄</div>
+      <div class="section-title-group">
+        <h2>4. Automated Deploys</h2>
+        <p>Auto-deploying to staging on every merge to develop</p>
+      </div>
+    </div>
+    <p>With <strong>Continuous Deployment (CD)</strong>, every merge to the <code class="code-inline">develop</code> branch automatically deploys to staging — no manual steps needed. This keeps staging always up-to-date.</p>
+    <h3>Render Auto-Deploy Configuration</h3>
+    <p>Render can watch your GitHub repository and auto-deploy when a branch is updated:</p>
+    <ul>
+      <li>Go to Render dashboard → Select your service → Settings.</li>
+      <li>Set "Auto-Deploy" to ON, branch = <code class="code-inline">develop</code>.</li>
+      <li>Every push to <code class="code-inline">develop</code> triggers: pull latest code → run migrations → restart service.</li>
+      <li>Deployment takes ~2–3 minutes. Render shows a deployment log.</li>
+    </ul>
+    <h3>CD Flow (Develop Branch)</h3>
+    <div class="code-block">Developer pushes to feature branch
+        │
+        ▼
+GitHub Actions CI runs (lint + tests)
+        │
+    PASS  FAIL
+      │     │
+      ▼     ▼
+PR reviewed  PR blocked (tests must pass first)
+      │
+      ▼
+Merge to develop
+      │
+      ▼
+Render auto-deploy to staging
+      │
+      ▼
+QA verifies on staging.food-delivery.render.com
+      │
+      ▼ (when stable)
+Manual deploy to production (Semester 4)</div>
+  </section>
+
+  <footer>
+    <a href="semester2_deployment.html">← Deployment Sem 2</a>
+    <nav class="footer-nav">
+      <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+      <a href="semester4_deployment.html">Next: Deployment Sem 4 →</a>
+    </nav>
+  </footer>
+</div>
+</body>
+</html>

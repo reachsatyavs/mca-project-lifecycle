@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logging &amp; Monitoring — Semester 2 | Online Food Delivery System</title>
+  <link rel="stylesheet" href="child_page_styles.css">
+</head>
+<body>
+<div class="page-wrap">
+  <nav class="breadcrumb">
+    <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+    <span class="sep">›</span><span>Semester 2</span>
+    <span class="sep">›</span><span>Logging &amp; Monitoring</span>
+  </nav>
+  <header class="page-header">
+    <div class="sem-badge sem-2">Semester 2 — Build</div>
+    <h1>Logging &amp; Monitoring — Framework Setup &amp; Error Tracking</h1>
+    <div class="project-tag">Example Project: <strong>Online Food Delivery System</strong></div>
+    <p class="header-desc">Logging and monitoring are essential from the first deployment. They tell you what your system is doing and alert you when something goes wrong — before your users notice.</p>
+  </header>
+
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon icon-orange">📝</div>
+      <div class="section-title-group">
+        <h2>Logging Framework Setup</h2>
+        <p>Capturing structured logs from day one</p>
+      </div>
+    </div>
+    <p>A <strong>logging framework</strong> replaces <code class="code-inline">print()</code> statements with structured, configurable log messages that include timestamp, severity, and context.</p>
+    <h3>Log Levels</h3>
+    <table>
+      <thead><tr><th>Level</th><th>When to Use</th><th>Food Delivery Example</th></tr></thead>
+      <tbody>
+        <tr><td><strong>DEBUG</strong></td><td>Detailed diagnostic info (dev only)</td><td>Cart contents calculation steps</td></tr>
+        <tr><td><strong>INFO</strong></td><td>Normal business events</td><td>Order ORD-001 placed by user 42</td></tr>
+        <tr><td><strong>WARNING</strong></td><td>Unexpected but handled situation</td><td>Restaurant R-07 didn't respond in 5 min — auto-cancelling order</td></tr>
+        <tr><td><strong>ERROR</strong></td><td>Something failed but system still running</td><td>Payment gateway returned unexpected error code</td></tr>
+        <tr><td><strong>CRITICAL</strong></td><td>System may be going down</td><td>Database connection pool exhausted</td></tr>
+      </tbody>
+    </table>
+    <h3>Structured Logging (Python / Express.js)</h3>
+    <div class="code-block">import logging
+import json
+
+logger = logging.getLogger('orders')
+
+def place_order(customer, data):
+    logger.info("Order placement started", extra={
+        "customer_id": customer.id,
+        "restaurant_id": data['restaurant_id'],
+        "item_count": len(data['items'])
+    })
+    try:
+        order = Order.objects.create(...)
+        logger.info("Order created successfully", extra={
+            "order_id": order.id,
+            "total": float(order.total)
+        })
+        return order
+    except Exception as e:
+        logger.error("Order creation failed", extra={
+            "customer_id": customer.id,
+            "error": str(e)
+        }, exc_info=True)
+        raise</div>
+    <h3>Express.js Logging Configuration</h3>
+    <div class="code-block"># settings/base.py
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'json': {
+            '()': 'pythonjsonlogger.jsonlogger.JsonFormatter',
+            'format': '%(asctime)s %(name)s %(levelname)s %(message)s'
+        },
+    },
+    'handlers': {
+        'console': {'class': 'logging.StreamHandler', 'formatter': 'json'},
+        'file': {
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': 'logs/app.log',
+            'maxBytes': 10_000_000,  # 10 MB
+            'backupCount': 5,
+            'formatter': 'json'
+        },
+    },
+    'root': {'handlers': ['console', 'file'], 'level': 'INFO'},
+    'loggers': {
+        'orders': {'level': 'DEBUG', 'propagate': True},
+    }
+}</div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon icon-orange">🚨</div>
+      <div class="section-title-group">
+        <h2>Error Tracking with Sentry</h2>
+        <p>Automatically capture and report application errors</p>
+      </div>
+    </div>
+    <p><strong>Sentry</strong> is a free error tracking tool that automatically captures unhandled exceptions, groups them by issue, and alerts you by email. It's essential for finding bugs in production that users don't report.</p>
+    <h3>Sentry Setup (Express.js)</h3>
+    <div class="code-block">pip install sentry-sdk
+
+# settings/production.py
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+
+sentry_sdk.init(
+    dsn="https://xxxxxxxxxxxx@o0.ingest.sentry.io/0",
+    integrations=[DjangoIntegration()],
+    traces_sample_rate=0.1,  # 10% of transactions for performance
+    send_default_pii=False,  # Don't send PII (GDPR)
+    environment="production"
+)</div>
+    <p>With Sentry, when an order placement fails with an unhandled exception at 2 AM, you get an email immediately — including the full stack trace, user context, and request details. No need to dig through log files.</p>
+    <div class="info-box green">
+      <div class="info-box-title">Sentry Free Tier</div>
+      <p style="margin:0">Sentry's free plan gives 5,000 errors/month — more than enough for a student project. Sign up at sentry.io with your GitHub account.</p>
+    </div>
+  </section>
+
+  <footer>
+    <a href="semester2_testing.html">← Testing Sem 2</a>
+    <nav class="footer-nav">
+      <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+      <a href="semester3_logging.html">Next: Logging Sem 3 →</a>
+    </nav>
+  </footer>
+</div>
+</body>
+</html>

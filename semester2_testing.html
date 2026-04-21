@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Testing — Semester 2 | Online Food Delivery System</title>
+  <link rel="stylesheet" href="child_page_styles.css">
+</head>
+<body>
+<div class="page-wrap">
+  <nav class="breadcrumb">
+    <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+    <span class="sep">›</span><span>Semester 2</span>
+    <span class="sep">›</span><span>Testing</span>
+  </nav>
+  <header class="page-header">
+    <div class="sem-badge sem-2">Semester 2 — Build</div>
+    <h1>Testing — Unit, Integration &amp; Test Plan</h1>
+    <div class="project-tag">Example Project: <strong>Online Food Delivery System</strong></div>
+    <p class="header-desc">Testing starts in Semester 2 alongside coding — not after. Unit tests verify individual functions; integration tests verify that modules work together. The test plan documents the overall testing strategy.</p>
+  </header>
+  <nav class="topic-nav green-nav">
+    <div class="topic-nav-label">Jump to section</div>
+    <a href="#unit-tests">1. Unit Tests</a>
+    <a href="#integration-tests">2. Integration Tests</a>
+    <a href="#test-plan">3. Test Plan Document</a>
+    <a href="#test-cases">4. Write Test Cases</a>
+  </nav>
+
+  <section class="section" id="unit-tests">
+    <div class="section-header">
+      <div class="section-icon icon-green">🧪</div>
+      <div class="section-title-group">
+        <h2>1. Unit Tests</h2>
+        <p>Testing individual functions and classes in isolation</p>
+      </div>
+    </div>
+    <p>A <strong>unit test</strong> tests a single function or method in isolation — no database, no network, no file system. External dependencies are replaced with <em>mocks</em>. Unit tests run in milliseconds and should be run before every commit.</p>
+    <h3>What to Unit Test in Food Delivery</h3>
+    <ul>
+      <li>Order total calculation (subtotal + delivery fee + tax)</li>
+      <li>Business rule: minimum order ₹100 validation</li>
+      <li>Business rule: free delivery threshold ≥ ₹500</li>
+      <li>Order status transition rules (only valid transitions allowed)</li>
+      <li>Password validation (length, complexity)</li>
+      <li>Distance calculation between two lat/lng coordinates</li>
+      <li>Delivery partner assignment logic (nearest partner)</li>
+    </ul>
+    <h3>Example Unit Test (Jest — Node.js)</h3>
+    <div class="code-block">// tests/unit/order.service.test.js
+const { getDeliveryFee, calculateOrderTotal } = require('../../src/services/order.service');
+const { validateMinimumOrder } = require('../../src/utils/validators');
+
+describe('Order Calculation', () => {
+
+  test('delivery fee is ₹40 for orders below ₹500', () => {
+    expect(getDeliveryFee(450)).toBe(40);
+  });
+
+  test('delivery is free at exactly ₹500', () => {
+    expect(getDeliveryFee(500)).toBe(0);
+  });
+
+  test('delivery is free above ₹500', () => {
+    expect(getDeliveryFee(650)).toBe(0);
+  });
+
+  test('order total includes delivery fee and tax', () => {
+    const total = calculateOrderTotal({ subtotal: 300, taxRate: 0.05 });
+    expect(total).toBe(300 + 40 + 15);   // subtotal + fee + tax
+  });
+
+  test('throws if cart total is below ₹100 minimum', () => {
+    expect(() => validateMinimumOrder(80)).toThrow('Minimum order amount is ₹100');
+  });
+});
+
+describe('Order Status Transitions', () => {
+
+  test('PLACED can transition to ACCEPTED', () => {
+    expect(canTransitionTo('PLACED', 'ACCEPTED')).toBe(true);
+  });
+
+  test('DELIVERED cannot go back to PREPARING', () => {
+    expect(canTransitionTo('DELIVERED', 'PREPARING')).toBe(false);
+  });
+});</div>
+    <div class="info-box green">
+      <div class="info-box-title">Coverage Target</div>
+      <p style="margin:0">Aim for <strong>70–80% code coverage</strong> on the business logic layer (services, validators). Run <code class="code-inline">npm test -- --coverage</code> to generate a coverage report. Jest will show you which branches and lines are not yet tested.</p>
+    </div>
+  </section>
+
+  <section class="section" id="integration-tests">
+    <div class="section-header">
+      <div class="section-icon icon-green">🔗</div>
+      <div class="section-title-group">
+        <h2>2. Integration Tests</h2>
+        <p>Testing that modules work correctly together, including the database</p>
+      </div>
+    </div>
+    <p>Integration tests test the interaction between components — typically a full HTTP request through the API layer down to the test database. They are slower than unit tests but catch bugs that unit tests miss (e.g., database constraint violations, serialisation issues).</p>
+    <h3>Example Integration Test: Full Order Flow (Jest + Supertest)</h3>
+    <div class="code-block">// tests/integration/order.test.js
+const request = require('supertest');
+const app = require('../../src/app');
+const { prisma } = require('../../src/config/database');
+
+describe('POST /api/orders/', () => {
+  let customerToken, restaurantId, menuItemId, addressId;
+
+  beforeAll(async () => {
+    // Seed test data directly via Prisma
+    const customer = await prisma.user.create({
+      data: { name: 'Test Customer', email: 'test@customer.com',
+              passwordHash: '<hashed>', role: 'CUSTOMER', emailVerified: true }
+    });
+    const restaurant = await prisma.restaurant.create({
+      data: { name: 'Test Biryani House', status: 'APPROVED', ownerId: 1 }
+    });
+    const item = await prisma.menuItem.create({
+      data: { name: 'Chicken Biryani', price: 250, restaurantId: restaurant.id, isAvailable: true }
+    });
+    const address = await prisma.address.create({
+      data: { userId: customer.id, street: 'MG Road', city: 'Bangalore' }
+    });
+
+    restaurantId = restaurant.id;
+    menuItemId = item.id;
+    addressId = address.id;
+    customerToken = generateTestJWT(customer);   // helper that signs a real JWT
+  });
+
+  afterAll(() => prisma.$disconnect());
+
+  test('places order successfully with COD', async () => {
+    const res = await request(app)
+      .post('/api/orders/')
+      .set('Authorization', `Bearer ${customerToken}`)
+      .send({
+        restaurantId, addressId,
+        paymentMethod: 'COD',
+        items: [{ menuItemId, quantity: 2 }]
+      });
+
+    expect(res.status).toBe(201);
+    expect(res.body.status).toBe('PLACED');
+    const order = await prisma.order.findFirst();
+    expect(order).not.toBeNull();
+  });
+
+  test('returns 400 when items array is empty', async () => {
+    const res = await request(app)
+      .post('/api/orders/')
+      .set('Authorization', `Bearer ${customerToken}`)
+      .send({ restaurantId, addressId, paymentMethod: 'COD', items: [] });
+
+    expect(res.status).toBe(400);
+    expect(res.body.error).toBe('VALIDATION_ERROR');
+  });
+});</div>
+  </section>
+
+  <section class="section" id="test-plan">
+    <div class="section-header">
+      <div class="section-icon icon-green">📋</div>
+      <div class="section-title-group">
+        <h2>3. Test Plan Document</h2>
+        <p>The master document governing all testing activities across all semesters</p>
+      </div>
+    </div>
+    <p>The <strong>Test Plan</strong> is created in Semester 2 and updated each semester. It answers: what will be tested, how, by whom, and when.</p>
+    <h3>Test Plan Sections</h3>
+    <table>
+      <thead><tr><th>Section</th><th>Content for Food Delivery</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Scope</strong></td><td>Which modules are in scope: Auth, Restaurant, Order, Payment, Reviews. Out of scope: third-party payment gateway internals.</td></tr>
+        <tr><td><strong>Test Levels</strong></td><td>Unit (Sem 2), Integration (Sem 2), System (Sem 3), UAT (Sem 4), Security (Sem 4)</td></tr>
+        <tr><td><strong>Test Environment</strong></td><td>Local development + Staging server on Render. Test DB separate from production DB.</td></tr>
+        <tr><td><strong>Test Tools</strong></td><td>jest + jest-cov (unit), DRF APITestCase (integration), Selenium/Playwright (E2E, Sem 3), Postman (manual API), OWASP ZAP (security, Sem 4)</td></tr>
+        <tr><td><strong>Entry Criteria</strong></td><td>Feature is code-complete and PR merged to develop branch.</td></tr>
+        <tr><td><strong>Exit Criteria</strong></td><td>All critical test cases pass. 0 Priority-1 bugs open. Code coverage ≥ 70%.</td></tr>
+        <tr><td><strong>Bug Severity Levels</strong></td><td>P1: Blocker (cannot demo), P2: Major (key feature broken), P3: Minor (cosmetic), P4: Enhancement</td></tr>
+        <tr><td><strong>Bug Tracking</strong></td><td>GitHub Issues with labels: bug, priority-1, priority-2</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ============================================================
+       SECTION 4 : Write Test Cases
+       ============================================================ -->
+  <section class="section" id="test-cases">
+    <div class="section-header">
+      <div class="section-icon icon-green">✍️</div>
+      <div class="section-title-group">
+        <h2>4. Write Test Cases</h2>
+        <p>Semester 2 is when formal test cases are written — not executed yet</p>
+      </div>
+    </div>
+
+    <div class="info-box blue">
+      <div class="info-box-title">Writing vs Executing — Key Distinction</div>
+      <p style="margin:0">
+        In Semester 2 you <strong>write</strong> the test cases — formally, from the requirements.
+        Each TC gets a TC ID, precondition, test data, steps, and expected result.
+        The <strong>Status field stays "Not Executed"</strong> until Semester 3 when the full system is deployed and all TCs are run against it.
+        Think of it like preparing exam questions now, and the exam being held next semester.
+      </p>
+    </div>
+
+    <p>Write test cases as soon as a feature's API endpoints are merged to <code>develop</code>. Writing them immediately after coding ensures your test data and expectations are accurate while the feature is fresh.</p>
+
+    <h3>Test Cases — Authentication Module</h3>
+    <style>
+      .tc-row { border: 1px solid #e0e8d0; border-left: 4px solid #0F6E56; border-radius: 6px; margin-bottom: 12px; padding: 12px 16px; background: #fff; }
+      .tc-row-id { font-size: 11px; font-weight: 700; color: #0F6E56; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 5px; }
+      .tc-row-title { font-size: 14px; font-weight: 700; color: #1a1a2e; margin-bottom: 10px; }
+      .tc-mini-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+      .tc-mini-table td:first-child { font-weight: 600; color: #777; width: 110px; padding: 3px 10px 3px 0; vertical-align: top; }
+      .tc-mini-table td:last-child { color: #333; padding: 3px 0; }
+      .badge-not-exec { display:inline-block; font-size:11px; font-weight:700; padding:2px 10px; border-radius:4px; background:#f0f0f0; color:#888; border:1px solid #ddd; }
+      .badge-happy { display:inline-block; font-size:10px; font-weight:700; padding:2px 8px; border-radius:4px; background:#e8f5e9; color:#2e7d32; }
+      .badge-neg { display:inline-block; font-size:10px; font-weight:700; padding:2px 8px; border-radius:4px; background:#fde8e8; color:#c62828; }
+      .badge-boundary { display:inline-block; font-size:10px; font-weight:700; padding:2px 8px; border-radius:4px; background:#e3f2fd; color:#1565c0; }
+    </style>
+
+    <div class="tc-row">
+      <div class="tc-row-id">TC-01 · Covers UC-02 · FR-102 · US-C02</div>
+      <div class="tc-row-title">Login with valid credentials <span class="badge-happy">Happy Path</span></div>
+      <table class="tc-mini-table">
+        <tr><td>Precondition</td><td>User priya@example.com exists, email verified, account active.</td></tr>
+        <tr><td>Test Data</td><td>email: priya@example.com &nbsp;|&nbsp; password: Priya@123</td></tr>
+        <tr><td>Steps</td><td>1. POST /api/auth/login with credentials. &nbsp;2. Inspect response.</td></tr>
+        <tr><td>Expected</td><td>HTTP 200 · access token + refresh token returned · user.role = "CUSTOMER"</td></tr>
+        <tr><td>Priority</td><td>P1</td></tr>
+        <tr><td>Status</td><td><span class="badge-not-exec">Not Executed</span> &nbsp;— to be run in Semester 3</td></tr>
+      </table>
+    </div>
+
+    <div class="tc-row">
+      <div class="tc-row-id">TC-02 · Covers UC-02 · FR-102 · US-C02</div>
+      <div class="tc-row-title">Login with wrong password <span class="badge-neg">Negative</span></div>
+      <table class="tc-mini-table">
+        <tr><td>Precondition</td><td>User priya@example.com exists.</td></tr>
+        <tr><td>Test Data</td><td>email: priya@example.com &nbsp;|&nbsp; password: WrongPass999</td></tr>
+        <tr><td>Steps</td><td>1. POST /api/auth/login with wrong password. &nbsp;2. Inspect response.</td></tr>
+        <tr><td>Expected</td><td>HTTP 401 · error: "INVALID_CREDENTIALS" · no token in response</td></tr>
+        <tr><td>Priority</td><td>P1</td></tr>
+        <tr><td>Status</td><td><span class="badge-not-exec">Not Executed</span></td></tr>
+      </table>
+    </div>
+
+    <div class="tc-row">
+      <div class="tc-row-id">TC-03 · Covers UC-01 · FR-101 · US-C01</div>
+      <div class="tc-row-title">Register with duplicate email <span class="badge-neg">Negative</span></div>
+      <table class="tc-mini-table">
+        <tr><td>Precondition</td><td>User priya@example.com already exists in DB.</td></tr>
+        <tr><td>Test Data</td><td>name: Priya · email: priya@example.com · password: New@12345</td></tr>
+        <tr><td>Steps</td><td>1. POST /api/auth/register with existing email. &nbsp;2. Inspect response.</td></tr>
+        <tr><td>Expected</td><td>HTTP 409 · error: "EMAIL_ALREADY_EXISTS" · no new user in DB</td></tr>
+        <tr><td>Priority</td><td>P1</td></tr>
+        <tr><td>Status</td><td><span class="badge-not-exec">Not Executed</span></td></tr>
+      </table>
+    </div>
+
+    <h3>Test Cases — Order Placement Module</h3>
+
+    <div class="tc-row" style="border-left-color: #185FA5;">
+      <div class="tc-row-id" style="color:#185FA5;">TC-04 · Covers UC-08 · FR-303 · FR-402 · US-C05</div>
+      <div class="tc-row-title">Place order with Cash on Delivery — success <span class="badge-happy">Happy Path</span></div>
+      <table class="tc-mini-table">
+        <tr><td>Precondition</td><td>Customer logged in. Cart: 2× Paneer Tikka ₹180 + 1× Naan ₹60 = ₹420. Restaurant open.</td></tr>
+        <tr><td>Test Data</td><td>delivery_address_id: 3 &nbsp;|&nbsp; payment_method: "COD"</td></tr>
+        <tr><td>Steps</td><td>1. POST /api/orders/ with cart + COD. &nbsp;2. Inspect response and DB.</td></tr>
+        <tr><td>Expected</td><td>HTTP 201 · order_id returned · status = "PLACED" in DB · cart cleared · restaurant notified</td></tr>
+        <tr><td>Priority</td><td>P1</td></tr>
+        <tr><td>Status</td><td><span class="badge-not-exec">Not Executed</span></td></tr>
+      </table>
+    </div>
+
+    <div class="tc-row" style="border-left-color: #185FA5;">
+      <div class="tc-row-id" style="color:#185FA5;">TC-05 · Covers UC-08 · FR-303 · FR-401</div>
+      <div class="tc-row-title">Place order — payment gateway declines card <span class="badge-neg">Negative</span></div>
+      <table class="tc-mini-table">
+        <tr><td>Precondition</td><td>Customer logged in. Cart total = ₹420. Restaurant open.</td></tr>
+        <tr><td>Test Data</td><td>Razorpay test declined card: 4111 1111 1111 1111</td></tr>
+        <tr><td>Steps</td><td>1. POST /api/orders/ with online payment. &nbsp;2. Simulate gateway decline. &nbsp;3. Inspect DB.</td></tr>
+        <tr><td>Expected</td><td>HTTP 400 · error: "PAYMENT_FAILED" · NO order in DB · cart unchanged</td></tr>
+        <tr><td>Priority</td><td>P1</td></tr>
+        <tr><td>Status</td><td><span class="badge-not-exec">Not Executed</span></td></tr>
+      </table>
+    </div>
+
+    <div class="tc-row" style="border-left-color: #185FA5;">
+      <div class="tc-row-id" style="color:#185FA5;">TC-06 · Covers UC-08 · BR-02</div>
+      <div class="tc-row-title">Place order — cart total below ₹100 minimum <span class="badge-boundary">Boundary</span></div>
+      <table class="tc-mini-table">
+        <tr><td>Precondition</td><td>Customer logged in. Cart contains 1× item = ₹99.</td></tr>
+        <tr><td>Test Data</td><td>cart_total = ₹99 (one rupee below minimum)</td></tr>
+        <tr><td>Steps</td><td>1. POST /api/orders/ with ₹99 cart. &nbsp;2. Inspect response.</td></tr>
+        <tr><td>Expected</td><td>HTTP 400 · error: "MINIMUM_ORDER_VIOLATED" · cart_total: 99 · minimum: 100</td></tr>
+        <tr><td>Priority</td><td>P1</td></tr>
+        <tr><td>Status</td><td><span class="badge-not-exec">Not Executed</span></td></tr>
+      </table>
+    </div>
+
+    <div class="tc-row" style="border-left-color: #185FA5;">
+      <div class="tc-row-id" style="color:#185FA5;">TC-07 · Covers UC-05 · FR-301 · BR-13</div>
+      <div class="tc-row-title">View restaurant that is currently closed <span class="badge-neg">Negative</span></div>
+      <table class="tc-mini-table">
+        <tr><td>Precondition</td><td>Restaurant "Spice Garden" has hours 10:00–23:00. Test run at 08:30 AM.</td></tr>
+        <tr><td>Test Data</td><td>restaurant_id: 7</td></tr>
+        <tr><td>Steps</td><td>1. GET /api/restaurants/7/ at 08:30. &nbsp;2. Inspect is_open field.</td></tr>
+        <tr><td>Expected</td><td>HTTP 200 · is_open: false · next_open_time: "10:00" · checkout disabled in UI</td></tr>
+        <tr><td>Priority</td><td>P2</td></tr>
+        <tr><td>Status</td><td><span class="badge-not-exec">Not Executed</span></td></tr>
+      </table>
+    </div>
+
+    <h3>Test Cases — Reviews Module</h3>
+
+    <div class="tc-row" style="border-left-color: #c47a10;">
+      <div class="tc-row-id" style="color:#c47a10;">TC-08 · Covers UC-12 · FR-601 · US-C07</div>
+      <div class="tc-row-title">Submit review for delivered order <span class="badge-happy">Happy Path</span></div>
+      <table class="tc-mini-table">
+        <tr><td>Precondition</td><td>Order ORD-001 status = DELIVERED. No existing review for this order.</td></tr>
+        <tr><td>Test Data</td><td>order_id: ORD-001 &nbsp;|&nbsp; rating: 4 &nbsp;|&nbsp; comment: "Excellent food!"</td></tr>
+        <tr><td>Steps</td><td>1. POST /api/reviews/ with rating + comment. &nbsp;2. Inspect response + restaurant avg rating.</td></tr>
+        <tr><td>Expected</td><td>HTTP 201 · review_id returned · restaurant avg_rating updated</td></tr>
+        <tr><td>Priority</td><td>P2</td></tr>
+        <tr><td>Status</td><td><span class="badge-not-exec">Not Executed</span></td></tr>
+      </table>
+    </div>
+
+    <div class="tc-row" style="border-left-color: #c47a10;">
+      <div class="tc-row-id" style="color:#c47a10;">TC-09 · Covers UC-12 · FR-601 · BR-10</div>
+      <div class="tc-row-title">Attempt duplicate review on same order <span class="badge-neg">Negative</span></div>
+      <table class="tc-mini-table">
+        <tr><td>Precondition</td><td>Order ORD-001 already has a review by this customer.</td></tr>
+        <tr><td>Test Data</td><td>order_id: ORD-001 &nbsp;|&nbsp; rating: 5</td></tr>
+        <tr><td>Steps</td><td>1. POST /api/reviews/ for same order. &nbsp;2. Inspect response.</td></tr>
+        <tr><td>Expected</td><td>HTTP 409 · error: "REVIEW_ALREADY_EXISTS"</td></tr>
+        <tr><td>Priority</td><td>P2</td></tr>
+        <tr><td>Status</td><td><span class="badge-not-exec">Not Executed</span></td></tr>
+      </table>
+    </div>
+
+    <div class="tc-row" style="border-left-color: #c47a10;">
+      <div class="tc-row-id" style="color:#c47a10;">TC-10 · Covers UC-12 · FR-601</div>
+      <div class="tc-row-title">Attempt review on order not yet delivered <span class="badge-neg">Negative</span></div>
+      <table class="tc-mini-table">
+        <tr><td>Precondition</td><td>Order ORD-002 has status = "PREPARING" (not DELIVERED).</td></tr>
+        <tr><td>Test Data</td><td>order_id: ORD-002 &nbsp;|&nbsp; rating: 3</td></tr>
+        <tr><td>Steps</td><td>1. POST /api/reviews/ for in-progress order. &nbsp;2. Inspect response.</td></tr>
+        <tr><td>Expected</td><td>HTTP 400 · error: "REVIEW_NOT_ALLOWED" · message: "Can only review delivered orders"</td></tr>
+        <tr><td>Priority</td><td>P1</td></tr>
+        <tr><td>Status</td><td><span class="badge-not-exec">Not Executed</span></td></tr>
+      </table>
+    </div>
+
+    <h3>Requirements Traceability Matrix (Semester 2 — TCs Written, Not Yet Executed)</h3>
+    <table>
+      <thead>
+        <tr><th>TC ID</th><th>Test Title</th><th>UC</th><th>FR / BR</th><th>Priority</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>TC-01</td><td>Login — valid</td><td>UC-02</td><td>FR-102</td><td>P1</td><td style="color:#888; font-style:italic;">Not Executed</td></tr>
+        <tr><td>TC-02</td><td>Login — wrong password</td><td>UC-02</td><td>FR-102</td><td>P1</td><td style="color:#888; font-style:italic;">Not Executed</td></tr>
+        <tr><td>TC-03</td><td>Register — duplicate email</td><td>UC-01</td><td>FR-101</td><td>P1</td><td style="color:#888; font-style:italic;">Not Executed</td></tr>
+        <tr><td>TC-04</td><td>Place order — COD success</td><td>UC-08</td><td>FR-303, FR-402</td><td>P1</td><td style="color:#888; font-style:italic;">Not Executed</td></tr>
+        <tr><td>TC-05</td><td>Place order — payment declined</td><td>UC-08</td><td>FR-303, FR-401</td><td>P1</td><td style="color:#888; font-style:italic;">Not Executed</td></tr>
+        <tr><td>TC-06</td><td>Cart below ₹100 minimum</td><td>UC-08</td><td>BR-02</td><td>P1</td><td style="color:#888; font-style:italic;">Not Executed</td></tr>
+        <tr><td>TC-07</td><td>View closed restaurant</td><td>UC-05</td><td>FR-301, BR-13</td><td>P2</td><td style="color:#888; font-style:italic;">Not Executed</td></tr>
+        <tr><td>TC-08</td><td>Submit review — success</td><td>UC-12</td><td>FR-601</td><td>P2</td><td style="color:#888; font-style:italic;">Not Executed</td></tr>
+        <tr><td>TC-09</td><td>Duplicate review blocked</td><td>UC-12</td><td>FR-601, BR-10</td><td>P2</td><td style="color:#888; font-style:italic;">Not Executed</td></tr>
+        <tr><td>TC-10</td><td>Review on undelivered order</td><td>UC-12</td><td>FR-601</td><td>P1</td><td style="color:#888; font-style:italic;">Not Executed</td></tr>
+      </tbody>
+    </table>
+
+    <div class="info-box green">
+      <div class="info-box-title">Next Step — Semester 3</div>
+      <p style="margin:0">
+        These 10 test cases (and the additional ones you write for other modules — aim for ~40 total) will be executed
+        in Semester 3 against the fully deployed integrated system. See
+        <a href="semester3_testing.html" style="color:#0F6E56; font-weight:700;">semester3_testing.html</a>
+        for the execution log, PASS/FAIL results, bug filing, and the final Test Summary Report.
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    <a href="semester2_coding.html">← Coding Sem 2</a>
+    <nav class="footer-nav">
+      <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+      <a href="semester3_testing.html">Next: Testing Sem 3 →</a>
+    </nav>
+  </footer>
+</div>
+</body>
+</html>

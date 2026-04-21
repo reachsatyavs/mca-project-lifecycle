@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Planning — Semester 1 | Online Food Delivery System</title>
+  <link rel="stylesheet" href="child_page_styles.css">
+  <style>
+    .lifecycle-banner {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 18px 0;
+    }
+    .lc-cell {
+      padding: 16px 18px;
+      position: relative;
+    }
+    .lc-cell.s1 { background: #f0f7ff; border-right: 2px solid #ddd; }
+    .lc-cell.s2 { background: #f0faf5; border-right: 2px solid #ddd; }
+    .lc-cell.s3 { background: #fffbf0; }
+    .lc-sem {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.5px; margin-bottom: 6px;
+    }
+    .lc-sem.s1 { color: #185FA5; }
+    .lc-sem.s2 { color: #0F6E56; }
+    .lc-sem.s3 { color: #c47a10; }
+    .lc-title { font-size: 14px; font-weight: 700; color: #1a1a2e; margin-bottom: 6px; }
+    .lc-desc { font-size: 12px; color: #555; line-height: 1.6; }
+    .lc-active-badge {
+      display: inline-block; font-size: 10px; font-weight: 700;
+      padding: 2px 8px; border-radius: 3px; margin-top: 8px;
+      background: #185FA5; color: #fff;
+    }
+    .template-card {
+      background: #f8f8f8; border: 1px dashed #aaa;
+      border-left: 4px solid #aaa;
+      border-radius: 6px; padding: 14px 18px; margin-bottom: 14px;
+    }
+    .template-card .template-label {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.5px; color: #888; margin-bottom: 8px;
+    }
+    .template-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .template-table td:first-child {
+      font-weight: 600; color: #666; width: 120px;
+      vertical-align: top; padding: 4px 12px 4px 0;
+    }
+    .template-table td:last-child { color: #999; padding: 4px 0; font-style: italic; }
+    .scope-card {
+      border: 1px solid #e0e0f0; border-radius: 8px;
+      padding: 14px 18px; margin-bottom: 10px; background: #fff;
+    }
+    @media (max-width: 680px) {
+      .lifecycle-banner { grid-template-columns: 1fr; }
+      .lc-cell { border-right: none; border-bottom: 2px solid #ddd; }
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrap">
+  <nav class="breadcrumb">
+    <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+    <span class="sep">›</span><a href="semester1_requirements.html">Requirements</a>
+    <span class="sep">›</span><span>Test Planning</span>
+  </nav>
+  <header class="page-header">
+    <div class="sem-badge sem-1">Semester 1 — Foundation</div>
+    <h1>Test Planning &amp; Strategy</h1>
+    <div class="project-tag">Example Project: <strong>Online Food Delivery System</strong></div>
+    <p class="header-desc">Test planning happens in Semester 1 — but the actual test cases are <strong>written in Semester 2</strong> and <strong>executed in Semester 3</strong>. This document defines the testing strategy, scope, types of testing, and the template format that will guide Semester 2.</p>
+  </header>
+  <nav class="topic-nav">
+    <div class="topic-nav-label">Jump to section</div>
+    <a href="#lifecycle">Testing Lifecycle</a>
+    <a href="#strategy">Test Strategy</a>
+    <a href="#scope">Scope &amp; Types</a>
+    <a href="#template">TC Template</a>
+    <a href="#planning-rtm">RTM Plan</a>
+  </nav>
+
+  <!-- Lifecycle Banner -->
+  <section class="section" id="lifecycle">
+    <div class="section-header">
+      <div class="section-icon icon-purple">📅</div>
+      <div class="section-title-group">
+        <h2>When Does Each Testing Activity Happen?</h2>
+        <p>Understanding the testing lifecycle across semesters</p>
+      </div>
+    </div>
+
+    <div class="lifecycle-banner">
+      <div class="lc-cell s1">
+        <div class="lc-sem s1">Semester 1</div>
+        <div class="lc-title">📋 Test Planning</div>
+        <div class="lc-desc">
+          Define the testing strategy. What will be tested, how, by whom. Write the test plan document. Define scope, types of tests, environments, entry/exit criteria. Create the TC template.
+        </div>
+        <div class="lc-active-badge">You are here</div>
+      </div>
+      <div class="lc-cell s2">
+        <div class="lc-sem s2">Semester 2</div>
+        <div class="lc-title">✍️ Test Case Writing</div>
+        <div class="lc-desc">
+          Write formal test cases from the requirements. Each TC maps to a Use Case and Functional Requirement. Status at this stage: <em>"Written — not yet executed."</em> Unit tests and integration tests are also coded here.
+        </div>
+      </div>
+      <div class="lc-cell s3">
+        <div class="lc-sem s3">Semester 3</div>
+        <div class="lc-title">▶️ Test Case Execution</div>
+        <div class="lc-desc">
+          Run all written test cases against the complete, integrated system. Record actual results — PASS or FAIL. File bugs for failures. Run regression after bug fixes. Produce the Test Summary Report.
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box blue">
+      <div class="info-box-title">Why This Order?</div>
+      <p style="margin:0">
+        Test cases are written <em>from requirements</em> — so you need the requirements to be stable first (Semester 1).
+        But you can't run them until the <em>system is built</em> (Semester 2 coding).
+        And you want to run the <em>full integrated system</em> — not just individual modules — which is ready in Semester 3.
+        This is the V-Model of software development.
+      </p>
+    </div>
+
+    <h3>The V-Model — Testing Mirrors Development</h3>
+    <table>
+      <thead><tr><th>Left side (Build)</th><th>Phase</th><th>Right side (Test)</th></tr></thead>
+      <tbody>
+        <tr><td>Semester 1 — Requirements</td><td>↔</td><td>Semester 3 — Acceptance / System Testing</td></tr>
+        <tr><td>Semester 1 — Design</td><td>↔</td><td>Semester 3 — Integration Testing</td></tr>
+        <tr><td>Semester 2 — Coding</td><td>↔</td><td>Semester 2 — Unit &amp; Integration Tests</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Test Strategy -->
+  <section class="section" id="strategy">
+    <div class="section-header">
+      <div class="section-icon icon-purple">🎯</div>
+      <div class="section-title-group">
+        <h2>Test Strategy</h2>
+        <p>The high-level approach to quality assurance for the entire project</p>
+      </div>
+    </div>
+
+    <p>The test strategy is written in Semester 1 as part of the SRS / TDD and serves as the master agreement between the team on how quality will be achieved.</p>
+
+    <h3>Testing Objectives</h3>
+    <ul>
+      <li>Verify that all 20 Use Cases from the SRS execute correctly as designed.</li>
+      <li>Verify that all 13 Functional Requirements are satisfied.</li>
+      <li>Verify that NFRs are met: page load &lt; 2 s, API response &lt; 500 ms, 99% uptime.</li>
+      <li>Ensure all business rules (BR-01 to BR-13) are enforced by the backend.</li>
+      <li>Detect and resolve all P1 and P2 defects before Semester 3 milestone review.</li>
+    </ul>
+
+    <h3>Test Approach per Level</h3>
+    <table>
+      <thead><tr><th>Level</th><th>What it Tests</th><th>When</th><th>Tool</th><th>Who</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Unit Tests</strong></td><td>Individual functions in isolation (no DB, no network)</td><td>Semester 2 — during coding, before every commit</td><td>Jest</td><td>Developer</td></tr>
+        <tr><td><strong>Integration Tests</strong></td><td>API endpoint + database together</td><td>Semester 2 — after a feature is complete</td><td>Jest + Supertest</td><td>Developer</td></tr>
+        <tr><td><strong>System / Functional Tests</strong></td><td>Complete use cases end-to-end via UI</td><td>Semester 3 — alpha testing</td><td>Manual + Playwright</td><td>Tester / Team</td></tr>
+        <tr><td><strong>Performance Tests</strong></td><td>API under load — response time &amp; throughput</td><td>Semester 3</td><td>k6 / Locust</td><td>Team</td></tr>
+        <tr><td><strong>UAT</strong></td><td>Real-user scenarios — beta testers</td><td>Semester 3</td><td>Manual</td><td>Beta Users</td></tr>
+        <tr><td><strong>Security Tests</strong></td><td>Auth, injection, broken access control</td><td>Semester 4</td><td>OWASP ZAP</td><td>Team</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Scope -->
+  <section class="section" id="scope">
+    <div class="section-header">
+      <div class="section-icon icon-purple">🗺️</div>
+      <div class="section-title-group">
+        <h2>Test Scope &amp; Types</h2>
+        <p>What is in scope, what is out of scope, and what types of tests are planned</p>
+      </div>
+    </div>
+
+    <h3>In Scope for Testing</h3>
+    <div class="scope-card">
+      <div style="display:flex; gap:20px; flex-wrap:wrap; font-size:13px;">
+        <div style="flex:1; min-width:200px;">
+          <div style="font-weight:700; color:#0F6E56; margin-bottom:6px;">✅ Functional (must test)</div>
+          <ul style="margin:0; padding-left:16px; line-height:2;">
+            <li>All authentication flows (register, login, JWT, refresh)</li>
+            <li>Restaurant CRUD and menu management</li>
+            <li>Order placement, payment, status transitions</li>
+            <li>Delivery partner assignment and delivery</li>
+            <li>Rating and review submission</li>
+            <li>Admin approval and user management</li>
+          </ul>
+        </div>
+        <div style="flex:1; min-width:200px;">
+          <div style="font-weight:700; color:#185FA5; margin-bottom:6px;">📊 Non-Functional (must measure)</div>
+          <ul style="margin:0; padding-left:16px; line-height:2;">
+            <li>API response time under normal load</li>
+            <li>Page load speed (Core Web Vitals)</li>
+            <li>Concurrent user handling (50 simultaneous)</li>
+            <li>Mobile responsiveness (375px → 1440px)</li>
+            <li>HTTPS enforcement</li>
+          </ul>
+        </div>
+        <div style="flex:1; min-width:200px;">
+          <div style="font-weight:700; color:#c62828; margin-bottom:6px;">❌ Out of Scope</div>
+          <ul style="margin:0; padding-left:16px; line-height:2;">
+            <li>Razorpay / Stripe internal payment processing</li>
+            <li>SendGrid email delivery (third party)</li>
+            <li>Google Maps routing accuracy</li>
+            <li>Penetration testing (only OWASP ZAP in Sem 4)</li>
+            <li>Load testing beyond 100 concurrent users</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <h3>Test Environments</h3>
+    <table>
+      <thead><tr><th>Environment</th><th>Purpose</th><th>When Used</th><th>DB</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Local Dev</strong></td><td>Developer's own machine</td><td>During coding</td><td>SQLite or local PostgreSQL</td></tr>
+        <tr><td><strong>Staging</strong></td><td>Deployed on Render — mirrors production</td><td>Integration tests, Semester 3 alpha</td><td>PostgreSQL (separate from production)</td></tr>
+        <tr><td><strong>Production</strong></td><td>Live system — end users</td><td>Semester 4 only</td><td>PostgreSQL — real data</td></tr>
+      </tbody>
+    </table>
+
+    <div class="info-box orange">
+      <div class="info-box-title">Entry and Exit Criteria</div>
+      <table style="margin:0; font-size:13px;">
+        <thead><tr><th></th><th>Entry Criteria (start testing when…)</th><th>Exit Criteria (stop testing when…)</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Sem 2</strong></td><td>Feature PR merged to develop; lint passes; unit tests green</td><td>All TC status = "Written"; unit coverage ≥ 70%</td></tr>
+          <tr><td><strong>Sem 3</strong></td><td>Full system deployed to staging; all modules integrated</td><td>All TCs executed; 0 open P1 bugs; P2 bugs assigned; Test Report signed off</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Template -->
+  <section class="section" id="template">
+    <div class="section-header">
+      <div class="section-icon icon-purple">📝</div>
+      <div class="section-title-group">
+        <h2>Test Case Template</h2>
+        <p>The standard format that every test case written in Semester 2 must follow</p>
+      </div>
+    </div>
+
+    <div class="info-box blue">
+      <div class="info-box-title">Important — This is a Template, Not an Actual Test Case</div>
+      <p style="margin:0">
+        The placeholders below show the <em>structure</em> that every test case must follow when written in Semester 2.
+        The Status field will have a value only after execution in Semester 3 — in Semester 2 it reads "Not Executed."
+      </p>
+    </div>
+
+    <div class="template-card">
+      <div class="template-label">Test Case Template — Copy this for every TC you write in Semester 2</div>
+      <table class="template-table">
+        <tbody>
+          <tr><td>TC ID</td><td>TC-&lt;nn&gt; &nbsp;(e.g. TC-01, TC-02…)</td></tr>
+          <tr><td>Title</td><td>Short, specific description of what is being tested</td></tr>
+          <tr><td>Covers</td><td>UC-XX · FR-YYY · US-ZZZ &nbsp;&larr; traceability links</td></tr>
+          <tr><td>Precondition</td><td>Database state and test data that must exist before the test begins</td></tr>
+          <tr><td>Test Data</td><td>Exact values: email addresses, passwords, amounts, IDs</td></tr>
+          <tr><td>Steps</td><td>Numbered, reproducible actions — step 1, step 2…</td></tr>
+          <tr><td>Expected Result</td><td>Exact outcome: UI state, HTTP status code, DB row state, email sent</td></tr>
+          <tr><td>Type</td><td>Happy Path / Negative / Boundary / Security</td></tr>
+          <tr><td>Priority</td><td>P1 / P2 / P3</td></tr>
+          <tr><td>Status</td><td><em>Not Executed</em> &nbsp;(filled in Semester 3 as PASS / FAIL)</td></tr>
+          <tr><td>Bug ID</td><td><em>Blank</em> &nbsp;(filled if status = FAIL, e.g. BUG-012)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Naming Convention</h3>
+    <table>
+      <thead><tr><th>Module</th><th>TC Range</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td>Authentication (Register, Login)</td><td>TC-01 – TC-10</td><td>TC-01: Login valid, TC-02: Login wrong password</td></tr>
+        <tr><td>Restaurant (Browse, Menu)</td><td>TC-11 – TC-20</td><td>TC-11: View closed restaurant, TC-12: Search no results</td></tr>
+        <tr><td>Order Placement</td><td>TC-21 – TC-35</td><td>TC-21: COD success, TC-22: Payment declined</td></tr>
+        <tr><td>Order Tracking / Cancel</td><td>TC-36 – TC-45</td><td>TC-36: Track active order, TC-37: Cancel within window</td></tr>
+        <tr><td>Reviews</td><td>TC-46 – TC-50</td><td>TC-46: Submit review, TC-47: Duplicate review blocked</td></tr>
+        <tr><td>Admin</td><td>TC-51 – TC-60</td><td>TC-51: Approve restaurant, TC-52: Suspend user</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:13px; color:#555;">This gives you a planned set of <strong>~60 test cases</strong> to write in Semester 2. You don't need to write all 60 — aim for coverage of every Use Case's happy path + at least one negative path each.</p>
+  </section>
+
+  <!-- RTM Plan -->
+  <section class="section" id="planning-rtm">
+    <div class="section-header">
+      <div class="section-icon icon-purple">🔗</div>
+      <div class="section-title-group">
+        <h2>Requirements Traceability Matrix (RTM) Plan</h2>
+        <p>How TCs will be linked back to requirements — to prove coverage</p>
+      </div>
+    </div>
+
+    <p>
+      The RTM proves that every requirement has at least one test case covering it.
+      The RTM <em>structure</em> is set up in Semester 1; it is <em>populated with TC IDs</em> in Semester 2 and
+      <em>filled with PASS/FAIL results</em> in Semester 3.
+    </p>
+
+    <h3>RTM Structure (Semester 1 — headers only)</h3>
+    <table>
+      <thead>
+        <tr><th>FR / UC</th><th>Description</th><th>Test Cases (filled in Sem 2)</th><th>Result (filled in Sem 3)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>FR-101 · UC-01</td><td>User Registration</td><td style="color:#aaa; font-style:italic;">TC-01, TC-02, TC-03</td><td style="color:#aaa; font-style:italic;">—</td></tr>
+        <tr><td>FR-102 · UC-02</td><td>User Login</td><td style="color:#aaa; font-style:italic;">TC-04, TC-05, TC-06</td><td style="color:#aaa; font-style:italic;">—</td></tr>
+        <tr><td>FR-301 · UC-05</td><td>Browse Restaurants</td><td style="color:#aaa; font-style:italic;">TC-11, TC-12</td><td style="color:#aaa; font-style:italic;">—</td></tr>
+        <tr><td>FR-303 · UC-08</td><td>Place Order</td><td style="color:#aaa; font-style:italic;">TC-21 … TC-30</td><td style="color:#aaa; font-style:italic;">—</td></tr>
+        <tr><td>FR-601 · UC-12</td><td>Write Review</td><td style="color:#aaa; font-style:italic;">TC-46, TC-47</td><td style="color:#aaa; font-style:italic;">—</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:13px; color:#888; margin-top:6px;"><em>The greyed-out values above will be filled in with actual TC IDs during Semester 2, and with PASS/FAIL during Semester 3 alpha testing.</em></p>
+
+    <div class="info-box green">
+      <div class="info-box-title">Where to Go Next</div>
+      <table style="margin:0; font-size:13px;">
+        <tbody>
+          <tr>
+            <td style="padding:6px 12px 6px 0; vertical-align:top; font-weight:600;">Semester 2 Testing →</td>
+            <td style="padding:6px 0;"><a href="semester2_testing.html" style="color:#0F6E56; font-weight:700;">semester2_testing.html</a> — This is where you formally write TC-01 through TC-60, each linked to a UC and FR.</td>
+          </tr>
+          <tr>
+            <td style="padding:6px 12px 6px 0; vertical-align:top; font-weight:600;">Semester 3 Testing →</td>
+            <td style="padding:6px 0;"><a href="semester3_testing.html" style="color:#c47a10; font-weight:700;">semester3_testing.html</a> — This is where you execute every TC and record actual results against the full deployed system.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    <a href="semester1_use_cases.html">← Use Cases</a>
+    <nav class="footer-nav">
+      <a href="semester1_requirements.html">Requirements Overview</a>
+      <a href="semester2_testing.html">Next: Write Test Cases (Sem 2) →</a>
+    </nav>
+  </footer>
+</div>
+</body>
+</html>

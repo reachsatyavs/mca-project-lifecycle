@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MCA Project Lifecycle — 4 Semesters | Online Food Delivery System</title>
+  <style>
+    /* ---- Reset & Base ---- */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f5f6fa;
+      color: #1a1a2e;
+      line-height: 1.5;
+    }
+
+    /* ---- Page wrapper ---- */
+    .page-wrap { max-width: 1100px; margin: 0 auto; padding: 28px 16px 60px; }
+
+    /* ---- Page header ---- */
+    .page-header {
+      margin-bottom: 28px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #e0e0e8;
+    }
+    .page-title { font-size: 22px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+    .page-subtitle { font-size: 13.5px; color: #666; }
+    .project-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 10px;
+      background: #EEEDFE;
+      border: 1px solid #AFA9EC;
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 12.5px;
+      color: #3C3489;
+      font-weight: 500;
+    }
+    .project-pill .dot { width: 6px; height: 6px; border-radius: 50%; background: #7F77DD; }
+
+    /* ---- Legend ---- */
+    .legend-row {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      font-size: 12px;
+      color: #555;
+      margin-bottom: 16px;
+    }
+    .leg-item { display: flex; align-items: center; gap: 5px; }
+    .leg-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+
+    /* ---- Grid layout ---- */
+    .header-row, .phase-row {
+      display: grid;
+      grid-template-columns: 148px repeat(4, 1fr);
+      gap: 6px;
+      margin-bottom: 6px;
+      align-items: start;
+    }
+
+    /* ---- Semester header cells ---- */
+    .sem-header {
+      text-align: center;
+      padding: 10px 8px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .sem-1 { background: #EEEDFE; color: #3C3489; border: 1px solid #AFA9EC; }
+    .sem-2 { background: #E1F5EE; color: #0F6E56; border: 1px solid #5DCAA5; }
+    .sem-3 { background: #FAEEDA; color: #854F0B; border: 1px solid #EF9F27; }
+    .sem-4 { background: #E6F1FB; color: #185FA5; border: 1px solid #85B7EB; }
+
+    /* ---- Phase label ---- */
+    .phase-label {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 10px;
+      border-radius: 6px;
+      background: #fff;
+      border: 1px solid #e0e0e8;
+      min-height: 52px;
+    }
+    .phase-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+    .phase-name { font-size: 12px; font-weight: 600; color: #1a1a2e; line-height: 1.3; }
+
+    /* ---- Content cells ---- */
+    .cell {
+      border-radius: 6px;
+      padding: 8px 10px;
+      border: 1px solid #e0e0e8;
+      min-height: 52px;
+      font-size: 11.5px;
+      line-height: 1.5;
+      color: #444;
+    }
+    .cell ul { list-style: none; padding: 0; }
+    .cell ul li { padding: 1px 0; }
+    .cell ul li::before { content: "· "; color: #999; }
+
+    /* Active cell colours */
+    .c1-active { background: #EEEDFE; border-color: #AFA9EC; color: #3C3489; }
+    .c2-active { background: #E1F5EE; border-color: #5DCAA5; color: #085041; }
+    .c3-active { background: #FAEEDA; border-color: #EF9F27; color: #633806; }
+    .c4-active { background: #E6F1FB; border-color: #85B7EB; color: #0C447C; }
+
+    /* Dim cell colours */
+    .c1-dim { background: #EEEDFE22; border-color: #AFA9EC55; opacity: 0.45; }
+    .c2-dim { background: #E1F5EE22; border-color: #5DCAA555; opacity: 0.45; }
+    .c3-dim { background: #FAEEDA22; border-color: #EF9F2755; opacity: 0.45; }
+    .c4-dim { background: #E6F1FB22; border-color: #85B7EB55; opacity: 0.45; }
+
+    /* ---- Links inside cells ---- */
+    .cell a {
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1px dashed rgba(0,0,0,0.25);
+      transition: border-color 0.15s;
+    }
+    .cell a:hover { border-bottom-style: solid; border-bottom-color: currentColor; }
+    .cell-link {
+      display: block;
+      margin-top: 6px;
+      font-size: 10.5px;
+      font-weight: 600;
+      text-align: right;
+      opacity: 0.7;
+      letter-spacing: 0.02em;
+    }
+    .cell-link:hover { opacity: 1; }
+
+    /* ---- Timeline bar ---- */
+    .timeline-bar {
+      display: flex;
+      height: 6px;
+      border-radius: 3px;
+      overflow: hidden;
+      margin-top: 18px;
+      margin-bottom: 4px;
+    }
+    .tb-seg { flex: 1; margin-right: 4px; border-radius: 3px; }
+    .tb-seg:last-child { margin-right: 0; }
+    .tb-s1 { background: #7F77DD; }
+    .tb-s2 { background: #1D9E75; }
+    .tb-s3 { background: #EF9F27; }
+    .tb-s4 { background: #378ADD; }
+
+    .timeline-labels {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      font-size: 11px;
+      color: #888;
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    /* ---- Section title ---- */
+    .section-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin: 24px 0 10px;
+    }
+
+    /* ---- Tools grid ---- */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+    .tool-card {
+      background: #fff;
+      border: 1px solid #e0e0e8;
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+    .tool-cat {
+      font-size: 11px;
+      font-weight: 700;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+    }
+    .tool-list { font-size: 12.5px; color: #333; line-height: 1.75; }
+
+    /* ---- Info banner ---- */
+    .info-banner {
+      background: #EEEDFE;
+      border: 1px solid #AFA9EC;
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin-bottom: 22px;
+      font-size: 13px;
+      color: #3C3489;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .info-banner-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+    .info-banner strong { color: #1a1a2e; }
+
+    /* ---- Responsive ---- */
+    @media (max-width: 800px) {
+      .header-row, .phase-row { grid-template-columns: 110px repeat(4, 1fr); gap: 4px; }
+      .cell { padding: 6px 7px; font-size: 10.5px; }
+      .phase-name { font-size: 11px; }
+      .sem-header { font-size: 11px; }
+    }
+    @media (max-width: 560px) {
+      .header-row, .phase-row { grid-template-columns: 90px repeat(4, 1fr); gap: 3px; }
+      .cell ul li::before { content: ""; }
+      .cell-link { display: none; }
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <!-- Page Header -->
+  <header class="page-header">
+    <h1 class="page-title">MCA Project Lifecycle &mdash; 4 Semesters</h1>
+    <p class="page-subtitle">Phases, activities, deliverables and tools mapped semester-by-semester</p>
+    <div class="project-pill">
+      <span class="dot"></span>
+      Example Project: Online Food Delivery System &mdash; click any item for detailed notes
+    </div>
+  </header>
+
+  <!-- Info Banner -->
+  <div class="info-banner">
+    <span class="info-banner-icon">💡</span>
+    <div>
+      <strong>How to use this page:</strong> Each coloured cell shows what happens in that phase during that semester.
+      Click the <em>"Details →"</em> link inside any active cell to open in-depth notes with
+      <strong>Online Food Delivery System</strong> examples — concepts, code snippets, diagrams, and templates.
+    </div>
+  </div>
+
+  <!-- Legend -->
+  <div class="legend-row">
+    <span class="leg-item"><span class="leg-dot" style="background:#7F77DD"></span>Sem 1 — Foundation</span>
+    <span class="leg-item"><span class="leg-dot" style="background:#1D9E75"></span>Sem 2 — Build</span>
+    <span class="leg-item"><span class="leg-dot" style="background:#EF9F27"></span>Sem 3 — Deliver</span>
+    <span class="leg-item"><span class="leg-dot" style="background:#378ADD"></span>Sem 4 — Production</span>
+  </div>
+
+  <!-- Header Row -->
+  <div class="header-row">
+    <div></div>
+    <div class="sem-header sem-1">Semester 1<br><span style="font-weight:400;font-size:11px">Foundation</span></div>
+    <div class="sem-header sem-2">Semester 2<br><span style="font-weight:400;font-size:11px">Build</span></div>
+    <div class="sem-header sem-3">Semester 3<br><span style="font-weight:400;font-size:11px">Deliver</span></div>
+    <div class="sem-header sem-4">Semester 4<br><span style="font-weight:400;font-size:11px">Production</span></div>
+  </div>
+
+  <!-- PHASE: Ideation & Scope -->
+  <div class="phase-row">
+    <div class="phase-label"><span class="phase-dot" style="background:#7F77DD"></span><span class="phase-name">Ideation &amp; Scope</span></div>
+
+    <div class="cell c1-active">
+      <ul>
+        <li><a href="semester1_ideation_scope.html#project-selection">Project selection</a></li>
+        <li><a href="semester1_ideation_scope.html#goals-non-goals">Goals &amp; non-goals</a></li>
+        <li><a href="semester1_ideation_scope.html#feasibility">Feasibility check</a></li>
+        <li><a href="semester1_ideation_scope.html#constraints">Constraints list</a></li>
+        <li><a href="semester1_ideation_scope.html#team-formation">Team formation</a></li>
+      </ul>
+      <a class="cell-link" href="semester1_ideation_scope.html">Details →</a>
+    </div>
+
+    <div class="cell c2-dim">
+      <ul>
+        <li><a href="semester2_ideation_scope.html">Scope refinements</a></li>
+        <li><a href="semester2_ideation_scope.html">Change requests</a></li>
+      </ul>
+    </div>
+
+    <div class="cell" style="opacity:0.25"></div>
+    <div class="cell" style="opacity:0.25"></div>
+  </div>
+
+  <!-- PHASE: Requirements -->
+  <div class="phase-row">
+    <div class="phase-label"><span class="phase-dot" style="background:#7F77DD"></span><span class="phase-name">Requirements (SRS / PRD)</span></div>
+
+    <div class="cell c1-active">
+      <ul>
+        <li><a href="semester1_requirements.html#functional-reqs">Functional reqs</a></li>
+        <li><a href="semester1_requirements.html#non-functional-reqs">Non-functional reqs</a></li>
+        <li><a href="semester1_requirements.html#user-stories">User stories</a></li>
+        <li><a href="semester1_requirements.html#use-cases">Use cases (UML)</a></li>
+        <li><a href="semester1_requirements.html#business-rules">Business rules</a></li>
+      </ul>
+      <a class="cell-link" href="semester1_requirements.html">Details →</a>
+    </div>
+
+    <div class="cell c2-active">
+      <ul>
+        <li><a href="semester2_requirements.html#detailed-use-cases">Detailed use cases</a></li>
+        <li><a href="semester2_requirements.html#api-contract">API contract draft</a></li>
+        <li><a href="semester2_requirements.html#acceptance">Acceptance criteria</a></li>
+      </ul>
+      <a class="cell-link" href="semester2_requirements.html">Details →</a>
+    </div>
+
+    <div class="cell c3-dim">
+      <ul>
+        <li><a href="semester3_requirements.html">Change reqs via CR</a></li>
+      </ul>
+    </div>
+
+    <div class="cell" style="opacity:0.25"></div>
+  </div>
+
+  <!-- PHASE: Planning -->
+  <div class="phase-row">
+    <div class="phase-label"><span class="phase-dot" style="background:#7F77DD"></span><span class="phase-name">Planning (SPMP)</span></div>
+
+    <div class="cell c1-active">
+      <ul>
+        <li><a href="semester1_planning.html#wbs">WBS / task breakdown</a></li>
+        <li><a href="semester1_planning.html#spmp">SPMP document</a></li>
+        <li><a href="semester1_planning.html#milestones">Milestones &amp; timeline</a></li>
+        <li><a href="semester1_planning.html#risk">Risk register</a></li>
+        <li><a href="semester1_planning.html#roles">Role assignments</a></li>
+      </ul>
+      <a class="cell-link" href="semester1_planning.html">Details →</a>
+    </div>
+
+    <div class="cell c2-active">
+      <ul>
+        <li><a href="semester2_planning.html#sprint-planning">Sprint planning</a></li>
+        <li><a href="semester2_planning.html#backlog">Backlog grooming</a></li>
+        <li><a href="semester2_planning.html#timeline">Revised timeline</a></li>
+      </ul>
+      <a class="cell-link" href="semester2_planning.html">Details →</a>
+    </div>
+
+    <div class="cell c3-active">
+      <ul>
+        <li><a href="semester3_planning.html">Release planning</a></li>
+        <li><a href="semester3_planning.html">Go-live checklist</a></li>
+      </ul>
+      <a class="cell-link" href="semester3_planning.html">Details →</a>
+    </div>
+
+    <div class="cell c4-active">
+      <ul>
+        <li><a href="semester4_planning.html">Maintenance plan</a></li>
+        <li><a href="semester4_planning.html">Retrospective</a></li>
+      </ul>
+      <a class="cell-link" href="semester4_planning.html">Details →</a>
+    </div>
+  </div>
+
+  <!-- PHASE: Design -->
+  <div class="phase-row">
+    <div class="phase-label"><span class="phase-dot" style="background:#1D9E75"></span><span class="phase-name">Design (TDD)</span></div>
+
+    <div class="cell c1-active">
+      <ul>
+        <li><a href="semester1_design.html#architecture">System architecture</a></li>
+        <li><a href="semester1_design.html#er-diagram">ER diagrams</a></li>
+        <li><a href="semester1_design.html#class-diagrams">Class diagrams</a></li>
+        <li><a href="semester1_design.html#tech-stack">Tech stack decision</a></li>
+      </ul>
+      <a class="cell-link" href="semester1_design.html">Details →</a>
+    </div>
+
+    <div class="cell c2-active">
+      <ul>
+        <li><a href="semester2_design.html#flow">Flow diagrams</a></li>
+        <li><a href="semester2_design.html#sequence">Sequence diagrams</a></li>
+        <li><a href="semester2_design.html#api-design">API design (OpenAPI)</a></li>
+        <li><a href="semester2_design.html#db-schema">DB schema final</a></li>
+        <li><a href="semester2_wireframes.html">Wireframes / UI Mockups</a></li>
+      </ul>
+      <a class="cell-link" href="semester2_design.html">Details →</a>
+    </div>
+
+    <div class="cell c3-dim">
+      <ul>
+        <li><a href="semester3_design.html">Design revisions</a></li>
+      </ul>
+    </div>
+
+    <div class="cell" style="opacity:0.25"></div>
+  </div>
+
+  <!-- PHASE: Coding -->
+  <div class="phase-row">
+    <div class="phase-label"><span class="phase-dot" style="background:#1D9E75"></span><span class="phase-name">Coding</span></div>
+
+    <div class="cell c1-dim">
+      <ul>
+        <li><a href="semester1_coding.html">Prototype / PoC</a></li>
+      </ul>
+    </div>
+
+    <div class="cell c2-active">
+      <ul>
+        <li><a href="semester2_coding.html#core-modules">Core modules</a></li>
+        <li><a href="semester2_coding.html#backend-apis">Backend APIs</a></li>
+        <li><a href="semester2_coding.html#db-layer">Database layer</a></li>
+        <li><a href="semester2_coding.html#version-control">Version control (Git)</a></li>
+        <li><a href="semester2_coding.html#code-reviews">Code reviews</a></li>
+      </ul>
+      <a class="cell-link" href="semester2_coding.html">Details →</a>
+    </div>
+
+    <div class="cell c3-active">
+      <ul>
+        <li><a href="semester3_coding.html#frontend">Frontend / UI</a></li>
+        <li><a href="semester3_coding.html#integration">Integration layer</a></li>
+        <li><a href="semester3_coding.html#feature-complete">Feature completion</a></li>
+        <li><a href="semester3_coding.html#refactoring">Refactoring</a></li>
+      </ul>
+      <a class="cell-link" href="semester3_coding.html">Details →</a>
+    </div>
+
+    <div class="cell c4-dim">
+      <ul>
+        <li><a href="semester4_coding.html">Bug fixes</a></li>
+        <li><a href="semester4_coding.html">Patches</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- PHASE: Testing -->
+  <div class="phase-row">
+    <div class="phase-label"><span class="phase-dot" style="background:#EF9F27"></span><span class="phase-name">Testing</span></div>
+
+    <div class="cell" style="opacity:0.25"></div>
+
+    <div class="cell c2-active">
+      <ul>
+        <li><a href="semester2_testing.html#unit-tests">Unit tests</a></li>
+        <li><a href="semester2_testing.html#integration-tests">Integration tests</a></li>
+        <li><a href="semester2_testing.html#test-plan">Test plan doc</a></li>
+      </ul>
+      <a class="cell-link" href="semester2_testing.html">Details →</a>
+    </div>
+
+    <div class="cell c3-active">
+      <ul>
+        <li><a href="semester3_testing.html#alpha">Alpha testing</a></li>
+        <li><a href="semester3_testing.html#system-e2e">System / E2E tests</a></li>
+        <li><a href="semester3_testing.html#performance">Performance tests</a></li>
+        <li><a href="semester3_testing.html#bug-tracking">Bug tracking</a></li>
+        <li><a href="semester3_testing.html#beta">Beta (peer review)</a></li>
+      </ul>
+      <a class="cell-link" href="semester3_testing.html">Details →</a>
+    </div>
+
+    <div class="cell c4-active">
+      <ul>
+        <li><a href="semester4_testing.html">UAT</a></li>
+        <li><a href="semester4_testing.html">Regression suite</a></li>
+        <li><a href="semester4_testing.html">Security scan</a></li>
+      </ul>
+      <a class="cell-link" href="semester4_testing.html">Details →</a>
+    </div>
+  </div>
+
+  <!-- PHASE: Logging & Monitoring -->
+  <div class="phase-row">
+    <div class="phase-label"><span class="phase-dot" style="background:#EF9F27"></span><span class="phase-name">Logging &amp; Monitoring</span></div>
+
+    <div class="cell" style="opacity:0.25"></div>
+
+    <div class="cell c2-active">
+      <ul>
+        <li><a href="semester2_logging.html">Logging framework setup</a></li>
+        <li><a href="semester2_logging.html">Error tracking</a></li>
+      </ul>
+      <a class="cell-link" href="semester2_logging.html">Details →</a>
+    </div>
+
+    <div class="cell c3-active">
+      <ul>
+        <li><a href="semester3_logging.html">Health dashboards</a></li>
+        <li><a href="semester3_logging.html">Alert rules</a></li>
+        <li><a href="semester3_logging.html">Structured logs</a></li>
+      </ul>
+      <a class="cell-link" href="semester3_logging.html">Details →</a>
+    </div>
+
+    <div class="cell c4-active">
+      <ul>
+        <li><a href="semester4_logging.html">Prod monitoring</a></li>
+        <li><a href="semester4_logging.html">SLA tracking</a></li>
+        <li><a href="semester4_logging.html">Incident response</a></li>
+      </ul>
+      <a class="cell-link" href="semester4_logging.html">Details →</a>
+    </div>
+  </div>
+
+  <!-- PHASE: Deployment & CI/CD -->
+  <div class="phase-row">
+    <div class="phase-label"><span class="phase-dot" style="background:#378ADD"></span><span class="phase-name">Deployment &amp; CI/CD</span></div>
+
+    <div class="cell" style="opacity:0.25"></div>
+
+    <div class="cell c2-dim">
+      <ul>
+        <li><a href="semester2_deployment.html">Local/dev env setup</a></li>
+      </ul>
+    </div>
+
+    <div class="cell c3-active">
+      <ul>
+        <li><a href="semester3_deployment.html#ci">CI pipeline (GitHub Actions)</a></li>
+        <li><a href="semester3_deployment.html#staging">Staging environment</a></li>
+        <li><a href="semester3_deployment.html#docker">Docker containers</a></li>
+        <li><a href="semester3_deployment.html#auto-deploy">Automated deploys</a></li>
+      </ul>
+      <a class="cell-link" href="semester3_deployment.html">Details →</a>
+    </div>
+
+    <div class="cell c4-active">
+      <ul>
+        <li><a href="semester4_deployment.html">Production deploy</a></li>
+        <li><a href="semester4_deployment.html">CD pipeline final</a></li>
+        <li><a href="semester4_deployment.html">Rollback strategy</a></li>
+      </ul>
+      <a class="cell-link" href="semester4_deployment.html">Details →</a>
+    </div>
+  </div>
+
+  <!-- PHASE: Documentation -->
+  <div class="phase-row">
+    <div class="phase-label"><span class="phase-dot" style="background:#378ADD"></span><span class="phase-name">Documentation</span></div>
+
+    <div class="cell c1-active">
+      <ul>
+        <li><a href="semester1_documentation.html#readme">README (initial)</a></li>
+        <li><a href="semester1_documentation.html#spmp-draft">SPMP draft</a></li>
+      </ul>
+      <a class="cell-link" href="semester1_documentation.html">Details →</a>
+    </div>
+
+    <div class="cell c2-active">
+      <ul>
+        <li><a href="semester2_documentation.html">PRD final</a></li>
+        <li><a href="semester2_documentation.html">TDD final</a></li>
+        <li><a href="semester2_documentation.html">API docs (Swagger)</a></li>
+      </ul>
+      <a class="cell-link" href="semester2_documentation.html">Details →</a>
+    </div>
+
+    <div class="cell c3-active">
+      <ul>
+        <li><a href="semester3_documentation.html">User manual</a></li>
+        <li><a href="semester3_documentation.html">Test reports</a></li>
+        <li><a href="semester3_documentation.html">Deployment guide</a></li>
+      </ul>
+      <a class="cell-link" href="semester3_documentation.html">Details →</a>
+    </div>
+
+    <div class="cell c4-active">
+      <ul>
+        <li><a href="semester4_documentation.html">Maintenance guide</a></li>
+        <li><a href="semester4_documentation.html">Final README</a></li>
+        <li><a href="semester4_documentation.html">Project report</a></li>
+      </ul>
+      <a class="cell-link" href="semester4_documentation.html">Details →</a>
+    </div>
+  </div>
+
+  <!-- PHASE: Maintenance -->
+  <div class="phase-row">
+    <div class="phase-label"><span class="phase-dot" style="background:#378ADD"></span><span class="phase-name">Maintenance</span></div>
+
+    <div class="cell" style="opacity:0.25"></div>
+    <div class="cell" style="opacity:0.25"></div>
+
+    <div class="cell c3-dim">
+      <ul>
+        <li><a href="semester3_maintenance.html">Post-beta fixes</a></li>
+      </ul>
+    </div>
+
+    <div class="cell c4-active">
+      <ul>
+        <li><a href="semester4_maintenance.html#hotfixes">Hotfixes</a></li>
+        <li><a href="semester4_maintenance.html#version-updates">Version updates</a></li>
+        <li><a href="semester4_maintenance.html#post-deploy">Post-deployment review</a></li>
+        <li><a href="semester4_maintenance.html#enhancement-log">Enhancement log</a></li>
+      </ul>
+      <a class="cell-link" href="semester4_maintenance.html">Details →</a>
+    </div>
+  </div>
+
+  <!-- Timeline bar -->
+  <div class="timeline-bar">
+    <div class="tb-seg tb-s1"></div>
+    <div class="tb-seg tb-s2"></div>
+    <div class="tb-seg tb-s3"></div>
+    <div class="tb-seg tb-s4"></div>
+  </div>
+  <div class="timeline-labels">
+    <span>Plan &amp; Specify</span>
+    <span>Design &amp; Build Core</span>
+    <span>Integrate &amp; Test</span>
+    <span>Ship &amp; Sustain</span>
+  </div>
+
+  <!-- Tools Section -->
+  <div class="section-title">Recommended Tools by Category</div>
+  <div class="tools-grid">
+    <div class="tool-card">
+      <div class="tool-cat">Project Planning</div>
+      <div class="tool-list">Jira / Linear<br>Trello (basic)<br>GitHub Projects<br>Notion (SPMP docs)</div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-cat">Requirements &amp; Docs</div>
+      <div class="tool-list">Confluence / Notion<br>Google Docs<br>Markdown + Git<br>Miro (user stories)</div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-cat">Design &amp; Diagrams</div>
+      <div class="tool-list">draw.io / Lucidchart<br>Figma (wireframes)<br>PlantUML / Mermaid<br>dbdiagram.io (ERD)</div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-cat">Version Control</div>
+      <div class="tool-list">Git + GitHub / GitLab<br>Gitflow branching<br>Pull Requests<br>Code review workflows</div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-cat">Coding &amp; IDE</div>
+      <div class="tool-list">VS Code / IntelliJ<br>Python / Java / Node.js<br>Postman (API testing)<br>Swagger / OpenAPI</div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-cat">Testing</div>
+      <div class="tool-list">JUnit / PyTest<br>Selenium / Playwright<br>Postman / REST Assured<br>OWASP ZAP (security)</div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-cat">CI/CD &amp; DevOps</div>
+      <div class="tool-list">GitHub Actions<br>Docker + Docker Compose<br>Render / Railway / Heroku<br>Nginx (reverse proxy)</div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-cat">Logging &amp; Monitoring</div>
+      <div class="tool-list">Winston / Loguru<br>Sentry (errors)<br>UptimeRobot (uptime)<br>Grafana + Prometheus</div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-cat">Databases</div>
+      <div class="tool-list">MySQL / PostgreSQL<br>MongoDB (NoSQL)<br>Redis (caching)<br>SQLite (prototyping)</div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-cat">Communication</div>
+      <div class="tool-list">Slack / MS Teams<br>GitHub Issues<br>Weekly standups<br>Sprint retrospectives</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planning — Semester 3 | Online Food Delivery System</title>
+  <link rel="stylesheet" href="child_page_styles.css">
+</head>
+<body>
+<div class="page-wrap">
+  <nav class="breadcrumb">
+    <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+    <span class="sep">›</span><span>Semester 3</span>
+    <span class="sep">›</span><span>Planning — Release</span>
+  </nav>
+  <header class="page-header">
+    <div class="sem-badge sem-3">Semester 3 — Deliver</div>
+    <h1>Planning — Release Planning &amp; Go-Live Checklist</h1>
+    <div class="project-tag">Example Project: <strong>Online Food Delivery System</strong></div>
+    <p class="header-desc">Semester 3 planning focuses on preparing for the first public release — defining release criteria, building a go-live checklist, and planning the beta testing period.</p>
+  </header>
+
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon icon-orange">🚀</div>
+      <div class="section-title-group">
+        <h2>Release Planning</h2>
+        <p>Defining what "ready to ship" means for the Food Delivery system</p>
+      </div>
+    </div>
+    <p><strong>Release planning</strong> decides which features are included in each release and the conditions that must be met before shipping to real users.</p>
+    <h3>Release Plan</h3>
+    <table>
+      <thead><tr><th>Release</th><th>When</th><th>Included Features</th><th>Target Users</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Alpha (v0.1)</strong></td><td>Sem 2, End</td><td>Core order flow, basic UI. No mobile responsive. No production deploy.</td><td>Team only</td></tr>
+        <tr><td><strong>Beta (v0.5)</strong></td><td>Sem 3, Week 12</td><td>All features from SRS. Mobile responsive. Deployed to staging.</td><td>5–10 peer testers (other MCA students)</td></tr>
+        <tr><td><strong>Release Candidate (v0.9)</strong></td><td>Sem 3, Week 18</td><td>All beta bugs fixed. Performance tested. Security scanned.</td><td>Faculty guide + 2–3 external testers</td></tr>
+        <tr><td><strong>Production (v1.0)</strong></td><td>Sem 4, Week 4</td><td>All RC bugs fixed. Full CI/CD pipeline. Public URL live.</td><td>Anyone</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon icon-orange">✅</div>
+      <div class="section-title-group">
+        <h2>Go-Live Checklist</h2>
+        <p>Everything that must be verified before going to production</p>
+      </div>
+    </div>
+    <p>A <strong>Go-Live Checklist</strong> prevents the embarrassment of launching a broken system. Every item must be checked off before the production deployment in Semester 4.</p>
+    <h3>Functional Checks</h3>
+    <ul>
+      <li>☐ Customer can register, login, and update profile.</li>
+      <li>☐ Customer can browse restaurants, view menus, and add items to cart.</li>
+      <li>☐ Customer can place an order (online payment + COD paths both work).</li>
+      <li>☐ Restaurant owner can accept orders and manage menu.</li>
+      <li>☐ Delivery partner can mark orders as Picked Up and Delivered.</li>
+      <li>☐ Customer receives email on order confirmation and status changes.</li>
+      <li>☐ Admin can approve/reject restaurants.</li>
+      <li>☐ Customer can rate and review after delivery.</li>
+    </ul>
+    <h3>Non-Functional Checks</h3>
+    <ul>
+      <li>☐ All pages load in &lt; 3 seconds on 4G (tested with Chrome DevTools throttling).</li>
+      <li>☐ System handles 50 concurrent users (basic load test with Locust).</li>
+      <li>☐ HTTPS is enforced — all HTTP redirects to HTTPS.</li>
+      <li>☐ Passwords are hashed with bcrypt (confirmed via DB inspection).</li>
+      <li>☐ No sensitive data in frontend JS (no API keys in browser code).</li>
+      <li>☐ Mobile responsive: tested on 375px, 768px, 1280px breakpoints.</li>
+    </ul>
+    <h3>Operational Checks</h3>
+    <ul>
+      <li>☐ Sentry is configured and receiving error events.</li>
+      <li>☐ UptimeRobot is monitoring the production URL.</li>
+      <li>☐ Database backup is running daily and verified by restoring once.</li>
+      <li>☐ All environment variables are in production — no hardcoded values.</li>
+      <li>☐ CI/CD pipeline is green on the main branch.</li>
+      <li>☐ Rollback procedure is documented and tested.</li>
+    </ul>
+    <div class="info-box orange">
+      <div class="info-box-title">The Cost of Skipping the Checklist</div>
+      <p style="margin:0">Going live without a checklist is how teams discover on demo day that the payment gateway is still in sandbox mode, or that the admin password is "admin123", or that the database is pointing to localhost. The checklist takes 30 minutes to run and saves 3 hours of embarrassment.</p>
+    </div>
+  </section>
+
+  <footer>
+    <a href="semester2_planning.html">← Planning Sem 2</a>
+    <nav class="footer-nav">
+      <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+      <a href="semester4_planning.html">Next: Planning Sem 4 →</a>
+    </nav>
+  </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bug Fixes &amp; Patches — Semester 4 | Online Food Delivery System</title>
+  <link rel="stylesheet" href="child_page_styles.css">
+</head>
+<body>
+<div class="page-wrap">
+  <nav class="breadcrumb">
+    <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+    <span class="sep">›</span><span>Semester 4</span>
+    <span class="sep">›</span><span>Coding — Bug Fixes</span>
+  </nav>
+  <header class="page-header">
+    <div class="sem-badge sem-4">Semester 4 — Production</div>
+    <h1>Coding — Bug Fixes &amp; Patches</h1>
+    <div class="project-tag">Example Project: <strong>Online Food Delivery System</strong></div>
+    <p class="header-desc">In Semester 4, coding is focused on fixing production bugs and security patches — not building new features. Every change follows a disciplined hotfix process to minimise risk.</p>
+  </header>
+
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon icon-blue">🔧</div>
+      <div class="section-title-group">
+        <h2>Production Bug Fix Process</h2>
+        <p>A disciplined approach to fixing bugs in a live system</p>
+      </div>
+    </div>
+    <p>Fixing bugs in production is different from fixing bugs during development. In production, a bad fix can break a working system. Every fix must be validated on staging before deploying to production.</p>
+    <h3>Hotfix Workflow</h3>
+    <div class="code-block"># 1. Create hotfix branch from main (NOT develop)
+git checkout main
+git checkout -b hotfix/fix-order-minimum-validation
+
+# 2. Make the minimal fix
+# Edit only the affected file(s)
+# Add/update the relevant unit test
+
+# 3. Run full test suite locally
+jest --tb=short
+
+# 4. Push and create PR to main AND develop
+git push origin hotfix/fix-order-minimum-validation
+
+# 5. Deploy hotfix branch to staging for verification
+# 6. Get code review approval
+# 7. Merge to main → triggers CI/CD to production
+# 8. Merge to develop → keeps develop branch in sync</div>
+    <h3>Common Semester 4 Bug Categories</h3>
+    <table>
+      <thead><tr><th>Bug Type</th><th>Example</th><th>Fix Approach</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Business logic bug</strong></td><td>Delivery fee not applied to COD orders</td><td>Fix service layer + add unit test for COD path</td></tr>
+        <tr><td><strong>UI bug</strong></td><td>Cart total overflows on small screens</td><td>CSS fix + add responsive test case</td></tr>
+        <tr><td><strong>Data bug</strong></td><td>Restaurant rating shows NaN if no reviews</td><td>Add null-safe calculation in rating service</td></tr>
+        <tr><td><strong>Security patch</strong></td><td>Express.js releases security update (CVE)</td><td><code class="code-inline">pip install Express.js==4.2.x</code> + full regression test</td></tr>
+        <tr><td><strong>Performance bug</strong></td><td>Admin analytics page times out at 30s</td><td>Add DB index + cache the aggregation query</td></tr>
+      </tbody>
+    </table>
+    <div class="info-box blue">
+      <div class="info-box-title">The "Minimal Fix" Principle</div>
+      <p style="margin:0">In production, make the smallest possible change that fixes the bug. Don't refactor surrounding code. Don't add unrelated features. The larger the change, the higher the risk of introducing new bugs. Refactoring belongs in a regular sprint — not a hotfix.</p>
+    </div>
+  </section>
+
+  <footer>
+    <a href="semester3_coding.html">← Coding Sem 3</a>
+    <nav class="footer-nav">
+      <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+    </nav>
+  </footer>
+</div>
+</body>
+</html>

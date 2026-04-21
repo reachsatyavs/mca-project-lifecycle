@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planning — Semester 4 | Online Food Delivery System</title>
+  <link rel="stylesheet" href="child_page_styles.css">
+</head>
+<body>
+<div class="page-wrap">
+  <nav class="breadcrumb">
+    <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+    <span class="sep">›</span><span>Semester 4</span>
+    <span class="sep">›</span><span>Planning — Maintenance &amp; Retrospective</span>
+  </nav>
+  <header class="page-header">
+    <div class="sem-badge sem-4">Semester 4 — Production</div>
+    <h1>Planning — Maintenance Plan &amp; Retrospective</h1>
+    <div class="project-tag">Example Project: <strong>Online Food Delivery System</strong></div>
+    <p class="header-desc">Semester 4 is about shipping to production and sustaining the system. The maintenance plan defines how bugs will be handled post-launch. The retrospective captures what the team learned over 4 semesters.</p>
+  </header>
+
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon icon-blue">🛠️</div>
+      <div class="section-title-group">
+        <h2>Maintenance Plan</h2>
+        <p>How the system will be kept healthy after production launch</p>
+      </div>
+    </div>
+    <p>A <strong>Maintenance Plan</strong> defines procedures for handling bugs, patches, and updates after the system is live. Even a student project needs a maintenance plan for the duration of the Semester 4 evaluation period.</p>
+    <h3>Maintenance Categories</h3>
+    <table>
+      <thead><tr><th>Type</th><th>Description</th><th>Example for Food Delivery</th><th>Response Time</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Corrective</strong></td><td>Fixing bugs found in production</td><td>Order status stuck at "Preparing" due to partner app bug</td><td>P1: 24hrs. P2: 1 week</td></tr>
+        <tr><td><strong>Adaptive</strong></td><td>Changes to keep up with environment</td><td>Razorpay API version update requires library upgrade</td><td>Within 2 weeks of change</td></tr>
+        <tr><td><strong>Perfective</strong></td><td>Performance or UX improvements</td><td>Reduce restaurant listing page load from 1.2s to 0.4s with caching</td><td>Enhancement log — next sprint</td></tr>
+        <tr><td><strong>Preventive</strong></td><td>Preventing future failures</td><td>Add DB index after load test reveals slow query</td><td>Scheduled maintenance window</td></tr>
+      </tbody>
+    </table>
+    <h3>Maintenance Schedule</h3>
+    <ul>
+      <li><strong>Daily:</strong> Monitor Sentry dashboard and UptimeRobot alerts.</li>
+      <li><strong>Weekly:</strong> Review open bug list; triage new bugs from Sentry.</li>
+      <li><strong>Monthly:</strong> Dependency security audit (<code class="code-inline">pip audit</code>); review database backup integrity.</li>
+      <li><strong>Every 3 months:</strong> Review and update dependencies to latest stable versions.</li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon icon-blue">🔄</div>
+      <div class="section-title-group">
+        <h2>Retrospective</h2>
+        <p>Looking back on 4 semesters — what worked and what to improve</p>
+      </div>
+    </div>
+    <p>A <strong>retrospective</strong> is a structured reflection session run at the end of the project. The team honestly evaluates their process, tools, and teamwork to derive lessons for future projects.</p>
+    <h3>Retrospective Format (4Ls)</h3>
+    <table>
+      <thead><tr><th>Category</th><th>Question</th><th>Example Responses (Food Delivery Team)</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Liked ❤️</strong></td><td>What worked really well?</td><td>"GitHub Actions CI saved us 3 times from merging broken code." "Weekly standups kept everyone accountable." "Using Swagger made frontend integration much easier."</td></tr>
+        <tr><td><strong>Learned 📚</strong></td><td>What did we learn?</td><td>"Payment gateway integration is harder than it looks — start early." "Docker solved the 'works on my machine' problem completely." "User testing revealed bugs we never would have found internally."</td></tr>
+        <tr><td><strong>Lacked 😟</strong></td><td>What was missing or insufficient?</td><td>"We didn't start writing tests until Semester 3 — should have been Semester 2." "Our Semester 1 ER diagram had 3 missing tables discovered in Semester 2." "No on-call schedule — P1 bugs sat for 48hrs on weekends."</td></tr>
+        <tr><td><strong>Longed For 🌟</strong></td><td>What do we wish we had?</td><td>"A real mobile app." "Redis caching from the start." "More beta testers with diverse devices."</td></tr>
+      </tbody>
+    </table>
+    <h3>Key Lessons for Future MCA Projects</h3>
+    <ol>
+      <li>Write tests from Semester 2 alongside the code — not after.</li>
+      <li>Set up CI/CD in Semester 2 — not Semester 3.</li>
+      <li>Define API contracts before writing frontend — it enables parallel development.</li>
+      <li>Get real users to test early and often — at least once per semester.</li>
+      <li>Document as you go — don't leave documentation for the final week.</li>
+      <li>The Non-Goals document saved the project from three attempts at scope creep.</li>
+    </ol>
+  </section>
+
+  <footer>
+    <a href="semester3_planning.html">← Planning Sem 3</a>
+    <nav class="footer-nav">
+      <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+    </nav>
+  </footer>
+</div>
+</body>
+</html>

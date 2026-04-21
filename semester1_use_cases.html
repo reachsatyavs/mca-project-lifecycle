@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Use Cases — Semester 1 | Online Food Delivery System</title>
+  <link rel="stylesheet" href="child_page_styles.css">
+</head>
+<body>
+<div class="page-wrap">
+  <nav class="breadcrumb">
+    <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+    <span class="sep">›</span><a href="semester1_requirements.html">Requirements</a>
+    <span class="sep">›</span><span>Use Cases</span>
+  </nav>
+  <header class="page-header">
+    <div class="sem-badge sem-1">Semester 1 — Foundation</div>
+    <h1>Use Cases (UML)</h1>
+    <div class="project-tag">Example Project: <strong>Online Food Delivery System</strong></div>
+    <p class="header-desc">Use cases model how actors interact with the system to achieve a goal. They describe the complete interaction — main flow, alternate flows, pre and postconditions — and form the basis for detailed design and test planning.</p>
+  </header>
+  <nav class="topic-nav">
+    <div class="topic-nav-label">Jump to section</div>
+    <a href="#actors">Actors</a>
+    <a href="#uc-list">Use Case List</a>
+    <a href="#uc-06">UC-06: Place Order</a>
+    <a href="#uc-02">UC-02: Login</a>
+    <a href="#uc-09">UC-09: Write Review</a>
+  </nav>
+
+  <!-- What is a Use Case -->
+  <section class="section" id="actors">
+    <div class="section-header">
+      <div class="section-icon icon-purple">📖</div>
+      <div class="section-title-group">
+        <h2>What is a Use Case?</h2>
+        <p>Modelling system interactions between actors and the system</p>
+      </div>
+    </div>
+    <div class="info-box blue">
+      <div class="info-box-title">Use Case vs User Story</div>
+      <table style="font-size:13px; margin:0;">
+        <thead><tr><th>Aspect</th><th>User Story</th><th>Use Case</th></tr></thead>
+        <tbody>
+          <tr><td>Format</td><td>"As a… I want… so that…"</td><td>Structured table with actor, flows, conditions</td></tr>
+          <tr><td>Detail level</td><td>High-level, one sentence</td><td>Step-by-step, all alternate paths</td></tr>
+          <tr><td>Audience</td><td>Product owner, stakeholders</td><td>Developers, testers, designers</td></tr>
+          <tr><td>Purpose</td><td>What to build (the goal)</td><td>How the system handles it (the interaction)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h3>Actors in Online Food Delivery System</h3>
+    <div class="tags">
+      <span class="tag tag-purple">Customer</span>
+      <span class="tag tag-green">Restaurant Owner</span>
+      <span class="tag tag-orange">Delivery Partner</span>
+      <span class="tag tag-blue">Platform Admin</span>
+      <span class="tag tag-gray">«system» Payment Gateway</span>
+      <span class="tag tag-gray">«system» Email Service</span>
+    </div>
+    <p style="margin-top:12px;">
+      Actors are entities that interact with the system from outside.
+      <strong>Primary actors</strong> initiate a use case (e.g., Customer places an order).
+      <strong>Secondary actors</strong> are involved in supporting the use case but don't initiate it (e.g., Payment Gateway processes the payment).
+    </p>
+  </section>
+
+  <!-- Use Case List -->
+  <section class="section" id="uc-list">
+    <div class="section-header">
+      <div class="section-icon icon-purple">🗂️</div>
+      <div class="section-title-group">
+        <h2>Use Case List</h2>
+        <p>All 20 use cases for the Online Food Delivery System</p>
+      </div>
+    </div>
+    <table>
+      <thead>
+        <tr><th>ID</th><th>Use Case</th><th>Primary Actor</th><th>Secondary Actor(s)</th><th>Related FR</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>UC-01</td><td>Register Account</td><td>Customer / Owner / Partner</td><td>Email Service</td><td>FR-101</td></tr>
+        <tr><td>UC-02</td><td>Login</td><td>All actors</td><td>—</td><td>FR-102</td></tr>
+        <tr><td>UC-03</td><td>Reset Password</td><td>Any user</td><td>Email Service</td><td>FR-103</td></tr>
+        <tr><td>UC-04</td><td>Update Profile</td><td>Any user</td><td>—</td><td>FR-104</td></tr>
+        <tr><td>UC-05</td><td>Browse Restaurants</td><td>Customer</td><td>—</td><td>FR-301</td></tr>
+        <tr><td>UC-06</td><td>View Menu</td><td>Customer</td><td>—</td><td>FR-301</td></tr>
+        <tr><td>UC-07</td><td>Manage Cart</td><td>Customer</td><td>—</td><td>FR-302</td></tr>
+        <tr><td>UC-08</td><td>Place Order</td><td>Customer</td><td>Payment Gateway, Email Service</td><td>FR-303, FR-401</td></tr>
+        <tr><td>UC-09</td><td>Track Order</td><td>Customer</td><td>—</td><td>FR-304</td></tr>
+        <tr><td>UC-10</td><td>Cancel Order</td><td>Customer</td><td>Email Service, Payment Gateway (refund)</td><td>FR-303, BR-03</td></tr>
+        <tr><td>UC-11</td><td>View Order History</td><td>Customer</td><td>—</td><td>FR-305</td></tr>
+        <tr><td>UC-12</td><td>Write Review</td><td>Customer</td><td>—</td><td>FR-601</td></tr>
+        <tr><td>UC-13</td><td>Register Restaurant</td><td>Restaurant Owner</td><td>Email Service</td><td>FR-201</td></tr>
+        <tr><td>UC-14</td><td>Manage Menu</td><td>Restaurant Owner</td><td>—</td><td>FR-202</td></tr>
+        <tr><td>UC-15</td><td>Accept / Reject Order</td><td>Restaurant Owner</td><td>Email Service</td><td>FR-203</td></tr>
+        <tr><td>UC-16</td><td>Go Online / Offline</td><td>Delivery Partner</td><td>—</td><td>FR-501</td></tr>
+        <tr><td>UC-17</td><td>Accept &amp; Deliver Order</td><td>Delivery Partner</td><td>—</td><td>FR-502, FR-503</td></tr>
+        <tr><td>UC-18</td><td>Approve Restaurant</td><td>Admin</td><td>Email Service</td><td>FR-602</td></tr>
+        <tr><td>UC-19</td><td>View Analytics</td><td>Admin</td><td>—</td><td>FR-602</td></tr>
+        <tr><td>UC-20</td><td>Suspend / Ban User</td><td>Admin</td><td>Email Service</td><td>FR-602</td></tr>
+      </tbody>
+    </table>
+    <div class="info-box green">
+      <div class="info-box-title">«include» and «extend» Relationships</div>
+      <p style="margin:0">
+        <strong>«include»:</strong> UC-08 (Place Order) always includes UC-07 (Manage Cart) — it's a mandatory sub-flow.<br>
+        <strong>«extend»:</strong> UC-10 (Cancel Order) extends UC-08 (Place Order) — it's an optional path that only happens under certain conditions (customer cancels before restaurant accepts).
+      </p>
+    </div>
+  </section>
+
+  <!-- UC-08: Place Order -->
+  <section class="section" id="uc-06">
+    <div class="section-header">
+      <div class="section-icon icon-purple">🛒</div>
+      <div class="section-title-group">
+        <h2>Detailed Use Case: UC-08 Place Order</h2>
+        <p>The most complex and critical use case in the system</p>
+      </div>
+    </div>
+    <table>
+      <tbody>
+        <tr><td><strong>Use Case ID</strong></td><td>UC-08</td></tr>
+        <tr><td><strong>Use Case Name</strong></td><td>Place Order</td></tr>
+        <tr><td><strong>Actor</strong></td><td>Customer (Primary), Payment Gateway (Secondary), Email Service (Secondary)</td></tr>
+        <tr><td><strong>Description</strong></td><td>Customer reviews their cart, selects a delivery address, chooses a payment method, and confirms the order. The system processes the payment and creates an order record.</td></tr>
+        <tr><td><strong>Preconditions</strong></td><td>1. Customer is logged in. &nbsp;2. Cart contains at least one item totalling ≥ ₹100. &nbsp;3. Customer has at least one saved delivery address. &nbsp;4. Restaurant is currently open.</td></tr>
+        <tr>
+          <td><strong>Main Flow</strong></td>
+          <td>
+            1. Customer clicks "Proceed to Checkout."<br>
+            2. System displays order summary (items, quantities, subtotal, delivery fee, taxes, total).<br>
+            3. Customer selects or adds a delivery address.<br>
+            4. Customer selects payment method (Online / COD).<br>
+            5. Customer clicks "Place Order."<br>
+            6a. <em>If Online payment:</em> System creates Razorpay order → customer pays in popup → system verifies signature.<br>
+            6b. <em>If COD:</em> Skip to step 7.<br>
+            7. System creates order record with status "PLACED."<br>
+            8. System sends order confirmation email to customer.<br>
+            9. System notifies restaurant of new order.<br>
+            10. System clears the cart and redirects customer to order tracking page.
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Alternate Flow A</strong></td>
+          <td><strong>Payment Failure (Step 6a):</strong> Gateway returns failure → System shows error with retry option → Order is NOT created → Cart is NOT cleared.</td>
+        </tr>
+        <tr>
+          <td><strong>Alternate Flow B</strong></td>
+          <td><strong>Restaurant Closed:</strong> System detects restaurant is outside operating hours → "Place Order" button is disabled → Message: "Spice Garden is currently closed. Opens at 10:00 AM."</td>
+        </tr>
+        <tr>
+          <td><strong>Alternate Flow C</strong></td>
+          <td><strong>Cart Below Minimum:</strong> System detects cart total &lt; ₹100 → "Checkout" button shows tooltip: "Add ₹X more to proceed." → Button is disabled.</td>
+        </tr>
+        <tr><td><strong>Postconditions</strong></td><td>Order record exists in DB with unique order ID. Cart is cleared. Restaurant receives a notification. Email sent to customer.</td></tr>
+        <tr><td><strong>Related FRs</strong></td><td>FR-303, FR-401, FR-402, FR-403</td></tr>
+        <tr><td><strong>Related User Stories</strong></td><td>US-C04 (Cart), US-C05 (Payment)</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- UC-02: Login -->
+  <section class="section" id="uc-02">
+    <div class="section-header">
+      <div class="section-icon icon-purple">🔐</div>
+      <div class="section-title-group">
+        <h2>Detailed Use Case: UC-02 Login</h2>
+        <p>Authentication — the gateway to all other use cases</p>
+      </div>
+    </div>
+    <table>
+      <tbody>
+        <tr><td><strong>Use Case ID</strong></td><td>UC-02</td></tr>
+        <tr><td><strong>Use Case Name</strong></td><td>Login</td></tr>
+        <tr><td><strong>Actor</strong></td><td>Any registered user (Customer, Owner, Partner, Admin)</td></tr>
+        <tr><td><strong>Description</strong></td><td>A registered user provides their email and password. The system authenticates them and returns a JWT access token granting access to role-specific features.</td></tr>
+        <tr><td><strong>Preconditions</strong></td><td>1. User has a registered account. &nbsp;2. Email is verified. &nbsp;3. Account is not suspended.</td></tr>
+        <tr>
+          <td><strong>Main Flow</strong></td>
+          <td>
+            1. User navigates to the login page.<br>
+            2. User enters email and password.<br>
+            3. User clicks "Login."<br>
+            4. System validates credentials (bcrypt hash comparison).<br>
+            5. System issues a JWT access token (15 min) and a refresh token (7 days).<br>
+            6. System updates user's <code>last_login</code> timestamp.<br>
+            7. System redirects to role-specific dashboard (Customer → Home, Admin → Admin Panel).
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Alternate Flow A</strong></td>
+          <td><strong>Wrong Password:</strong> Returns error "Invalid email or password." No indication of which field is wrong (security). User can try again or use Forgot Password.</td>
+        </tr>
+        <tr>
+          <td><strong>Alternate Flow B</strong></td>
+          <td><strong>Account Suspended:</strong> System displays "Your account has been suspended. Contact support." No token issued.</td>
+        </tr>
+        <tr>
+          <td><strong>Alternate Flow C</strong></td>
+          <td><strong>Email Not Verified:</strong> System shows "Please verify your email. Resend verification link?" No token issued.</td>
+        </tr>
+        <tr><td><strong>Postconditions</strong></td><td>User has valid JWT token. Session is active. <code>last_login</code> updated in DB.</td></tr>
+        <tr><td><strong>Related FRs</strong></td><td>FR-102</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- UC-12: Write Review -->
+  <section class="section" id="uc-09">
+    <div class="section-header">
+      <div class="section-icon icon-purple">⭐</div>
+      <div class="section-title-group">
+        <h2>Detailed Use Case: UC-12 Write Review</h2>
+        <p>Post-delivery feedback loop — builds trust on the platform</p>
+      </div>
+    </div>
+    <table>
+      <tbody>
+        <tr><td><strong>Use Case ID</strong></td><td>UC-12</td></tr>
+        <tr><td><strong>Use Case Name</strong></td><td>Write Review</td></tr>
+        <tr><td><strong>Actor</strong></td><td>Customer (Primary)</td></tr>
+        <tr><td><strong>Description</strong></td><td>A customer who has received a delivered order submits a star rating and optional text review for the restaurant.</td></tr>
+        <tr><td><strong>Preconditions</strong></td><td>1. Customer is logged in. &nbsp;2. Order status = DELIVERED. &nbsp;3. Customer has NOT already reviewed this specific order.</td></tr>
+        <tr>
+          <td><strong>Main Flow</strong></td>
+          <td>
+            1. Customer opens order history and selects a delivered order.<br>
+            2. System shows "Rate &amp; Review" button (only for unreviewed delivered orders).<br>
+            3. Customer selects a star rating (1–5).<br>
+            4. Customer optionally enters text comment (max 500 characters).<br>
+            5. Customer clicks "Submit Review."<br>
+            6. System saves the review (customer_id, restaurant_id, order_id, rating, comment).<br>
+            7. System recalculates restaurant average rating.<br>
+            8. System shows confirmation: "Thank you for your review!"
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Alternate Flow A</strong></td>
+          <td><strong>Already Reviewed:</strong> "Rate &amp; Review" button is hidden. API returns 409 Conflict if called directly.</td>
+        </tr>
+        <tr>
+          <td><strong>Alternate Flow B</strong></td>
+          <td><strong>Order Not Delivered:</strong> "Rate &amp; Review" option not shown. API returns 400 with error REVIEW_NOT_ALLOWED.</td>
+        </tr>
+        <tr><td><strong>Postconditions</strong></td><td>Review record saved. Restaurant avg rating updated. Order marked as reviewed.</td></tr>
+        <tr><td><strong>Related FRs</strong></td><td>FR-601</td></tr>
+        <tr><td><strong>Related User Stories</strong></td><td>US-C07</td></tr>
+      </tbody>
+    </table>
+    <div class="info-box green">
+      <div class="info-box-title">Tool Recommendation</div>
+      <p style="margin:0">Draw your Use Case Diagram using <strong>draw.io</strong> (free, browser-based) or <strong>PlantUML</strong> (text-to-diagram, version-controllable). Use ovals for use cases, stick figures for actors, lines for associations, and dashed arrows for «include» / «extend» relationships.</p>
+    </div>
+  </section>
+
+  <footer>
+    <a href="semester1_user_stories.html">← User Stories</a>
+    <nav class="footer-nav">
+      <a href="semester1_requirements.html">Requirements Overview</a>
+      <a href="semester1_test_cases.html">Test Cases →</a>
+    </nav>
+  </footer>
+</div>
+</body>
+</html>

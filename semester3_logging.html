@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logging &amp; Monitoring — Semester 3 | Online Food Delivery System</title>
+  <link rel="stylesheet" href="child_page_styles.css">
+</head>
+<body>
+<div class="page-wrap">
+  <nav class="breadcrumb">
+    <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+    <span class="sep">›</span><span>Semester 3</span>
+    <span class="sep">›</span><span>Logging &amp; Monitoring</span>
+  </nav>
+  <header class="page-header">
+    <div class="sem-badge sem-3">Semester 3 — Deliver</div>
+    <h1>Monitoring — Dashboards, Alerts &amp; Structured Logs</h1>
+    <div class="project-tag">Example Project: <strong>Online Food Delivery System</strong></div>
+    <p class="header-desc">In Semester 3, monitoring evolves from basic error tracking to full observability: health dashboards, alert rules, and structured logs that let you understand system behaviour at a glance.</p>
+  </header>
+
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon icon-orange">📊</div>
+      <div class="section-title-group">
+        <h2>Health Dashboards</h2>
+        <p>Visualising system health metrics in real time</p>
+      </div>
+    </div>
+    <h3>Key Metrics to Dashboard</h3>
+    <table>
+      <thead><tr><th>Metric</th><th>Why It Matters</th><th>Healthy Range</th></tr></thead>
+      <tbody>
+        <tr><td>HTTP 5xx error rate</td><td>High rate = backend bugs or DB issues</td><td>&lt; 0.1% of requests</td></tr>
+        <tr><td>API p95 response time</td><td>Slow = DB queries need optimisation</td><td>&lt; 500ms</td></tr>
+        <tr><td>Orders placed per hour</td><td>Business health; also load indicator</td><td>Baseline after beta period</td></tr>
+        <tr><td>Active database connections</td><td>Too many = connection pool exhausted</td><td>&lt; 80% of pool size</td></tr>
+        <tr><td>Disk usage (database)</td><td>Database growth over time</td><td>&lt; 70% of free tier limit</td></tr>
+      </tbody>
+    </table>
+    <h3>Simple Dashboard with UptimeRobot + Render Metrics</h3>
+    <p>For a student project, you don't need a full Prometheus/Grafana stack (that's production-grade). Use:</p>
+    <ul>
+      <li><strong>UptimeRobot</strong> (free) — uptime monitoring + downtime alerts by email/SMS.</li>
+      <li><strong>Render Dashboard</strong> — built-in CPU, memory, and request metrics for deployed services.</li>
+      <li><strong>Sentry Performance</strong> — request duration histogram and slow transaction alerts.</li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon icon-orange">🔔</div>
+      <div class="section-title-group">
+        <h2>Alert Rules</h2>
+        <p>Getting notified when something goes wrong</p>
+      </div>
+    </div>
+    <h3>Essential Alerts for Food Delivery</h3>
+    <table>
+      <thead><tr><th>Alert</th><th>Threshold</th><th>Channel</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td>Server Down</td><td>Uptime check fails for 2 minutes</td><td>Email + SMS (UptimeRobot)</td><td>Users can't access the site</td></tr>
+        <tr><td>New Sentry Error</td><td>First occurrence of any new error</td><td>Email (Sentry)</td><td>New bugs discovered in production</td></tr>
+        <tr><td>Error spike</td><td>&gt; 10 errors in 5 minutes</td><td>Email (Sentry)</td><td>Something broke in production</td></tr>
+        <tr><td>Slow transaction</td><td>Any request &gt; 2 seconds</td><td>Sentry Performance alert</td><td>Performance regression</td></tr>
+      </tbody>
+    </table>
+    <h3>Custom Health Check Endpoint</h3>
+    <div class="code-block"># views.py — Health check endpoint
+from django.db import connection
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+class HealthCheckView(APIView):
+    authentication_classes = []
+    permission_classes = []
+
+    def get(self, request):
+        # Check DB connectivity
+        try:
+            connection.ensure_connection()
+            db_status = "ok"
+        except Exception:
+            db_status = "error"
+
+        status = "healthy" if db_status == "ok" else "unhealthy"
+        http_status = 200 if status == "healthy" else 503
+
+        return Response({
+            "status": status,
+            "database": db_status,
+            "version": "1.0.0"
+        }, status=http_status)
+
+# urls.py
+path('health/', HealthCheckView.as_view(), name='health-check')</div>
+    <p>Point UptimeRobot to <code class="code-inline">https://your-app.render.com/health/</code> — it checks every 5 minutes and alerts you if the response is not 200 OK.</p>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon icon-orange">🗒️</div>
+      <div class="section-title-group">
+        <h2>Structured Logs</h2>
+        <p>Making logs machine-readable and searchable</p>
+      </div>
+    </div>
+    <p><strong>Structured logging</strong> means writing logs as JSON objects rather than plain text strings. This makes them searchable, filterable, and parseable by log aggregation tools.</p>
+    <h3>Plain Text vs Structured Log</h3>
+    <table>
+      <thead><tr><th>Plain Text (Bad)</th><th>Structured JSON (Good)</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><code class="code-inline">Order placed by user 42 for restaurant 7, total: 520</code></td>
+          <td><code class="code-inline">{"event":"order_placed","user_id":42,"restaurant_id":7,"total":520,"order_id":"ORD-001","timestamp":"2024-03-15T14:22:10Z"}</code></td>
+        </tr>
+      </tbody>
+    </table>
+    <p>With structured logs, you can query: <em>"Show all orders placed by user 42 in the last hour"</em> or <em>"Show all failed orders for restaurant 7"</em> — impossible with plain text logs.</p>
+    <div class="info-box orange">
+      <div class="info-box-title">Log Retention</div>
+      <p style="margin:0">Keep logs for at least 30 days. On Render, logs are only kept for 7 days on the free tier. For longer retention, forward logs to <strong>Papertrail</strong> or <strong>Logtail</strong> (both have free tiers).</p>
+    </div>
+  </section>
+
+  <footer>
+    <a href="semester2_logging.html">← Logging Sem 2</a>
+    <nav class="footer-nav">
+      <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+      <a href="semester4_logging.html">Next: Monitoring Sem 4 →</a>
+    </nav>
+  </footer>
+</div>
+</body>
+</html>

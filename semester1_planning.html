@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planning (SPMP) — Semester 1 | Online Food Delivery System</title>
+  <link rel="stylesheet" href="child_page_styles.css">
+</head>
+<body>
+<div class="page-wrap">
+  <nav class="breadcrumb">
+    <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+    <span class="sep">›</span><span>Semester 1</span>
+    <span class="sep">›</span><span>Planning (SPMP)</span>
+  </nav>
+  <header class="page-header">
+    <div class="sem-badge sem-1">Semester 1 — Foundation</div>
+    <h1>Planning — SPMP</h1>
+    <div class="project-tag">Example Project: <strong>Online Food Delivery System</strong></div>
+    <p class="header-desc">The Software Project Management Plan (SPMP) is your roadmap for the entire project. It defines how the team will work, what will be delivered, when, and by whom.</p>
+  </header>
+  <nav class="topic-nav">
+    <div class="topic-nav-label">Jump to section</div>
+    <a href="#wbs">1. WBS / Task Breakdown</a>
+    <a href="#spmp">2. SPMP Document</a>
+    <a href="#milestones">3. Milestones &amp; Timeline</a>
+    <a href="#risk">4. Risk Register</a>
+    <a href="#roles">5. Role Assignments</a>
+  </nav>
+
+  <section class="section" id="wbs">
+    <div class="section-header">
+      <div class="section-icon icon-purple">🌳</div>
+      <div class="section-title-group">
+        <h2>1. WBS / Task Breakdown</h2>
+        <p>Decomposing the project into manageable work packages</p>
+      </div>
+    </div>
+    <p>A <strong>Work Breakdown Structure (WBS)</strong> decomposes the total project scope into smaller, manageable deliverables. Each "leaf" node is a work package — small enough to estimate and assign to one person.</p>
+    <h3>WBS for Online Food Delivery System</h3>
+    <table>
+      <thead><tr><th>Level 1</th><th>Level 2</th><th>Level 3 (Work Packages)</th></tr></thead>
+      <tbody>
+        <tr><td rowspan="5"><strong>1. Planning &amp; Requirements</strong></td><td>1.1 Ideation</td><td>Project proposal, feasibility report, team charter</td></tr>
+        <tr><td>1.2 SRS</td><td>Functional reqs, NFRs, user stories, use cases, business rules</td></tr>
+        <tr><td>1.3 SPMP</td><td>WBS, timeline, risk register, role assignments</td></tr>
+        <tr><td>1.4 Design Docs</td><td>Architecture diagram, ER diagram, class diagrams, tech stack decision</td></tr>
+        <tr><td>1.5 Setup</td><td>GitHub repo, project board (Jira/Trello), coding conventions doc</td></tr>
+        <tr><td rowspan="5"><strong>2. Backend Development</strong></td><td>2.1 Auth Module</td><td>Registration, login, JWT/session, password reset</td></tr>
+        <tr><td>2.2 Restaurant Module</td><td>CRUD restaurant, CRUD menu items</td></tr>
+        <tr><td>2.3 Order Module</td><td>Cart, place order, order status FSM, order history</td></tr>
+        <tr><td>2.4 Payment Module</td><td>Payment gateway integration, invoice generation</td></tr>
+        <tr><td>2.5 Admin Module</td><td>Approve restaurants, dashboard analytics</td></tr>
+        <tr><td rowspan="4"><strong>3. Frontend Development</strong></td><td>3.1 Customer Portal</td><td>Home, restaurant listing, menu, cart, checkout, tracking</td></tr>
+        <tr><td>3.2 Restaurant Dashboard</td><td>Login, order management, menu management</td></tr>
+        <tr><td>3.3 Delivery Partner App</td><td>Order view, status updates</td></tr>
+        <tr><td>3.4 Admin Panel</td><td>User management, restaurant approval, reports</td></tr>
+        <tr><td rowspan="3"><strong>4. Testing</strong></td><td>4.1 Unit Testing</td><td>Test all API endpoints (PyTest / JUnit)</td></tr>
+        <tr><td>4.2 Integration Testing</td><td>Order flow end-to-end, payment flow</td></tr>
+        <tr><td>4.3 UAT</td><td>User acceptance testing with 5 external testers</td></tr>
+        <tr><td rowspan="3"><strong>5. Deployment</strong></td><td>5.1 CI/CD</td><td>GitHub Actions pipeline, auto-deploy to staging</td></tr>
+        <tr><td>5.2 Production Deploy</td><td>Deploy to Render/Railway, domain setup, SSL</td></tr>
+        <tr><td>5.3 Monitoring</td><td>Set up Sentry, UptimeRobot, structured logging</td></tr>
+        <tr><td rowspan="2"><strong>6. Documentation</strong></td><td>6.1 Technical Docs</td><td>API docs (Swagger), TDD, database schema doc</td></tr>
+        <tr><td>6.2 User Docs</td><td>User manual, deployment guide, final project report</td></tr>
+      </tbody>
+    </table>
+    <div class="info-box purple">
+      <div class="info-box-title">WBS Rule of Thumb</div>
+      <p style="margin:0">Each leaf-level work package should be completable by one person in <strong>1–5 days</strong>. If a task takes longer than 5 days, break it down further. This makes estimation and progress tracking much easier.</p>
+    </div>
+  </section>
+
+  <section class="section" id="spmp">
+    <div class="section-header">
+      <div class="section-icon icon-purple">📄</div>
+      <div class="section-title-group">
+        <h2>2. SPMP Document Structure</h2>
+        <p>What goes into a Software Project Management Plan</p>
+      </div>
+    </div>
+    <p>The <strong>SPMP</strong> is a living document — it is created in Semester 1 and updated each semester. It is the single source of truth for how the project is managed.</p>
+    <h3>Standard SPMP Sections</h3>
+    <table>
+      <thead><tr><th>Section</th><th>Contents for Online Food Delivery</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1. Project Overview</strong></td><td>Project name, objective, one-paragraph description, key stakeholders (team, faculty guide)</td></tr>
+        <tr><td><strong>2. Project Deliverables</strong></td><td>List all outputs per semester: SRS, TDD, working software, test reports, deployment</td></tr>
+        <tr><td><strong>3. WBS</strong></td><td>Hierarchical task list (see above)</td></tr>
+        <tr><td><strong>4. Schedule (Gantt Chart)</strong></td><td>Timeline showing which tasks happen when, with dependencies</td></tr>
+        <tr><td><strong>5. Resource Plan</strong></td><td>Who is on the team, their roles, hours per week committed</td></tr>
+        <tr><td><strong>6. Risk Management Plan</strong></td><td>Risk register (see below)</td></tr>
+        <tr><td><strong>7. Quality Plan</strong></td><td>Code review process, test coverage targets, definition of "done"</td></tr>
+        <tr><td><strong>8. Communication Plan</strong></td><td>Meeting cadence, reporting format, escalation path</td></tr>
+        <tr><td><strong>9. Configuration Management</strong></td><td>Git branching strategy, version numbering, change request process</td></tr>
+        <tr><td><strong>10. Monitoring &amp; Control</strong></td><td>How progress is tracked (Jira/Trello board), velocity measurement</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section" id="milestones">
+    <div class="section-header">
+      <div class="section-icon icon-purple">📅</div>
+      <div class="section-title-group">
+        <h2>3. Milestones &amp; Timeline</h2>
+        <p>Key checkpoints across the 4 semesters</p>
+      </div>
+    </div>
+    <table>
+      <thead><tr><th>Milestone</th><th>Semester</th><th>Deliverable</th><th>Success Criteria</th></tr></thead>
+      <tbody>
+        <tr><td><strong>M1 — Project Kick-off</strong></td><td>Sem 1, Week 2</td><td>Approved project proposal</td><td>Faculty guide signature on proposal</td></tr>
+        <tr><td><strong>M2 — SRS Complete</strong></td><td>Sem 1, Week 8</td><td>Signed-off SRS document</td><td>All FRs, NFRs, Use Cases documented; no open "TBD" items</td></tr>
+        <tr><td><strong>M3 — Design Complete</strong></td><td>Sem 1, Week 14</td><td>TDD with ER diagram, architecture, tech stack</td><td>DB schema can be created from ER diagram without ambiguity</td></tr>
+        <tr><td><strong>M4 — Working Auth &amp; DB</strong></td><td>Sem 2, Week 4</td><td>Login/registration + DB schema created</td><td>Users can register and log in; schema matches ER diagram</td></tr>
+        <tr><td><strong>M5 — Core APIs Done</strong></td><td>Sem 2, Week 12</td><td>All backend REST APIs implemented</td><td>All endpoints testable via Postman with 90% passing</td></tr>
+        <tr><td><strong>M6 — Alpha Release</strong></td><td>Sem 2, Week 20</td><td>Frontend integrated with backend; deployable</td><td>Full order flow works end-to-end in staging environment</td></tr>
+        <tr><td><strong>M7 — Beta / Peer Review</strong></td><td>Sem 3, Week 10</td><td>Feature-complete system tested by peers</td><td>Minimum 10 external users test all major flows; bugs logged</td></tr>
+        <tr><td><strong>M8 — Production Deploy</strong></td><td>Sem 4, Week 4</td><td>Live system on public URL</td><td>System accessible at public URL; CI/CD pipeline green</td></tr>
+        <tr><td><strong>M9 — Final Submission</strong></td><td>Sem 4, Week 18</td><td>Full project report + presentation</td><td>All documentation complete; viva conducted</td></tr>
+      </tbody>
+    </table>
+    <div class="info-box blue">
+      <div class="info-box-title">Gantt Chart Tip</div>
+      <p style="margin:0">Create a Gantt chart in <strong>ProjectLibre</strong> (free) or Google Sheets. Show each work package as a bar spanning its planned start-to-end dates. Mark milestones as diamonds. Update it monthly.</p>
+    </div>
+  </section>
+
+  <section class="section" id="risk">
+    <div class="section-header">
+      <div class="section-icon icon-purple">⚠️</div>
+      <div class="section-title-group">
+        <h2>4. Risk Register</h2>
+        <p>Identifying, assessing, and planning responses for project risks</p>
+      </div>
+    </div>
+    <p>A <strong>Risk Register</strong> lists everything that could go wrong and defines how to respond. Each risk has a <em>probability</em> (High/Medium/Low) and <em>impact</em> (High/Medium/Low). Priority = Probability × Impact.</p>
+    <table>
+      <thead><tr><th>Risk ID</th><th>Risk Description</th><th>Prob</th><th>Impact</th><th>Priority</th><th>Mitigation Strategy</th><th>Owner</th></tr></thead>
+      <tbody>
+        <tr><td>R-01</td><td>Team member drops course or becomes unavailable</td><td>Medium</td><td>High</td><td>High</td><td>Cross-train all members; document code clearly; inform faculty early</td><td>PM</td></tr>
+        <tr><td>R-02</td><td>Scope creep — stakeholders keep requesting new features</td><td>High</td><td>Medium</td><td>High</td><td>Enforce Non-Goals document; use formal Change Request process</td><td>PM</td></tr>
+        <tr><td>R-03</td><td>Payment gateway API changes or sandbox discontinued</td><td>Low</td><td>High</td><td>Medium</td><td>Abstract payment logic behind an interface; have a mock payment fallback</td><td>Backend Dev</td></tr>
+        <tr><td>R-04</td><td>Free hosting tier has downtime during demo</td><td>Medium</td><td>High</td><td>High</td><td>Monitor uptime; have a recorded demo video as backup; test before presentation</td><td>DevOps</td></tr>
+        <tr><td>R-05</td><td>Data loss due to no backup strategy</td><td>Low</td><td>High</td><td>Medium</td><td>Daily automated DB backups; store backups on Google Drive</td><td>DB Designer</td></tr>
+        <tr><td>R-06</td><td>Security vulnerability in authentication</td><td>Medium</td><td>High</td><td>High</td><td>Use proven libraries (e.g., bcrypt, JWT); run OWASP ZAP scan in Sem 4</td><td>Backend Dev</td></tr>
+        <tr><td>R-07</td><td>Frontend–backend API integration delays</td><td>High</td><td>Medium</td><td>High</td><td>Define API contracts (OpenAPI spec) early in Sem 2; use mock APIs during frontend dev</td><td>PM</td></tr>
+        <tr><td>R-08</td><td>Performance too slow for demo load test</td><td>Medium</td><td>Medium</td><td>Medium</td><td>Add DB indexes early; use caching (Redis); performance test in Sem 3</td><td>Backend Dev</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section" id="roles">
+    <div class="section-header">
+      <div class="section-icon icon-purple">👤</div>
+      <div class="section-title-group">
+        <h2>5. Role Assignments</h2>
+        <p>Mapping WBS work packages to team members</p>
+      </div>
+    </div>
+    <p>Based on the team charter and WBS, assign each work package or phase to a primary owner. The table below shows a recommended assignment for a 4-person team.</p>
+    <table>
+      <thead><tr><th>Team Member</th><th>Primary Role</th><th>Owns WBS Items</th><th>Supports</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Member A</strong></td><td>Project Manager + Backend Dev</td><td>1.3 SPMP, 2.3 Order Module, 2.4 Payment Module</td><td>Code reviews, documentation</td></tr>
+        <tr><td><strong>Member B</strong></td><td>Backend Dev</td><td>2.1 Auth Module, 2.2 Restaurant Module, 2.5 Admin Module</td><td>API contract drafting</td></tr>
+        <tr><td><strong>Member C</strong></td><td>Frontend Dev</td><td>3.1 Customer Portal, 3.2 Restaurant Dashboard</td><td>UI/UX design, API integration</td></tr>
+        <tr><td><strong>Member D</strong></td><td>DB Designer + QA + DevOps</td><td>1.4 Design Docs (ER/Schema), 4.1–4.3 Testing, 5.1–5.3 Deployment</td><td>Database queries, monitoring</td></tr>
+      </tbody>
+    </table>
+    <div class="info-box green">
+      <div class="info-box-title">Deliverable for This Phase</div>
+      <ul style="margin:0">
+        <li><strong>SPMP Document</strong> — version 1.0, covering all sections above.</li>
+        <li><strong>GitHub Repository</strong> — initialized with README, .gitignore, folder structure, and branching strategy documented.</li>
+        <li><strong>Project Board</strong> — Jira or Trello board with all Semester 1 tasks created and assigned.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <a href="semester1_requirements.html">← Requirements (SRS)</a>
+    <nav class="footer-nav">
+      <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+      <a href="semester1_design.html">Next: Design (TDD) →</a>
+    </nav>
+  </footer>
+</div>
+</body>
+</html>

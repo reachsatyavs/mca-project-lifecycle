@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentation — Semester 2 | Online Food Delivery System</title>
+  <link rel="stylesheet" href="child_page_styles.css">
+</head>
+<body>
+<div class="page-wrap">
+  <nav class="breadcrumb">
+    <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+    <span class="sep">›</span><span>Semester 2</span>
+    <span class="sep">›</span><span>Documentation</span>
+  </nav>
+  <header class="page-header">
+    <div class="sem-badge sem-2">Semester 2 — Build</div>
+    <h1>Documentation — PRD, TDD Final &amp; API Docs</h1>
+    <div class="project-tag">Example Project: <strong>Online Food Delivery System</strong></div>
+    <p class="header-desc">Semester 2 produces the final versions of the PRD and TDD, plus live API documentation generated from the code itself using Swagger.</p>
+  </header>
+
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon icon-blue">📄</div>
+      <div class="section-title-group">
+        <h2>PRD Final</h2>
+        <p>Product Requirements Document — the definitive feature specification</p>
+      </div>
+    </div>
+    <p>The <strong>PRD (Product Requirements Document)</strong> is an updated, final version of the SRS from Semester 1 — incorporating all approved Change Requests and the more detailed acceptance criteria written in Semester 2. While the SRS uses IEEE format, the PRD uses a product-manager style format focused on user value.</p>
+    <h3>PRD Structure for Food Delivery</h3>
+    <table>
+      <thead><tr><th>Section</th><th>Contents</th></tr></thead>
+      <tbody>
+        <tr><td>Executive Summary</td><td>What the product is, who it's for, why we're building it (1 page)</td></tr>
+        <tr><td>User Personas</td><td>Detailed profiles of Customer, Restaurant Owner, Delivery Partner, Admin with goals and pain points</td></tr>
+        <tr><td>Feature List</td><td>All features with MoSCoW priority (Must/Should/Could/Won't) and completion status</td></tr>
+        <tr><td>User Stories &amp; Acceptance Criteria</td><td>Updated stories from Semester 1 + new stories discovered in Semester 2</td></tr>
+        <tr><td>Non-Functional Requirements</td><td>Updated NFRs with measurable targets confirmed against actual system</td></tr>
+        <tr><td>Change Log</td><td>All CRs applied since Semester 1 SRS with rationale</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon icon-blue">🏗️</div>
+      <div class="section-title-group">
+        <h2>TDD Final</h2>
+        <p>Technical Design Document — updated to reflect actual implementation</p>
+      </div>
+    </div>
+    <p>The TDD v2.0 updates the Semester 1 design documents to reflect the actual system as built — including any design decisions made during coding, updated ER diagrams, and finalised sequence diagrams.</p>
+    <ul>
+      <li>Architecture diagram updated to show all actual components (including Sentry, Cloudinary, SendGrid).</li>
+      <li>Final ER diagram exported from actual database schema (use <code class="code-inline">pg_dump</code> or dbdiagram.io import).</li>
+      <li>API design section with link to live Swagger documentation URL.</li>
+      <li>Sequence diagrams for all key flows (order placement, payment, delivery).</li>
+      <li>Technology decisions documented with version numbers (Express.js 4.2.7, PostgreSQL 15.2, etc.).</li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon icon-blue">🔌</div>
+      <div class="section-title-group">
+        <h2>API Docs (Swagger)</h2>
+        <p>Auto-generated, live API documentation from code</p>
+      </div>
+    </div>
+    <p>Swagger (OpenAPI) documentation is generated automatically from your API code using <code class="code-inline">swagger-ui-express</code>. It provides an interactive UI at <code class="code-inline">/api/schema/swagger-ui/</code> where developers can explore and test all endpoints.</p>
+    <h3>Setup with Express.js (Node.js)</h3>
+    <div class="code-block">pip install swagger-ui-express
+
+# settings.py
+INSTALLED_APPS += ['drf_spectacular']
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Online Food Delivery API',
+    'DESCRIPTION': 'REST API for the Online Food Delivery System',
+    'VERSION': '2.0.0',
+}
+
+# urls.py
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+urlpatterns += [
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(), name='swagger-ui'),
+]</div>
+    <p>Add docstrings to your views for richer documentation:</p>
+    <div class="code-block">from drf_spectacular.utils import extend_schema
+
+class OrderCreateView(APIView):
+    @extend_schema(
+        request=OrderCreateSerializer,
+        responses={201: OrderResponseSerializer},
+        description="Place a new food order. Customer must be authenticated.",
+        tags=["Orders"]
+    )
+    def post(self, request): ...</div>
+    <div class="info-box green">
+      <div class="info-box-title">Deploy Swagger to Staging</div>
+      <p style="margin:0">Keep Swagger UI accessible on your staging URL (<code class="code-inline">https://your-app.render.com/api/schema/swagger-ui/</code>) so your faculty guide can see all your APIs without setting up Postman. Disable it in production (or add Basic Auth) to avoid exposing your API to the public.</p>
+    </div>
+  </section>
+
+  <footer>
+    <a href="semester1_documentation.html">← Docs Sem 1</a>
+    <nav class="footer-nav">
+      <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+      <a href="semester3_documentation.html">Next: Docs Sem 3 →</a>
+    </nav>
+  </footer>
+</div>
+</body>
+</html>

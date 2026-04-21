@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Testing — Semester 3 | Online Food Delivery System</title>
+  <link rel="stylesheet" href="child_page_styles.css">
+</head>
+<body>
+<div class="page-wrap">
+  <nav class="breadcrumb">
+    <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+    <span class="sep">›</span><span>Semester 3</span>
+    <span class="sep">›</span><span>Testing</span>
+  </nav>
+  <header class="page-header">
+    <div class="sem-badge sem-3">Semester 3 — Deliver</div>
+    <h1>Testing — System, E2E, Performance &amp; Beta</h1>
+    <div class="project-tag">Example Project: <strong>Online Food Delivery System</strong></div>
+    <p class="header-desc">Semester 3 testing moves beyond individual unit tests to full system tests, end-to-end browser automation, performance benchmarking, and a beta testing program with real users.</p>
+  </header>
+  <nav class="topic-nav orange-nav">
+    <div class="topic-nav-label">Jump to section</div>
+    <a href="#tc-execution">1. Test Case Execution</a>
+    <a href="#alpha">2. Alpha Testing</a>
+    <a href="#system-e2e">3. System / E2E Tests</a>
+    <a href="#performance">4. Performance Tests</a>
+    <a href="#bug-tracking">5. Bug Tracking</a>
+    <a href="#beta">6. Beta / Peer Review</a>
+  </nav>
+
+  <!-- ============================================================
+       SECTION 1 : Test Case Execution (the big one — written in Sem 2, run here)
+       ============================================================ -->
+  <section class="section" id="tc-execution">
+    <div class="section-header">
+      <div class="section-icon icon-orange">▶️</div>
+      <div class="section-title-group">
+        <h2>1. Test Case Execution</h2>
+        <p>Running the test cases written in Semester 2 against the full deployed system</p>
+      </div>
+    </div>
+
+    <div class="info-box blue">
+      <div class="info-box-title">Why Execute in Semester 3 and Not Semester 2?</div>
+      <p style="margin:0">
+        In Semester 2 you build and unit-test individual modules.
+        But formal test case execution needs the <strong>fully integrated system</strong> — all modules wired together, deployed on staging, with real data flowing through.
+        That complete system is only ready at the start of Semester 3.
+        Running TCs on partial code gives incomplete and misleading results.
+      </p>
+    </div>
+
+    <style>
+      .exec-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+      .exec-table th { background: #2c2c3a; color: #fff; padding: 8px 12px; text-align: left; }
+      .exec-table td { padding: 8px 12px; border-bottom: 1px solid #eee; vertical-align: top; }
+      .exec-table tr:nth-child(even) { background: #f9f9fc; }
+      .ex-pass { display:inline-block; font-size:11px; font-weight:700; padding:2px 10px; border-radius:4px; background:#d4edda; color:#155724; border:1px solid #b8ddc5; }
+      .ex-fail { display:inline-block; font-size:11px; font-weight:700; padding:2px 10px; border-radius:4px; background:#fde8e8; color:#7b1a1a; border:1px solid #f5c6c6; }
+      .ex-block { display:inline-block; font-size:11px; font-weight:700; padding:2px 10px; border-radius:4px; background:#fff3cd; color:#856404; border:1px solid #ffeeba; }
+    </style>
+
+    <h3>Execution Log — Sprint 1 Feature Set (Authentication)</h3>
+    <p style="font-size:13px; color:#555; margin-bottom:10px;">
+      Date: Week 2 of Semester 3 &nbsp;|&nbsp; Environment: Staging (Render) &nbsp;|&nbsp; Tester: Member D &nbsp;|&nbsp; System version: v1.2.0
+    </p>
+    <table class="exec-table">
+      <thead>
+        <tr><th>TC ID</th><th>Test Title</th><th>Expected Result</th><th>Actual Result</th><th>Status</th><th>Bug ID</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>TC-01</strong></td>
+          <td>Login — valid credentials</td>
+          <td>HTTP 200, access token returned</td>
+          <td>HTTP 200, tokens in body ✓</td>
+          <td><span class="ex-pass">PASS</span></td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td><strong>TC-02</strong></td>
+          <td>Login — wrong password</td>
+          <td>HTTP 401, error: INVALID_CREDENTIALS</td>
+          <td>HTTP 401, correct error ✓</td>
+          <td><span class="ex-pass">PASS</span></td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td><strong>TC-03</strong></td>
+          <td>Register — duplicate email</td>
+          <td>HTTP 409, EMAIL_ALREADY_EXISTS</td>
+          <td>HTTP 500 — unhandled DB constraint error ✗</td>
+          <td><span class="ex-fail">FAIL</span></td>
+          <td><a href="#bug-tracking" style="color:#c62828; font-weight:700;">BUG-001</a></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Execution Log — Order Placement</h3>
+    <table class="exec-table">
+      <thead>
+        <tr><th>TC ID</th><th>Test Title</th><th>Expected Result</th><th>Actual Result</th><th>Status</th><th>Bug ID</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>TC-04</strong></td>
+          <td>Place order — COD success</td>
+          <td>HTTP 201, status=PLACED, email sent</td>
+          <td>HTTP 201 ✓, email delayed 3 min (acceptable) ✓</td>
+          <td><span class="ex-pass">PASS</span></td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td><strong>TC-05</strong></td>
+          <td>Place order — payment declined</td>
+          <td>HTTP 400, no order in DB</td>
+          <td>HTTP 400 ✓, order NOT created ✓</td>
+          <td><span class="ex-pass">PASS</span></td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td><strong>TC-06</strong></td>
+          <td>Cart below ₹100 minimum</td>
+          <td>HTTP 400, MINIMUM_ORDER_VIOLATED</td>
+          <td>HTTP 400 ✓ on API; UI button NOT disabled ✗</td>
+          <td><span class="ex-fail">FAIL</span></td>
+          <td><a href="#bug-tracking" style="color:#c62828; font-weight:700;">BUG-002</a></td>
+        </tr>
+        <tr>
+          <td><strong>TC-07</strong></td>
+          <td>View closed restaurant</td>
+          <td>is_open: false, checkout disabled</td>
+          <td>is_open: false ✓, checkout still enabled in UI ✗</td>
+          <td><span class="ex-fail">FAIL</span></td>
+          <td><a href="#bug-tracking" style="color:#c62828; font-weight:700;">BUG-003</a></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Execution Log — Reviews</h3>
+    <table class="exec-table">
+      <thead>
+        <tr><th>TC ID</th><th>Test Title</th><th>Expected Result</th><th>Actual Result</th><th>Status</th><th>Bug ID</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>TC-08</strong></td>
+          <td>Submit review — success</td>
+          <td>HTTP 201, avg rating updated</td>
+          <td>HTTP 201 ✓, avg rating updated ✓</td>
+          <td><span class="ex-pass">PASS</span></td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td><strong>TC-09</strong></td>
+          <td>Duplicate review blocked</td>
+          <td>HTTP 409, REVIEW_ALREADY_EXISTS</td>
+          <td>HTTP 409 ✓</td>
+          <td><span class="ex-pass">PASS</span></td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td><strong>TC-10</strong></td>
+          <td>Review on undelivered order</td>
+          <td>HTTP 400, REVIEW_NOT_ALLOWED</td>
+          <td>HTTP 400 ✓</td>
+          <td><span class="ex-pass">PASS</span></td>
+          <td>—</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Execution Summary</h3>
+    <div style="display:flex; gap:16px; flex-wrap:wrap; margin:12px 0;">
+      <div style="flex:1; min-width:120px; background:#d4edda; border:1px solid #b8ddc5; border-radius:8px; padding:14px; text-align:center;">
+        <div style="font-size:28px; font-weight:700; color:#155724;">7</div>
+        <div style="font-size:12px; color:#155724; font-weight:600; margin-top:4px;">PASS</div>
+      </div>
+      <div style="flex:1; min-width:120px; background:#fde8e8; border:1px solid #f5c6c6; border-radius:8px; padding:14px; text-align:center;">
+        <div style="font-size:28px; font-weight:700; color:#7b1a1a;">3</div>
+        <div style="font-size:12px; color:#7b1a1a; font-weight:600; margin-top:4px;">FAIL</div>
+      </div>
+      <div style="flex:1; min-width:120px; background:#fff3cd; border:1px solid #ffeeba; border-radius:8px; padding:14px; text-align:center;">
+        <div style="font-size:28px; font-weight:700; color:#856404;">0</div>
+        <div style="font-size:12px; color:#856404; font-weight:600; margin-top:4px;">BLOCKED</div>
+      </div>
+      <div style="flex:1; min-width:160px; background:#f8f9fa; border:1px solid #dee2e6; border-radius:8px; padding:14px; text-align:center;">
+        <div style="font-size:28px; font-weight:700; color:#1a1a2e;">70%</div>
+        <div style="font-size:12px; color:#555; font-weight:600; margin-top:4px;">Pass Rate</div>
+        <div style="font-size:11px; color:#888; margin-top:2px;">Target: 100% P1 pass</div>
+      </div>
+    </div>
+
+    <div class="info-box orange">
+      <div class="info-box-title">Next Action After Failures</div>
+      <ol style="margin:0; padding-left:18px; font-size:13.5px; line-height:2;">
+        <li>Log each failed TC as a Bug Report (see Section 5 below).</li>
+        <li>Assign to the responsible developer with a fix deadline.</li>
+        <li>After fix is merged, <strong>re-execute the failed TCs only</strong> (regression pass).</li>
+        <li>Update TC status from FAIL → PASS once re-execution passes.</li>
+        <li>Exit criteria: all P1 TCs = PASS, all P2 TCs = PASS or assigned to known backlog.</li>
+      </ol>
+    </div>
+
+    <h3>Regression Test Log (after bug fixes)</h3>
+    <table class="exec-table">
+      <thead>
+        <tr><th>TC ID</th><th>Bug Fixed</th><th>Fix Description</th><th>Re-run Date</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>TC-03</strong></td>
+          <td>BUG-001</td>
+          <td>Added try/catch for Prisma unique constraint on email; now returns 409</td>
+          <td>Week 3 Sem 3</td>
+          <td><span class="ex-pass">PASS</span></td>
+        </tr>
+        <tr>
+          <td><strong>TC-06</strong></td>
+          <td>BUG-002</td>
+          <td>Frontend checkout button disabled when cart total &lt; ₹100</td>
+          <td>Week 3 Sem 3</td>
+          <td><span class="ex-pass">PASS</span></td>
+        </tr>
+        <tr>
+          <td><strong>TC-07</strong></td>
+          <td>BUG-003</td>
+          <td>Frontend reads is_open from API and disables checkout block</td>
+          <td>Week 3 Sem 3</td>
+          <td><span class="ex-pass">PASS</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="background:#d4edda; border:1px solid #b8ddc5; border-radius:8px; padding:12px 16px; margin-top:12px; font-size:13.5px; font-weight:600; color:#155724;">
+      ✅ After regression pass: All 10 TCs = PASS. Exit criteria met. Ready for Alpha Testing.
+    </div>
+  </section>
+
+  <section class="section" id="alpha">
+    <div class="section-header">
+      <div class="section-icon icon-orange">🔬</div>
+      <div class="section-title-group">
+        <h2>2. Alpha Testing</h2>
+        <p>Internal testing by the development team before external users</p>
+      </div>
+    </div>
+    <p><strong>Alpha testing</strong> is conducted by the team itself on the deployed staging environment. It is the first end-to-end test of the complete system — all modules integrated and running together.</p>
+    <h3>Alpha Test Scope for Food Delivery</h3>
+    <ul>
+      <li>All 14 Use Cases from the SRS must be executed manually at least once.</li>
+      <li>All edge cases from business rules must be verified (min order, free delivery threshold, cancellation window, etc.).</li>
+      <li>All three portals (Customer, Restaurant, Delivery Partner) tested across Chrome, Firefox, and Safari.</li>
+      <li>Mobile responsiveness verified at 375px (iPhone SE) and 414px (iPhone Pro Max).</li>
+      <li>Payment flows: successful payment, failed payment, COD order — all verified with Razorpay sandbox.</li>
+    </ul>
+    <h3>Alpha Test Log Format</h3>
+    <table>
+      <thead><tr><th>Test Case ID</th><th>Description</th><th>Steps</th><th>Expected</th><th>Actual</th><th>Status</th><th>Bug ID</th></tr></thead>
+      <tbody>
+        <tr><td>TC-001</td><td>Customer places order successfully with COD</td><td>Login → Add items → Checkout → COD → Confirm</td><td>Order created, status PLACED, email received</td><td>✅ As expected</td><td>PASS</td><td>—</td></tr>
+        <tr><td>TC-002</td><td>Order placement below ₹100 minimum</td><td>Login → Add ₹80 item → Checkout</td><td>Error: "Minimum order is ₹100"</td><td>❌ No error shown; order placed</td><td>FAIL</td><td>BUG-012</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section" id="system-e2e">
+    <div class="section-header">
+      <div class="section-icon icon-orange">🤖</div>
+      <div class="section-title-group">
+        <h2>3. System / End-to-End Tests</h2>
+        <p>Automated browser-based tests of complete user journeys</p>
+      </div>
+    </div>
+    <p>E2E tests use a browser automation tool (Playwright or Selenium) to simulate a real user clicking through the application. They catch integration bugs that unit tests cannot — like a broken redirect after payment or a missing cookie.</p>
+    <h3>E2E Test: Complete Order Flow (Playwright)</h3>
+    <div class="code-block">// tests/e2e/order_flow.spec.ts (Playwright)
+import { test, expect } from '@playwright/test';
+
+test('Customer places a complete order with COD', async ({ page }) => {
+  // 1. Login
+  await page.goto('/login');
+  await page.fill('[name=email]', 'test@customer.com');
+  await page.fill('[name=password]', 'Test@1234');
+  await page.click('button[type=submit]');
+  await expect(page).toHaveURL('/home');
+
+  // 2. Browse and select restaurant
+  await page.click('text=Biryani House');
+  await expect(page).toHaveURL(/\/restaurants\/\d+/);
+
+  // 3. Add item to cart
+  await page.click('button:has-text("Add to Cart")');
+  await expect(page.locator('.cart-badge')).toHaveText('1');
+
+  // 4. Proceed to checkout
+  await page.click('text=Checkout');
+  await page.selectOption('[name=address]', '1'); // Select saved address
+  await page.click('text=Cash on Delivery');
+  await page.click('text=Place Order');
+
+  // 5. Verify order confirmation
+  await expect(page.locator('.order-status')).toHaveText('Order Placed');
+  await expect(page.locator('.order-id')).toBeVisible();
+});</div>
+    <div class="info-box orange">
+      <div class="info-box-title">Playwright vs Selenium</div>
+      <p style="margin:0"><strong>Playwright</strong> (by Microsoft) is newer, faster, and has better async support than Selenium. It works with JavaScript/TypeScript, Python, and Java. For a student project, Playwright with JavaScript is the recommended choice.</p>
+    </div>
+  </section>
+
+  <section class="section" id="performance">
+    <div class="section-header">
+      <div class="section-icon icon-orange">⚡</div>
+      <div class="section-title-group">
+        <h2>4. Performance Tests</h2>
+        <p>Validating that the system meets NFR-1 (page load) and NFR-3 (concurrent users)</p>
+      </div>
+    </div>
+    <h3>Load Testing with Locust</h3>
+    <div class="code-block"># locustfile.py
+from locust import HttpUser, task, between
+
+class FoodDeliveryUser(HttpUser):
+    wait_time = between(1, 3)  # Seconds between requests
+
+    def on_start(self):
+        """Login and get JWT"""
+        response = self.client.post("/api/auth/login/", json={
+            "email": "test@customer.com",
+            "password": "Test@1234"
+        })
+        self.token = response.json()["access"]
+
+    @task(3)
+    def browse_restaurants(self):
+        self.client.get("/api/restaurants/",
+            headers={"Authorization": f"Bearer {self.token}"})
+
+    @task(2)
+    def view_menu(self):
+        self.client.get("/api/restaurants/1/menu/",
+            headers={"Authorization": f"Bearer {self.token}"})
+
+    @task(1)
+    def view_order_history(self):
+        self.client.get("/api/orders/",
+            headers={"Authorization": f"Bearer {self.token}"})</div>
+    <h3>Run the Load Test</h3>
+    <div class="code-block">pip install locust
+locust -f locustfile.py --host=https://your-app.render.com
+# Open http://localhost:8089 in browser
+# Set: 50 users, spawn rate 5/sec → Start</div>
+    <h3>Performance Baseline Targets (from NFRs)</h3>
+    <table>
+      <thead><tr><th>Endpoint</th><th>Target p95 Response</th><th>Tested Result</th></tr></thead>
+      <tbody>
+        <tr><td>GET /api/restaurants/</td><td>&lt; 500ms</td><td>Measure and record</td></tr>
+        <tr><td>POST /api/orders/</td><td>&lt; 1000ms</td><td>Measure and record</td></tr>
+        <tr><td>GET /api/orders/{id}/</td><td>&lt; 300ms</td><td>Measure and record</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section" id="bug-tracking">
+    <div class="section-header">
+      <div class="section-icon icon-orange">🐛</div>
+      <div class="section-title-group">
+        <h2>5. Bug Tracking</h2>
+        <p>Systematic recording and resolution of all defects</p>
+      </div>
+    </div>
+    <h3>Bug Report Template</h3>
+    <table>
+      <tbody>
+        <tr><td><strong>Bug ID</strong></td><td>BUG-012</td></tr>
+        <tr><td><strong>Title</strong></td><td>Order placed successfully below ₹100 minimum — BR-02 not enforced</td></tr>
+        <tr><td><strong>Severity</strong></td><td>P1 — Blocker (business rule violation)</td></tr>
+        <tr><td><strong>Steps to Reproduce</strong></td><td>1. Login as customer. 2. Add one item priced ₹80 to cart. 3. Proceed to checkout. 4. Select COD. 5. Click "Place Order."</td></tr>
+        <tr><td><strong>Expected</strong></td><td>Error message: "Minimum order amount is ₹100. Please add more items."</td></tr>
+        <tr><td><strong>Actual</strong></td><td>Order is created successfully with total ₹80.</td></tr>
+        <tr><td><strong>Root Cause</strong></td><td>Minimum order validation only in frontend — not enforced in backend API.</td></tr>
+        <tr><td><strong>Fix</strong></td><td>Add validation in <code class="code-inline">OrderCreateSerializer.validate()</code> to check cart total ≥ 100.</td></tr>
+        <tr><td><strong>Fixed By</strong></td><td>Member B, Sprint 5</td></tr>
+        <tr><td><strong>Verified By</strong></td><td>Member D, Sprint 5</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section" id="beta">
+    <div class="section-header">
+      <div class="section-icon icon-orange">👥</div>
+      <div class="section-title-group">
+        <h2>6. Beta / Peer Review Testing</h2>
+        <p>Getting external users to test the system before go-live</p>
+      </div>
+    </div>
+    <p>Beta testing gives the system to real users — people who weren't involved in building it. They will discover usability issues, edge cases, and bugs the team has become blind to.</p>
+    <h3>Beta Testing Plan for Food Delivery</h3>
+    <ul>
+      <li><strong>Beta Testers:</strong> 8–10 other MCA students (different batch or section).</li>
+      <li><strong>Duration:</strong> 2 weeks of testing with daily feedback.</li>
+      <li><strong>Test Scenarios Given to Beta Users:</strong>
+        <ul>
+          <li>"Register as a new customer and place your first order."</li>
+          <li>"As a restaurant owner, add 3 menu items and accept an incoming order."</li>
+          <li>"Try to place an order with an empty cart."</li>
+          <li>"Use the system on your mobile phone."</li>
+        </ul>
+      </li>
+      <li><strong>Feedback Collection:</strong> Google Form with fields: Bug/Suggestion, Screenshot, Severity, Steps to reproduce.</li>
+      <li><strong>Exit Criteria:</strong> All P1 bugs fixed; P2 bugs assigned to sprint; feedback summary documented.</li>
+    </ul>
+  </section>
+
+  <footer>
+    <a href="semester2_testing.html">← Testing Sem 2</a>
+    <nav class="footer-nav">
+      <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+      <a href="semester4_testing.html">Next: Testing Sem 4 →</a>
+    </nav>
+  </footer>
+</div>
+</body>
+</html>

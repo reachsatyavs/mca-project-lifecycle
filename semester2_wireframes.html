@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UI Wireframes — Semester 2 | Online Food Delivery System</title>
+  <link rel="stylesheet" href="child_page_styles.css">
+  <style>
+    /* ── Wireframe page styles ── */
+    .wf-intro { max-width: 760px; }
+    .screens-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 36px;
+      margin: 24px 0;
+    }
+    .screen-block { display: flex; flex-direction: column; gap: 12px; }
+    .screen-label {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.8px; color: #888;
+    }
+    .screen-label strong { color: #185FA5; }
+    .screen-title { font-size: 16px; font-weight: 700; color: #1a1a2e; margin-bottom: 2px; }
+
+    /* Phone frame */
+    .phone {
+      width: 320px; min-height: 580px;
+      background: #fff;
+      border-radius: 28px;
+      border: 2px solid #2c2c3a;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.10);
+      overflow: hidden;
+      position: relative;
+    }
+    .phone-notch {
+      background: #2c2c3a; height: 24px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .phone-notch .dot {
+      width: 8px; height: 8px; background: #1a1a2e;
+      border-radius: 50%; margin: 0 3px;
+    }
+    .phone-notch .dot.cam { background: #3a3a4a; }
+
+    /* ── Status bar ── */
+    .status-bar {
+      background: #ff6b35; color: #fff;
+      font-size: 10px; padding: 4px 14px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+
+    /* ── Nav bar ── */
+    .app-nav {
+      background: #ff6b35; color: #fff; padding: 10px 14px;
+      display: flex; align-items: center; gap: 8px;
+      font-weight: 700; font-size: 14px;
+    }
+    .app-nav .back { font-size: 18px; cursor: pointer; }
+    .app-nav .spacer { flex: 1; }
+    .app-nav .cart-icon { font-size: 18px; position: relative; }
+    .cart-badge {
+      position: absolute; top: -5px; right: -5px;
+      background: #fff; color: #ff6b35;
+      font-size: 8px; font-weight: 700;
+      width: 14px; height: 14px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* ── Scrollable content ── */
+    .phone-body { padding: 0; overflow-y: auto; }
+
+    /* ── Search bar ── */
+    .search-bar {
+      background: #fff3ee; padding: 10px 14px;
+    }
+    .search-input {
+      background: #fff; border: 1px solid #e0e0e0;
+      border-radius: 20px; padding: 8px 14px;
+      font-size: 12px; color: #999; display: flex; align-items: center; gap: 8px;
+    }
+
+    /* ── Category chips ── */
+    .chip-row { display: flex; gap: 8px; padding: 10px 14px; overflow-x: auto; }
+    .chip {
+      background: #fff; border: 1.5px solid #e0e0e0;
+      border-radius: 16px; padding: 4px 12px; font-size: 11px;
+      font-weight: 600; color: #555; white-space: nowrap; flex-shrink: 0;
+    }
+    .chip.active { background: #ff6b35; border-color: #ff6b35; color: #fff; }
+
+    /* ── Section heading ── */
+    .sect-head {
+      padding: 8px 14px 4px; font-size: 13px;
+      font-weight: 700; color: #1a1a2e;
+    }
+
+    /* ── Restaurant card ── */
+    .rest-card {
+      margin: 6px 14px; border-radius: 10px;
+      border: 1px solid #eee; overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .rest-img {
+      width: 100%; height: 90px;
+      background: linear-gradient(135deg, #ffd6c0 0%, #ffb090 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px; color: #ff6b35;
+      position: relative;
+    }
+    .rest-img .veg-flag {
+      position: absolute; top: 8px; left: 8px;
+      background: #fff; border-radius: 4px; padding: 2px 6px;
+      font-size: 9px; font-weight: 700; color: #2e7d32; border: 1px solid #2e7d32;
+    }
+    .rest-img .offer-tag {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(90deg, #e44d26, transparent);
+      color: #fff; font-size: 9px; font-weight: 700; padding: 3px 8px;
+    }
+    .rest-info { padding: 8px 10px; background: #fff; }
+    .rest-name { font-size: 13px; font-weight: 700; color: #1a1a2e; }
+    .rest-meta { font-size: 10px; color: #888; margin-top: 3px; display: flex; gap: 10px; align-items: center; }
+    .rating { background: #2e7d32; color: #fff; font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 3px; }
+
+    /* ── Menu page ── */
+    .menu-header {
+      background: linear-gradient(135deg, #2c2c3a, #1a1a2e);
+      padding: 14px; color: #fff;
+    }
+    .menu-rest-name { font-size: 16px; font-weight: 700; }
+    .menu-rest-meta { font-size: 10px; opacity: 0.7; margin-top: 3px; }
+    .menu-cat-bar { display: flex; gap: 0; background: #f5f5f5; border-bottom: 1px solid #e0e0e0; overflow-x: auto; }
+    .menu-cat { padding: 8px 14px; font-size: 11px; font-weight: 600; color: #888; white-space: nowrap; border-bottom: 2px solid transparent; }
+    .menu-cat.active { color: #ff6b35; border-bottom-color: #ff6b35; }
+    .menu-item { display: flex; gap: 10px; padding: 10px 14px; border-bottom: 1px solid #f0f0f0; }
+    .menu-item-info { flex: 1; }
+    .menu-item-name { font-size: 12px; font-weight: 700; color: #1a1a2e; }
+    .menu-item-desc { font-size: 10px; color: #999; margin-top: 2px; line-height: 1.4; }
+    .menu-item-price { font-size: 12px; font-weight: 700; color: #333; margin-top: 4px; }
+    .menu-item-img {
+      width: 64px; height: 64px; border-radius: 8px; flex-shrink: 0;
+      background: linear-gradient(135deg, #ffd6c0, #ffb090);
+      display: flex; align-items: center; justify-content: center; font-size: 22px;
+      position: relative;
+    }
+    .add-btn {
+      position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%);
+      background: #fff; border: 1.5px solid #ff6b35; color: #ff6b35;
+      font-size: 11px; font-weight: 700; padding: 2px 10px; border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    /* ── Cart / Checkout page ── */
+    .cart-item { display: flex; gap: 10px; padding: 10px 14px; border-bottom: 1px solid #f0f0f0; align-items: center; }
+    .qty-ctrl { display: flex; align-items: center; gap: 6px; }
+    .qty-btn { width: 22px; height: 22px; border-radius: 50%; background: #ff6b35; color: #fff; font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center; border: none; }
+    .qty-num { font-size: 12px; font-weight: 700; color: #1a1a2e; }
+    .cart-item-name { flex: 1; font-size: 12px; font-weight: 600; color: #1a1a2e; }
+    .cart-item-price { font-size: 12px; font-weight: 700; color: #333; }
+    .bill-row { display: flex; justify-content: space-between; padding: 5px 14px; font-size: 12px; color: #555; }
+    .bill-row.total { font-weight: 700; color: #1a1a2e; border-top: 1px dashed #e0e0e0; margin-top: 4px; padding-top: 8px; }
+    .addr-block { margin: 10px 14px; border: 1.5px solid #ff6b35; border-radius: 8px; padding: 10px 12px; }
+    .addr-block .addr-label { font-size: 9px; font-weight: 700; text-transform: uppercase; color: #ff6b35; letter-spacing: 0.5px; }
+    .addr-block .addr-text { font-size: 11px; color: #444; margin-top: 3px; }
+    .pay-row { display: flex; align-items: center; gap: 10px; padding: 8px 14px; }
+    .pay-opt { width: 14px; height: 14px; border-radius: 50%; border: 2px solid #ff6b35; position: relative; }
+    .pay-opt.sel::after { content: ''; position: absolute; top: 2px; left: 2px; width: 6px; height: 6px; border-radius: 50%; background: #ff6b35; }
+    .pay-label { font-size: 12px; color: #333; font-weight: 500; }
+    .place-btn { margin: 12px 14px; background: #ff6b35; color: #fff; font-size: 14px; font-weight: 700; padding: 12px; border-radius: 10px; text-align: center; border: none; }
+
+    /* ── Tracking page ── */
+    .track-header { background: linear-gradient(135deg, #1a1a2e, #2c2c3a); padding: 14px; color: #fff; }
+    .track-order-id { font-size: 10px; opacity: 0.6; }
+    .track-status { font-size: 16px; font-weight: 700; margin-top: 4px; }
+    .track-eta { font-size: 11px; opacity: 0.8; margin-top: 2px; }
+    .timeline { padding: 14px; }
+    .tl-item { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 12px; }
+    .tl-dot { width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 10px; margin-top: 2px; }
+    .tl-dot.done { background: #2e7d32; color: #fff; }
+    .tl-dot.active { background: #ff6b35; color: #fff; animation: pulse 1.5s infinite; }
+    .tl-dot.pending { background: #e0e0e0; color: #aaa; }
+    @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(255,107,53,0.4); } 50% { box-shadow: 0 0 0 6px rgba(255,107,53,0); } }
+    .tl-text { flex: 1; }
+    .tl-title { font-size: 12px; font-weight: 700; color: #1a1a2e; }
+    .tl-time { font-size: 10px; color: #888; margin-top: 2px; }
+    .partner-card { margin: 0 14px 12px; border: 1px solid #e0e0e0; border-radius: 10px; padding: 10px 12px; display: flex; gap: 10px; align-items: center; }
+    .partner-avatar { width: 40px; height: 40px; border-radius: 50%; background: #ffd6c0; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+    .partner-name { font-size: 12px; font-weight: 700; color: #1a1a2e; }
+    .partner-vehicle { font-size: 10px; color: #888; }
+
+    /* ── Owner Dashboard ── */
+    .dash-stat-row { display: flex; gap: 8px; padding: 10px 14px; }
+    .dash-stat { flex: 1; border-radius: 8px; padding: 10px; text-align: center; }
+    .dash-stat.green { background: #e8f5e9; }
+    .dash-stat.orange { background: #fff3e0; }
+    .dash-stat.blue { background: #e3f2fd; }
+    .dash-stat-num { font-size: 20px; font-weight: 700; color: #1a1a2e; }
+    .dash-stat-label { font-size: 9px; color: #888; text-transform: uppercase; letter-spacing: 0.3px; margin-top: 2px; }
+    .order-row { display: flex; align-items: center; gap: 8px; padding: 8px 14px; border-bottom: 1px solid #f0f0f0; }
+    .order-id { font-size: 10px; color: #888; width: 70px; }
+    .order-items { flex: 1; font-size: 11px; font-weight: 600; color: #1a1a2e; }
+    .order-price { font-size: 11px; font-weight: 700; color: #333; }
+    .order-actions { display: flex; gap: 4px; }
+    .btn-accept { background: #2e7d32; color: #fff; font-size: 9px; font-weight: 700; padding: 3px 7px; border-radius: 4px; border: none; }
+    .btn-reject { background: #c62828; color: #fff; font-size: 9px; font-weight: 700; padding: 3px 7px; border-radius: 4px; border: none; }
+    .order-new-badge { background: #ff6b35; color: #fff; font-size: 8px; font-weight: 700; padding: 1px 5px; border-radius: 3px; }
+
+    /* ── Bottom nav ── */
+    .bottom-nav { display: flex; background: #fff; border-top: 1px solid #e0e0e0; }
+    .bn-item { flex: 1; padding: 8px 4px; text-align: center; font-size: 9px; color: #aaa; }
+    .bn-item.active { color: #ff6b35; }
+    .bn-icon { font-size: 18px; display: block; }
+
+    /* ── Annotation ── */
+    .annotations { margin-top: 14px; font-size: 12px; color: #555; line-height: 1.8; }
+    .annotations li { margin-bottom: 4px; }
+    .ann-marker {
+      display: inline-block; width: 18px; height: 18px; border-radius: 50%;
+      background: #ff6b35; color: #fff; font-size: 9px; font-weight: 700;
+      text-align: center; line-height: 18px; margin-right: 5px;
+    }
+
+    /* Responsive */
+    @media (max-width: 700px) {
+      .screens-grid { grid-template-columns: 1fr; }
+      .phone { width: 100%; max-width: 320px; margin: 0 auto; }
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrap">
+  <nav class="breadcrumb">
+    <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+    <span class="sep">›</span><span>Semester 2</span>
+    <span class="sep">›</span><span>UI Wireframes</span>
+  </nav>
+  <header class="page-header">
+    <div class="sem-badge sem-2">Semester 2 — Build</div>
+    <h1>UI Wireframes &amp; Screen Mockups</h1>
+    <div class="project-tag">Example Project: <strong>Online Food Delivery System</strong></div>
+    <p class="header-desc">Wireframes show the layout, content hierarchy, and user flows before any real code is written. These high-fidelity mockups represent the key screens of the Online Food Delivery app — built with HTML/CSS to match what the final React/Vue frontend should look like.</p>
+  </header>
+  <nav class="topic-nav green-nav">
+    <div class="topic-nav-label">Jump to screen</div>
+    <a href="#screen-home">1. Home</a>
+    <a href="#screen-menu">2. Menu</a>
+    <a href="#screen-cart">3. Cart &amp; Checkout</a>
+    <a href="#screen-track">4. Order Tracking</a>
+    <a href="#screen-dash">5. Owner Dashboard</a>
+    <a href="#wf-notes">Notes</a>
+  </nav>
+
+  <div class="info-box blue wf-intro">
+    <div class="info-box-title">Wireframe vs Mockup vs Prototype</div>
+    <table style="font-size:13px; margin:0;">
+      <thead><tr><th>Type</th><th>Fidelity</th><th>When Made</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Wireframe</strong></td><td>Low (boxes &amp; lines)</td><td>Semester 1 design phase</td><td>Layout and content structure; no colours</td></tr>
+        <tr><td><strong>Mockup</strong></td><td>High (like screenshots)</td><td>Semester 2 before sprint 5</td><td>Visual design; colours, fonts — not interactive</td></tr>
+        <tr><td><strong>Prototype</strong></td><td>High + interactive</td><td>Figma / actual coded</td><td>Clickable flow for user testing</td></tr>
+      </tbody>
+    </table>
+    <p style="margin:8px 0 0; font-size:12.5px; color:#444;">These screens below are <strong>high-fidelity mockups</strong> — they show exactly what the frontend should look like, making it easier to hand off to the frontend developer in Sprint 5.</p>
+  </div>
+
+  <!-- ── SCREEN 1: Home ── -->
+  <section class="section" id="screen-home">
+    <div class="section-header">
+      <div class="section-icon icon-green">🏠</div>
+      <div class="section-title-group">
+        <h2>Screen 1 — Customer Home</h2>
+        <p>Restaurant search, cuisine filters, featured listings</p>
+      </div>
+    </div>
+    <div class="screens-grid">
+      <div class="screen-block">
+        <div class="phone">
+          <div class="phone-notch"><div class="dot cam"></div><div class="dot"></div></div>
+          <div class="status-bar"><span>9:41</span><span>📶 100%</span></div>
+          <div class="app-nav">
+            <span>📍 Koramangala, BLR</span>
+            <div class="spacer"></div>
+            <div class="cart-icon" style="position:relative;">🛒<div class="cart-badge">2</div></div>
+            <span style="font-size:18px; margin-left:10px;">🔔</span>
+          </div>
+          <div class="phone-body">
+            <div class="search-bar">
+              <div class="search-input">🔍 <span>Search for restaurants or dishes…</span></div>
+            </div>
+            <!-- Cuisine filter chips -->
+            <div class="chip-row">
+              <div class="chip active">All</div>
+              <div class="chip">🍕 Pizza</div>
+              <div class="chip">🍛 Indian</div>
+              <div class="chip">🍔 Burgers</div>
+              <div class="chip">🍜 Chinese</div>
+              <div class="chip">🥗 Healthy</div>
+            </div>
+            <!-- Featured -->
+            <div class="sect-head">🔥 Popular Near You</div>
+            <!-- Card 1 -->
+            <div class="rest-card">
+              <div class="rest-img">
+                🍛
+                <div class="veg-flag">PURE VEG</div>
+                <div class="offer-tag">50% OFF up to ₹100</div>
+              </div>
+              <div class="rest-info">
+                <div class="rest-name">Spice Garden</div>
+                <div class="rest-meta">
+                  <span class="rating">★ 4.3</span>
+                  <span>25–35 min</span>
+                  <span>₹200 for two</span>
+                </div>
+                <div style="font-size:10px; color:#888; margin-top:2px;">North Indian · Biryani · Kebabs</div>
+              </div>
+            </div>
+            <!-- Card 2 -->
+            <div class="rest-card">
+              <div class="rest-img" style="background:linear-gradient(135deg,#c8e6c9,#81c784);">
+                🍕
+                <div class="offer-tag">Free delivery</div>
+              </div>
+              <div class="rest-info">
+                <div class="rest-name">Pizza House</div>
+                <div class="rest-meta">
+                  <span class="rating" style="background:#f57c00;">★ 3.9</span>
+                  <span>20–30 min</span>
+                  <span>₹300 for two</span>
+                </div>
+                <div style="font-size:10px; color:#888; margin-top:2px;">Pizza · Pasta · Garlic Bread</div>
+              </div>
+            </div>
+            <!-- Card 3 -->
+            <div class="rest-card">
+              <div class="rest-img" style="background:linear-gradient(135deg,#bbdefb,#64b5f6);">
+                🍔
+              </div>
+              <div class="rest-info">
+                <div class="rest-name">Burger Bros</div>
+                <div class="rest-meta">
+                  <span class="rating">★ 4.6</span>
+                  <span>15–25 min</span>
+                  <span>₹250 for two</span>
+                </div>
+                <div style="font-size:10px; color:#888; margin-top:2px;">Burgers · Fries · Shakes</div>
+              </div>
+            </div>
+            <!-- Bottom nav -->
+            <div class="bottom-nav" style="margin-top:8px;">
+              <div class="bn-item active"><span class="bn-icon">🏠</span>Home</div>
+              <div class="bn-item"><span class="bn-icon">🔍</span>Search</div>
+              <div class="bn-item"><span class="bn-icon">🛒</span>Cart</div>
+              <div class="bn-item"><span class="bn-icon">📦</span>Orders</div>
+              <div class="bn-item"><span class="bn-icon">👤</span>Profile</div>
+            </div>
+          </div>
+        </div>
+        <ul class="annotations">
+          <li>Top nav shows live delivery location — tappable to change</li>
+          <li>Cart badge shows item count across app</li>
+          <li>Cuisine chips filter restaurants in real-time (no page reload)</li>
+          <li>Each card has restaurant image, rating, delivery time, offer tag</li>
+          <li>Bottom nav is persistent across all screens</li>
+        </ul>
+      </div>
+
+      <!-- Screen 1b: Search results -->
+      <div class="screen-block">
+        <div class="screen-label">Variant — <strong>Search Results</strong></div>
+        <div class="phone">
+          <div class="phone-notch"><div class="dot cam"></div></div>
+          <div class="status-bar"><span>9:41</span><span>📶 100%</span></div>
+          <div class="app-nav">
+            <span class="back">←</span>
+            <span style="flex:1; text-align:center;">Search</span>
+          </div>
+          <div class="phone-body">
+            <div class="search-bar">
+              <div class="search-input" style="border-color:#ff6b35;">🔍 <span style="color:#333;">biryani</span></div>
+            </div>
+            <div style="padding:6px 14px; font-size:11px; color:#888;">12 results for "biryani"</div>
+            <div class="chip-row">
+              <div class="chip active">Restaurants</div>
+              <div class="chip">Dishes</div>
+            </div>
+            <div class="rest-card">
+              <div class="rest-img">🍚<div class="offer-tag">₹50 OFF · use BIRYANI50</div></div>
+              <div class="rest-info">
+                <div class="rest-name">Biryani House</div>
+                <div class="rest-meta"><span class="rating">★ 4.4</span><span>30–40 min</span></div>
+                <div style="font-size:10px; color:#888; margin-top:2px;">Biryani · Haleem · Kebabs</div>
+              </div>
+            </div>
+            <div style="padding:8px 14px;">
+              <div style="font-size:11px; font-weight:700; color:#1a1a2e; margin-bottom:6px;">Dishes matching "biryani"</div>
+              <div style="display:flex; gap:8px; overflow-x:auto;">
+                <div style="min-width:100px; border:1px solid #eee; border-radius:8px; overflow:hidden;">
+                  <div style="height:60px; background:linear-gradient(135deg,#ffd6c0,#ffb090); display:flex;align-items:center;justify-content:center;font-size:22px;">🍚</div>
+                  <div style="padding:6px 8px;"><div style="font-size:10px;font-weight:700;">Chicken Biryani</div><div style="font-size:10px;color:#888;">₹220</div></div>
+                </div>
+                <div style="min-width:100px; border:1px solid #eee; border-radius:8px; overflow:hidden;">
+                  <div style="height:60px; background:linear-gradient(135deg,#c8e6c9,#81c784); display:flex;align-items:center;justify-content:center;font-size:22px;">🌿</div>
+                  <div style="padding:6px 8px;"><div style="font-size:10px;font-weight:700;">Veg Biryani</div><div style="font-size:10px;color:#888;">₹180</div></div>
+                </div>
+              </div>
+            </div>
+            <div style="padding:20px; text-align:center; color:#aaa; font-size:12px; display:none;">
+              No results found.<br>Try different keywords.
+            </div>
+            <div class="bottom-nav">
+              <div class="bn-item"><span class="bn-icon">🏠</span>Home</div>
+              <div class="bn-item active"><span class="bn-icon">🔍</span>Search</div>
+              <div class="bn-item"><span class="bn-icon">🛒</span>Cart</div>
+              <div class="bn-item"><span class="bn-icon">📦</span>Orders</div>
+              <div class="bn-item"><span class="bn-icon">👤</span>Profile</div>
+            </div>
+          </div>
+        </div>
+        <ul class="annotations">
+          <li>Search shows both Restaurant and Dish results in tabs</li>
+          <li>Dish cards show the item image, name, price inline</li>
+          <li>"No results" state uses a friendly empty state (not shown above)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SCREEN 2: Menu ── -->
+  <section class="section" id="screen-menu">
+    <div class="section-header">
+      <div class="section-icon icon-green">🍽️</div>
+      <div class="section-title-group">
+        <h2>Screen 2 — Restaurant Menu</h2>
+        <p>Restaurant header, category tabs, add-to-cart items</p>
+      </div>
+    </div>
+    <div class="screens-grid">
+      <div class="screen-block">
+        <div class="phone">
+          <div class="phone-notch"><div class="dot cam"></div></div>
+          <div class="status-bar"><span>9:43</span><span>📶 100%</span></div>
+          <div class="app-nav">
+            <span class="back">←</span>
+            <span style="flex:1;">Spice Garden</span>
+            <div class="cart-icon" style="position:relative;">🛒<div class="cart-badge">0</div></div>
+          </div>
+          <div class="phone-body">
+            <div class="menu-header">
+              <div class="menu-rest-name">Spice Garden</div>
+              <div class="menu-rest-meta">North Indian · Koramangala, Bangalore</div>
+              <div style="display:flex; gap:12px; margin-top:6px; font-size:10px;">
+                <span style="background:rgba(255,255,255,0.15); padding:2px 8px; border-radius:10px;">★ 4.3 · 320 ratings</span>
+                <span style="background:rgba(255,255,255,0.15); padding:2px 8px; border-radius:10px;">⏱ 25–35 min</span>
+                <span style="background:rgba(255,255,255,0.15); padding:2px 8px; border-radius:10px;">🛵 ₹30 delivery</span>
+              </div>
+            </div>
+            <!-- Offer banner -->
+            <div style="background:#fff3e0; padding:8px 14px; font-size:11px; font-weight:600; color:#e65100; display:flex; align-items:center; gap:6px;">
+              🏷️ 50% off on first order · Use <strong>FIRST50</strong>
+            </div>
+            <!-- Category tabs -->
+            <div class="menu-cat-bar">
+              <div class="menu-cat active">Starters</div>
+              <div class="menu-cat">Main Course</div>
+              <div class="menu-cat">Breads</div>
+              <div class="menu-cat">Biryani</div>
+              <div class="menu-cat">Desserts</div>
+            </div>
+            <!-- Items: Starters -->
+            <div class="sect-head" style="background:#f8f8f8; padding:6px 14px; font-size:11px; color:#888; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">Starters (4)</div>
+            <div class="menu-item">
+              <div class="menu-item-info">
+                <div style="display:flex; gap:4px; align-items:center; margin-bottom:3px;">
+                  <span style="width:10px;height:10px;border:1.5px solid #2e7d32;border-radius:2px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;"><span style="width:5px;height:5px;background:#2e7d32;border-radius:50%;"></span></span>
+                  <div class="menu-item-name">Paneer Tikka</div>
+                </div>
+                <div class="menu-item-desc">Marinated cottage cheese cubes grilled in tandoor · serves 2</div>
+                <div class="menu-item-price">₹ 180</div>
+              </div>
+              <div class="menu-item-img">🧀<div class="add-btn">+ ADD</div></div>
+            </div>
+            <div class="menu-item" style="background:#fff8f5;">
+              <div class="menu-item-info">
+                <div style="display:flex; gap:4px; align-items:center; margin-bottom:3px;">
+                  <span style="width:10px;height:10px;border:1.5px solid #c62828;border-radius:2px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;"><span style="width:5px;height:5px;background:#c62828;border-radius:50%;"></span></span>
+                  <div class="menu-item-name">Chicken Tikka</div>
+                </div>
+                <div class="menu-item-desc">Tender chicken marinated in spiced yoghurt · 4 pieces</div>
+                <div class="menu-item-price">₹ 220 &nbsp;<span style="font-size:10px; text-decoration:line-through; color:#aaa;">₹260</span></div>
+              </div>
+              <div class="menu-item-img" style="background:linear-gradient(135deg,#ffd6c0,#ff9066);">🍗<div class="add-btn" style="background:#ff6b35;color:#fff;border:none;">1 ✕</div></div>
+            </div>
+            <div class="menu-item">
+              <div class="menu-item-info">
+                <div style="display:flex; gap:4px; align-items:center; margin-bottom:3px;">
+                  <span style="width:10px;height:10px;border:1.5px solid #2e7d32;border-radius:2px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;"><span style="width:5px;height:5px;background:#2e7d32;border-radius:50%;"></span></span>
+                  <div class="menu-item-name">Veg Seekh Kebab</div>
+                </div>
+                <div class="menu-item-desc">Minced vegetables seasoned with herbs · 3 pieces</div>
+                <div class="menu-item-price">₹ 150</div>
+              </div>
+              <div class="menu-item-img">🥕<div class="add-btn">+ ADD</div></div>
+            </div>
+            <div class="bottom-nav">
+              <div class="bn-item"><span class="bn-icon">🏠</span>Home</div>
+              <div class="bn-item active"><span class="bn-icon">🔍</span>Search</div>
+              <div class="bn-item"><span class="bn-icon">🛒</span>Cart</div>
+              <div class="bn-item"><span class="bn-icon">📦</span>Orders</div>
+              <div class="bn-item"><span class="bn-icon">👤</span>Profile</div>
+            </div>
+          </div>
+        </div>
+        <ul class="annotations">
+          <li>Green/red square icon = veg / non-veg indicator</li>
+          <li>Strikethrough price shows original vs offer price</li>
+          <li>"1 ✕" on item means it's already in cart — shows quantity control</li>
+          <li>Category tab bar is horizontally scrollable</li>
+          <li>Sticky cart button appears at bottom when cart is non-empty</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SCREEN 3: Cart & Checkout ── -->
+  <section class="section" id="screen-cart">
+    <div class="section-header">
+      <div class="section-icon icon-green">🛒</div>
+      <div class="section-title-group">
+        <h2>Screen 3 — Cart &amp; Checkout</h2>
+        <p>Order summary, address selection, payment choice, place order</p>
+      </div>
+    </div>
+    <div class="screens-grid">
+      <div class="screen-block">
+        <div class="phone">
+          <div class="phone-notch"><div class="dot cam"></div></div>
+          <div class="status-bar"><span>9:48</span><span>📶 100%</span></div>
+          <div class="app-nav">
+            <span class="back">←</span>
+            <span style="flex:1;">Your Cart</span>
+            <span style="font-size:12px; opacity:0.8;">Spice Garden</span>
+          </div>
+          <div class="phone-body">
+            <!-- Cart items -->
+            <div class="sect-head">Items (3)</div>
+            <div class="cart-item">
+              <div class="qty-ctrl"><button class="qty-btn">−</button><span class="qty-num">2</span><button class="qty-btn">+</button></div>
+              <div class="cart-item-name">Paneer Tikka</div>
+              <div class="cart-item-price">₹ 360</div>
+            </div>
+            <div class="cart-item">
+              <div class="qty-ctrl"><button class="qty-btn">−</button><span class="qty-num">1</span><button class="qty-btn">+</button></div>
+              <div class="cart-item-name">Chicken Tikka</div>
+              <div class="cart-item-price">₹ 220</div>
+            </div>
+            <div class="cart-item">
+              <div class="qty-ctrl"><button class="qty-btn">−</button><span class="qty-num">3</span><button class="qty-btn">+</button></div>
+              <div class="cart-item-name">Butter Naan</div>
+              <div class="cart-item-price">₹ 180</div>
+            </div>
+            <!-- Bill breakdown -->
+            <div style="background:#f8f8f8; margin:8px 14px; border-radius:8px; padding:10px 0;">
+              <div class="sect-head" style="padding:4px 12px;">Bill Details</div>
+              <div class="bill-row"><span>Item total</span><span>₹ 760</span></div>
+              <div class="bill-row"><span>Delivery fee</span><span>₹ 30</span></div>
+              <div class="bill-row"><span>GST &amp; charges</span><span>₹ 38</span></div>
+              <div class="bill-row"><span style="color:#2e7d32;">Discount (FIRST50)</span><span style="color:#2e7d32;">− ₹ 100</span></div>
+              <div class="bill-row total"><span>Total</span><span>₹ 728</span></div>
+            </div>
+            <!-- Delivery address -->
+            <div class="sect-head">Deliver to</div>
+            <div class="addr-block">
+              <div class="addr-label">🏠 Home</div>
+              <div class="addr-text">42, 3rd Floor, 5th Cross, Koramangala 5th Block, Bangalore – 560095</div>
+              <div style="font-size:10px; color:#ff6b35; margin-top:6px; font-weight:600;">Change address ›</div>
+            </div>
+            <!-- Payment -->
+            <div class="sect-head">Payment Method</div>
+            <div class="pay-row">
+              <div class="pay-opt sel"></div>
+              <span style="font-size:16px;">💳</span>
+              <div class="pay-label">Credit / Debit Card (Razorpay)</div>
+            </div>
+            <div class="pay-row">
+              <div class="pay-opt"></div>
+              <span style="font-size:16px;">📱</span>
+              <div class="pay-label">UPI</div>
+            </div>
+            <div class="pay-row">
+              <div class="pay-row" style="padding:0;">
+                <div class="pay-opt"></div>
+                <span style="font-size:16px;">💵</span>
+                <div class="pay-label">Cash on Delivery</div>
+              </div>
+            </div>
+            <!-- CTA -->
+            <button class="place-btn">Place Order — ₹ 728</button>
+          </div>
+        </div>
+        <ul class="annotations">
+          <li>Quantity +/− buttons update total in real-time</li>
+          <li>Green text shows discount applied automatically from promo code</li>
+          <li>Address block is tappable to open address list / add new</li>
+          <li>CTA button shows total amount — no surprise at the end</li>
+          <li>Minimum order validation (≥ ₹100) happens before enabling button</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SCREEN 4: Order Tracking ── -->
+  <section class="section" id="screen-track">
+    <div class="section-header">
+      <div class="section-icon icon-green">📍</div>
+      <div class="section-title-group">
+        <h2>Screen 4 — Order Tracking</h2>
+        <p>Live order status timeline and delivery partner info</p>
+      </div>
+    </div>
+    <div class="screens-grid">
+      <div class="screen-block">
+        <div class="phone">
+          <div class="phone-notch"><div class="dot cam"></div></div>
+          <div class="status-bar"><span>10:02</span><span>📶 100%</span></div>
+          <div class="app-nav">
+            <span class="back">←</span>
+            <span style="flex:1;">Track Order</span>
+            <span style="font-size:12px; opacity:0.8;">Help</span>
+          </div>
+          <div class="phone-body">
+            <div class="track-header">
+              <div class="track-order-id">Order #ORD-20240421-8821 · Spice Garden</div>
+              <div class="track-status">🛵 Out for Delivery</div>
+              <div class="track-eta">Estimated arrival: <strong>10:18 AM</strong> (16 min away)</div>
+            </div>
+            <!-- Timeline -->
+            <div class="timeline">
+              <div class="tl-item">
+                <div class="tl-dot done">✓</div>
+                <div class="tl-text"><div class="tl-title">Order Placed</div><div class="tl-time">9:48 AM</div></div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-dot done">✓</div>
+                <div class="tl-text"><div class="tl-title">Order Accepted by Restaurant</div><div class="tl-time">9:51 AM</div></div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-dot done">✓</div>
+                <div class="tl-text"><div class="tl-title">Preparing Your Food</div><div class="tl-time">9:52 AM</div></div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-dot active">🛵</div>
+                <div class="tl-text"><div class="tl-title" style="color:#ff6b35;">Out for Delivery</div><div class="tl-time">10:02 AM · In progress…</div></div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-dot pending">○</div>
+                <div class="tl-text"><div class="tl-title" style="color:#aaa;">Delivered</div><div class="tl-time" style="color:#ccc;">Estimated: 10:18 AM</div></div>
+              </div>
+            </div>
+            <!-- Partner info -->
+            <div class="sect-head">Your Delivery Partner</div>
+            <div class="partner-card">
+              <div class="partner-avatar">👨‍💼</div>
+              <div style="flex:1;">
+                <div class="partner-name">Rahul Verma</div>
+                <div class="partner-vehicle">Hero Splendor · KA-05-AB-1234</div>
+                <div style="font-size:10px; color:#ff6b35; margin-top:3px; font-weight:600;">★ 4.7 · 320 deliveries</div>
+              </div>
+              <div style="display:flex; gap:8px;">
+                <div style="width:36px; height:36px; border-radius:50%; background:#e8f5e9; display:flex; align-items:center; justify-content:center; font-size:18px;">📞</div>
+                <div style="width:36px; height:36px; border-radius:50%; background:#e3f2fd; display:flex; align-items:center; justify-content:center; font-size:18px;">💬</div>
+              </div>
+            </div>
+            <!-- Order summary -->
+            <div style="margin:0 14px 12px; border:1px solid #eee; border-radius:8px; padding:10px 12px; font-size:11px; color:#555;">
+              <div style="font-weight:700; color:#1a1a2e; margin-bottom:6px;">Order Summary</div>
+              <div>2× Paneer Tikka · 1× Chicken Tikka · 3× Butter Naan</div>
+              <div style="margin-top:4px; font-weight:700; color:#333;">Total paid: ₹ 728 (Online)</div>
+            </div>
+            <div class="bottom-nav">
+              <div class="bn-item"><span class="bn-icon">🏠</span>Home</div>
+              <div class="bn-item"><span class="bn-icon">🔍</span>Search</div>
+              <div class="bn-item"><span class="bn-icon">🛒</span>Cart</div>
+              <div class="bn-item active"><span class="bn-icon">📦</span>Orders</div>
+              <div class="bn-item"><span class="bn-icon">👤</span>Profile</div>
+            </div>
+          </div>
+        </div>
+        <ul class="annotations">
+          <li>Pulsing animation on the active step (Out for Delivery)</li>
+          <li>ETA computed from delivery partner's last known GPS location</li>
+          <li>Status auto-refreshes every 15 seconds via polling (or WebSocket)</li>
+          <li>Phone/chat button to contact delivery partner directly</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SCREEN 5: Restaurant Owner Dashboard ── -->
+  <section class="section" id="screen-dash">
+    <div class="section-header">
+      <div class="section-icon icon-green">🏪</div>
+      <div class="section-title-group">
+        <h2>Screen 5 — Restaurant Owner Dashboard</h2>
+        <p>Incoming orders, stats, accept/reject controls</p>
+      </div>
+    </div>
+    <div class="screens-grid">
+      <div class="screen-block">
+        <div class="phone">
+          <div class="phone-notch"><div class="dot cam"></div></div>
+          <div class="status-bar"><span>10:05</span><span>📶 100%</span></div>
+          <div class="app-nav" style="background:#1a1a2e;">
+            <span style="flex:1; font-weight:700;">Spice Garden Dashboard</span>
+            <span style="font-size:12px; background:#2e7d32; padding:2px 8px; border-radius:10px; font-size:10px; font-weight:700;">● OPEN</span>
+          </div>
+          <div class="phone-body">
+            <!-- Stats row -->
+            <div class="dash-stat-row">
+              <div class="dash-stat green">
+                <div class="dash-stat-num">12</div>
+                <div class="dash-stat-label">Today's Orders</div>
+              </div>
+              <div class="dash-stat orange">
+                <div class="dash-stat-num">3</div>
+                <div class="dash-stat-label">Pending</div>
+              </div>
+              <div class="dash-stat blue">
+                <div class="dash-stat-num">₹4.8K</div>
+                <div class="dash-stat-label">Revenue</div>
+              </div>
+            </div>
+            <!-- Incoming orders -->
+            <div style="background:#fff3e0; padding:6px 14px; font-size:12px; font-weight:700; color:#e65100; display:flex; align-items:center; gap:6px;">
+              🔔 New Orders (2)
+            </div>
+            <!-- Order 1 - new, needs action -->
+            <div style="border-left:4px solid #ff6b35; margin:8px 14px; border-radius:0 8px 8px 0; border:1px solid #ffe0b2; border-left:4px solid #ff6b35; padding:10px 12px; background:#fff8f5;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                <span style="font-size:11px; font-weight:700; color:#1a1a2e;">ORD-20240421-8821</span>
+                <span class="order-new-badge">NEW ●</span>
+              </div>
+              <div style="font-size:12px; color:#333; margin-bottom:4px;">2× Paneer Tikka · 1× Chicken Tikka · 3× Butter Naan</div>
+              <div style="font-size:11px; color:#888; margin-bottom:8px;">Cash on Delivery · 📍 Koramangala 5th Block</div>
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:13px; font-weight:700; color:#333;">₹ 728</span>
+                <div style="display:flex; gap:6px;">
+                  <button class="btn-accept" style="font-size:11px; padding:5px 12px;">✓ Accept</button>
+                  <button class="btn-reject" style="font-size:11px; padding:5px 12px;">✕ Reject</button>
+                </div>
+              </div>
+              <div style="font-size:10px; color:#ff6b35; margin-top:6px; font-weight:600;">⏱ Respond within 4:32 min</div>
+            </div>
+            <!-- Order 2 - accepted, preparing -->
+            <div style="margin:8px 14px; border-radius:8px; border:1px solid #e0e0e0; padding:10px 12px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                <span style="font-size:11px; font-weight:700; color:#1a1a2e;">ORD-20240421-8810</span>
+                <span style="background:#e8f5e9; color:#2e7d32; font-size:9px; font-weight:700; padding:2px 6px; border-radius:3px;">PREPARING</span>
+              </div>
+              <div style="font-size:12px; color:#333; margin-bottom:4px;">1× Veg Biryani · 2× Butter Naan</div>
+              <div style="font-size:11px; color:#888;">Online Payment · Ready in ~15 min</div>
+              <button style="width:100%; margin-top:8px; background:#185FA5; color:#fff; font-size:11px; font-weight:700; padding:6px; border-radius:6px; border:none;">Mark Ready for Pickup</button>
+            </div>
+            <!-- Tab bar -->
+            <div class="bottom-nav" style="margin-top:8px;">
+              <div class="bn-item active" style="color:#ff6b35;"><span class="bn-icon">📦</span>Orders</div>
+              <div class="bn-item"><span class="bn-icon">🍽️</span>Menu</div>
+              <div class="bn-item"><span class="bn-icon">📊</span>Reports</div>
+              <div class="bn-item"><span class="bn-icon">⚙️</span>Settings</div>
+            </div>
+          </div>
+        </div>
+        <ul class="annotations">
+          <li>OPEN/CLOSED toggle at top lets owner go online/offline instantly</li>
+          <li>Red countdown timer for unresponded orders (auto-reject at 0)</li>
+          <li>Color-coded order cards: orange = new, green = accepted</li>
+          <li>"Mark Ready for Pickup" notifies the delivery partner system</li>
+          <li>Revenue card shows today's earnings at a glance</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Notes ── -->
+  <section class="section" id="wf-notes">
+    <div class="section-header">
+      <div class="section-icon icon-green">📌</div>
+      <div class="section-title-group">
+        <h2>Design System Notes</h2>
+        <p>Colours, typography, and component guidelines</p>
+      </div>
+    </div>
+    <table>
+      <thead><tr><th>Element</th><th>Value</th><th>Usage</th></tr></thead>
+      <tbody>
+        <tr><td>Primary colour</td><td style="color:#ff6b35;"><strong>#FF6B35</strong></td><td>Buttons, CTAs, active states, nav bar</td></tr>
+        <tr><td>Dark background</td><td><strong>#1A1A2E</strong></td><td>Menu headers, owner dashboard nav, headings</td></tr>
+        <tr><td>Success green</td><td style="color:#2e7d32;"><strong>#2E7D32</strong></td><td>Ratings, veg indicator, accepted status</td></tr>
+        <tr><td>Error red</td><td style="color:#c62828;"><strong>#C62828</strong></td><td>Non-veg indicator, reject button</td></tr>
+        <tr><td>Font stack</td><td><code>-apple-system, Segoe UI, Roboto</code></td><td>Body text; system font for performance</td></tr>
+        <tr><td>Base font size</td><td>14px app / 12px secondary</td><td>Readable on 375px+ screens</td></tr>
+        <tr><td>Border radius</td><td>8px cards / 20px chips / 50% avatars</td><td>Modern soft corners throughout</td></tr>
+        <tr><td>Shadow</td><td><code>0 1px 4px rgba(0,0,0,0.06)</code></td><td>Cards — subtle depth without heavy shadows</td></tr>
+      </tbody>
+    </table>
+    <div class="info-box green">
+      <div class="info-box-title">Handoff to Frontend Developer</div>
+      <p style="margin:0; font-size:13.5px;">
+        In Sprint 5, share these wireframes as the <strong>frontend spec</strong>. For each screen, document:
+        (1) API endpoint the screen calls, (2) state that triggers re-render, (3) loading/error states, (4) responsive breakpoints.
+        Use Figma to add real assets (photos, icons) on top of this HTML mockup.
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    <a href="semester2_design.html">← System Design</a>
+    <nav class="footer-nav">
+      <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+      <a href="semester2_coding.html">Next: Coding →</a>
+    </nav>
+  </footer>
+</div>
+</body>
+</html>

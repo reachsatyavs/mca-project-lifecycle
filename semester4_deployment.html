@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deployment — Semester 4 | Online Food Delivery System</title>
+  <link rel="stylesheet" href="child_page_styles.css">
+</head>
+<body>
+<div class="page-wrap">
+  <nav class="breadcrumb">
+    <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+    <span class="sep">›</span><span>Semester 4</span>
+    <span class="sep">›</span><span>Production Deployment</span>
+  </nav>
+  <header class="page-header">
+    <div class="sem-badge sem-4">Semester 4 — Production</div>
+    <h1>Deployment — Production, CD Pipeline &amp; Rollback</h1>
+    <div class="project-tag">Example Project: <strong>Online Food Delivery System</strong></div>
+    <p class="header-desc">Semester 4 completes the deployment story: the final production launch, a complete CD pipeline with manual approval gate, and a tested rollback strategy for emergencies.</p>
+  </header>
+
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon icon-blue">🚀</div>
+      <div class="section-title-group">
+        <h2>Production Deployment</h2>
+        <p>Going live for real — the final step of the 4-semester journey</p>
+      </div>
+    </div>
+    <h3>Production Deployment Steps</h3>
+    <ol>
+      <li><strong>Final code freeze:</strong> Merge all approved PRs. No new features after code freeze — only bug fixes from this point.</li>
+      <li><strong>Run full regression suite</strong> on staging: all tests must pass.</li>
+      <li><strong>Run Go-Live Checklist</strong> (see <a href="semester3_planning.html">Planning Sem 3</a>).</li>
+      <li><strong>Database backup:</strong> Take a manual backup of the staging DB before production deploy.</li>
+      <li><strong>Set production environment variables:</strong> DATABASE_URL (prod DB), SENTRY_DSN (prod project), ALLOWED_HOSTS.</li>
+      <li><strong>Deploy to production Render service.</strong></li>
+      <li><strong>Run database migrations:</strong> <code class="code-inline">python manage.py migrate</code> on the production instance.</li>
+      <li><strong>Smoke test production URL:</strong> Manually verify 5 critical flows work on the live site.</li>
+      <li><strong>Announce go-live</strong> to faculty guide. Send public URL.</li>
+    </ol>
+    <h3>Blue-Green Deployment (Optional, Advanced)</h3>
+    <p>For zero-downtime deployment, consider a <strong>Blue-Green</strong> strategy: run two identical environments (Blue = current production, Green = new version). Switch traffic to Green once verified, keep Blue as instant rollback. Render supports this via preview environments.</p>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon icon-blue">⚙️</div>
+      <div class="section-title-group">
+        <h2>CD Pipeline — Final</h2>
+        <p>The complete Continuous Deployment flow with manual approval gate</p>
+      </div>
+    </div>
+    <div class="code-block"># .github/workflows/cd-production.yml
+name: CD — Deploy to Production
+
+on:
+  workflow_dispatch:   # Manual trigger only (not auto)
+    inputs:
+      confirm:
+        description: 'Type "deploy" to confirm production deployment'
+        required: true
+
+jobs:
+  deploy-production:
+    runs-on: ubuntu-latest
+    if: github.event.inputs.confirm == 'deploy'
+    environment: production   # Requires approval in GitHub Environments
+    steps:
+      - name: Run final test suite
+        run: jest --tb=short
+
+      - name: Deploy to Render Production
+        run: |
+          curl -X POST "${{ secrets.RENDER_PRODUCTION_DEPLOY_HOOK }}"
+
+      - name: Notify team
+        run: echo "Production deployment triggered. Monitor at Render dashboard."</div>
+    <p>The <code class="code-inline">workflow_dispatch</code> trigger means this CD pipeline only runs when a team member manually triggers it — not on every push. The <code class="code-inline">environment: production</code> setting can require a second-person approval in GitHub's environment protection rules.</p>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon icon-blue">⏪</div>
+      <div class="section-title-group">
+        <h2>Rollback Strategy</h2>
+        <p>What to do when a production deployment causes a regression</p>
+      </div>
+    </div>
+    <p>A <strong>rollback</strong> reverts production to the last known-good state as quickly as possible. Every production deployment should have a tested rollback plan.</p>
+    <h3>Rollback Options (Fastest to Slowest)</h3>
+    <table>
+      <thead><tr><th>Method</th><th>Time to Rollback</th><th>When to Use</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Render: Deploy Previous Version</strong></td><td>~3 minutes</td><td>Code issue — previous Docker image still available in Render</td></tr>
+        <tr><td><strong>Git Revert + Redeploy</strong></td><td>~10 minutes</td><td>Code issue — create a revert commit, push to main, CI/CD redeploys</td></tr>
+        <tr><td><strong>Database Rollback (Migration Down)</strong></td><td>~20 minutes</td><td>DB migration broke something — run <code class="code-inline">python manage.py migrate myapp 0042</code></td></tr>
+        <tr><td><strong>Full DB Restore from Backup</strong></td><td>~30–60 minutes</td><td>Last resort — data corruption occurred</td></tr>
+      </tbody>
+    </table>
+    <h3>Test Your Rollback</h3>
+    <div class="info-box blue">
+      <div class="info-box-title">Untested Rollbacks Fail</div>
+      <p style="margin:0">Run a mock rollback on staging before production go-live. Deploy a "bad" version to staging, then roll it back using option 1 above. If you've never practiced it, you will fumble when it matters most — during a real incident.</p>
+    </div>
+  </section>
+
+  <footer>
+    <a href="semester3_deployment.html">← Deployment Sem 3</a>
+    <nav class="footer-nav">
+      <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+    </nav>
+  </footer>
+</div>
+</body>
+</html>

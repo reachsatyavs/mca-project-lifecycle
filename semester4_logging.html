@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monitoring — Semester 4 | Online Food Delivery System</title>
+  <link rel="stylesheet" href="child_page_styles.css">
+</head>
+<body>
+<div class="page-wrap">
+  <nav class="breadcrumb">
+    <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+    <span class="sep">›</span><span>Semester 4</span>
+    <span class="sep">›</span><span>Production Monitoring</span>
+  </nav>
+  <header class="page-header">
+    <div class="sem-badge sem-4">Semester 4 — Production</div>
+    <h1>Monitoring — Production Monitoring, SLA &amp; Incident Response</h1>
+    <div class="project-tag">Example Project: <strong>Online Food Delivery System</strong></div>
+    <p class="header-desc">Once in production, monitoring shifts from development to operations. You track SLA compliance, investigate incidents, and ensure the system remains healthy for real users.</p>
+  </header>
+
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon icon-blue">📈</div>
+      <div class="section-title-group">
+        <h2>Production Monitoring</h2>
+        <p>Observing system health 24/7 after go-live</p>
+      </div>
+    </div>
+    <h3>Production Monitoring Stack</h3>
+    <table>
+      <thead><tr><th>Tool</th><th>What It Monitors</th><th>Free Tier?</th></tr></thead>
+      <tbody>
+        <tr><td><strong>UptimeRobot</strong></td><td>URL availability every 5 minutes; sends email/SMS if down</td><td>Yes (50 monitors)</td></tr>
+        <tr><td><strong>Sentry</strong></td><td>Application errors, unhandled exceptions, performance</td><td>Yes (5k events/month)</td></tr>
+        <tr><td><strong>Render Metrics</strong></td><td>CPU, memory, request volume for deployed service</td><td>Yes (built-in)</td></tr>
+        <tr><td><strong>Supabase Dashboard</strong></td><td>Database query performance, connection count, storage</td><td>Yes (built-in)</td></tr>
+        <tr><td><strong>Logtail / Papertrail</strong></td><td>Log aggregation and search beyond Render's 7-day retention</td><td>Yes (limited)</td></tr>
+      </tbody>
+    </table>
+    <h3>Key Production Metrics to Watch Daily</h3>
+    <ul>
+      <li>Uptime percentage (target: 99%+).</li>
+      <li>Number of 5xx errors per day (target: 0).</li>
+      <li>p95 API response time (target: &lt; 500ms).</li>
+      <li>Active user sessions (business metric).</li>
+      <li>Orders placed per day (business metric).</li>
+      <li>Payment success rate (target: &gt; 98%).</li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon icon-blue">📋</div>
+      <div class="section-title-group">
+        <h2>SLA Tracking</h2>
+        <p>Measuring system performance against agreed targets</p>
+      </div>
+    </div>
+    <p>A <strong>Service Level Agreement (SLA)</strong> is a commitment about system quality. For a student project, the SLA is defined in your NFRs. Semester 4 is when you actually measure compliance.</p>
+    <h3>SLA Dashboard for Food Delivery</h3>
+    <table>
+      <thead><tr><th>SLA Item</th><th>Target (from NFRs)</th><th>Measured (Sem 4)</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>System Uptime</td><td>≥ 99% per month</td><td>99.3% (Render auto-restart helps)</td><td>✅ Met</td></tr>
+        <tr><td>Page Load Time</td><td>&lt; 3 seconds</td><td>1.8s avg (Google Lighthouse)</td><td>✅ Met</td></tr>
+        <tr><td>API p95 Response</td><td>&lt; 500ms</td><td>320ms (Sentry Performance)</td><td>✅ Met</td></tr>
+        <tr><td>Payment Success Rate</td><td>&gt; 98%</td><td>99.1% (sandbox)</td><td>✅ Met</td></tr>
+        <tr><td>Error Rate</td><td>&lt; 0.1% requests</td><td>0.04% (Sentry)</td><td>✅ Met</td></tr>
+      </tbody>
+    </table>
+    <p>Include this table in your final project report as evidence of NFR compliance.</p>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon icon-blue">🚨</div>
+      <div class="section-title-group">
+        <h2>Incident Response</h2>
+        <p>What to do when production goes down</p>
+      </div>
+    </div>
+    <p>An <strong>incident</strong> is any unplanned interruption to service. Having a response procedure means the team responds calmly and systematically rather than panicking.</p>
+    <h3>Incident Response Playbook</h3>
+    <table>
+      <thead><tr><th>Step</th><th>Action</th><th>Example for Food Delivery</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1. Detect</strong></td><td>UptimeRobot or Sentry alerts team</td><td>Email: "Your monitor food-delivery.render.com is DOWN"</td></tr>
+        <tr><td><strong>2. Triage</strong></td><td>Determine scope: is the whole site down or just one feature?</td><td>Visit site → 500 error → check Render logs → DB connection error</td></tr>
+        <tr><td><strong>3. Communicate</strong></td><td>Inform stakeholders (team + faculty guide)</td><td>WhatsApp: "Production down, investigating. ETA 30 min."</td></tr>
+        <tr><td><strong>4. Mitigate</strong></td><td>Restore service ASAP — even if imperfect (rollback, restart)</td><td>Render dashboard → Manual restart → Service recovers</td></tr>
+        <tr><td><strong>5. Resolve</strong></td><td>Fix the root cause properly</td><td>DB connection pool exhausted → increase pool size in settings</td></tr>
+        <tr><td><strong>6. Post-Mortem</strong></td><td>Document the incident and lessons learned</td><td>Write 1-page incident report: what happened, why, how to prevent</td></tr>
+      </tbody>
+    </table>
+    <div class="info-box blue">
+      <div class="info-box-title">Incident Report is a Project Asset</div>
+      <p style="margin:0">If a production incident occurs during Semester 4, write a post-mortem and include it in your final report. It demonstrates professional maturity — acknowledging that failures happen and showing you responded systematically.</p>
+    </div>
+  </section>
+
+  <footer>
+    <a href="semester3_logging.html">← Monitoring Sem 3</a>
+    <nav class="footer-nav">
+      <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+    </nav>
+  </footer>
+</div>
+</body>
+</html>

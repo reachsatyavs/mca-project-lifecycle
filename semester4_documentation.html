@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentation — Semester 4 | Online Food Delivery System</title>
+  <link rel="stylesheet" href="child_page_styles.css">
+</head>
+<body>
+<div class="page-wrap">
+  <nav class="breadcrumb">
+    <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+    <span class="sep">›</span><span>Semester 4</span>
+    <span class="sep">›</span><span>Documentation — Final</span>
+  </nav>
+  <header class="page-header">
+    <div class="sem-badge sem-4">Semester 4 — Production</div>
+    <h1>Documentation — Maintenance Guide, Final README &amp; Project Report</h1>
+    <div class="project-tag">Example Project: <strong>Online Food Delivery System</strong></div>
+    <p class="header-desc">Semester 4 completes all documentation. The maintenance guide ensures the system can be managed after the team leaves. The final README is the polished face of the project. The project report is the comprehensive academic deliverable.</p>
+  </header>
+
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon icon-blue">🔧</div>
+      <div class="section-title-group">
+        <h2>Maintenance Guide</h2>
+        <p>Enabling future maintainers to keep the system healthy</p>
+      </div>
+    </div>
+    <p>The <strong>Maintenance Guide</strong> is written for someone who didn't build the system but needs to maintain it. It covers routine operations, troubleshooting, and how to perform common changes.</p>
+    <h3>Maintenance Guide Contents</h3>
+    <table>
+      <thead><tr><th>Section</th><th>Contents</th></tr></thead>
+      <tbody>
+        <tr><td>System Overview</td><td>Architecture diagram, component list, all URLs (production, staging, API docs, monitoring dashboards)</td></tr>
+        <tr><td>Access Credentials</td><td>Where to find credentials (password manager / secrets vault — not in this doc!). Who has admin access.</td></tr>
+        <tr><td>Routine Operations</td><td>How to: restart the server, run migrations, create admin user, restore from backup, view logs</td></tr>
+        <tr><td>Monitoring</td><td>UptimeRobot dashboard URL, Sentry project URL, Render dashboard URL</td></tr>
+        <tr><td>Hotfix Process</td><td>Step-by-step hotfix workflow (git branching + staging verification + production deploy)</td></tr>
+        <tr><td>Dependency Updates</td><td>How to run <code class="code-inline">pip audit</code> and <code class="code-inline">npm audit</code>; checklist for updating Express.js/React versions</td></tr>
+        <tr><td>Common Issues</td><td>Known issues, their symptoms, and fixes: Render auto-sleep, DB connection pool, CORS errors</td></tr>
+        <tr><td>Contacts</td><td>Team members, faculty guide, hosting support links</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon icon-blue">📖</div>
+      <div class="section-title-group">
+        <h2>Final README</h2>
+        <p>The polished, complete face of the project's GitHub repository</p>
+      </div>
+    </div>
+    <h3>Final README Checklist</h3>
+    <ul>
+      <li>✅ Project title, tagline, and 1-paragraph description.</li>
+      <li>✅ Live demo URL (production URL).</li>
+      <li>✅ Screenshots of key screens (home, ordering flow, dashboard).</li>
+      <li>✅ Feature list — what the system can do.</li>
+      <li>✅ Tech stack — with version numbers.</li>
+      <li>✅ Local development setup (docker-compose up).</li>
+      <li>✅ Running tests (<code class="code-inline">jest --cov=apps</code>).</li>
+      <li>✅ Links to all documents (SRS, TDD, SPMP PDFs in /docs).</li>
+      <li>✅ Team members with roles.</li>
+      <li>✅ Project status badges (CI status, coverage %, uptime).</li>
+    </ul>
+    <h3>README Status Badges</h3>
+    <div class="code-block"><!-- Add to top of README.md -->
+![CI](https://github.com/your-team/food-delivery/actions/workflows/ci.yml/badge.svg)
+![Coverage](https://codecov.io/gh/your-team/food-delivery/branch/main/graph/badge.svg)
+[![uptime](https://img.shields.io/uptimerobot/ratio/mXXXXXXX)](https://uptimerobot.com)</div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon icon-blue">📑</div>
+      <div class="section-title-group">
+        <h2>Project Report</h2>
+        <p>The comprehensive academic document summarising 4 semesters of work</p>
+      </div>
+    </div>
+    <p>The <strong>Final Project Report</strong> is the primary academic deliverable submitted for the MCA project. It is typically 80–120 pages and follows the university's prescribed format.</p>
+    <h3>Recommended Chapter Structure</h3>
+    <table>
+      <thead><tr><th>Chapter</th><th>Contents</th><th>Approx Pages</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1. Introduction</strong></td><td>Background, problem statement, objectives, scope, report organisation</td><td>5–8</td></tr>
+        <tr><td><strong>2. Literature Survey</strong></td><td>Review of existing food delivery systems (Swiggy, Zomato, DoorDash), similar academic projects, technologies reviewed</td><td>8–12</td></tr>
+        <tr><td><strong>3. System Analysis</strong></td><td>Requirements (FR, NFR), Use Cases, Business Rules — condensed from SRS</td><td>15–20</td></tr>
+        <tr><td><strong>4. System Design</strong></td><td>Architecture, ER diagram, class diagrams, API design, UI wireframes — condensed from TDD</td><td>15–20</td></tr>
+        <tr><td><strong>5. Implementation</strong></td><td>Tech stack, module-by-module implementation details, key algorithms (order assignment, rating calculation), code snippets for complex logic</td><td>20–25</td></tr>
+        <tr><td><strong>6. Testing</strong></td><td>Test plan summary, unit test results, integration test results, E2E results, performance results, security scan results, UAT certificate</td><td>15–20</td></tr>
+        <tr><td><strong>7. Deployment</strong></td><td>CI/CD pipeline overview, hosting architecture, production deployment steps, monitoring setup</td><td>5–8</td></tr>
+        <tr><td><strong>8. Conclusion &amp; Future Work</strong></td><td>What was achieved, what was learned, limitations, future enhancements (mobile app, AI recommendations, multi-city)</td><td>5–8</td></tr>
+        <tr><td><strong>References</strong></td><td>IEEE format references for all cited papers, websites, frameworks</td><td>2–4</td></tr>
+        <tr><td><strong>Appendices</strong></td><td>Full SRS, SPMP, TDD; sample test cases; deployment guide; user manual</td><td>Varies</td></tr>
+      </tbody>
+    </table>
+    <div class="info-box blue">
+      <div class="info-box-title">Write Progressively</div>
+      <p style="margin:0">Don't write the project report in Semester 4 from scratch. Start a report template in Semester 1 and add to it every semester. Chapters 3 and 4 (Analysis and Design) are essentially the SRS and TDD converted to report format — you've already done most of the work.</p>
+    </div>
+  </section>
+
+  <footer>
+    <a href="semester3_documentation.html">← Docs Sem 3</a>
+    <nav class="footer-nav">
+      <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+    </nav>
+  </footer>
+</div>
+</body>
+</html>

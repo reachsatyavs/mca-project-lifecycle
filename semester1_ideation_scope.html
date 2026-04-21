@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ideation &amp; Scope — Semester 1 | Online Food Delivery System</title>
+  <link rel="stylesheet" href="child_page_styles.css">
+</head>
+<body>
+<div class="page-wrap">
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb">
+    <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+    <span class="sep">›</span>
+    <span>Semester 1 — Foundation</span>
+    <span class="sep">›</span>
+    <span>Ideation &amp; Scope</span>
+  </nav>
+
+  <!-- Page Header -->
+  <header class="page-header">
+    <div class="sem-badge sem-1">Semester 1 &mdash; Foundation</div>
+    <h1>Ideation &amp; Scope</h1>
+    <div class="project-tag">Example Project: <strong>Online Food Delivery System</strong></div>
+    <p class="header-desc">
+      Every great software project begins with a clear idea and well-defined boundaries.
+      In this phase, you choose your project, state what it will and won't do, check whether
+      it is realistic, list your constraints, and assemble your team.
+    </p>
+  </header>
+
+  <!-- Quick Navigation -->
+  <nav class="topic-nav">
+    <div class="topic-nav-label">Jump to section</div>
+    <a href="#project-selection">1. Project Selection</a>
+    <a href="#goals-non-goals">2. Goals &amp; Non-Goals</a>
+    <a href="#feasibility">3. Feasibility Check</a>
+    <a href="#constraints">4. Constraints List</a>
+    <a href="#team-formation">5. Team Formation</a>
+  </nav>
+
+  <!-- ============================================================
+       SECTION 1 : Project Selection
+       ============================================================ -->
+  <section class="section" id="project-selection">
+    <div class="section-header">
+      <div class="section-icon icon-purple">💡</div>
+      <div class="section-title-group">
+        <h2>1. Project Selection</h2>
+        <p>Choosing the right project — and articulating the problem it solves</p>
+      </div>
+    </div>
+
+    <h3>What is an Online Food Delivery System?</h3>
+    <p>
+      An Online Food Delivery System is a web-based platform that connects <strong>customers</strong>
+      who want to order food with <strong>restaurants</strong> that prepare the food and
+      <strong>delivery partners</strong> who bring it to the customer's doorstep.
+      Think of it as a digital marketplace layered between the restaurant and the hungry customer.
+    </p>
+    <p>
+      Real-world examples your students are familiar with: <strong>Swiggy</strong>, <strong>Zomato</strong>,
+      <strong>DoorDash</strong>, and <strong>Uber Eats</strong>. Your project will be a
+      simplified, educational version of the same concept — but every layer from database to UI
+      will be built by the team.
+    </p>
+
+    <h3>The Problem Statement</h3>
+    <div class="info-box purple">
+      <div class="info-box-title">Problem Statement</div>
+      <p style="margin:0">
+        Customers in a city/campus face inconvenience in discovering nearby restaurants, viewing
+        their menus, and ordering food efficiently. Restaurants lack a digital channel to reach
+        a wider audience. The absence of a unified, technology-driven platform means missed
+        business opportunities for restaurants and frustration for customers.
+      </p>
+    </div>
+
+    <h3>Why This Project for MCA Students?</h3>
+    <p>This project is an excellent choice because it:</p>
+    <ul>
+      <li>Covers all major software engineering concepts: authentication, CRUD, payments, real-time status, APIs.</li>
+      <li>Has well-known real-world counterparts students can reference for inspiration.</li>
+      <li>Is complex enough to last 4 semesters yet scoped to be achievable by a student team.</li>
+      <li>Involves multiple user roles (Customer, Restaurant Owner, Delivery Partner, Admin) — excellent for learning role-based access control.</li>
+      <li>Produces a portfolio-worthy project that is directly relevant to industry.</li>
+    </ul>
+
+    <h3>System Overview (Student Scope)</h3>
+    <table>
+      <thead>
+        <tr><th>Actor</th><th>What they do in the system</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Customer</strong></td><td>Registers, browses restaurants &amp; menus, adds to cart, places orders, tracks delivery, pays, leaves reviews.</td></tr>
+        <tr><td><strong>Restaurant Owner</strong></td><td>Registers restaurant, manages menu (add/edit/delete items), sets prices, views &amp; accepts incoming orders.</td></tr>
+        <tr><td><strong>Delivery Partner</strong></td><td>Registers as partner, views assigned orders, updates pickup &amp; delivery status.</td></tr>
+        <tr><td><strong>Platform Admin</strong></td><td>Approves restaurants, manages users, views analytics, handles complaints.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="info-box green">
+      <div class="info-box-title">Student Tip</div>
+      <p style="margin:0">
+        Start by sketching a simple diagram with these four actors and draw arrows showing what
+        each one does. This becomes the foundation of your Use Case diagram in the Requirements phase.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 2 : Goals & Non-Goals
+       ============================================================ -->
+  <section class="section" id="goals-non-goals">
+    <div class="section-header">
+      <div class="section-icon icon-purple">🎯</div>
+      <div class="section-title-group">
+        <h2>2. Goals &amp; Non-Goals</h2>
+        <p>Explicitly stating what the project will AND will not do</p>
+      </div>
+    </div>
+
+    <p>
+      A <strong>Goals &amp; Non-Goals</strong> document prevents scope creep — the tendency of
+      a project to grow beyond its original plan. Writing down what is <em>out of scope</em>
+      is just as important as writing what is in scope.
+    </p>
+
+    <h3>Goals (In Scope)</h3>
+    <div class="two-col">
+      <div class="two-col-item">
+        <h4>Customer-Facing</h4>
+        <ul>
+          <li>User registration &amp; login (email + password)</li>
+          <li>Browse restaurants by cuisine or location</li>
+          <li>View restaurant menus with item photos &amp; prices</li>
+          <li>Add/remove items from a cart</li>
+          <li>Place orders and choose delivery address</li>
+          <li>Simulated online payment (sandbox gateway)</li>
+          <li>Real-time order status tracking (Pending → Accepted → Preparing → Out for Delivery → Delivered)</li>
+          <li>View order history</li>
+          <li>Rate and review restaurants</li>
+        </ul>
+      </div>
+      <div class="two-col-item">
+        <h4>Restaurant &amp; Admin</h4>
+        <ul>
+          <li>Restaurant owner registration &amp; profile management</li>
+          <li>Menu management (CRUD for food items)</li>
+          <li>Order notification and acceptance/rejection</li>
+          <li>Delivery partner registration</li>
+          <li>Order assignment to delivery partner</li>
+          <li>Admin panel: approve/reject restaurants, view reports</li>
+          <li>Email notifications (order confirmation, status updates)</li>
+          <li>Responsive web application (desktop + mobile browser)</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Non-Goals (Explicitly Out of Scope)</h3>
+    <div class="info-box red">
+      <div class="info-box-title">Out of Scope for Student Project</div>
+      <ul style="margin:0">
+        <li><strong>No native mobile apps</strong> (iOS / Android) — web-responsive design is sufficient.</li>
+        <li><strong>No real payment gateway</strong> — use a sandbox (Razorpay test mode / Stripe test mode).</li>
+        <li><strong>No live GPS tracking</strong> — status updates are manual; real-time GPS is too complex.</li>
+        <li><strong>No multi-city support</strong> — scope to one city or campus area.</li>
+        <li><strong>No AI/ML recommendations</strong> — no "you might also like" engine.</li>
+        <li><strong>No multi-language support</strong> — English only for the prototype.</li>
+        <li><strong>No third-party logistics integration</strong> (FedEx, Dunzo etc.).</li>
+        <li><strong>No franchise / chain restaurant management</strong> — single-outlet restaurants only.</li>
+        <li><strong>No subscription or loyalty rewards</strong> programme.</li>
+      </ul>
+    </div>
+
+    <div class="info-box blue">
+      <div class="info-box-title">Why Non-Goals Matter</div>
+      <p style="margin:0">
+        When a stakeholder says "Can we also add a chatbot?", you can point to the Non-Goals document
+        and say it is out of scope. Without this list, your project will never be finished.
+        A Change Request (CR) process in Semester 2 handles any genuine changes that arise later.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 3 : Feasibility Check
+       ============================================================ -->
+  <section class="section" id="feasibility">
+    <div class="section-header">
+      <div class="section-icon icon-purple">🔬</div>
+      <div class="section-title-group">
+        <h2>3. Feasibility Check</h2>
+        <p>Assessing whether the project can realistically be built</p>
+      </div>
+    </div>
+
+    <p>
+      A <strong>Feasibility Study</strong> answers one question: <em>"Can we actually build this?"</em>
+      It examines the project from three angles — technical, operational, and economic.
+    </p>
+
+    <h3>Technical Feasibility</h3>
+    <table>
+      <thead>
+        <tr><th>Concern</th><th>Assessment for Online Food Delivery</th><th>Verdict</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Programming language &amp; framework</td>
+          <td>Python (Express.js/Flask), Java (Spring Boot), or Node.js (Express) — all well-documented with large communities.</td>
+          <td>✅ Feasible</td>
+        </tr>
+        <tr>
+          <td>Database</td>
+          <td>MySQL or PostgreSQL for structured data (orders, users, restaurants). Both free and widely taught.</td>
+          <td>✅ Feasible</td>
+        </tr>
+        <tr>
+          <td>Frontend</td>
+          <td>HTML/CSS/JS with React or plain Bootstrap — no proprietary tool required.</td>
+          <td>✅ Feasible</td>
+        </tr>
+        <tr>
+          <td>Payment integration</td>
+          <td>Razorpay or Stripe sandbox offers free test environments with full API docs.</td>
+          <td>✅ Feasible</td>
+        </tr>
+        <tr>
+          <td>Hosting / Deployment</td>
+          <td>Render, Railway, or Heroku free tier — no cost for student projects.</td>
+          <td>✅ Feasible</td>
+        </tr>
+        <tr>
+          <td>Real-time features</td>
+          <td>Order status polling (refresh every 10 s) is simpler than WebSockets and fully feasible for student scope.</td>
+          <td>✅ Feasible</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Operational Feasibility</h3>
+    <ul>
+      <li><strong>Team size:</strong> 4–5 MCA students covering backend, frontend, DB, QA, and DevOps roles.</li>
+      <li><strong>Duration:</strong> 4 semesters (~18–24 months) — adequate to cover all phases.</li>
+      <li><strong>Supervision:</strong> Faculty guide provides feedback at end of each semester milestone.</li>
+      <li><strong>Tools access:</strong> VS Code, Git/GitHub, Postman — all free and available in college labs.</li>
+      <li><strong>Knowledge prerequisite:</strong> Databases (taught in Sem 1), Web programming (Sem 1), DBMS lab — all prerequisite coursework aligns.</li>
+    </ul>
+
+    <h3>Economic Feasibility</h3>
+    <table>
+      <thead>
+        <tr><th>Cost Item</th><th>Option</th><th>Estimated Cost</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Hosting (web server)</td><td>Render / Railway free tier</td><td>₹0</td></tr>
+        <tr><td>Database hosting</td><td>Supabase free tier / Railway PostgreSQL</td><td>₹0</td></tr>
+        <tr><td>Domain name</td><td>Optional — use default hosting URL</td><td>₹0 – ₹800/year</td></tr>
+        <tr><td>Payment gateway (sandbox)</td><td>Razorpay / Stripe test mode</td><td>₹0</td></tr>
+        <tr><td>Email service</td><td>Gmail SMTP or SendGrid free tier (100 emails/day)</td><td>₹0</td></tr>
+        <tr><td>IDEs &amp; tools</td><td>VS Code, Git, Postman, draw.io — all free</td><td>₹0</td></tr>
+        <tr><td><strong>Total</strong></td><td></td><td><strong>≈ ₹0 – ₹800</strong></td></tr>
+      </tbody>
+    </table>
+
+    <div class="info-box green">
+      <div class="info-box-title">Feasibility Conclusion</div>
+      <p style="margin:0">
+        The Online Food Delivery System is <strong>technically, operationally, and economically
+        feasible</strong> as a student project. No expensive tools or infrastructure are required.
+        The technology stack is within the reach of MCA students with standard coursework knowledge.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 4 : Constraints List
+       ============================================================ -->
+  <section class="section" id="constraints">
+    <div class="section-header">
+      <div class="section-icon icon-purple">⛓️</div>
+      <div class="section-title-group">
+        <h2>4. Constraints List</h2>
+        <p>Known limitations that the project must work within</p>
+      </div>
+    </div>
+
+    <p>
+      Constraints are <strong>hard limits</strong> that cannot be negotiated. They differ from
+      risks (which are uncertain) and non-goals (which are choices). Documenting constraints
+      early prevents unrealistic expectations later.
+    </p>
+
+    <h3>Time Constraints</h3>
+    <table>
+      <thead>
+        <tr><th>Semester</th><th>Duration</th><th>Key Deliverable</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Semester 1</td><td>~6 months</td><td>SRS, SPMP, system design documents, architecture diagram</td></tr>
+        <tr><td>Semester 2</td><td>~6 months</td><td>Working backend + database; basic frontend prototype</td></tr>
+        <tr><td>Semester 3</td><td>~6 months</td><td>Full integrated working system; alpha testing complete</td></tr>
+        <tr><td>Semester 4</td><td>~6 months</td><td>Production-deployed, tested, documented final product</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Technology Constraints</h3>
+    <ul>
+      <li>Must use technologies covered in the MCA curriculum (no proprietary/licensed tools without approval).</li>
+      <li>No real money transactions — all payment must go through sandbox/test mode.</li>
+      <li>System must be deployable to a free cloud hosting service.</li>
+      <li>Source code must be version-controlled on GitHub/GitLab (public or private — as instructed).</li>
+    </ul>
+
+    <h3>Team Constraints</h3>
+    <ul>
+      <li>Team size: minimum 3, maximum 5 students.</li>
+      <li>Each team member must contribute to documentation, not just coding.</li>
+      <li>A project guide (faculty) must be assigned and approve major phase deliverables.</li>
+    </ul>
+
+    <h3>Quality Constraints</h3>
+    <ul>
+      <li>Each semester must produce a documented deliverable (SRS, TDD, Test Report, etc.).</li>
+      <li>Code must follow a consistent naming convention and style guide chosen in Semester 1.</li>
+      <li>Minimum 70% test coverage for core modules in Semester 3.</li>
+      <li>Final system must be accessible via a public URL (not just localhost).</li>
+    </ul>
+
+    <div class="info-box orange">
+      <div class="info-box-title">Constraint vs. Risk</div>
+      <p style="margin:0">
+        A <strong>constraint</strong> is certain — e.g., "we have 6 months." A <strong>risk</strong>
+        is uncertain — e.g., "a team member might drop the course." Both need to be documented,
+        but constraints go in the SPMP while risks go in the Risk Register (covered in Planning).
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 5 : Team Formation
+       ============================================================ -->
+  <section class="section" id="team-formation">
+    <div class="section-header">
+      <div class="section-icon icon-purple">👥</div>
+      <div class="section-title-group">
+        <h2>5. Team Formation</h2>
+        <p>Defining roles, responsibilities, and how the team will work together</p>
+      </div>
+    </div>
+
+    <p>
+      A well-structured team with clear role boundaries reduces confusion and improves
+      accountability. For a 4–5 member MCA team, the following roles are recommended.
+      A single person can wear two hats, but each responsibility must have one clear owner.
+    </p>
+
+    <h3>Recommended Roles</h3>
+    <table>
+      <thead>
+        <tr><th>Role</th><th>Responsibilities</th><th>Key Skills Needed</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Project Manager / Scrum Master</strong></td>
+          <td>
+            Maintains task tracker (Jira/Trello), runs sprint meetings, writes SPMP,
+            communicates with faculty guide, tracks milestones.
+          </td>
+          <td>Organization, communication, documentation</td>
+        </tr>
+        <tr>
+          <td><strong>Backend Developer</strong></td>
+          <td>
+            Builds REST APIs, implements business logic (order placement, payment flow),
+            manages database interactions, handles authentication.
+          </td>
+          <td>Python/Java/Node.js, SQL, REST API design</td>
+        </tr>
+        <tr>
+          <td><strong>Frontend Developer</strong></td>
+          <td>
+            Builds the web UI (customer portal, restaurant dashboard, admin panel),
+            integrates with backend APIs, ensures responsive design.
+          </td>
+          <td>HTML, CSS, JavaScript (React or Vanilla JS)</td>
+        </tr>
+        <tr>
+          <td><strong>Database Designer / Full-Stack</strong></td>
+          <td>
+            Designs ER diagram, creates schema, writes migrations,
+            optimizes queries, also supports backend or frontend as needed.
+          </td>
+          <td>SQL, ER modeling, query optimization</td>
+        </tr>
+        <tr>
+          <td><strong>QA &amp; DevOps</strong></td>
+          <td>
+            Writes test plans and test cases, performs manual and automated testing,
+            sets up CI/CD pipeline (Semester 3), manages deployments.
+          </td>
+          <td>Testing tools (Selenium/PyTest), GitHub Actions, Docker basics</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Team Charter</h3>
+    <p>
+      A <strong>Team Charter</strong> is a short agreement the team writes in Semester 1.
+      It covers working norms and prevents future conflict.
+    </p>
+    <div class="info-box blue">
+      <div class="info-box-title">Sample Team Charter Items</div>
+      <ul style="margin:0">
+        <li>Weekly sync meeting: every Monday, 6 PM, 30 minutes (online / in lab).</li>
+        <li>All code commits go through a Pull Request with at least one reviewer.</li>
+        <li>Decisions are made by team consensus; PM has tie-breaking vote.</li>
+        <li>Any team member missing 2 consecutive meetings informs the faculty guide.</li>
+        <li>Communication channel: WhatsApp group for quick updates, GitHub Issues for task tracking.</li>
+        <li>Code style guide: ESLint (Python) / Google Java Style (Java) — agreed on Day 1.</li>
+      </ul>
+    </div>
+
+    <h3>RACI Matrix (Online Food Delivery Project)</h3>
+    <p>
+      RACI = <strong>R</strong>esponsible, <strong>A</strong>ccountable, <strong>C</strong>onsulted,
+      <strong>I</strong>nformed. Every task has exactly one <em>A</em> (owner).
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>Task</th>
+          <th>PM</th>
+          <th>Backend Dev</th>
+          <th>Frontend Dev</th>
+          <th>DB Designer</th>
+          <th>QA/DevOps</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>SRS Document</td><td><strong>A/R</strong></td><td>C</td><td>C</td><td>C</td><td>I</td></tr>
+        <tr><td>ER Diagram</td><td>I</td><td>C</td><td>I</td><td><strong>A/R</strong></td><td>I</td></tr>
+        <tr><td>REST API Development</td><td>I</td><td><strong>A/R</strong></td><td>C</td><td>C</td><td>C</td></tr>
+        <tr><td>Frontend UI</td><td>I</td><td>C</td><td><strong>A/R</strong></td><td>I</td><td>C</td></tr>
+        <tr><td>Test Plan</td><td>C</td><td>C</td><td>C</td><td>I</td><td><strong>A/R</strong></td></tr>
+        <tr><td>Deployment</td><td>I</td><td>C</td><td>C</td><td>I</td><td><strong>A/R</strong></td></tr>
+      </tbody>
+    </table>
+
+    <div class="info-box green">
+      <div class="info-box-title">Deliverable for This Phase</div>
+      <ul style="margin:0">
+        <li><strong>Project Proposal Document</strong> — 2–3 pages covering problem statement, objectives, actors, feasibility summary, and team roster with roles.</li>
+        <li>Get this signed off by your faculty guide before moving to the Requirements phase.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <a href="mca_project_lifecycle_4_semesters.html">← Back to Project Lifecycle</a>
+    <nav class="footer-nav">
+      <a href="semester1_requirements.html">Next: Requirements (SRS) →</a>
+    </nav>
+  </footer>
+
+</div>
+</body>
+</html>

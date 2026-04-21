@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Requirements Refinements — Semester 2 | Online Food Delivery System</title>
+  <link rel="stylesheet" href="child_page_styles.css">
+</head>
+<body>
+<div class="page-wrap">
+  <nav class="breadcrumb">
+    <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+    <span class="sep">›</span><span>Semester 2</span>
+    <span class="sep">›</span><span>Requirements — Detailed</span>
+  </nav>
+  <header class="page-header">
+    <div class="sem-badge sem-2">Semester 2 — Build</div>
+    <h1>Requirements — Detailed Use Cases, API Contracts &amp; Acceptance Criteria</h1>
+    <div class="project-tag">Example Project: <strong>Online Food Delivery System</strong></div>
+    <p class="header-desc">Semester 2 requirements work goes deeper — expanding use cases into developer-ready API contracts and explicit acceptance criteria that the QA team will use for testing.</p>
+  </header>
+  <nav class="topic-nav topic-nav green-nav">
+    <div class="topic-nav-label">Jump to section</div>
+    <a href="#detailed-use-cases">1. Detailed Use Cases</a>
+    <a href="#api-contract">2. API Contract Draft</a>
+    <a href="#acceptance">3. Acceptance Criteria</a>
+  </nav>
+
+  <section class="section" id="detailed-use-cases">
+    <div class="section-header">
+      <div class="section-icon icon-green">📋</div>
+      <div class="section-title-group">
+        <h2>1. Detailed Use Cases</h2>
+        <p>Expanding high-level use cases into full interaction flows</p>
+      </div>
+    </div>
+    <p>In Semester 1 you listed the use cases. In Semester 2 you expand the most complex ones into step-by-step interaction sequences — these guide backend and frontend developers on exactly what to build.</p>
+    <h3>UC-12: Delivery Partner — Accept and Deliver Order</h3>
+    <table>
+      <tbody>
+        <tr><td><strong>Actor</strong></td><td>Delivery Partner</td></tr>
+        <tr><td><strong>Trigger</strong></td><td>System assigns order to partner</td></tr>
+        <tr><td><strong>Precondition</strong></td><td>Partner is online and within 3 km of restaurant; order status is ACCEPTED by restaurant</td></tr>
+        <tr><td><strong>Main Flow</strong></td><td>
+          1. System assigns order → partner sees notification.<br>
+          2. Partner views order details (restaurant address, item list, customer delivery address).<br>
+          3. Partner navigates to restaurant and picks up order.<br>
+          4. Partner taps "Picked Up" → order status becomes PICKED_UP.<br>
+          5. Partner navigates to customer address and delivers order.<br>
+          6. Partner taps "Delivered" → order status becomes DELIVERED.<br>
+          7. System sends delivery confirmation to customer.
+        </td></tr>
+        <tr><td><strong>Alternate — Partner Rejects</strong></td><td>Partner rejects within 3 minutes → system re-assigns to next nearest available partner.</td></tr>
+        <tr><td><strong>Postcondition</strong></td><td>Order is DELIVERED; customer prompted to rate restaurant; partner's delivery count incremented.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section" id="api-contract">
+    <div class="section-header">
+      <div class="section-icon icon-green">🔌</div>
+      <div class="section-title-group">
+        <h2>2. API Contract Draft</h2>
+        <p>Defining the REST API interface before writing a single line of backend code</p>
+      </div>
+    </div>
+    <p>An <strong>API Contract</strong> is the agreement between the backend and frontend teams. By defining the API shape (endpoint, method, request body, response) before coding, both teams can work in parallel — the frontend uses mock data matching the contract while the backend builds the real implementation.</p>
+
+    <h3>Sample API Endpoints</h3>
+    <table>
+      <thead><tr><th>Method</th><th>Endpoint</th><th>Description</th><th>Auth Required</th></tr></thead>
+      <tbody>
+        <tr><td><span class="tag tag-green">GET</span></td><td><code class="code-inline">/api/restaurants/</code></td><td>List all approved restaurants</td><td>No</td></tr>
+        <tr><td><span class="tag tag-green">GET</span></td><td><code class="code-inline">/api/restaurants/{id}/menu/</code></td><td>Get menu items for a restaurant</td><td>No</td></tr>
+        <tr><td><span class="tag tag-orange">POST</span></td><td><code class="code-inline">/api/auth/login/</code></td><td>Login, returns access + refresh JWT</td><td>No</td></tr>
+        <tr><td><span class="tag tag-orange">POST</span></td><td><code class="code-inline">/api/orders/</code></td><td>Place a new order</td><td>Customer JWT</td></tr>
+        <tr><td><span class="tag tag-green">GET</span></td><td><code class="code-inline">/api/orders/{id}/</code></td><td>Get order details and current status</td><td>Customer / Partner / Admin JWT</td></tr>
+        <tr><td><span class="tag tag-blue">PATCH</span></td><td><code class="code-inline">/api/orders/{id}/status/</code></td><td>Update order status</td><td>Restaurant / Partner JWT</td></tr>
+        <tr><td><span class="tag tag-orange">POST</span></td><td><code class="code-inline">/api/payments/initiate/</code></td><td>Initiate payment, returns gateway order ID</td><td>Customer JWT</td></tr>
+        <tr><td><span class="tag tag-orange">POST</span></td><td><code class="code-inline">/api/payments/verify/</code></td><td>Verify payment signature from gateway</td><td>Customer JWT</td></tr>
+        <tr><td><span class="tag tag-orange">POST</span></td><td><code class="code-inline">/api/reviews/</code></td><td>Submit a rating and review</td><td>Customer JWT</td></tr>
+        <tr><td><span class="tag tag-green">GET</span></td><td><code class="code-inline">/api/admin/restaurants/pending/</code></td><td>List pending restaurant approvals</td><td>Admin JWT</td></tr>
+      </tbody>
+    </table>
+
+    <hr class="divider">
+
+    <!-- ── API 1: Login ── -->
+    <h3>📌 API 1 — POST /api/auth/login/</h3>
+    <p>Customer logs in with email and password. Returns a JWT access token and refresh token.</p>
+
+    <h4>Request Body</h4>
+    <div class="code-block">{
+  "email": "priya@example.com",
+  "password": "MyPass@123"
+}</div>
+
+    <h4>✅ Success Response — 200 OK</h4>
+    <div class="code-block">{
+  "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0MiwiZXhwIjoxNzE...",
+  "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0MiwiZXhwIjoxNz...",
+  "user": {
+    "id": 42,
+    "name": "Priya Sharma",
+    "email": "priya@example.com",
+    "role": "CUSTOMER"
+  }
+}</div>
+
+    <h4>❌ Error Response — 401 Unauthorized (wrong password)</h4>
+    <div class="code-block">{
+  "error": "INVALID_CREDENTIALS",
+  "message": "Email or password is incorrect.",
+  "status_code": 401
+}</div>
+
+    <h4>❌ Error Response — 400 Bad Request (missing field)</h4>
+    <div class="code-block">{
+  "error": "VALIDATION_ERROR",
+  "message": "This field is required.",
+  "fields": {
+    "password": ["This field may not be blank."]
+  },
+  "status_code": 400
+}</div>
+
+    <hr class="divider">
+
+    <!-- ── API 2: List Restaurants ── -->
+    <h3>📌 API 2 — GET /api/restaurants/?cuisine=Indian&city=Bangalore</h3>
+    <p>Fetch all approved restaurants, with optional filters for cuisine type and city. No authentication required.</p>
+
+    <h4>✅ Success Response — 200 OK</h4>
+    <div class="code-block">{
+  "count": 2,
+  "next": "/api/restaurants/?page=2",
+  "previous": null,
+  "results": [
+    {
+      "id": 7,
+      "name": "Spice Garden",
+      "cuisine_type": "Indian",
+      "address": "12, MG Road, Bangalore – 560001",
+      "avg_rating": 4.3,
+      "total_reviews": 128,
+      "is_open": true,
+      "opening_time": "10:00",
+      "closing_time": "23:00",
+      "estimated_delivery_minutes": 30,
+      "thumbnail": "https://res.cloudinary.com/demo/spice_garden.jpg",
+      "min_order": 100,
+      "delivery_fee": 40
+    },
+    {
+      "id": 12,
+      "name": "Biryani House",
+      "cuisine_type": "Indian",
+      "address": "88, Koramangala, Bangalore – 560034",
+      "avg_rating": 4.6,
+      "total_reviews": 312,
+      "is_open": false,
+      "opening_time": "11:00",
+      "closing_time": "22:30",
+      "estimated_delivery_minutes": 45,
+      "thumbnail": "https://res.cloudinary.com/demo/biryani_house.jpg",
+      "min_order": 150,
+      "delivery_fee": 0
+    }
+  ]
+}</div>
+
+    <h4>❌ Error Response — 404 Not Found (no matching restaurants)</h4>
+    <div class="code-block">{
+  "count": 0,
+  "next": null,
+  "previous": null,
+  "results": [],
+  "message": "No approved restaurants found for the given filters."
+}</div>
+
+    <hr class="divider">
+
+    <!-- ── API 3: Restaurant Menu ── -->
+    <h3>📌 API 3 — GET /api/restaurants/7/menu/</h3>
+    <p>Fetch all available menu items for restaurant with ID 7, grouped by category.</p>
+
+    <h4>✅ Success Response — 200 OK</h4>
+    <div class="code-block">{
+  "restaurant_id": 7,
+  "restaurant_name": "Spice Garden",
+  "categories": [
+    {
+      "name": "Starters",
+      "items": [
+        {
+          "id": 101,
+          "name": "Paneer Tikka",
+          "description": "Marinated cottage cheese grilled in tandoor",
+          "price": 180.00,
+          "is_veg": true,
+          "is_available": true,
+          "image": "https://res.cloudinary.com/demo/paneer_tikka.jpg"
+        },
+        {
+          "id": 102,
+          "name": "Chicken 65",
+          "description": "Spicy deep-fried chicken with curry leaves",
+          "price": 220.00,
+          "is_veg": false,
+          "is_available": true,
+          "image": "https://res.cloudinary.com/demo/chicken65.jpg"
+        }
+      ]
+    },
+    {
+      "name": "Main Course",
+      "items": [
+        {
+          "id": 201,
+          "name": "Butter Naan (2 pcs)",
+          "description": "Soft leavened bread baked in tandoor",
+          "price": 60.00,
+          "is_veg": true,
+          "is_available": true,
+          "image": "https://res.cloudinary.com/demo/naan.jpg"
+        }
+      ]
+    }
+  ]
+}</div>
+
+    <hr class="divider">
+
+    <!-- ── API 4: Place Order ── -->
+    <h3>📌 API 4 — POST /api/orders/</h3>
+    <p>Place a new food order. Requires a valid Customer JWT in the <code class="code-inline">Authorization: Bearer &lt;token&gt;</code> header.</p>
+
+    <h4>Request Body</h4>
+    <div class="code-block">{
+  "restaurant_id": 7,
+  "delivery_address_id": 3,
+  "payment_method": "ONLINE",
+  "special_instructions": "Extra spicy please, no onions",
+  "items": [
+    { "menu_item_id": 101, "quantity": 2 },
+    { "menu_item_id": 201, "quantity": 1 }
+  ]
+}</div>
+
+    <h4>✅ Success Response — 201 Created</h4>
+    <div class="code-block">{
+  "order_id": "ORD-20240315-1042",
+  "status": "PLACED",
+  "restaurant": {
+    "id": 7,
+    "name": "Spice Garden"
+  },
+  "items": [
+    { "name": "Paneer Tikka", "quantity": 2, "unit_price": 180.00, "subtotal": 360.00 },
+    { "name": "Butter Naan (2 pcs)", "quantity": 1, "unit_price": 60.00, "subtotal": 60.00 }
+  ],
+  "pricing": {
+    "subtotal": 420.00,
+    "delivery_fee": 40.00,
+    "taxes": 21.00,
+    "total": 481.00
+  },
+  "payment": {
+    "method": "ONLINE",
+    "gateway_order_id": "rzp_order_MKP9x2abc123",
+    "gateway_key": "rzp_test_xxxxxxxxxxxxxx"
+  },
+  "estimated_delivery_minutes": 35,
+  "created_at": "2024-03-15T14:22:10Z"
+}</div>
+
+    <h4>❌ Error Response — 400 Bad Request (below minimum order)</h4>
+    <div class="code-block">{
+  "error": "MINIMUM_ORDER_VIOLATED",
+  "message": "Minimum order amount is ₹100. Your cart total is ₹60.",
+  "status_code": 400,
+  "details": {
+    "cart_total": 60.00,
+    "minimum_required": 100.00
+  }
+}</div>
+
+    <h4>❌ Error Response — 400 Bad Request (restaurant closed)</h4>
+    <div class="code-block">{
+  "error": "RESTAURANT_CLOSED",
+  "message": "Spice Garden is currently closed. Opens at 10:00 AM.",
+  "status_code": 400,
+  "details": {
+    "restaurant_id": 7,
+    "next_open_time": "10:00"
+  }
+}</div>
+
+    <h4>❌ Error Response — 401 Unauthorized (no token)</h4>
+    <div class="code-block">{
+  "error": "AUTHENTICATION_REQUIRED",
+  "message": "Authentication credentials were not provided.",
+  "status_code": 401
+}</div>
+
+    <hr class="divider">
+
+    <!-- ── API 5: Get Order Details ── -->
+    <h3>📌 API 5 — GET /api/orders/ORD-20240315-1042/</h3>
+    <p>Fetch full details of an order including current status and delivery partner info (if assigned).</p>
+
+    <h4>✅ Success Response — 200 OK</h4>
+    <div class="code-block">{
+  "order_id": "ORD-20240315-1042",
+  "status": "OUT_FOR_DELIVERY",
+  "status_history": [
+    { "status": "PLACED",    "time": "2024-03-15T14:22:10Z" },
+    { "status": "ACCEPTED",  "time": "2024-03-15T14:25:00Z" },
+    { "status": "PREPARING", "time": "2024-03-15T14:26:30Z" },
+    { "status": "PICKED_UP", "time": "2024-03-15T14:52:00Z" }
+  ],
+  "restaurant": {
+    "id": 7,
+    "name": "Spice Garden",
+    "phone": "+91-80-1234567"
+  },
+  "delivery_partner": {
+    "name": "Rajan Kumar",
+    "phone": "+91-9876543210",
+    "vehicle": "Motorcycle"
+  },
+  "delivery_address": {
+    "street": "45, 5th Cross, Indiranagar",
+    "city": "Bangalore",
+    "pincode": "560038"
+  },
+  "items": [
+    { "name": "Paneer Tikka", "quantity": 2, "subtotal": 360.00 },
+    { "name": "Butter Naan (2 pcs)", "quantity": 1, "subtotal": 60.00 }
+  ],
+  "pricing": {
+    "subtotal": 420.00,
+    "delivery_fee": 40.00,
+    "taxes": 21.00,
+    "total": 481.00
+  },
+  "payment": {
+    "method": "ONLINE",
+    "status": "PAID",
+    "paid_at": "2024-03-15T14:23:05Z"
+  },
+  "estimated_delivery_minutes": 12
+}</div>
+
+    <hr class="divider">
+
+    <!-- ── API 6: Update Order Status ── -->
+    <h3>📌 API 6 — PATCH /api/orders/ORD-20240315-1042/status/</h3>
+    <p>Update the status of an order. Only the restaurant (ACCEPTED, PREPARING) or delivery partner (PICKED_UP, DELIVERED) can call this endpoint.</p>
+
+    <h4>Request Body</h4>
+    <div class="code-block">{
+  "status": "PREPARING",
+  "note": "Will be ready in 20 minutes"
+}</div>
+
+    <h4>✅ Success Response — 200 OK</h4>
+    <div class="code-block">{
+  "order_id": "ORD-20240315-1042",
+  "previous_status": "ACCEPTED",
+  "new_status": "PREPARING",
+  "updated_at": "2024-03-15T14:26:30Z",
+  "message": "Order status updated. Customer has been notified."
+}</div>
+
+    <h4>❌ Error Response — 400 Bad Request (invalid transition)</h4>
+    <div class="code-block">{
+  "error": "INVALID_STATUS_TRANSITION",
+  "message": "Cannot transition from DELIVERED to PREPARING.",
+  "status_code": 400,
+  "details": {
+    "current_status": "DELIVERED",
+    "requested_status": "PREPARING",
+    "allowed_transitions": []
+  }
+}</div>
+
+    <h4>❌ Error Response — 403 Forbidden (wrong role)</h4>
+    <div class="code-block">{
+  "error": "PERMISSION_DENIED",
+  "message": "Only the assigned restaurant can mark an order as PREPARING.",
+  "status_code": 403
+}</div>
+
+    <hr class="divider">
+
+    <!-- ── API 7: Submit Review ── -->
+    <h3>📌 API 7 — POST /api/reviews/</h3>
+    <p>Submit a rating and review for a restaurant after the order is delivered.</p>
+
+    <h4>Request Body</h4>
+    <div class="code-block">{
+  "order_id": "ORD-20240315-1042",
+  "restaurant_id": 7,
+  "rating": 4,
+  "comment": "Food was delicious! Paneer Tikka was perfectly spiced. Delivery was a bit slow."
+}</div>
+
+    <h4>✅ Success Response — 201 Created</h4>
+    <div class="code-block">{
+  "review_id": 289,
+  "restaurant": "Spice Garden",
+  "rating": 4,
+  "comment": "Food was delicious! ...",
+  "created_at": "2024-03-15T16:05:00Z",
+  "restaurant_new_avg_rating": 4.31
+}</div>
+
+    <h4>❌ Error Response — 400 Bad Request (order not delivered yet)</h4>
+    <div class="code-block">{
+  "error": "REVIEW_NOT_ALLOWED",
+  "message": "You can only review an order after it has been delivered.",
+  "status_code": 400,
+  "details": {
+    "order_status": "PREPARING",
+    "required_status": "DELIVERED"
+  }
+}</div>
+
+    <hr class="divider">
+
+    <!-- ── Standard Error Envelope ── -->
+    <h3>🔴 Standard Error Envelope</h3>
+    <p>All error responses follow a consistent structure so the frontend can handle them uniformly:</p>
+    <div class="code-block">{
+  "error": "ERROR_CODE_IN_CAPS",       // Machine-readable code for frontend logic
+  "message": "Human-readable message", // Shown directly to user
+  "status_code": 400,                  // Same as HTTP status code
+  "details": { ... }                   // Optional: extra context (field errors, limits, etc.)
+}</div>
+
+    <table>
+      <thead><tr><th>HTTP Status</th><th>When to Use</th><th>Example in Food Delivery</th></tr></thead>
+      <tbody>
+        <tr><td><strong>200 OK</strong></td><td>Successful GET / PATCH</td><td>Restaurant list returned; order status updated</td></tr>
+        <tr><td><strong>201 Created</strong></td><td>Successful POST that creates a resource</td><td>Order placed; review submitted; user registered</td></tr>
+        <tr><td><strong>400 Bad Request</strong></td><td>Invalid input from client</td><td>Cart below ₹100; missing required field; invalid transition</td></tr>
+        <tr><td><strong>401 Unauthorized</strong></td><td>Missing or invalid token</td><td>No JWT sent; JWT expired</td></tr>
+        <tr><td><strong>403 Forbidden</strong></td><td>Valid token but wrong role/permission</td><td>Customer tries to call restaurant-only endpoint</td></tr>
+        <tr><td><strong>404 Not Found</strong></td><td>Resource doesn't exist</td><td>Order ID doesn't exist; restaurant not found</td></tr>
+        <tr><td><strong>409 Conflict</strong></td><td>Duplicate / business rule conflict</td><td>User already reviewed this order; email already registered</td></tr>
+        <tr><td><strong>500 Server Error</strong></td><td>Unhandled backend exception</td><td>Database connection lost; uncaught exception — never expose stack trace!</td></tr>
+      </tbody>
+    </table>
+
+    <div class="info-box green">
+      <div class="info-box-title">Tool: OpenAPI / Swagger</div>
+      <p style="margin:0">Write your API contract as an <strong>OpenAPI 3.0 YAML</strong> file. Use <strong>Swagger Editor</strong> (editor.swagger.io) to view it visually. With Express.js (Node.js), install <code class="code-inline">swagger-ui-express</code> and the spec is auto-generated from your code. You can also paste these JSON examples directly into Swagger as example responses.</p>
+    </div>
+  </section>
+
+  <section class="section" id="acceptance">
+    <div class="section-header">
+      <div class="section-icon icon-green">✅</div>
+      <div class="section-title-group">
+        <h2>3. Acceptance Criteria</h2>
+        <p>Specific, testable conditions that define "done" for each feature</p>
+      </div>
+    </div>
+    <p><strong>Acceptance Criteria (AC)</strong> are precise statements that a feature must satisfy to be considered complete. They bridge the gap between user stories and test cases. They are written by the PM/BA in Semester 2 before the developer starts coding each feature.</p>
+    <h3>Acceptance Criteria: Order Placement Feature</h3>
+    <div class="info-box green">
+      <div class="info-box-title">Feature: Customer Places an Order</div>
+      <ul style="margin:0">
+        <li>AC-1: Customer cannot place an order if cart is empty — "Place Order" button is disabled.</li>
+        <li>AC-2: Customer cannot place an order if restaurant is currently closed — error shown.</li>
+        <li>AC-3: Customer must select a delivery address before proceeding to payment.</li>
+        <li>AC-4: Payment page displays the correct itemised breakdown (subtotal, delivery fee, taxes, total).</li>
+        <li>AC-5: After successful online payment, order status becomes "PLACED" and order ID is shown.</li>
+        <li>AC-6: After failed payment, order is NOT created in the database.</li>
+        <li>AC-7: Order confirmation email is sent within 2 minutes of placement.</li>
+        <li>AC-8: Restaurant receives an in-app notification within 5 seconds of order being placed.</li>
+        <li>AC-9: Cart is cleared after successful order placement.</li>
+        <li>AC-10: Customer is redirected to the order tracking page after placement.</li>
+      </ul>
+    </div>
+    <p>These AC items directly become your Semester 2 test cases — one test per AC item.</p>
+  </section>
+
+  <footer>
+    <a href="semester1_requirements.html">← Requirements Sem 1</a>
+    <nav class="footer-nav">
+      <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+      <a href="semester3_requirements.html">Next: Requirements Sem 3 →</a>
+    </nav>
+  </footer>
+</div>
+</body>
+</html>

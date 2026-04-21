@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Requirements (SRS/PRD) — Semester 1 | Online Food Delivery System</title>
+  <link rel="stylesheet" href="child_page_styles.css">
+  <style>
+    /* ── Three-column comparison layout ── */
+    .three-col-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 14px;
+      margin: 20px 0;
+      align-items: start;
+    }
+    .tri-head {
+      font-size: 12px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.5px; padding: 10px 14px;
+      border-radius: 8px 8px 0 0; text-align: center; margin-bottom: 10px;
+    }
+    .tri-head.us { background: #5147A9; color: #fff; }
+    .tri-head.uc { background: #0F6E56; color: #fff; }
+    .tri-head.tc { background: #7a5a0a; color: #fff; }
+
+    /* Compact comparison cards */
+    .cmp-card {
+      background: #fff; border-radius: 8px;
+      padding: 12px 14px; margin-bottom: 10px;
+      border: 1px solid #e0e0f0;
+    }
+    .cmp-card.us { border-left: 4px solid #5147A9; }
+    .cmp-card.uc { border-left: 4px solid #0F6E56; }
+    .cmp-card.tc { border-left: 4px solid #c47a10; }
+    .cmp-id {
+      font-size: 10.5px; font-weight: 700; color: #888;
+      text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 5px;
+    }
+    .cmp-id .covers { font-weight: 400; color: #aaa; font-size: 10px; }
+    .cmp-title { font-weight: 700; font-size: 13.5px; color: #1a1a2e; margin-bottom: 6px; }
+    .cmp-body { font-size: 12.5px; color: #444; line-height: 1.6; margin-bottom: 6px; }
+    .cmp-label {
+      font-size: 11px; font-weight: 600; text-transform: uppercase;
+      color: #888; letter-spacing: 0.3px; margin: 6px 0 3px;
+    }
+    .cmp-steps { font-size: 12px; color: #444; line-height: 1.9; padding-left: 14px; margin: 0; }
+    .cmp-ac { font-size: 12px; color: #444; padding-left: 14px; margin: 0; line-height: 1.8; }
+    .badge-pass {
+      display: inline-block; font-size: 11px; font-weight: 700;
+      padding: 2px 10px; border-radius: 4px;
+      background: #d4edda; color: #155724; border: 1px solid #b8ddc5;
+    }
+    .badge-fail {
+      display: inline-block; font-size: 11px; font-weight: 700;
+      padding: 2px 10px; border-radius: 4px;
+      background: #fde8e8; color: #7b1a1a; border: 1px solid #f5c6c6;
+    }
+
+    /* Full test case card */
+    .tc-full {
+      background: #fff; border: 1px solid #e0d8b0;
+      border-left: 4px solid #c47a10;
+      border-radius: 8px; padding: 16px 18px; margin-bottom: 16px;
+    }
+    .tc-full-id {
+      font-size: 11px; font-weight: 700; color: #7a5a0a;
+      text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;
+    }
+    .tc-full-title { font-size: 15px; font-weight: 700; color: #1a1a2e; margin-bottom: 12px; }
+    .tc-full table { font-size: 13px; margin: 0; }
+    .tc-full td:first-child { font-weight: 600; color: #666; width: 110px; vertical-align: top; padding: 4px 10px 4px 0; }
+    .tc-full td:last-child { color: #333; padding: 4px 0; }
+
+    /* Blockquote callout */
+    .callout-quote {
+      border-left: 5px solid #5147A9; background: #f6f5ff;
+      padding: 14px 18px; border-radius: 0 8px 8px 0; margin: 16px 0;
+      font-size: 14.5px; color: #2a2a4a; line-height: 1.7;
+    }
+
+    @media (max-width: 740px) {
+      .three-col-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb">
+    <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+    <span class="sep">›</span>
+    <span>Semester 1 — Foundation</span>
+    <span class="sep">›</span>
+    <span>Requirements (SRS / PRD)</span>
+  </nav>
+
+  <!-- Page Header -->
+  <header class="page-header">
+    <div class="sem-badge sem-1">Semester 1 — Foundation</div>
+    <h1>Requirements — SRS &amp; PRD</h1>
+    <div class="project-tag">Example Project: <strong>Online Food Delivery System</strong></div>
+    <p class="header-desc">
+      Requirements capture exactly what the system must do (functional) and how well it must
+      do it (non-functional). A solid SRS (Software Requirements Specification) is the contract
+      between the team and their stakeholders — and the foundation for design and testing.
+    </p>
+  </header>
+
+  <!-- Quick Navigation -->
+  <nav class="topic-nav">
+    <div class="topic-nav-label">On this page</div>
+    <a href="#functional-reqs">1. Functional Requirements</a>
+    <a href="#non-functional-reqs">2. Non-Functional Requirements</a>
+    <a href="#user-stories">3. User Stories ↗</a>
+    <a href="#use-cases">4. Use Cases ↗</a>
+    <a href="#comparison">5. Story vs Use Case vs Test Case</a>
+    <a href="#test-cases">6. Test Planning ↗</a>
+    <a href="#business-rules">7. Business Rules</a>
+  </nav>
+  <div style="background:#f0f7ff; border:1px solid #b8d4f0; border-radius:8px; padding:12px 18px; margin:12px 0; font-size:13px; color:#185FA5;">
+    <strong>📂 Sections 3, 4, and 6 have been split into dedicated pages</strong> for easier navigation.
+    Links marked with ↗ open the full dedicated document.
+    The comparison table (Section 5) and Business Rules (Section 7) remain here.
+  </div>
+
+  <!-- ============================================================
+       SECTION 1 : Functional Requirements
+       ============================================================ -->
+  <section class="section" id="functional-reqs">
+    <div class="section-header">
+      <div class="section-icon icon-purple">📋</div>
+      <div class="section-title-group">
+        <h2>1. Functional Requirements</h2>
+        <p>What the system <em>must do</em> — observable features and behaviours</p>
+      </div>
+    </div>
+
+    <p>
+      A <strong>functional requirement</strong> describes a specific behaviour or function the
+      system must provide. They are written from the perspective of what the system does, not
+      how it does it. Each requirement is given a unique ID so it can be traced through design,
+      coding, and testing.
+    </p>
+
+    <h3>FR-1: User Management</h3>
+    <div class="req-item">
+      <span class="req-id">FR-101</span>
+      <div class="req-content">
+        <strong>User Registration</strong>
+        <span>The system shall allow new users to register using their name, email address, phone number, and password. A verification email shall be sent upon registration.</span>
+      </div>
+    </div>
+    <div class="req-item">
+      <span class="req-id">FR-102</span>
+      <div class="req-content">
+        <strong>User Login / Logout</strong>
+        <span>Registered users shall be able to log in using email + password. Users shall be able to log out from any page. Invalid credentials shall display an error message.</span>
+      </div>
+    </div>
+    <div class="req-item">
+      <span class="req-id">FR-103</span>
+      <div class="req-content">
+        <strong>Password Reset</strong>
+        <span>The system shall allow users to reset forgotten passwords via a link sent to their registered email address. The link shall expire after 30 minutes.</span>
+      </div>
+    </div>
+    <div class="req-item">
+      <span class="req-id">FR-104</span>
+      <div class="req-content">
+        <strong>Profile Management</strong>
+        <span>Logged-in users shall be able to update their name, phone number, and delivery addresses. Users can save multiple delivery addresses.</span>
+      </div>
+    </div>
+
+    <h3>FR-2: Restaurant Management</h3>
+    <div class="req-item">
+      <span class="req-id green">FR-201</span>
+      <div class="req-content">
+        <strong>Restaurant Registration</strong>
+        <span>Restaurant owners shall be able to register their restaurant by providing name, address, cuisine type, opening hours, and a FSSAI licence number. Registration requires admin approval.</span>
+      </div>
+    </div>
+    <div class="req-item">
+      <span class="req-id green">FR-202</span>
+      <div class="req-content">
+        <strong>Menu Management</strong>
+        <span>Restaurant owners shall be able to add, edit, and delete menu items. Each item shall have a name, description, price, category (e.g., Starter, Main, Dessert), photo, and veg/non-veg flag.</span>
+      </div>
+    </div>
+    <div class="req-item">
+      <span class="req-id green">FR-203</span>
+      <div class="req-content">
+        <strong>Order Management (Restaurant Side)</strong>
+        <span>Restaurant owners shall receive a notification for each new order. They shall be able to accept or reject an order within 5 minutes. Accepted orders display preparation time.</span>
+      </div>
+    </div>
+
+    <h3>FR-3: Ordering</h3>
+    <div class="req-item">
+      <span class="req-id orange">FR-301</span>
+      <div class="req-content">
+        <strong>Restaurant Discovery</strong>
+        <span>Customers shall be able to search for restaurants by name or filter by cuisine type, rating, or price range. Results shall show restaurant name, rating, distance, and delivery time estimate.</span>
+      </div>
+    </div>
+    <div class="req-item">
+      <span class="req-id orange">FR-302</span>
+      <div class="req-content">
+        <strong>Cart Management</strong>
+        <span>Customers shall be able to add items to a cart, update quantities, and remove items. The cart shall persist across page refreshes. Items from only one restaurant may be in the cart at a time.</span>
+      </div>
+    </div>
+    <div class="req-item">
+      <span class="req-id orange">FR-303</span>
+      <div class="req-content">
+        <strong>Order Placement</strong>
+        <span>Customers shall be able to place an order by selecting a delivery address, choosing a payment method, and confirming the order. An order confirmation page and email shall be generated.</span>
+      </div>
+    </div>
+    <div class="req-item">
+      <span class="req-id orange">FR-304</span>
+      <div class="req-content">
+        <strong>Order Status Tracking</strong>
+        <span>Customers shall be able to view real-time order status transitions: Order Placed → Restaurant Accepted → Preparing → Picked Up → Out for Delivery → Delivered. Status shall auto-refresh every 15 seconds.</span>
+      </div>
+    </div>
+    <div class="req-item">
+      <span class="req-id orange">FR-305</span>
+      <div class="req-content">
+        <strong>Order History</strong>
+        <span>Customers shall be able to view a list of all past orders with date, items, total, and status. Customers shall be able to reorder any past order in one click.</span>
+      </div>
+    </div>
+
+    <h3>FR-4: Payment</h3>
+    <div class="req-item">
+      <span class="req-id blue">FR-401</span>
+      <div class="req-content">
+        <strong>Online Payment</strong>
+        <span>The system shall integrate with a sandbox payment gateway (Razorpay / Stripe test mode) to process credit card, debit card, and UPI payments. Payment failure shall allow retry.</span>
+      </div>
+    </div>
+    <div class="req-item">
+      <span class="req-id blue">FR-402</span>
+      <div class="req-content">
+        <strong>Cash on Delivery</strong>
+        <span>Customers shall have the option to pay cash upon delivery. COD orders shall display a "Collect ₹XXX" instruction to the delivery partner.</span>
+      </div>
+    </div>
+    <div class="req-item">
+      <span class="req-id blue">FR-403</span>
+      <div class="req-content">
+        <strong>Invoice Generation</strong>
+        <span>After a successful order, the system shall generate an invoice showing itemised charges, delivery fee, applicable taxes, and order total. The invoice shall be downloadable as PDF.</span>
+      </div>
+    </div>
+
+    <h3>FR-5: Delivery Partner</h3>
+    <div class="req-item">
+      <span class="req-id">FR-501</span>
+      <div class="req-content">
+        <strong>Partner Registration &amp; Profile</strong>
+        <span>Delivery partners shall be able to register with name, phone, vehicle type, and licence number. Partners shall go online/offline to indicate availability.</span>
+      </div>
+    </div>
+    <div class="req-item">
+      <span class="req-id">FR-502</span>
+      <div class="req-content">
+        <strong>Order Assignment</strong>
+        <span>The system shall automatically assign accepted orders to the nearest available delivery partner. If no partner accepts within 3 minutes, the order is re-queued.</span>
+      </div>
+    </div>
+    <div class="req-item">
+      <span class="req-id">FR-503</span>
+      <div class="req-content">
+        <strong>Status Updates by Partner</strong>
+        <span>Delivery partners shall be able to mark orders as "Picked Up" and "Delivered". Each status change triggers a notification to the customer.</span>
+      </div>
+    </div>
+
+    <h3>FR-6: Reviews &amp; Admin</h3>
+    <div class="req-item">
+      <span class="req-id red">FR-601</span>
+      <div class="req-content">
+        <strong>Ratings &amp; Reviews</strong>
+        <span>After delivery, customers shall be able to rate the restaurant (1–5 stars) and add a text review. Restaurant average rating is recalculated after each review.</span>
+      </div>
+    </div>
+    <div class="req-item">
+      <span class="req-id red">FR-602</span>
+      <div class="req-content">
+        <strong>Admin Dashboard</strong>
+        <span>The admin shall view platform-wide statistics: total orders today, revenue, active restaurants, active users. Admin shall approve/reject restaurant registrations.</span>
+      </div>
+    </div>
+
+    <div class="info-box blue">
+      <div class="info-box-title">Traceability</div>
+      <p style="margin:0">
+        Every FR gets a unique ID (e.g., FR-303). When you write test cases in Semester 2, each
+        test case links back to an FR. This is called <strong>requirements traceability</strong>
+        — it ensures nothing slips through the cracks. Build a Requirements Traceability Matrix (RTM).
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 2 : Non-Functional Requirements
+       ============================================================ -->
+  <section class="section" id="non-functional-reqs">
+    <div class="section-header">
+      <div class="section-icon icon-purple">⚡</div>
+      <div class="section-title-group">
+        <h2>2. Non-Functional Requirements</h2>
+        <p>How well the system performs — quality attributes and constraints</p>
+      </div>
+    </div>
+
+    <p>
+      Non-functional requirements (NFRs) define the <em>quality</em> of the system — not
+      what it does but how it behaves. They are often called <strong>quality attributes</strong>
+      or the "-ilities" (reliability, scalability, security, usability...).
+    </p>
+
+    <h3>Performance</h3>
+    <div class="req-item">
+      <span class="req-id">NFR-1</span>
+      <div class="req-content">
+        <strong>Page Load Time</strong>
+        <span>Any page shall fully load within 3 seconds on a standard broadband connection (10 Mbps).</span>
+      </div>
+    </div>
+    <div class="req-item">
+      <span class="req-id">NFR-2</span>
+      <div class="req-content">
+        <strong>API Response Time</strong>
+        <span>All REST API responses shall return within 500 ms under normal load (up to 50 concurrent users).</span>
+      </div>
+    </div>
+    <div class="req-item">
+      <span class="req-id">NFR-3</span>
+      <div class="req-content">
+        <strong>Concurrent Users</strong>
+        <span>The system shall handle a minimum of 100 concurrent sessions without degradation (sufficient for a college campus scenario).</span>
+      </div>
+    </div>
+
+    <h3>Security</h3>
+    <div class="req-item">
+      <span class="req-id red">NFR-4</span>
+      <div class="req-content">
+        <strong>Password Hashing</strong>
+        <span>User passwords shall never be stored in plain text. bcrypt (work factor ≥ 10) or Argon2 shall be used for password hashing.</span>
+      </div>
+    </div>
+    <div class="req-item">
+      <span class="req-id red">NFR-5</span>
+      <div class="req-content">
+        <strong>HTTPS Enforcement</strong>
+        <span>All HTTP traffic shall be redirected to HTTPS. TLS 1.2 or higher shall be enforced in production.</span>
+      </div>
+    </div>
+    <div class="req-item">
+      <span class="req-id red">NFR-6</span>
+      <div class="req-content">
+        <strong>Input Validation &amp; SQL Injection Prevention</strong>
+        <span>All user inputs shall be validated and sanitised. Parameterised queries or ORM shall be used exclusively — no raw string-interpolated SQL.</span>
+      </div>
+    </div>
+    <div class="req-item">
+      <span class="req-id red">NFR-7</span>
+      <div class="req-content">
+        <strong>Role-Based Access Control</strong>
+        <span>API endpoints shall enforce role-based access. A customer shall not be able to call restaurant-management APIs; a delivery partner shall not access admin endpoints.</span>
+      </div>
+    </div>
+
+    <h3>Usability &amp; Accessibility</h3>
+    <div class="req-item">
+      <span class="req-id green">NFR-8</span>
+      <div class="req-content">
+        <strong>Responsive Design</strong>
+        <span>The UI shall be fully functional on screens from 375 px (mobile) to 1920 px (desktop wide). No horizontal scrolling on mobile.</span>
+      </div>
+    </div>
+    <div class="req-item">
+      <span class="req-id green">NFR-9</span>
+      <div class="req-content">
+        <strong>Error Messaging</strong>
+        <span>All form validation errors and API failures shall display human-readable, actionable messages. HTTP 500 errors shall show a friendly error page, not a raw stack trace.</span>
+      </div>
+    </div>
+
+    <h3>Reliability &amp; Availability</h3>
+    <div class="req-item">
+      <span class="req-id blue">NFR-10</span>
+      <div class="req-content">
+        <strong>Uptime Target</strong>
+        <span>The deployed system shall maintain ≥ 99% uptime during evaluation/demo periods (measured over any 30-day window).</span>
+      </div>
+    </div>
+    <div class="req-item">
+      <span class="req-id blue">NFR-11</span>
+      <div class="req-content">
+        <strong>Data Backup</strong>
+        <span>The database shall be backed up at least once daily. Backup files shall be stored separately from the primary server.</span>
+      </div>
+    </div>
+
+    <h3>Maintainability</h3>
+    <div class="req-item">
+      <span class="req-id orange">NFR-12</span>
+      <div class="req-content">
+        <strong>Code Quality</strong>
+        <span>All source code shall follow the agreed style guide (ESLint (Airbnb config) / Prettier). Functions exceeding 50 lines shall be refactored. Code complexity (cyclomatic) shall not exceed 10 per function.</span>
+      </div>
+    </div>
+    <div class="req-item">
+      <span class="req-id orange">NFR-13</span>
+      <div class="req-content">
+        <strong>Logging</strong>
+        <span>All API requests and errors shall be logged with timestamp, user ID, endpoint, and HTTP status code. Logs shall be queryable (structured JSON format).</span>
+      </div>
+    </div>
+
+    <div class="info-box orange">
+      <div class="info-box-title">Tip for Students</div>
+      <p style="margin:0">
+        NFRs are often ignored during development and only remembered during testing — when it's
+        too late to fix them cheaply. Write your NFRs in Semester 1 and review them every semester.
+        Performance NFRs directly inform your database indexing and API design decisions in Semester 2.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 3 : User Stories → dedicated page
+       ============================================================ -->
+  <section class="section" id="user-stories">
+    <div class="section-header">
+      <div class="section-icon icon-purple">📝</div>
+      <div class="section-title-group">
+        <h2>3. User Stories</h2>
+        <p>Requirements from the user's perspective — in plain language</p>
+      </div>
+    </div>
+    <p>
+      A <strong>user story</strong> captures a feature from the end-user's point of view:
+      <em>"As a [role], I want to [action], so that [benefit]."</em>
+      Each story carries Acceptance Criteria that directly drive your test cases.
+    </p>
+    <div style="border: 2px solid #5147A9; border-radius: 12px; padding: 24px 28px; background: linear-gradient(135deg, #f8f7ff 0%, #eeeeff 100%); margin: 16px 0;">
+      <div style="display:flex; align-items:center; gap:14px; margin-bottom:12px;">
+        <span style="font-size:36px;">📝</span>
+        <div>
+          <div style="font-size:18px; font-weight:700; color:#3d3580;">User Stories — Full Document</div>
+          <div style="font-size:13px; color:#666; margin-top:3px;">11 stories across 4 actor roles · INVEST criteria · Acceptance criteria</div>
+        </div>
+      </div>
+      <p style="font-size:13.5px; color:#444; margin:0 0 16px;">
+        Includes Customer stories (register, login, browse, cart, payment, tracking, review),
+        Restaurant Owner stories (register restaurant, manage menu, accept orders),
+        Delivery Partner stories, and Admin stories — each with detailed acceptance criteria.
+      </p>
+      <a href="semester1_user_stories.html" style="display:inline-block; background:#5147A9; color:#fff; font-weight:700; padding:10px 22px; border-radius:8px; text-decoration:none; font-size:14px;">
+        Open User Stories →
+      </a>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 4 : Use Cases → dedicated page
+       ============================================================ -->
+  <section class="section" id="use-cases">
+    <div class="section-header">
+      <div class="section-icon icon-purple">🔷</div>
+      <div class="section-title-group">
+        <h2>4. Use Cases (UML)</h2>
+        <p>Modelling system interactions between actors and the system</p>
+      </div>
+    </div>
+    <p>
+      A <strong>Use Case</strong> describes a specific way an actor interacts with the system to achieve a goal.
+      More detailed than a user story — it includes main flows, alternate flows, pre/postconditions.
+    </p>
+    <div style="border: 2px solid #0F6E56; border-radius: 12px; padding: 24px 28px; background: linear-gradient(135deg, #f0faf5 0%, #d6f0e6 100%); margin: 16px 0;">
+      <div style="display:flex; align-items:center; gap:14px; margin-bottom:12px;">
+        <span style="font-size:36px;">🔷</span>
+        <div>
+          <div style="font-size:18px; font-weight:700; color:#0a4d38;">Use Cases — Full Document</div>
+          <div style="font-size:13px; color:#666; margin-top:3px;">20 use cases · Actors &amp; relationships · 3 detailed use case tables</div>
+        </div>
+      </div>
+      <p style="font-size:13.5px; color:#444; margin:0 0 16px;">
+        Full use case list for all actors, plus detailed walk-throughs of UC-08 (Place Order),
+        UC-02 (Login), and UC-12 (Write Review) with main flows, alternate flows, and postconditions.
+      </p>
+      <a href="semester1_use_cases.html" style="display:inline-block; background:#0F6E56; color:#fff; font-weight:700; padding:10px 22px; border-radius:8px; text-decoration:none; font-size:14px;">
+        Open Use Cases →
+      </a>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 5 : Comparison — User Story vs Use Case vs Test Case
+       ============================================================ -->
+  <section class="section" id="comparison">
+    <div class="section-header">
+      <div class="section-icon icon-purple">🔍</div>
+      <div class="section-title-group">
+        <h2>5. User Story vs Use Case vs Test Case</h2>
+        <p>Students often mix these up — here is the clear difference</p>
+      </div>
+    </div>
+
+    <div class="callout-quote">
+      A <strong>User Story</strong> says <em>"I want to be able to do X."</em>
+      &nbsp;A <strong>Use Case</strong> says <em>"Here is exactly how the system handles X, step by step."</em>
+      &nbsp;A <strong>Test Case</strong> says <em>"I did X — here is exactly what should happen."</em>
+      <br><br>
+      One is a <strong>wish</strong>. One is a <strong>blueprint</strong>. One is a <strong>verification</strong>.
+    </div>
+
+    <h3>Comparison at a Glance</h3>
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th style="background:#EEEDFE;color:#3C3489;">User Story</th>
+          <th style="background:#E1F5EE;color:#0F6E56;">Use Case</th>
+          <th style="background:#FAEEDA;color:#854F0B;">Test Case</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Written by</strong></td><td>Product owner / analyst</td><td>Business analyst / designer</td><td>Tester / developer</td></tr>
+        <tr><td><strong>Written when</strong></td><td>Semester 1 — requirements</td><td>Semester 1 — requirements</td><td>Semester 2–3 — testing phase</td></tr>
+        <tr><td><strong>Purpose</strong></td><td>Define <em>what</em> to build (the goal)</td><td>Define <em>how</em> actor &amp; system interact</td><td>Verify it was built correctly</td></tr>
+        <tr><td><strong>Lives in</strong></td><td>PRD / SRS document</td><td>SRS / UML diagrams</td><td>Test Plan document</td></tr>
+        <tr><td><strong>Language</strong></td><td>Informal, goal-oriented</td><td>Structured, flow + alternate paths</td><td>Precise, step-by-step with inputs</td></tr>
+        <tr><td><strong>Pass / Fail?</strong></td><td>No — it's a wish</td><td>No — it's a scenario blueprint</td><td>Yes — has expected result</td></tr>
+        <tr><td><strong>Traced from</strong></td><td>Business goal</td><td>FR / business goal</td><td>User story / use case / FR</td></tr>
+        <tr><td><strong>Scope</strong></td><td>One actor's perspective</td><td>Complete interaction (all paths)</td><td>One specific scenario (one path)</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Side by Side — Same Feature, Three Artefacts</h3>
+    <p>The table below shows the <strong>same four features</strong> written as a User Story, as a Use Case summary, and as a Test Case — so you can see how they differ for identical functionality.</p>
+
+    <div class="three-col-grid">
+
+      <!-- ── Column 1: User Stories ── -->
+      <div>
+        <div class="tri-head us">User Stories — PRD / SRS</div>
+
+        <div class="cmp-card us">
+          <div class="cmp-id">US-01</div>
+          <div class="cmp-title">Login to my account</div>
+          <div class="cmp-body">As a <strong>customer</strong>, I want to <strong>log in with my email and password</strong> so that I can access my orders and saved addresses.</div>
+          <div class="cmp-label">Acceptance criteria</div>
+          <ul class="cmp-ac">
+            <li>Valid credentials grant access</li>
+            <li>Invalid credentials show an error</li>
+            <li>Session persists across page reload</li>
+          </ul>
+        </div>
+
+        <div class="cmp-card us">
+          <div class="cmp-id">US-02</div>
+          <div class="cmp-title">Place a food order online</div>
+          <div class="cmp-body">As a <strong>customer</strong>, I want to <strong>place a food order and pay online</strong> so that I can get food delivered without carrying cash.</div>
+          <div class="cmp-label">Acceptance criteria</div>
+          <ul class="cmp-ac">
+            <li>Cart shows item total + delivery fee</li>
+            <li>Payment success → order confirmed</li>
+            <li>Payment failure → order NOT created</li>
+          </ul>
+        </div>
+
+        <div class="cmp-card us">
+          <div class="cmp-id">US-03</div>
+          <div class="cmp-title">Track my order in real-time</div>
+          <div class="cmp-body">As a <strong>customer</strong>, I want to <strong>see real-time order status</strong> so that I know exactly when my food will arrive.</div>
+          <div class="cmp-label">Acceptance criteria</div>
+          <ul class="cmp-ac">
+            <li>Visual timeline with current step</li>
+            <li>Status auto-refreshes every 15s</li>
+            <li>Notification on status change</li>
+          </ul>
+        </div>
+
+        <div class="cmp-card us">
+          <div class="cmp-id">US-04</div>
+          <div class="cmp-title">Rate and review a restaurant</div>
+          <div class="cmp-body">As a <strong>customer</strong>, I want to <strong>rate and review a restaurant after delivery</strong> so that other users can make informed choices.</div>
+          <div class="cmp-label">Acceptance criteria</div>
+          <ul class="cmp-ac">
+            <li>Rating prompt appears after delivery</li>
+            <li>Only one review per order allowed</li>
+            <li>Avg rating updates after submission</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ── Column 2: Use Cases ── -->
+      <div>
+        <div class="tri-head uc">Use Cases — UML / SRS</div>
+
+        <div class="cmp-card uc">
+          <div class="cmp-id">UC-02 <span class="covers">↔ US-01</span></div>
+          <div class="cmp-title">Login</div>
+          <div class="cmp-body"><strong>Actor:</strong> Any registered user &nbsp;|&nbsp; <strong>Goal:</strong> Authenticate and receive JWT token</div>
+          <div class="cmp-label">Main flow</div>
+          <ol class="cmp-steps">
+            <li>User enters email + password</li>
+            <li>System validates against DB (bcrypt)</li>
+            <li>System issues JWT token</li>
+            <li>Redirect to dashboard</li>
+          </ol>
+          <div class="cmp-label">Alternate flows</div>
+          <ul class="cmp-ac">
+            <li>Wrong password → show error, no token</li>
+            <li>Account suspended → show message</li>
+            <li>Email unverified → prompt resend link</li>
+          </ul>
+        </div>
+
+        <div class="cmp-card uc">
+          <div class="cmp-id">UC-06 <span class="covers">↔ US-02</span></div>
+          <div class="cmp-title">Place Order</div>
+          <div class="cmp-body"><strong>Actor:</strong> Customer + Payment Gateway &nbsp;|&nbsp; <strong>Goal:</strong> Submit order and initiate payment</div>
+          <div class="cmp-label">Main flow</div>
+          <ol class="cmp-steps">
+            <li>Customer confirms cart</li>
+            <li>Selects address + payment method</li>
+            <li>Payment gateway processes</li>
+            <li>Order created, restaurant notified</li>
+          </ol>
+          <div class="cmp-label">Alternate flows</div>
+          <ul class="cmp-ac">
+            <li>Payment fails → no order created</li>
+            <li>Restaurant closed → button disabled</li>
+          </ul>
+        </div>
+
+        <div class="cmp-card uc">
+          <div class="cmp-id">UC-07 <span class="covers">↔ US-03</span></div>
+          <div class="cmp-title">Track Order</div>
+          <div class="cmp-body"><strong>Actor:</strong> Customer &nbsp;|&nbsp; <strong>Goal:</strong> View live order status and estimated arrival</div>
+          <div class="cmp-label">Main flow</div>
+          <ol class="cmp-steps">
+            <li>Customer opens tracking page</li>
+            <li>System fetches current status</li>
+            <li>Page auto-polls every 15 seconds</li>
+            <li>Status timeline updates in place</li>
+          </ol>
+          <div class="cmp-label">Alternate flows</div>
+          <ul class="cmp-ac">
+            <li>Order cancelled → show cancellation reason</li>
+          </ul>
+        </div>
+
+        <div class="cmp-card uc">
+          <div class="cmp-id">UC-09 <span class="covers">↔ US-04</span></div>
+          <div class="cmp-title">Write Review</div>
+          <div class="cmp-body"><strong>Actor:</strong> Customer &nbsp;|&nbsp; <strong>Goal:</strong> Submit star rating + comment for a delivered order</div>
+          <div class="cmp-label">Main flow</div>
+          <ol class="cmp-steps">
+            <li>Customer opens delivered order</li>
+            <li>Selects 1–5 star rating</li>
+            <li>Optionally adds text comment</li>
+            <li>System saves, updates avg rating</li>
+          </ol>
+          <div class="cmp-label">Alternate flows</div>
+          <ul class="cmp-ac">
+            <li>Already reviewed → button hidden</li>
+            <li>Not delivered yet → 400 error</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ── Column 3: Test Cases ── -->
+      <div>
+        <div class="tri-head tc">Test Cases — Test Plan</div>
+
+        <div class="cmp-card tc">
+          <div class="cmp-id">TC-01 <span class="covers">covers UC-02</span></div>
+          <div class="cmp-title">Login with valid credentials</div>
+          <div class="cmp-label">Precondition</div>
+          <div class="cmp-body">User priya@example.com exists in DB</div>
+          <div class="cmp-label">Steps</div>
+          <ol class="cmp-steps">
+            <li>Open /login</li>
+            <li>Enter priya@example.com, Priya@123</li>
+            <li>Click Login</li>
+          </ol>
+          <div class="cmp-label">Expected</div>
+          <div class="cmp-body">Redirect to /home; JWT set in browser; name shown in header</div>
+          <span class="badge-pass">Expected: PASS</span>
+        </div>
+
+        <div class="cmp-card tc">
+          <div class="cmp-id">TC-02 <span class="covers">covers UC-02</span></div>
+          <div class="cmp-title">Login with wrong password</div>
+          <div class="cmp-label">Precondition</div>
+          <div class="cmp-body">User priya@example.com exists in DB</div>
+          <div class="cmp-label">Steps</div>
+          <ol class="cmp-steps">
+            <li>Open /login</li>
+            <li>Enter priya@example.com, wrongpass</li>
+            <li>Click Login</li>
+          </ol>
+          <div class="cmp-label">Expected</div>
+          <div class="cmp-body">Error shown: "Invalid email or password". No redirect. No JWT set in browser.</div>
+          <span class="badge-fail">Expected: FAIL gracefully</span>
+        </div>
+
+        <div class="cmp-card tc">
+          <div class="cmp-id">TC-03 <span class="covers">covers UC-06</span></div>
+          <div class="cmp-title">Place order — COD success</div>
+          <div class="cmp-label">Precondition</div>
+          <div class="cmp-body">Logged in; cart ≥ ₹100; Spice Garden is open</div>
+          <div class="cmp-label">Steps</div>
+          <ol class="cmp-steps">
+            <li>Click Checkout</li>
+            <li>Select saved address</li>
+            <li>Select Cash on Delivery</li>
+            <li>Click Place Order</li>
+          </ol>
+          <div class="cmp-label">Expected</div>
+          <div class="cmp-body">Order created with status PLACED; redirected to tracking page; restaurant notified.</div>
+          <span class="badge-pass">Expected: PASS</span>
+        </div>
+
+        <div class="cmp-card tc">
+          <div class="cmp-id">TC-04 <span class="covers">covers UC-06</span></div>
+          <div class="cmp-title">Place order — payment declined</div>
+          <div class="cmp-label">Precondition</div>
+          <div class="cmp-body">Logged in; cart ≥ ₹100; using test declined card</div>
+          <div class="cmp-label">Steps</div>
+          <ol class="cmp-steps">
+            <li>Select Online payment</li>
+            <li>Enter declined test card</li>
+            <li>Submit in Razorpay popup</li>
+          </ol>
+          <div class="cmp-label">Expected</div>
+          <div class="cmp-body">Error: "Payment declined". Order NOT in DB. Retry option shown.</div>
+          <span class="badge-fail">Expected: FAIL gracefully</span>
+        </div>
+      </div>
+
+    </div><!-- end three-col-grid -->
+  </section>
+
+  <!-- ============================================================
+       SECTION 6 : Test Planning → dedicated page
+       ============================================================ -->
+  <section class="section" id="test-cases">
+    <div class="section-header">
+      <div class="section-icon icon-purple">🗺️</div>
+      <div class="section-title-group">
+        <h2>6. Test Planning (Strategy &amp; Scope)</h2>
+        <p>What will be tested, how, and when — across all semesters</p>
+      </div>
+    </div>
+    <div style="background:#fff3e0; border:1px solid #f0c060; border-radius:8px; padding:12px 16px; margin-bottom:14px; font-size:13px;">
+      <strong>⏱ When do Test Cases actually get written and run?</strong><br>
+      <span style="color:#555;">
+        Semester 1 = <strong>Test Planning</strong> (strategy, scope, template, RTM structure)<br>
+        Semester 2 = <strong>Test Case Writing</strong> (formal TCs drafted from FRs and UCs)<br>
+        Semester 3 = <strong>Test Case Execution</strong> (run, record PASS/FAIL, file bugs, regression)
+      </span>
+    </div>
+    <p>Test planning is done in Semester 1 because it is driven by requirements — not code. You define <em>what</em> needs to be tested before you build it, just as you define <em>what</em> to build before you write code.</p>
+    <div style="border: 2px solid #c47a10; border-radius: 12px; padding: 24px 28px; background: linear-gradient(135deg, #fffbf0 0%, #faefd0 100%); margin: 16px 0;">
+      <div style="display:flex; align-items:center; gap:14px; margin-bottom:12px;">
+        <span style="font-size:36px;">🗺️</span>
+        <div>
+          <div style="font-size:18px; font-weight:700; color:#7a5a0a;">Test Planning — Full Document</div>
+          <div style="font-size:13px; color:#666; margin-top:3px;">Testing lifecycle · Strategy · Scope · TC template · RTM structure</div>
+        </div>
+      </div>
+      <p style="font-size:13.5px; color:#444; margin:0 0 16px;">
+        Covers the V-Model, test levels (unit, integration, system, UAT), in-scope vs out-of-scope features,
+        entry/exit criteria, test environments, and the standard test case template that Semester 2 will use.
+        Also sets up the Requirements Traceability Matrix (RTM) headers.
+      </p>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <a href="semester1_test_cases.html" style="display:inline-block; background:#c47a10; color:#fff; font-weight:700; padding:10px 22px; border-radius:8px; text-decoration:none; font-size:14px;">
+          Open Test Planning →
+        </a>
+        <a href="semester2_testing.html" style="display:inline-block; background:#0F6E56; color:#fff; font-weight:700; padding:10px 22px; border-radius:8px; text-decoration:none; font-size:14px;">
+          Semester 2 — Write Test Cases →
+        </a>
+        <a href="semester3_testing.html" style="display:inline-block; background:#185FA5; color:#fff; font-weight:700; padding:10px 22px; border-radius:8px; text-decoration:none; font-size:14px;">
+          Semester 3 — Execute Test Cases →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 7 : Business Rules
+       ============================================================ -->
+  <section class="section" id="business-rules">
+    <div class="section-header">
+      <div class="section-icon icon-purple">⚖️</div>
+      <div class="section-title-group">
+        <h2>7. Business Rules</h2>
+        <p>Policies and constraints governing system behaviour</p>
+      </div>
+    </div>
+
+    <p>
+      <strong>Business rules</strong> are statements of business policy that the system must
+      enforce. They are not functional requirements (which describe what the system does)
+      but rather constraints on <em>how</em> the system should behave in specific situations.
+      They typically come from the business domain and remain stable over time.
+    </p>
+
+    <h3>Order Rules</h3>
+    <div class="req-item">
+      <span class="req-id">BR-01</span>
+      <div class="req-content">
+        <strong>Single Restaurant per Cart</strong>
+        <span>A customer's cart may contain items from only one restaurant at a time. Adding an item from a different restaurant requires clearing the existing cart.</span>
+      </div>
+    </div>
+    <div class="req-item">
+      <span class="req-id">BR-02</span>
+      <div class="req-content">
+        <strong>Minimum Order Amount</strong>
+        <span>The minimum cart value for a delivery order is ₹100. Orders below this amount shall not be eligible for delivery; the customer must add more items or pick up in person.</span>
+      </div>
+    </div>
+    <div class="req-item">
+      <span class="req-id">BR-03</span>
+      <div class="req-content">
+        <strong>Order Cancellation Window</strong>
+        <span>A customer may cancel an order only before the restaurant confirms preparation (i.e., while status is "Placed" or "Accepted"). Once status is "Preparing," cancellations are not allowed.</span>
+      </div>
+    </div>
+    <div class="req-item">
+      <span class="req-id">BR-04</span>
+      <div class="req-content">
+        <strong>Restaurant Response Timeout</strong>
+        <span>If a restaurant does not accept or reject an order within 5 minutes, the order is automatically cancelled and the customer is refunded.</span>
+      </div>
+    </div>
+
+    <h3>Delivery Rules</h3>
+    <div class="req-item">
+      <span class="req-id green">BR-05</span>
+      <div class="req-content">
+        <strong>Free Delivery Threshold</strong>
+        <span>Orders with a cart value of ₹500 or above qualify for free delivery. Below ₹500, a flat delivery fee of ₹40 is charged.</span>
+      </div>
+    </div>
+    <div class="req-item">
+      <span class="req-id green">BR-06</span>
+      <div class="req-content">
+        <strong>Maximum Delivery Radius</strong>
+        <span>Each restaurant defines its own maximum delivery radius (1–10 km). Customers whose delivery address falls outside this radius cannot order from that restaurant.</span>
+      </div>
+    </div>
+    <div class="req-item">
+      <span class="req-id green">BR-07</span>
+      <div class="req-content">
+        <strong>Delivery Partner Assignment</strong>
+        <span>Orders are assigned to the nearest available delivery partner within 3 km of the restaurant. If no partner is available within 3 km, the search radius expands by 1 km every 2 minutes.</span>
+      </div>
+    </div>
+
+    <h3>Payment &amp; Refund Rules</h3>
+    <div class="req-item">
+      <span class="req-id orange">BR-08</span>
+      <div class="req-content">
+        <strong>Refund Processing Time</strong>
+        <span>Refunds for cancelled online-payment orders shall be processed within 5–7 business days to the original payment instrument.</span>
+      </div>
+    </div>
+    <div class="req-item">
+      <span class="req-id orange">BR-09</span>
+      <div class="req-content">
+        <strong>COD Limit</strong>
+        <span>Cash on Delivery is available only for orders up to ₹1,000. Orders exceeding ₹1,000 must use online payment.</span>
+      </div>
+    </div>
+
+    <h3>Review Rules</h3>
+    <div class="req-item">
+      <span class="req-id blue">BR-10</span>
+      <div class="req-content">
+        <strong>Review Eligibility</strong>
+        <span>Only customers who have completed at least one order from a restaurant may leave a review. One review per order is allowed.</span>
+      </div>
+    </div>
+    <div class="req-item">
+      <span class="req-id blue">BR-11</span>
+      <div class="req-content">
+        <strong>Rating Calculation</strong>
+        <span>A restaurant's displayed rating is the arithmetic mean of all reviews. If a restaurant has fewer than 5 reviews, the rating displays as "New" instead of a star score.</span>
+      </div>
+    </div>
+
+    <h3>Restaurant Rules</h3>
+    <div class="req-item">
+      <span class="req-id red">BR-12</span>
+      <div class="req-content">
+        <strong>Approval Requirement</strong>
+        <span>A restaurant must be approved by the admin before it appears in customer searches. Rejected restaurants may reapply after 7 days with updated information.</span>
+      </div>
+    </div>
+    <div class="req-item">
+      <span class="req-id red">BR-13</span>
+      <div class="req-content">
+        <strong>Operating Hours Enforcement</strong>
+        <span>Customers cannot place orders at a restaurant outside its declared operating hours. The restaurant listing displays "Currently Closed" with the next opening time.</span>
+      </div>
+    </div>
+
+    <div class="info-box purple">
+      <div class="info-box-title">Where Business Rules Come From</div>
+      <p style="margin:0">
+        Business rules are discovered through stakeholder interviews. In your project, you are
+        both the developer and the "business owner" — so think critically: "What would Swiggy/Zomato
+        do in this situation?" Then document it as a BR. These rules will directly drive your
+        backend validation logic.
+      </p>
+    </div>
+
+    <div class="info-box green">
+      <div class="info-box-title">Deliverable for This Phase</div>
+      <ul style="margin:0">
+        <li><strong>SRS Document</strong> — typically 20–40 pages covering all FRs, NFRs, Use Cases, and Business Rules for your project.</li>
+        <li>Use IEEE 830 SRS template as a guide (Introduction, Overall Description, Specific Requirements).</li>
+        <li>Get SRS reviewed and signed off by faculty guide before Semester 2 design begins.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <a href="semester1_ideation_scope.html">← Ideation &amp; Scope</a>
+    <nav class="footer-nav">
+      <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+      <a href="semester1_planning.html">Next: Planning (SPMP) →</a>
+    </nav>
+  </footer>
+
+</div>
+</body>
+</html>

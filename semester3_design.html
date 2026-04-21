@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design Revisions — Semester 3 | Online Food Delivery System</title>
+  <link rel="stylesheet" href="child_page_styles.css">
+</head>
+<body>
+<div class="page-wrap">
+  <nav class="breadcrumb">
+    <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+    <span class="sep">›</span><span>Semester 3</span>
+    <span class="sep">›</span><span>Design Revisions</span>
+  </nav>
+  <header class="page-header">
+    <div class="sem-badge sem-3">Semester 3 — Deliver</div>
+    <h1>Design Revisions</h1>
+    <div class="project-tag">Example Project: <strong>Online Food Delivery System</strong></div>
+    <p class="header-desc">In Semester 3, most design is already done. Design revisions address gaps discovered during coding, performance issues found during testing, and UI improvements from beta feedback.</p>
+  </header>
+
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon icon-orange">✏️</div>
+      <div class="section-title-group">
+        <h2>Why Design Changes in Semester 3?</h2>
+        <p>Adapting the design based on real-world feedback</p>
+      </div>
+    </div>
+    <p>The design created in Semesters 1–2 was based on theoretical requirements. Semester 3 testing and beta user feedback reveals mismatches between the original design and actual usage patterns.</p>
+    <h3>Typical Design Revisions for Food Delivery</h3>
+    <table>
+      <thead><tr><th>Issue Found</th><th>Design Change</th><th>Where Updated</th></tr></thead>
+      <tbody>
+        <tr><td>Beta users confused by checkout flow — too many steps</td><td>Redesign checkout to single-page with accordion (UX revision)</td><td>Wireframes + Frontend code</td></tr>
+        <tr><td>Restaurant listing page slow (400ms) with 50 restaurants</td><td>Add Redis caching for restaurant list with 5-minute TTL</td><td>Architecture diagram + TDD</td></tr>
+        <tr><td>Order history page loads all orders — slow for power users</td><td>Add cursor-based pagination (not page numbers — better for real-time data)</td><td>API design + Sequence diagrams</td></tr>
+        <tr><td>Delivery partner assignment timeout logs show many failures</td><td>Change assignment algorithm: try 3 km, then 5 km, then 7 km with increasing timeouts</td><td>TDD algorithm section</td></tr>
+      </tbody>
+    </table>
+    <div class="info-box orange">
+      <div class="info-box-title">Update the TDD</div>
+      <p style="margin:0">Every design revision must be reflected in the TDD. If you change the database schema in Semester 3, create a new migration AND update the ER diagram in the TDD. Outdated documentation is worse than no documentation — it misleads the team.</p>
+    </div>
+  </section>
+
+  <footer>
+    <a href="semester2_design.html">← Design Sem 2</a>
+    <nav class="footer-nav">
+      <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+      <a href="semester3_coding.html">Next: Coding Sem 3 →</a>
+    </nav>
+  </footer>
+</div>
+</body>
+</html>

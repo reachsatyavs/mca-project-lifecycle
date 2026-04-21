@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deployment Setup — Semester 2 | Online Food Delivery System</title>
+  <link rel="stylesheet" href="child_page_styles.css">
+</head>
+<body>
+<div class="page-wrap">
+  <nav class="breadcrumb">
+    <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+    <span class="sep">›</span><span>Semester 2</span>
+    <span class="sep">›</span><span>Deployment — Dev/Local Setup</span>
+  </nav>
+  <header class="page-header">
+    <div class="sem-badge sem-2">Semester 2 — Build</div>
+    <h1>Deployment — Local &amp; Dev Environment Setup</h1>
+    <div class="project-tag">Example Project: <strong>Online Food Delivery System</strong></div>
+    <p class="header-desc">In Semester 2, the focus is on getting a consistent local development environment running for all team members, and deploying to a staging server. Full CI/CD pipelines come in Semester 3.</p>
+  </header>
+
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon icon-green">💻</div>
+      <div class="section-title-group">
+        <h2>Local Development Environment</h2>
+        <p>Making it easy for every team member to run the project locally</p>
+      </div>
+    </div>
+    <h3>The "Works on My Machine" Problem</h3>
+    <p>Without a standardised setup, each team member wastes hours getting the project to run on their laptop. Docker solves this — one <code class="code-inline">docker-compose up</code> command starts the entire stack.</p>
+    <h3>docker-compose.yml for Local Dev</h3>
+    <div class="code-block">version: '3.8'
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: fooddelivery
+      POSTGRES_USER: devuser
+      POSTGRES_PASSWORD: devpassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build: ./backend
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - db
+
+  frontend:
+    build: ./frontend
+    command: npm run dev
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "3000:3000"
+
+volumes:
+  postgres_data:</div>
+    <h3>Quick Start (For New Team Member)</h3>
+    <div class="code-block">git clone https://github.com/yourteam/food-delivery.git
+cd food-delivery
+cp backend/.env.example backend/.env
+# Edit backend/.env with your keys
+docker-compose up --build
+# Backend: http://localhost:8000
+# Frontend: http://localhost:3000</div>
+    <p>This README instruction should work on any team member's machine within 5 minutes. Document this in your README.md.</p>
+    <h3>Staging Deployment (Semester 2)</h3>
+    <p>Deploy to <strong>Render</strong> or <strong>Railway</strong> for a shared staging URL. All team members and the faculty guide can access and test the latest version without running it locally.</p>
+    <table>
+      <thead><tr><th>Platform</th><th>Free Tier Limits</th><th>Setup Time</th><th>Best For</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Render</strong></td><td>750 hrs/month, auto-sleep after 15 min idle</td><td>~20 minutes</td><td>Express.js/Node backends</td></tr>
+        <tr><td><strong>Railway</strong></td><td>$5 free credit/month</td><td>~15 minutes</td><td>Full stack with DB</td></tr>
+        <tr><td><strong>Vercel</strong></td><td>Unlimited (frontend only)</td><td>~5 minutes</td><td>React/Next.js frontends</td></tr>
+      </tbody>
+    </table>
+    <div class="info-box orange">
+      <div class="info-box-title">Auto-Sleep Warning</div>
+      <p style="margin:0">Render's free tier sleeps after 15 minutes of inactivity and takes ~30 seconds to wake up. For demos, access the URL 2 minutes before your presentation to warm it up. Or use <strong>UptimeRobot</strong> (free) to ping your app every 14 minutes to prevent sleep.</p>
+    </div>
+  </section>
+
+  <footer>
+    <a href="mca_project_lifecycle_4_semesters.html">← Project Lifecycle</a>
+    <nav class="footer-nav">
+      <a href="semester3_deployment.html">Next: Full CI/CD Sem 3 →</a>
+    </nav>
+  </footer>
+</div>
+</body>
+</html>

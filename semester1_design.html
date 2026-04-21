@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design (TDD) — Semester 1 | Online Food Delivery System</title>
+  <link rel="stylesheet" href="child_page_styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    /* ---- Mermaid ER diagram container ---- */
+    .er-diagram-wrap {
+      background: #1e1e2e;
+      border-radius: 12px;
+      padding: 24px 16px;
+      margin: 20px 0;
+      overflow-x: auto;
+    }
+    .er-diagram-wrap .mermaid {
+      display: flex;
+      justify-content: center;
+    }
+    .er-diagram-wrap svg {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrap">
+  <nav class="breadcrumb">
+    <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+    <span class="sep">›</span><span>Semester 1</span>
+    <span class="sep">›</span><span>Design (TDD)</span>
+  </nav>
+  <header class="page-header">
+    <div class="sem-badge sem-1">Semester 1 — Foundation</div>
+    <h1>Design — Technical Design Document</h1>
+    <div class="project-tag">Example Project: <strong>Online Food Delivery System</strong></div>
+    <p class="header-desc">The Technical Design Document (TDD) translates requirements into a technical blueprint. It defines how the system will be built — architecture, database, class structure, and technology choices.</p>
+  </header>
+
+  <!-- PAGE-LEVEL DEFINITION PANEL -->
+  <div class="info-box blue" style="margin-bottom:24px;">
+    <div class="info-box-title">📖 What is System / Technical Design?</div>
+    <p style="margin:0 0 10px 0">
+      <strong>System Design</strong> is the process of deciding <em>how</em> software will be built
+      — before any code is written. It answers questions like:
+    </p>
+    <ul style="margin:0 0 10px 0; padding-left:18px;">
+      <li><strong>Architecture</strong> — How many tiers? Monolith or microservices? Which cloud?</li>
+      <li><strong>Data Model (ER Diagram)</strong> — What data do we store, and how is it structured in the database?</li>
+      <li><strong>Object Design (Class Diagram)</strong> — What are the main objects (classes) in code, and how do they relate?</li>
+      <li><strong>API Design</strong> — What endpoints will the backend expose to the frontend?</li>
+      <li><strong>Technology Stack</strong> — Which programming language, framework, and database?</li>
+    </ul>
+    <p style="margin:0">
+      The output of this phase is the <strong>Technical Design Document (TDD)</strong> — a living document
+      reviewed and approved before coding begins. A good TDD prevents costly rework in later semesters.
+    </p>
+  </div>
+
+  <!-- ── COMPARISON PANEL ── -->
+  <div style="background:#fff;border:2px solid #3C3489;border-radius:12px;padding:20px 22px;margin-bottom:24px;">
+    <div style="font-weight:700;font-size:15px;color:#3C3489;margin-bottom:12px;">🤔 Students Often Confuse These Three — Here is the Difference</div>
+    <p style="margin:0 0 12px 0;font-size:14px;">All three diagrams live in your TDD, but each answers a completely different question:</p>
+    <table style="width:100%;border-collapse:collapse;font-size:13.5px;">
+      <thead>
+        <tr style="background:#1e1e2e;color:#e8e8ff;">
+          <th style="padding:10px 14px;text-align:left;font-weight:600;border-radius:4px 0 0 4px;">Diagram</th>
+          <th style="padding:10px 14px;text-align:left;font-weight:600;">Question it answers</th>
+          <th style="padding:10px 14px;text-align:left;font-weight:600;">Shapes used</th>
+          <th style="padding:10px 14px;text-align:left;font-weight:600;border-radius:0 4px 4px 0;">Lives in</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="padding:10px 14px;border-bottom:1px solid #e4e4f0;"><span style="display:inline-block;font-size:12px;font-weight:700;padding:2px 10px;border-radius:20px;background:#EEEDFE;color:#3C3489;border:1px solid #AFA9EC;">ER Diagram</span></td>
+          <td style="padding:10px 14px;border-bottom:1px solid #e4e4f0;"><strong>What data do we store?</strong><br><span style="font-size:12px;color:#555;">Entities, attributes, relationships in the DB</span></td>
+          <td style="padding:10px 14px;border-bottom:1px solid #e4e4f0;font-size:12px;">Entity boxes with columns; crow's foot lines</td>
+          <td style="padding:10px 14px;border-bottom:1px solid #e4e4f0;font-size:12px;">Database design / TDD</td>
+        </tr>
+        <tr style="background:#f8f8ff;">
+          <td style="padding:10px 14px;border-bottom:1px solid #e4e4f0;"><span style="display:inline-block;font-size:12px;font-weight:700;padding:2px 10px;border-radius:20px;background:#E1F5EE;color:#0F6E56;border:1px solid #5DCAA5;">Flow Diagram</span></td>
+          <td style="padding:10px 14px;border-bottom:1px solid #e4e4f0;"><strong>What steps happen, in what order?</strong><br><span style="font-size:12px;color:#555;">Business process logic, decisions, branches</span></td>
+          <td style="padding:10px 14px;border-bottom:1px solid #e4e4f0;font-size:12px;">Ovals (start/end), rectangles (steps), diamonds (decisions)</td>
+          <td style="padding:10px 14px;border-bottom:1px solid #e4e4f0;font-size:12px;">Process design / TDD</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 14px;border-bottom:1px solid #e4e4f0;"><span style="display:inline-block;font-size:12px;font-weight:700;padding:2px 10px;border-radius:20px;background:#FAEEDA;color:#854F0B;border:1px solid #EF9F27;">Class Diagram</span></td>
+          <td style="padding:10px 14px;border-bottom:1px solid #e4e4f0;"><strong>What code objects exist and how do they relate?</strong><br><span style="font-size:12px;color:#555;">Classes, attributes, methods, inheritance</span></td>
+          <td style="padding:10px 14px;border-bottom:1px solid #e4e4f0;font-size:12px;">3-part rectangles; hollow arrows (inheritance); lines (association)</td>
+          <td style="padding:10px 14px;border-bottom:1px solid #e4e4f0;font-size:12px;">OOP design / TDD</td>
+        </tr>
+        <tr style="background:#f8f8ff;">
+          <td style="padding:10px 14px;"><span style="display:inline-block;font-size:12px;font-weight:700;padding:2px 10px;border-radius:20px;background:#E6F1FB;color:#185FA5;border:1px solid #85B7EB;">Sequence Diagram</span></td>
+          <td style="padding:10px 14px;"><strong>Which components talk to each other, in what order?</strong><br><span style="font-size:12px;color:#555;">System interactions over time (Browser ↔ API ↔ DB)</span></td>
+          <td style="padding:10px 14px;font-size:12px;">Vertical lifelines; horizontal message arrows</td>
+          <td style="padding:10px 14px;font-size:12px;">Interaction design / TDD</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <nav class="topic-nav">
+    <div class="topic-nav-label">Jump to section</div>
+    <a href="#architecture">1. System Architecture</a>
+    <a href="#er-diagram">2. ER Diagrams</a>
+    <a href="#class-diagrams">3. Class Diagrams</a>
+    <a href="#tech-stack">4. Tech Stack Decision</a>
+  </nav>
+
+  <section class="section" id="architecture">
+    <div class="section-header">
+      <div class="section-icon icon-green">🏗️</div>
+      <div class="section-title-group">
+        <h2>1. System Architecture</h2>
+        <p>The high-level structure of the Online Food Delivery System</p>
+      </div>
+    </div>
+    <p>The recommended architecture is a <strong>3-tier web application</strong> with clear separation between Presentation, Application Logic, and Data layers — this is the industry-standard approach for web systems.</p>
+    <h3>Architecture Tiers</h3>
+    <table>
+      <thead><tr><th>Tier</th><th>Component</th><th>Technology</th><th>Responsibility</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Presentation (Frontend)</strong></td><td>Web Browser SPA or MPA</td><td>React.js / HTML+Bootstrap</td><td>Renders UI, collects user input, calls backend APIs</td></tr>
+        <tr><td><strong>Application (Backend)</strong></td><td>REST API Server</td><td>Express.js (Node.js) / Spring Boot (Java) / Django (Python)</td><td>Business logic, authentication, order processing, API endpoints</td></tr>
+        <tr><td><strong>Data (Database)</strong></td><td>Relational DB</td><td>PostgreSQL / MySQL</td><td>Stores all persistent data: users, restaurants, orders, menus</td></tr>
+      </tbody>
+    </table>
+    <h3>Additional Components</h3>
+    <ul>
+      <li><strong>Payment Gateway:</strong> Razorpay / Stripe Sandbox — external service called by backend for payment processing.</li>
+      <li><strong>Email Service:</strong> SendGrid / Gmail SMTP — sends order confirmations, status updates, password reset emails.</li>
+      <li><strong>File Storage:</strong> Cloudinary / local storage — stores restaurant and food item images.</li>
+      <li><strong>Cache (Semester 2 onwards):</strong> Redis — caches frequently accessed data like restaurant lists and menus.</li>
+    </ul>
+    <h3>Deployment Architecture</h3>
+    <div class="code-block">Browser ──HTTPS──► [Render / Railway]
+                           │
+                    ┌──────┴──────┐
+                    │  Web Server │  (Gunicorn / Nginx)
+                    │  (Backend)  │
+                    └──────┬──────┘
+                           │ SQL queries
+                    ┌──────▼──────┐
+                    │  PostgreSQL │  (Supabase / Railway DB)
+                    └─────────────┘
+                           │
+              ┌────────────┼────────────┐
+              │            │            │
+         Razorpay      SendGrid    Cloudinary
+         (Payments)   (Email)     (Images)</div>
+    <div class="info-box purple">
+      <div class="info-box-title">Why 3-Tier?</div>
+      <p style="margin:0">Separating concerns means you can change the frontend without touching the backend, and vice versa. In your project, the restaurant owner dashboard and the customer portal are both separate frontends talking to the same backend API — this is only clean because you have a proper API layer.</p>
+    </div>
+  </section>
+
+  <section class="section" id="er-diagram">
+    <div class="section-header">
+      <div class="section-icon icon-green">🗂️</div>
+      <div class="section-title-group">
+        <h2>2. ER Diagrams</h2>
+        <p>Entity-Relationship model for the Food Delivery database</p>
+      </div>
+    </div>
+
+    <!-- DEFINITION BOX -->
+    <div class="info-box blue">
+      <div class="info-box-title">📖 What is an ER Diagram?</div>
+      <p style="margin:0 0 8px 0">
+        An <strong>Entity-Relationship (ER) Diagram</strong> is a visual blueprint of a database.
+        It shows:
+      </p>
+      <ul style="margin:0; padding-left:18px;">
+        <li><strong>Entities</strong> — the "things" your system stores data about (e.g., User, Order, Restaurant). Drawn as rectangles.</li>
+        <li><strong>Attributes</strong> — the properties of each entity (e.g., User has name, email, phone). Drawn inside the rectangle.</li>
+        <li><strong>Relationships</strong> — how entities are connected (e.g., a User <em>places</em> many Orders). Drawn as lines with cardinality symbols.</li>
+        <li><strong>Cardinality</strong> — how many instances of one entity relate to another: One-to-One (1:1), One-to-Many (1:M), Many-to-Many (M:N).</li>
+      </ul>
+      <p style="margin:8px 0 0 0">
+        An ER diagram is created <strong>before any database tables are created</strong>. It is the design;
+        the SQL schema is the implementation. Both must match.
+      </p>
+    </div>
+
+    <h3>Cardinality Notation (Crow's Foot)</h3>
+    <p>We use <strong>Crow's Foot notation</strong> — the standard in industry tools like dbdiagram.io and draw.io:</p>
+    <table>
+      <thead><tr><th>Symbol</th><th>Meaning</th><th>Food Delivery Example</th></tr></thead>
+      <tbody>
+        <tr><td><code class="code-inline">||──|{</code></td><td>One-to-Many (1:M)</td><td>One User places many Orders</td></tr>
+        <tr><td><code class="code-inline">}|──||</code></td><td>Many-to-One (M:1)</td><td>Many Orders belong to one Restaurant</td></tr>
+        <tr><td><code class="code-inline">||──||</code></td><td>One-to-One (1:1)</td><td>One Order has exactly one Payment record</td></tr>
+        <tr><td><code class="code-inline">}|──|{</code></td><td>Many-to-Many (M:N)</td><td>Many Users can review many Restaurants (via Review table)</td></tr>
+        <tr><td><code class="code-inline">||──o{</code></td><td>One-to-Zero-or-Many</td><td>One Restaurant has zero or many Orders (new restaurant)</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Complete ER Diagram — Online Food Delivery System</h3>
+    <p>The diagram below is rendered live in your browser — each box shows the entity name, data types, column names, and PK/FK markers. Relationship lines use <strong>Crow's Foot notation</strong> with labels.</p>
+    <div class="er-diagram-wrap">
+      <div class="mermaid">
+erDiagram
+    USER {
+        int user_id PK
+        string name
+        string email UK
+        string password_hash
+        string phone
+        string role
+        datetime created_at
+    }
+    ADDRESS {
+        int address_id PK
+        int user_id FK
+        string street
+        string city
+        string pincode
+        bool is_default
+    }
+    RESTAURANT {
+        int restaurant_id PK
+        int owner_id FK
+        string name
+        string cuisine_type
+        string status
+        float avg_rating
+    }
+    MENU_ITEM {
+        int item_id PK
+        int restaurant_id FK
+        string name
+        decimal price
+        string category
+        bool is_veg
+        bool is_available
+    }
+    ORDER {
+        int order_id PK
+        int customer_id FK
+        int restaurant_id FK
+        int partner_id FK
+        int delivery_addr_id FK
+        string status
+        decimal subtotal
+        decimal delivery_fee
+        decimal total_amount
+        datetime created_at
+    }
+    ORDER_ITEM {
+        int order_item_id PK
+        int order_id FK
+        int menu_item_id FK
+        int quantity
+        decimal unit_price
+        decimal subtotal
+    }
+    PAYMENT {
+        int payment_id PK
+        int order_id FK
+        string gateway_txn_id
+        decimal amount
+        string method
+        string status
+        datetime paid_at
+    }
+    REVIEW {
+        int review_id PK
+        int customer_id FK
+        int restaurant_id FK
+        int order_id FK
+        int rating
+        text comment
+        datetime created_at
+    }
+    DELIVERY_PARTNER {
+        int partner_id PK
+        string vehicle_type
+        string licence_number
+        bool is_available
+        float current_lat
+        float current_lng
+    }
+
+    USER            ||--o{ ADDRESS          : "saves"
+    USER            ||--o{ RESTAURANT       : "owns"
+    RESTAURANT      ||--o{ MENU_ITEM        : "has"
+    USER            ||--o{ ORDER            : "places"
+    RESTAURANT      ||--o{ ORDER            : "receives"
+    ORDER           ||--|{ ORDER_ITEM       : "contains"
+    MENU_ITEM       ||--o{ ORDER_ITEM       : "ordered in"
+    ORDER           ||--|| PAYMENT          : "paid via"
+    USER            ||--o{ REVIEW          : "writes"
+    RESTAURANT      ||--o{ REVIEW          : "has"
+    USER            ||--o| DELIVERY_PARTNER : "has profile"
+      </div>
+    </div>
+
+    <div class="info-box green">
+      <div class="info-box-title">Reading the Diagram</div>
+      <ul style="margin:0; padding-left:18px;">
+        <li><strong>PK</strong> — Primary Key (unique identifier for each row)</li>
+        <li><strong>FK</strong> — Foreign Key (references another table's PK)</li>
+        <li><strong>UK</strong> — Unique Key (value must be unique, e.g., email)</li>
+        <li><strong>||──||</strong> — Exactly one on both sides (1:1)</li>
+        <li><strong>||──o{</strong> — One on left, zero-or-many on right (1:M)</li>
+        <li><strong>||──|{</strong> — One on left, one-or-many on right (mandatory M)</li>
+        <li><strong>||──o|</strong> — One on left, zero-or-one on right (optional 1:1)</li>
+      </ul>
+    </div>
+
+    <h3>Relationship Summary Table</h3>
+    <table>
+      <thead>
+        <tr><th>From Entity</th><th>Cardinality</th><th>To Entity</th><th>Relationship Name</th><th>FK Location</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>User</strong></td><td><strong>1 : M</strong></td><td>Address</td><td>User <em>saves</em> addresses</td><td>FK in Address</td></tr>
+        <tr><td><strong>User</strong></td><td><strong>1 : M</strong></td><td>Restaurant</td><td>User (owner) <em>owns</em> restaurants</td><td>FK in Restaurant</td></tr>
+        <tr><td><strong>Restaurant</strong></td><td><strong>1 : M</strong></td><td>MenuItem</td><td>Restaurant <em>has</em> menu items</td><td>FK in MenuItem</td></tr>
+        <tr><td><strong>User</strong></td><td><strong>1 : M</strong></td><td>Order</td><td>User (customer) <em>places</em> orders</td><td>FK in Order</td></tr>
+        <tr><td><strong>Restaurant</strong></td><td><strong>1 : M</strong></td><td>Order</td><td>Restaurant <em>receives</em> orders</td><td>FK in Order</td></tr>
+        <tr><td><strong>Order</strong></td><td><strong>1 : M</strong></td><td>OrderItem</td><td>Order <em>contains</em> line items</td><td>FK in OrderItem</td></tr>
+        <tr><td><strong>MenuItem</strong></td><td><strong>M : 1</strong></td><td>OrderItem</td><td>MenuItem <em>appears in</em> order items</td><td>FK in OrderItem</td></tr>
+        <tr><td><strong>Order</strong></td><td><strong>1 : 1</strong></td><td>Payment</td><td>Order <em>is paid via</em> one payment</td><td>FK in Payment</td></tr>
+        <tr><td><strong>User</strong></td><td><strong>1 : 1</strong></td><td>DeliveryPartner</td><td>User (partner) <em>has</em> partner profile</td><td>FK in DeliveryPartner (same PK)</td></tr>
+        <tr><td><strong>User</strong></td><td><strong>M : N</strong> (via Review)</td><td>Restaurant</td><td>User <em>reviews</em> restaurant (after order)</td><td>FKs in Review</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Corresponding SQL (for the core tables)</h3>
+    <div class="code-block">-- Users table (parent entity for all roles)
+CREATE TABLE users (
+    user_id     SERIAL PRIMARY KEY,
+    name        VARCHAR(100) NOT NULL,
+    email       VARCHAR(255) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    phone       VARCHAR(15),
+    role        VARCHAR(20) CHECK (role IN ('CUSTOMER','OWNER','PARTNER','ADMIN')),
+    created_at  TIMESTAMP DEFAULT NOW()
+);
+
+-- Address: one user → many addresses  (1:M)
+CREATE TABLE addresses (
+    address_id  SERIAL PRIMARY KEY,
+    user_id     INT NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
+    street      VARCHAR(255) NOT NULL,
+    city        VARCHAR(100) NOT NULL,
+    pincode     VARCHAR(10),
+    lat         DECIMAL(9,6),
+    lng         DECIMAL(9,6),
+    is_default  BOOLEAN DEFAULT FALSE
+);
+
+-- Restaurant: one owner-user → many restaurants  (1:M)
+CREATE TABLE restaurants (
+    restaurant_id   SERIAL PRIMARY KEY,
+    owner_id        INT NOT NULL REFERENCES users(user_id),
+    name            VARCHAR(150) NOT NULL,
+    cuisine_type    VARCHAR(50),
+    address         TEXT,
+    status          VARCHAR(20) DEFAULT 'PENDING'
+                    CHECK (status IN ('PENDING','APPROVED','REJECTED')),
+    avg_rating      DECIMAL(3,2) DEFAULT 0.00
+);
+
+-- Order: one customer → many orders, one restaurant → many orders  (M:1 both)
+CREATE TABLE orders (
+    order_id        SERIAL PRIMARY KEY,
+    customer_id     INT NOT NULL REFERENCES users(user_id),
+    restaurant_id   INT NOT NULL REFERENCES restaurants(restaurant_id),
+    partner_id      INT REFERENCES users(user_id),      -- nullable until assigned
+    delivery_addr_id INT NOT NULL REFERENCES addresses(address_id),
+    status          VARCHAR(20) DEFAULT 'PLACED',
+    subtotal        DECIMAL(10,2) NOT NULL,
+    delivery_fee    DECIMAL(6,2) NOT NULL DEFAULT 40.00,
+    total_amount    DECIMAL(10,2) NOT NULL,
+    created_at      TIMESTAMP DEFAULT NOW()
+);
+
+-- OrderItem: one order → many items, M items → many OrderItems  (1:M + M:1)
+CREATE TABLE order_items (
+    order_item_id   SERIAL PRIMARY KEY,
+    order_id        INT NOT NULL REFERENCES orders(order_id) ON DELETE CASCADE,
+    menu_item_id    INT NOT NULL REFERENCES menu_items(item_id),
+    quantity        INT NOT NULL CHECK (quantity > 0),
+    unit_price      DECIMAL(8,2) NOT NULL,
+    subtotal        DECIMAL(10,2) NOT NULL
+);
+
+-- Payment: exactly one per order  (1:1)
+CREATE TABLE payments (
+    payment_id      SERIAL PRIMARY KEY,
+    order_id        INT UNIQUE NOT NULL REFERENCES orders(order_id),
+    gateway_txn_id  VARCHAR(100),
+    amount          DECIMAL(10,2) NOT NULL,
+    method          VARCHAR(20) CHECK (method IN ('ONLINE','COD')),
+    status          VARCHAR(20) DEFAULT 'PENDING',
+    paid_at         TIMESTAMP
+);</div>
+
+    <div class="info-box green">
+      <div class="info-box-title">Tool: dbdiagram.io</div>
+      <p style="margin:0">Visit <strong>dbdiagram.io</strong> and paste DBML (Database Markup Language) to generate a visual ER diagram automatically. The diagram exports as PNG for your TDD. You can also import your SQL <code class="code-inline">CREATE TABLE</code> statements and it will draw the diagram for you.</p>
+    </div>
+  </section>
+
+  <section class="section" id="class-diagrams">
+    <div class="section-header">
+      <div class="section-icon icon-green">📐</div>
+      <div class="section-title-group">
+        <h2>3. Class Diagrams</h2>
+        <p>Object-oriented structure of the system's key domain classes</p>
+      </div>
+    </div>
+
+    <!-- DEFINITION BOX -->
+    <div class="info-box blue">
+      <div class="info-box-title">📖 What is a Class Diagram?</div>
+      <p style="margin:0 0 8px 0">
+        A <strong>Class Diagram</strong> (UML) shows the object-oriented structure of a software system.
+        It describes:
+      </p>
+      <ul style="margin:0; padding-left:18px;">
+        <li><strong>Classes</strong> — blueprints for objects. Each class has a name, attributes (data), and methods (behaviour). Drawn as a 3-part rectangle: name / attributes / methods.</li>
+        <li><strong>Visibility</strong> — <code class="code-inline">+</code> public, <code class="code-inline">-</code> private, <code class="code-inline">#</code> protected.</li>
+        <li><strong>Inheritance (Generalisation)</strong> — a child class <em>extends</em> a parent class, inheriting all its attributes and methods. Drawn as a hollow arrow (△) from child to parent.</li>
+        <li><strong>Association</strong> — one class uses another (e.g., Order <em>has a</em> Customer). Drawn as a plain line.</li>
+        <li><strong>Composition</strong> — strong ownership; child cannot exist without parent (e.g., OrderItem is part of Order). Drawn as a filled diamond ◆.</li>
+        <li><strong>Aggregation</strong> — weak ownership; child can exist independently. Drawn as hollow diamond ◇.</li>
+      </ul>
+    </div>
+
+    <h3>Inheritance Hierarchy: User System</h3>
+    <p>
+      All actors (Customer, Restaurant Owner, Delivery Partner, Admin) are types of users — they share common
+      attributes and methods but have different specialised behaviour. This is classic <strong>inheritance</strong>.
+      The hollow triangle arrow (△) means "extends / inherits from".
+    </p>
+    <div class="er-diagram-wrap">
+      <div class="mermaid">
+%%{init: {'theme': 'dark'}}%%
+classDiagram
+    class BaseUser {
+        <<abstract>>
+        #int id
+        #string name
+        #string email
+        #string passwordHash
+        #string phone
+        #bool isActive
+        #datetime createdAt
+        +login(email, password) Token
+        +logout() void
+        +resetPassword(token) void
+        +getProfile()* dict
+        +getRole()* string
+    }
+
+    class Customer {
+        -List~Address~ savedAddresses
+        -List~Order~ orderHistory
+        +placeOrder(cart, address) Order
+        +trackOrder(orderId) string
+        +writeReview(restaurant, rating) void
+        +getProfile() dict
+        +getRole() string
+    }
+
+    class RestaurantOwner {
+        -List~Restaurant~ restaurants
+        +addRestaurant(data) Restaurant
+        +manageMenu(restaurant) void
+        +acceptOrder(order) void
+        +rejectOrder(order) void
+        +getProfile() dict
+        +getRole() string
+    }
+
+    class DeliveryPartner {
+        -string vehicleType
+        -string licenceNumber
+        -bool isAvailable
+        -float currentLat
+        -float currentLng
+        +goOnline() void
+        +goOffline() void
+        +acceptOrder(order) void
+        +markPickedUp(order) void
+        +markDelivered(order) void
+        +getProfile() dict
+        +getRole() string
+    }
+
+    class Admin {
+        +approveRestaurant(id) void
+        +rejectRestaurant(id) void
+        +suspendUser(userId) void
+        +viewAnalytics() dict
+        +getProfile() dict
+        +getRole() string
+    }
+
+    class Order {
+        -int id
+        -OrderStatus status
+        -Decimal subtotal
+        -Decimal deliveryFee
+        -Decimal total
+        -datetime createdAt
+        +calculateTotal() Decimal
+        +canCancel() bool
+        +transitionTo(newStatus) void
+        +getStatusHistory() List
+    }
+
+    class OrderItem {
+        -int id
+        -int quantity
+        -Decimal unitPrice
+        +getSubtotal() Decimal
+    }
+
+    class OrderService {
+        <<service>>
+        +placeOrder(customer, cart) Order
+        +cancelOrder(orderId) void
+        +assignPartner(order) void
+        +updateStatus(order, status) void
+    }
+
+    BaseUser <|-- Customer : extends
+    BaseUser <|-- RestaurantOwner : extends
+    BaseUser <|-- DeliveryPartner : extends
+    BaseUser <|-- Admin : extends
+    Order "1" *-- "1..*" OrderItem : contains
+    Customer "1" --> "0..*" Order : places
+    OrderService ..> Order : manages
+    OrderService ..> DeliveryPartner : assigns
+      </div>
+    </div>
+
+    <h3>Why Inheritance Here?</h3>
+    <table>
+      <thead><tr><th>Benefit</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Code reuse</strong></td><td>Login, logout, and password-reset logic is written once in BaseUser — all subclasses get it for free.</td></tr>
+        <tr><td><strong>Single users table</strong></td><td>One <code class="code-inline">users</code> DB table stores all roles. The <code class="code-inline">role</code> column distinguishes them. (Table-per-hierarchy pattern.)</td></tr>
+        <tr><td><strong>Polymorphism</strong></td><td>Any function that accepts a <code class="code-inline">BaseUser</code> object works with Customer, Owner, and Partner alike — e.g., <code class="code-inline">send_notification(user)</code>.</td></tr>
+        <tr><td><strong>Override where needed</strong></td><td><code class="code-inline">get_profile()</code> returns different data per role: Customer returns saved addresses; Partner returns vehicle info.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>JavaScript / Node.js Code: Inheritance in Practice</h3>
+    <div class="code-block">// src/models/domain/BaseUser.js
+// Abstract base class — cannot be instantiated directly
+class BaseUser {
+  constructor({ id, name, email, phone, role, isActive = true, createdAt }) {
+    if (new.target === BaseUser) {
+      throw new Error('BaseUser is abstract — instantiate a subclass (Customer, Partner, etc.)');
+    }
+    this.id = id;
+    this.name = name;
+    this.email = email;
+    this.phone = phone;
+    this.role = role;
+    this.isActive = isActive;
+    this.createdAt = createdAt;
+  }
+
+  // Concrete method — same logic for every role
+  async login(email, password) {
+    const bcrypt = require('bcryptjs');
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (!user || !(await bcrypt.compare(password, user.passwordHash))) {
+      throw new Error('INVALID_CREDENTIALS');
+    }
+    return generateTokens(user);
+  }
+
+  // Abstract — MUST be overridden in each subclass
+  getProfile() {
+    throw new Error(`${this.constructor.name} must implement getProfile()`);
+  }
+}
+
+
+// src/models/domain/Customer.js
+class Customer extends BaseUser {
+  constructor(data) {
+    super({ ...data, role: 'CUSTOMER' });
+    this.savedAddresses = data.addresses ?? [];
+  }
+
+  getProfile() {                                  // ← overrides abstract method
+    return {
+      id: this.id,
+      name: this.name,
+      email: this.email,
+      addresses: this.savedAddresses
+    };
+  }
+
+  async placeOrder(cart, addressId) {             // ← Customer-only method
+    const OrderService = require('../services/order.service');
+    return OrderService.placeOrder({ customerId: this.id, cart, addressId });
+  }
+}
+
+
+// src/models/domain/DeliveryPartner.js
+class DeliveryPartner extends BaseUser {
+  constructor(data) {
+    super({ ...data, role: 'PARTNER' });
+    this.vehicleType = data.vehicleType;
+    this.licenceNumber = data.licenceNumber;
+    this.isAvailable = data.isAvailable ?? false;
+    this.currentLat = data.currentLat ?? null;
+    this.currentLng = data.currentLng ?? null;
+  }
+
+  getProfile() {                                  // ← overrides abstract method
+    return {
+      id: this.id,
+      name: this.name,
+      vehicleType: this.vehicleType,
+      isAvailable: this.isAvailable
+    };
+  }
+
+  async goOnline() {                              // ← Partner-only method
+    this.isAvailable = true;
+    await prisma.user.update({ where: { id: this.id }, data: { isAvailable: true } });
+  }
+
+  async acceptOrder(orderId) {                    // ← Partner-only method
+    await prisma.order.update({
+      where: { id: orderId },
+      data: { partnerId: this.id, status: 'OUT_FOR_DELIVERY' }
+    });
+  }
+}
+
+module.exports = { BaseUser, Customer, DeliveryPartner };</div>
+
+    <h3>Composition: Order contains OrderItems</h3>
+    <p>
+      <strong>Composition</strong> means an OrderItem cannot exist without its parent Order.
+      If the Order is deleted, all its OrderItems are deleted too (enforced via <code class="code-inline">ON DELETE CASCADE</code> in SQL).
+    </p>
+    <div class="code-block">┌────────────────────────────┐          ┌──────────────────────────────┐
+│           Order            │◆────────▶│         OrderItem            │
+├────────────────────────────┤ 1     M  ├──────────────────────────────┤
+│ - id: int                  │ composed │ - id: int                    │
+│ - customer: Customer       │  of      │ - order: Order (FK)          │
+│ - restaurant: Restaurant   │          │ - menu_item: MenuItem (FK)   │
+│ - items: List[OrderItem]   │          │ - quantity: int              │
+│ - status: OrderStatus(enum)│          │ - unit_price: Decimal        │
+│ - total: Decimal           │          │ - subtotal: Decimal          │
+├────────────────────────────┤          ├──────────────────────────────┤
+│ + calculate_total(): Dec.  │          │ + get_subtotal(): Decimal    │
+│ + can_cancel(): bool       │          └──────────────────────────────┘
+│ + transition_to(status)    │
+└────────────────────────────┘
+         ◇ aggregates (weak ownership)
+                  │
+         ┌────────▼───────────────────┐
+         │          Payment           │
+         │  (can exist after Order    │
+         │   deletion for audit logs) │
+         ├────────────────────────────┤
+         │ - order_id: int (FK)       │
+         │ - amount: Decimal          │
+         │ - status: PaymentStatus    │
+         └────────────────────────────┘</div>
+
+    <h3>State Machine: Order Status</h3>
+    <div class="code-block">PLACED ──► ACCEPTED ──► PREPARING ──► PICKED_UP ──► DELIVERED
+  │            │
+  ▼            ▼
+CANCELLED   CANCELLED (auto after 5 min with no restaurant response)
+
+Valid transitions:
+  PLACED     → ACCEPTED (by restaurant)
+  PLACED     → CANCELLED (by customer OR auto-timeout)
+  ACCEPTED   → PREPARING (by restaurant)
+  ACCEPTED   → CANCELLED (by restaurant — rejection)
+  PREPARING  → PICKED_UP (by delivery partner)
+  PICKED_UP  → DELIVERED (by delivery partner)
+
+Invalid (enforced in code):
+  DELIVERED  → any other status   ← FORBIDDEN
+  CANCELLED  → any other status   ← FORBIDDEN</div>
+    <p>Model this as an enum with a <code class="code-inline">VALID_TRANSITIONS</code> map in your Order class. When <code class="code-inline">transition_to(new_status)</code> is called, it checks the map before updating — this enforces the FSM at the application layer, not just the database.</p>
+  </section>
+
+  <section class="section" id="tech-stack">
+    <div class="section-header">
+      <div class="section-icon icon-green">🛠️</div>
+      <div class="section-title-group">
+        <h2>4. Tech Stack Decision</h2>
+        <p>Choosing and justifying your technology choices</p>
+      </div>
+    </div>
+    <p>The tech stack decision is made in Semester 1 and should not be changed mid-project. Here are the recommended options with a <strong>decision matrix</strong>.</p>
+    <h3>Backend Options</h3>
+    <table>
+      <thead><tr><th>Framework</th><th>Language</th><th>Learning Curve</th><th>ORM</th><th>REST API Support</th><th>Recommended For</th></tr></thead>
+      <tbody>
+        <tr style="background:#f0faf5;"><td><strong>Express.js ✅</strong></td><td>Node.js (JS)</td><td>Low–Medium</td><td>Prisma (excellent)</td><td>Built-in with middleware</td><td>JavaScript full-stack teams; fast iteration; huge npm ecosystem</td></tr>
+        <tr><td><strong>Spring Boot</strong></td><td>Java</td><td>High</td><td>Hibernate / JPA</td><td>Spring MVC</td><td>Teams with Java background; enterprise-style architecture</td></tr>
+        <tr><td><strong>Django + DRF</strong></td><td>Python</td><td>Medium</td><td>Django ORM</td><td>Django REST Framework</td><td>Teams comfortable with Python; fastest admin panel</td></tr>
+      </tbody>
+    </table>
+    <h3>Recommended Full Stack</h3>
+    <div class="info-box green">
+      <div class="info-box-title">Recommended Stack — Node.js Path</div>
+      <table style="margin:0">
+        <tbody>
+          <tr><td><strong>Backend</strong></td><td>Node.js 20 LTS + Express.js 4</td></tr>
+          <tr><td><strong>ORM</strong></td><td>Prisma (type-safe, excellent migrations)</td></tr>
+          <tr><td><strong>Database</strong></td><td>PostgreSQL (Supabase free tier)</td></tr>
+          <tr><td><strong>Frontend</strong></td><td>React.js (Vite) or plain HTML/Bootstrap 5</td></tr>
+          <tr><td><strong>Authentication</strong></td><td>JWT via <code>jsonwebtoken</code> + bcrypt</td></tr>
+          <tr><td><strong>Validation</strong></td><td>express-validator</td></tr>
+          <tr><td><strong>Payment</strong></td><td>Razorpay Sandbox</td></tr>
+          <tr><td><strong>Hosting</strong></td><td>Render (backend) + Vercel (frontend)</td></tr>
+          <tr><td><strong>CI/CD</strong></td><td>GitHub Actions</td></tr>
+          <tr><td><strong>Containerisation</strong></td><td>Docker (Semester 3)</td></tr>
+          <tr><td><strong>API Docs</strong></td><td>swagger-ui-express + swagger-jsdoc (OpenAPI)</td></tr>
+          <tr><td><strong>Testing</strong></td><td>Jest + Supertest (unit + integration)</td></tr>
+          <tr><td><strong>Linting</strong></td><td>ESLint (Airbnb config) + Prettier</td></tr>
+          <tr><td><strong>Logging</strong></td><td>Winston + morgan (HTTP request logs)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="info-box blue">
+      <div class="info-box-title">Key npm Packages (package.json)</div>
+      <div style="font-family:monospace; font-size:12.5px; line-height:2; background:#f0f7ff; padding:10px 14px; border-radius:6px;">
+        <strong>Runtime:</strong> express · prisma · @prisma/client · jsonwebtoken · bcryptjs · express-validator · cors · helmet · morgan · winston · dotenv · razorpay · nodemailer<br>
+        <strong>Dev:</strong> jest · supertest · eslint · prettier · nodemon · prisma (CLI)
+      </div>
+    </div>
+    <div class="info-box orange">
+      <div class="info-box-title">Important: Commit Early, Change Never</div>
+      <p style="margin:0">Once your tech stack is chosen and approved in Semester 1, do not switch frameworks mid-project. Document your tech decision with <strong>justifications</strong> in the TDD so it cannot be questioned later without a formal Change Request.</p>
+    </div>
+    <div class="info-box blue">
+      <div class="info-box-title">Deliverable for This Phase</div>
+      <ul style="margin:0">
+        <li><strong>TDD v1.0</strong> — Architecture diagram, ER diagram (exported from dbdiagram.io), class diagram for core domain, tech stack decision table with justifications.</li>
+        <li>ER diagram reviewed by DB designer and faculty guide.</li>
+        <li>Tech stack approved before any Semester 2 coding begins.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <a href="semester1_planning.html">← Planning (SPMP)</a>
+    <nav class="footer-nav">
+      <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+      <a href="semester2_design.html">Next: Design Sem 2 →</a>
+    </nav>
+  </footer>
+</div>
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'dark',
+    er: {
+      diagramPadding: 30,
+      layoutDirection: 'TB',
+      minEntityWidth: 100,
+      minEntityHeight: 75,
+      entityPadding: 15,
+      useMaxWidth: true
+    }
+  });
+</script>
+</body>
+</html>

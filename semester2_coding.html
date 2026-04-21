@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coding — Semester 2 | Online Food Delivery System</title>
+  <link rel="stylesheet" href="child_page_styles.css">
+</head>
+<body>
+<div class="page-wrap">
+  <nav class="breadcrumb">
+    <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+    <span class="sep">›</span><span>Semester 2</span>
+    <span class="sep">›</span><span>Coding</span>
+  </nav>
+  <header class="page-header">
+    <div class="sem-badge sem-2">Semester 2 — Build</div>
+    <h1>Coding — Core Modules, APIs &amp; Database (Node.js)</h1>
+    <div class="project-tag">Example Project: <strong>Online Food Delivery System</strong></div>
+    <p class="header-desc">Semester 2 is when the real coding begins. You build the core backend modules, REST APIs, and database layer — while following Git best practices and code review workflows.</p>
+  </header>
+  <nav class="topic-nav green-nav">
+    <div class="topic-nav-label">Jump to section</div>
+    <a href="#core-modules">1. Core Modules</a>
+    <a href="#backend-apis">2. Backend APIs</a>
+    <a href="#db-layer">3. Database Layer</a>
+    <a href="#version-control">4. Version Control</a>
+    <a href="#code-reviews">5. Code Reviews</a>
+  </nav>
+
+  <section class="section" id="core-modules">
+    <div class="section-header">
+      <div class="section-icon icon-green">📦</div>
+      <div class="section-title-group">
+        <h2>1. Core Modules</h2>
+        <p>Breaking the backend into independently developable modules</p>
+      </div>
+    </div>
+    <p>The backend is structured as separate Express.js routers, each owning a slice of the domain. This separation makes development parallel — Member A can build the Order module while Member B builds the Auth module without conflicts.</p>
+    <h3>Module Breakdown (Node.js / Express)</h3>
+    <table>
+      <thead><tr><th>Module (Express Router)</th><th>Prisma Models</th><th>Key API Endpoints</th><th>Owner</th></tr></thead>
+      <tbody>
+        <tr><td><strong>auth</strong></td><td>User, RefreshToken</td><td>Register, Login, Verify Email, Refresh Token, Logout</td><td>Member B</td></tr>
+        <tr><td><strong>users</strong></td><td>User, Address, DeliveryPartner</td><td>Profile, Update Profile, Manage Addresses</td><td>Member B</td></tr>
+        <tr><td><strong>restaurants</strong></td><td>Restaurant, MenuItem</td><td>List, Detail, Create, Update, Delete (restaurant + menu items)</td><td>Member B</td></tr>
+        <tr><td><strong>orders</strong></td><td>Order, OrderItem</td><td>Create, Get, Update Status, Order History</td><td>Member A</td></tr>
+        <tr><td><strong>payments</strong></td><td>Payment</td><td>Initiate Payment, Verify Webhook, Refund</td><td>Member A</td></tr>
+        <tr><td><strong>reviews</strong></td><td>Review</td><td>Create Review, List Reviews for Restaurant</td><td>Member A</td></tr>
+        <tr><td><strong>admin</strong></td><td>(uses models from above)</td><td>Approve Restaurant, View Stats, Manage Users</td><td>Member B</td></tr>
+        <tr><td><strong>notifications</strong></td><td>Notification</td><td>Triggered internally; Email (Nodemailer/SendGrid) + In-app</td><td>Member D</td></tr>
+      </tbody>
+    </table>
+    <h3>Project Folder Structure (Node.js / Express)</h3>
+    <div class="code-block">food-delivery-api/
+├── src/
+│   ├── app.js               # Express app setup, middleware registration
+│   ├── server.js            # HTTP server entry point (listens on port)
+│   ├── config/
+│   │   ├── database.js      # Prisma client singleton
+│   │   └── env.js           # Validated env vars via envalid
+│   ├── routes/              # Express routers — one file per module
+│   │   ├── auth.routes.js
+│   │   ├── restaurant.routes.js
+│   │   ├── order.routes.js
+│   │   └── payment.routes.js
+│   ├── controllers/         # Request handlers (parse req, call service, send res)
+│   │   ├── auth.controller.js
+│   │   └── order.controller.js
+│   ├── services/            # Business logic — no Express req/res here
+│   │   ├── auth.service.js
+│   │   └── order.service.js
+│   ├── middleware/
+│   │   ├── auth.middleware.js   # JWT verify, attach req.user
+│   │   ├── rbac.middleware.js   # authorize('CUSTOMER'), authorize('ADMIN')
+│   │   └── error.middleware.js  # Global error handler
+│   └── utils/               # Helpers: email sender, logger (Winston), validators
+├── prisma/
+│   ├── schema.prisma        # Database schema — source of truth
+│   └── migrations/          # Auto-generated migration files (version controlled)
+├── tests/                   # Jest unit + integration tests
+├── package.json
+├── .env.example             # Template for environment variables
+├── .gitignore
+└── Dockerfile</div>
+  </section>
+
+  <section class="section" id="backend-apis">
+    <div class="section-header">
+      <div class="section-icon icon-green">🔌</div>
+      <div class="section-title-group">
+        <h2>2. Backend APIs</h2>
+        <p>Building REST APIs with proper authentication and error handling</p>
+      </div>
+    </div>
+    <p>Good API design includes authentication guards, input validation, meaningful error responses, and consistent response format.</p>
+    <h3>Sample: Order Placement API (Node.js / Express)</h3>
+    <div class="code-block">// src/controllers/order.controller.js
+const { validationResult } = require('express-validator');
+const OrderService = require('../services/order.service');
+
+const placeOrder = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ error: 'VALIDATION_ERROR', fields: errors.array() });
+  }
+
+  try {
+    const order = await OrderService.placeOrder({
+      customerId: req.user.id,           // set by auth middleware
+      ...req.body
+    });
+    return res.status(201).json({
+      order_id: order.id,
+      status: order.status,
+      total: order.total
+    });
+  } catch (err) {
+    next(err);                           // forwarded to global error handler
+  }
+};
+
+module.exports = { placeOrder };</div>
+    <div class="code-block">// src/middleware/auth.middleware.js
+const jwt = require('jsonwebtoken');
+
+const authenticate = (req, res, next) => {
+  const header = req.headers.authorization;
+  if (!header?.startsWith('Bearer ')) {
+    return res.status(401).json({ error: 'AUTHENTICATION_REQUIRED' });
+  }
+  try {
+    const payload = jwt.verify(header.split(' ')[1], process.env.JWT_SECRET);
+    req.user = payload;                  // { id, email, role }
+    next();
+  } catch (err) {
+    const code = err.name === 'TokenExpiredError' ? 'TOKEN_EXPIRED' : 'INVALID_TOKEN';
+    return res.status(401).json({ error: code });
+  }
+};
+
+// Usage: router.post('/orders', authenticate, authorize('CUSTOMER'), placeOrder)
+const authorize = (...roles) => (req, res, next) => {
+  if (!roles.includes(req.user.role)) {
+    return res.status(403).json({ error: 'PERMISSION_DENIED' });
+  }
+  next();
+};
+
+module.exports = { authenticate, authorize };</div>
+    <h3>Environment Variables (Never Hardcode Secrets)</h3>
+    <div class="code-block"># .env  (NEVER commit this file to Git — add to .gitignore on Day 1!)
+NODE_ENV=development
+PORT=3000
+DATABASE_URL=postgresql://user:password@host:5432/fooddb
+JWT_SECRET=your-super-secret-jwt-key-min-32-chars
+JWT_REFRESH_SECRET=another-secret-for-refresh-tokens
+RAZORPAY_KEY_ID=rzp_test_xxxxxxxxx
+RAZORPAY_KEY_SECRET=xxxxxxxxxxxxx
+SENDGRID_API_KEY=SG.xxxxxxxxxxxx
+CLOUDINARY_URL=cloudinary://api_key:api_secret@cloud_name</div>
+    <div class="info-box red">
+      <div class="info-box-title">Security: Never Commit Secrets</div>
+      <p style="margin:0">Add <code class="code-inline">.env</code> to your <code class="code-inline">.gitignore</code> on Day 1. Provide a <code class="code-inline">.env.example</code> file with placeholder values. Hardcoded API keys in source code are a critical security vulnerability.</p>
+    </div>
+  </section>
+
+  <section class="section" id="db-layer">
+    <div class="section-header">
+      <div class="section-icon icon-green">🗄️</div>
+      <div class="section-title-group">
+        <h2>3. Database Layer</h2>
+        <p>Implementing the schema, migrations, and data access layer</p>
+      </div>
+    </div>
+    <p>Use your ORM's migration system to manage schema changes. Never alter the database directly in production — always use migrations so changes are reproducible and version-controlled.</p>
+    <h3>Prisma Migration Workflow (Node.js ORM)</h3>
+    <div class="code-block"># 1. Edit schema.prisma (add/change a model field)
+# 2. Generate and apply a migration
+npx prisma migrate dev --name add_order_status_field
+
+# 3. Prisma creates a migration file in prisma/migrations/
+# 4. Commit schema.prisma AND the migration file to Git together
+# 5. On production deploy:
+npx prisma migrate deploy</div>
+    <div class="code-block">// Sample prisma/schema.prisma (excerpt)
+model Order {
+  id           Int           @id @default(autoincrement())
+  customerId   Int
+  restaurantId Int
+  status       OrderStatus   @default(PLACED)
+  total        Decimal       @db.Decimal(10, 2)
+  paymentMode  PaymentMode
+  createdAt    DateTime      @default(now())
+  items        OrderItem[]
+  payment      Payment?
+  customer     User          @relation(fields: [customerId], references: [id])
+}
+
+enum OrderStatus {
+  PLACED ACCEPTED PREPARING OUT_FOR_DELIVERY DELIVERED CANCELLED
+}</div>
+    <h3>Transactions for Order Placement</h3>
+    <p>Order placement involves multiple DB writes (create order, create order items, update payment). These must be wrapped in a <strong>database transaction</strong> — if any step fails, the whole operation is rolled back.</p>
+    <div class="code-block">// src/services/order.service.js
+const { prisma } = require('../config/database');
+
+async function placeOrder({ customerId, restaurantId, items, paymentMode, addressId }) {
+  const total = items.reduce((sum, i) => sum + i.price * i.quantity, 0);
+
+  // prisma.$transaction guarantees all-or-nothing
+  const order = await prisma.$transaction(async (tx) => {
+    const newOrder = await tx.order.create({
+      data: { customerId, restaurantId, paymentMode, addressId, total,
+              items: { create: items } }
+    });
+    await tx.payment.create({
+      data: { orderId: newOrder.id, amount: total, status: 'PENDING', mode: paymentMode }
+    });
+    return newOrder;
+  });
+
+  return order;  // Only committed if no exception was thrown inside
+}
+  </section>
+
+  <section class="section" id="version-control">
+    <div class="section-header">
+      <div class="section-icon icon-green">🔀</div>
+      <div class="section-title-group">
+        <h2>4. Version Control (Git)</h2>
+        <p>Gitflow branching strategy for a team project</p>
+      </div>
+    </div>
+    <h3>Branching Strategy (Gitflow)</h3>
+    <table>
+      <thead><tr><th>Branch</th><th>Purpose</th><th>Who pushes here</th></tr></thead>
+      <tbody>
+        <tr><td><strong>main</strong></td><td>Production-ready code only</td><td>No direct pushes — only merges from release branches</td></tr>
+        <tr><td><strong>develop</strong></td><td>Integration branch — all features merge here</td><td>Merged via Pull Request only</td></tr>
+        <tr><td><strong>feature/xxx</strong></td><td>Individual feature development</td><td>Developer works here, then PRs to develop</td></tr>
+        <tr><td><strong>hotfix/xxx</strong></td><td>Urgent production bug fixes</td><td>Branches from main, merges to main + develop</td></tr>
+      </tbody>
+    </table>
+    <h3>Good Commit Message Convention</h3>
+    <div class="code-block"># Format: type(scope): short description
+#
+# Types: feat, fix, docs, test, refactor, chore
+
+feat(orders): add order placement API with payment integration
+fix(auth): handle expired JWT tokens gracefully
+docs(api): add Swagger annotations to restaurant endpoints
+test(orders): add unit tests for order status transitions
+refactor(users): extract address validation to utils module</div>
+  </section>
+
+  <section class="section" id="code-reviews">
+    <div class="section-header">
+      <div class="section-icon icon-green">👁️</div>
+      <div class="section-title-group">
+        <h2>5. Code Reviews</h2>
+        <p>Learning from each other and catching bugs before they reach develop</p>
+      </div>
+    </div>
+    <p>Every Pull Request (PR) must be reviewed by at least one other team member before merging. Code review is not about criticism — it's about knowledge sharing and catching bugs early.</p>
+    <h3>Code Review Checklist</h3>
+    <ul>
+      <li>Does the code follow the agreed style guide (ESLint / Prettier config)?</li>
+      <li>Are all inputs validated and sanitised?</li>
+      <li>Are there any hardcoded secrets or credentials?</li>
+      <li>Are error cases handled with appropriate status codes?</li>
+      <li>Are database queries optimised (no N+1 queries)?</li>
+      <li>Are unit tests included or updated?</li>
+      <li>Is the code understandable without excessive comments?</li>
+      <li>Does the PR description link to the Jira/GitHub issue?</li>
+    </ul>
+    <div class="info-box green">
+      <div class="info-box-title">N+1 Query Problem</div>
+      <p style="margin:0">If you load 10 orders and then loop through them to fetch each restaurant separately, that's 1 + 10 = 11 database queries. With Prisma, use <code class="code-inline">include: { restaurant: true, items: true }</code> to fetch everything in 1–2 queries via a JOIN. This is one of the most common performance bugs in beginner code.</p>
+    </div>
+  </section>
+
+  <footer>
+    <a href="semester1_coding.html">← Prototype (Sem 1)</a>
+    <nav class="footer-nav">
+      <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+      <a href="semester3_coding.html">Next: Coding Sem 3 →</a>
+    </nav>
+  </footer>
+</div>
+</body>
+</html>

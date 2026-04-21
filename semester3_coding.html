@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coding — Semester 3 | Online Food Delivery System</title>
+  <link rel="stylesheet" href="child_page_styles.css">
+</head>
+<body>
+<div class="page-wrap">
+  <nav class="breadcrumb">
+    <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+    <span class="sep">›</span><span>Semester 3</span>
+    <span class="sep">›</span><span>Coding</span>
+  </nav>
+  <header class="page-header">
+    <div class="sem-badge sem-3">Semester 3 — Deliver</div>
+    <h1>Coding — Frontend, Integration &amp; Feature Completion</h1>
+    <div class="project-tag">Example Project: <strong>Online Food Delivery System</strong></div>
+    <p class="header-desc">Semester 3 completes the frontend, integrates all layers together, and refactors code to production quality. Every feature from the SRS is either implemented or explicitly deferred.</p>
+  </header>
+  <nav class="topic-nav orange-nav">
+    <div class="topic-nav-label">Jump to section</div>
+    <a href="#frontend">1. Frontend / UI</a>
+    <a href="#integration">2. Integration Layer</a>
+    <a href="#feature-complete">3. Feature Completion</a>
+    <a href="#refactoring">4. Refactoring</a>
+  </nav>
+
+  <section class="section" id="frontend">
+    <div class="section-header">
+      <div class="section-icon icon-orange">🎨</div>
+      <div class="section-title-group">
+        <h2>1. Frontend / UI Completion</h2>
+        <p>Building all remaining screens to production quality</p>
+      </div>
+    </div>
+    <p>Semester 3 completes all frontend screens that weren't finished in Semester 2. The focus is on polish: responsive design, loading states, error states, and empty states.</p>
+    <h3>Frontend Checklist by Portal</h3>
+    <table>
+      <thead><tr><th>Portal</th><th>Screen</th><th>Status Target</th></tr></thead>
+      <tbody>
+        <tr><td rowspan="7"><strong>Customer Portal</strong></td><td>Home — restaurant search &amp; filter</td><td>Complete with responsive layout</td></tr>
+        <tr><td>Restaurant detail — menu with categories</td><td>Images loaded from Cloudinary</td></tr>
+        <tr><td>Cart — quantity controls, subtotal</td><td>Persists across pages (localStorage)</td></tr>
+        <tr><td>Checkout — address + payment selection</td><td>Single page, no redirect loops</td></tr>
+        <tr><td>Order tracking — live status timeline</td><td>Auto-refresh every 15s or WebSocket</td></tr>
+        <tr><td>Order history — with reorder button</td><td>Paginated (20 per page)</td></tr>
+        <tr><td>Profile — address management</td><td>Add, edit, delete, set default</td></tr>
+        <tr><td rowspan="3"><strong>Restaurant Portal</strong></td><td>Dashboard — incoming orders</td><td>Real-time notification badge</td></tr>
+        <tr><td>Menu management — add/edit/delete items</td><td>Image upload to Cloudinary</td></tr>
+        <tr><td>Order detail — accept/reject with timer</td><td>5-minute countdown visible</td></tr>
+        <tr><td rowspan="2"><strong>Delivery Portal</strong></td><td>Available orders view</td><td>Shows restaurant + distance</td></tr>
+        <tr><td>Active order — status update buttons</td><td>"Picked Up" and "Delivered" with confirmation</td></tr>
+        <tr><td rowspan="3"><strong>Admin Panel</strong></td><td>Pending restaurant approvals</td><td>Approve/reject with reason field</td></tr>
+        <tr><td>All users list with search</td><td>Paginated, filterable by role</td></tr>
+        <tr><td>Analytics dashboard</td><td>Orders today, revenue, top restaurants</td></tr>
+      </tbody>
+    </table>
+    <h3>Frontend Error States (Often Forgotten)</h3>
+    <div class="info-box orange">
+      <div class="info-box-title">Always Handle These States</div>
+      <ul style="margin:0">
+        <li><strong>Loading state:</strong> Show skeleton/spinner while API is fetching.</li>
+        <li><strong>Empty state:</strong> "No restaurants found" instead of blank page.</li>
+        <li><strong>Error state:</strong> "Something went wrong, please try again" with retry button.</li>
+        <li><strong>Offline state:</strong> Browser offline detection with user-friendly message.</li>
+        <li><strong>403/401:</strong> Redirect to login page (don't show blank screen).</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="integration">
+    <div class="section-header">
+      <div class="section-icon icon-orange">🔗</div>
+      <div class="section-title-group">
+        <h2>2. Integration Layer</h2>
+        <p>Connecting frontend to backend and all external services</p>
+      </div>
+    </div>
+    <p>Integration means ensuring that all parts of the system work together correctly — the frontend calls the right API endpoints, error responses from the backend are displayed properly on the frontend, and all external services (payment, email, image storage) work in the integrated system.</p>
+    <h3>Frontend API Client (React / Axios)</h3>
+    <div class="code-block">// src/api/client.js
+import axios from 'axios';
+
+const apiClient = axios.create({
+  baseURL: import.meta.env.VITE_API_BASE_URL, // from .env
+  headers: { 'Content-Type': 'application/json' }
+});
+
+// Attach JWT token to every request
+apiClient.interceptors.request.use(config => {
+  const token = localStorage.getItem('accessToken');
+  if (token) config.headers.Authorization = `Bearer ${token}`;
+  return config;
+});
+
+// Handle 401 — redirect to login
+apiClient.interceptors.response.use(
+  response => response,
+  error => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem('accessToken');
+      window.location.href = '/login';
+    }
+    return Promise.reject(error);
+  }
+);
+
+export default apiClient;</div>
+    <h3>CORS Configuration (Backend)</h3>
+    <div class="code-block"># settings/production.py
+CORS_ALLOWED_ORIGINS = [
+    "https://your-frontend.vercel.app",
+]
+CORS_ALLOW_CREDENTIALS = True  # Required for cookie-based auth</div>
+  </section>
+
+  <section class="section" id="feature-complete">
+    <div class="section-header">
+      <div class="section-icon icon-orange">✅</div>
+      <div class="section-title-group">
+        <h2>3. Feature Completion</h2>
+        <p>Definition of Done for every feature</p>
+      </div>
+    </div>
+    <p>A feature is only "done" when it meets the <strong>Definition of Done (DoD)</strong> — not when a developer says "I'm done coding."</p>
+    <h3>Definition of Done Checklist</h3>
+    <ul>
+      <li>Feature is implemented and matches acceptance criteria.</li>
+      <li>Unit tests written and passing (coverage maintained at ≥ 70%).</li>
+      <li>Integration test written for the main success and failure paths.</li>
+      <li>Code reviewed and approved by one other team member.</li>
+      <li>PR merged to develop branch (not just sitting in a local branch).</li>
+      <li>Feature is deployed to staging and manually smoke-tested.</li>
+      <li>Any new API endpoints are documented in Swagger.</li>
+      <li>No P1 or P2 bugs open against this feature.</li>
+    </ul>
+  </section>
+
+  <section class="section" id="refactoring">
+    <div class="section-header">
+      <div class="section-icon icon-orange">♻️</div>
+      <div class="section-title-group">
+        <h2>4. Refactoring</h2>
+        <p>Improving code quality without changing external behaviour</p>
+      </div>
+    </div>
+    <p><strong>Refactoring</strong> is changing the internal structure of code to make it cleaner, more efficient, or more maintainable — without adding new features or fixing bugs. In Semester 3, you refactor code that was written quickly in Semester 2.</p>
+    <h3>Common Refactoring Targets in Food Delivery</h3>
+    <table>
+      <thead><tr><th>Problem</th><th>Refactoring</th></tr></thead>
+      <tbody>
+        <tr><td>Order placement logic is all in the view (fat view anti-pattern)</td><td>Extract to an <code class="code-inline">OrderService</code> class — view just calls service methods</td></tr>
+        <tr><td>Database queries duplicated across views</td><td>Extract to a <code class="code-inline">RestaurantRepository</code> class or Manager</td></tr>
+        <tr><td>Magic numbers scattered in code (e.g., <code class="code-inline">if total &gt; 500</code>)</td><td>Move to named constants: <code class="code-inline">FREE_DELIVERY_THRESHOLD = 500</code></td></tr>
+        <tr><td>N+1 query in restaurant listing (loads menu for each restaurant)</td><td>Use <code class="code-inline">prefetch_related('menuitem_set')</code></td></tr>
+        <tr><td>Password reset logic duplicated in two endpoints</td><td>Extract to <code class="code-inline">PasswordResetService</code></td></tr>
+      </tbody>
+    </table>
+    <div class="info-box orange">
+      <div class="info-box-title">Refactoring Rule</div>
+      <p style="margin:0">Only refactor code that has unit tests. If you refactor without tests, you might silently break behaviour. The test suite is your safety net — it tells you instantly if a refactor broke something.</p>
+    </div>
+  </section>
+
+  <footer>
+    <a href="semester2_coding.html">← Coding Sem 2</a>
+    <nav class="footer-nav">
+      <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+      <a href="semester4_coding.html">Next: Coding Sem 4 →</a>
+    </nav>
+  </footer>
+</div>
+</body>
+</html>

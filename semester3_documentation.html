@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentation — Semester 3 | Online Food Delivery System</title>
+  <link rel="stylesheet" href="child_page_styles.css">
+</head>
+<body>
+<div class="page-wrap">
+  <nav class="breadcrumb">
+    <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+    <span class="sep">›</span><span>Semester 3</span>
+    <span class="sep">›</span><span>Documentation</span>
+  </nav>
+  <header class="page-header">
+    <div class="sem-badge sem-3">Semester 3 — Deliver</div>
+    <h1>Documentation — User Manual, Test Reports &amp; Deployment Guide</h1>
+    <div class="project-tag">Example Project: <strong>Online Food Delivery System</strong></div>
+    <p class="header-desc">Semester 3 documentation completes the user-facing and operational documentation — the user manual, test reports from all testing activities, and a deployment guide for reproducing the production environment.</p>
+  </header>
+
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon icon-blue">📖</div>
+      <div class="section-title-group">
+        <h2>User Manual</h2>
+        <p>Step-by-step guide for each type of user</p>
+      </div>
+    </div>
+    <p>The <strong>User Manual</strong> is written for non-technical users — people who will use the system but didn't build it. It covers every screen and operation with screenshots.</p>
+    <h3>User Manual Structure</h3>
+    <table>
+      <thead><tr><th>Chapter</th><th>Topics</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1. Customer Guide</strong></td><td>Registration, login, browsing restaurants, filtering by cuisine, viewing menus, adding to cart, checkout, tracking order, viewing history, leaving reviews, managing profile &amp; addresses</td></tr>
+        <tr><td><strong>2. Restaurant Owner Guide</strong></td><td>Registration, awaiting admin approval, setting up menu (add/edit/delete items, upload photos), managing incoming orders (accept/reject), viewing daily order summary</td></tr>
+        <tr><td><strong>3. Delivery Partner Guide</strong></td><td>Registration, going online/offline, viewing assigned orders, marking pickup and delivery</td></tr>
+        <tr><td><strong>4. Admin Guide</strong></td><td>Logging in, approving/rejecting restaurant applications, managing users, viewing platform reports</td></tr>
+        <tr><td><strong>5. Troubleshooting</strong></td><td>Common issues: payment failed (retry steps), order not accepted (auto-cancel rules), login issues (password reset steps)</td></tr>
+      </tbody>
+    </table>
+    <div class="info-box blue">
+      <div class="info-box-title">Screenshot Tip</div>
+      <p style="margin:0">Take screenshots of every screen in the user manual. Use a tool like <strong>Snagit</strong> or simply macOS's built-in screenshot tool. Annotate screenshots with numbered callouts pointing to buttons. A user manual with screenshots is 10× easier to follow than one without.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon icon-blue">📊</div>
+      <div class="section-title-group">
+        <h2>Test Reports</h2>
+        <p>Documenting what was tested, how, and the results</p>
+      </div>
+    </div>
+    <h3>Test Summary Report Structure</h3>
+    <table>
+      <thead><tr><th>Section</th><th>Details</th></tr></thead>
+      <tbody>
+        <tr><td>Test Summary</td><td>Total tests: 142. Passed: 138. Failed: 4. Blocked: 0. Coverage: 74%.</td></tr>
+        <tr><td>Unit Test Results</td><td>89 unit tests, 100% pass rate. Coverage report attached (coverage.html).</td></tr>
+        <tr><td>Integration Test Results</td><td>35 integration tests, 97% pass rate. 1 flaky test (order timeout race condition).</td></tr>
+        <tr><td>E2E Test Results</td><td>18 E2E scenarios, 94% pass rate. 1 failed (Safari checkout flow — workaround applied).</td></tr>
+        <tr><td>Performance Test Results</td><td>50 concurrent users. p95 response times: restaurant listing 280ms, order placement 620ms. All within NFR targets.</td></tr>
+        <tr><td>Bug Summary</td><td>27 bugs found. 24 fixed. 2 deferred (minor UI). 1 known issue (Safari bug — documented).</td></tr>
+        <tr><td>Open Issues</td><td>BUG-024: Safari payment popup blocked by pop-up blocker (user instruction added). BUG-027: Review form alignment on 320px screens (Sem 4 fix).</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon icon-blue">🚀</div>
+      <div class="section-title-group">
+        <h2>Deployment Guide</h2>
+        <p>How to reproduce the production environment from scratch</p>
+      </div>
+    </div>
+    <p>The <strong>Deployment Guide</strong> enables anyone to deploy the system to a fresh server. It is essential for grading (faculty may try to deploy it) and for the Semester 4 production launch.</p>
+    <h3>Deployment Guide Sections</h3>
+    <ol>
+      <li><strong>Prerequisites</strong> — Python 3.11+, Docker, Git, a Render account, a Supabase account.</li>
+      <li><strong>Environment Variables</strong> — Full list of all required <code class="code-inline">.env</code> variables with descriptions (not values).</li>
+      <li><strong>Database Setup</strong> — Create Supabase project, copy connection string, run migrations.</li>
+      <li><strong>Deploy Backend to Render</strong> — Step-by-step: connect GitHub repo, set env vars, deploy.</li>
+      <li><strong>Deploy Frontend to Vercel</strong> — Import from GitHub, set <code class="code-inline">VITE_API_BASE_URL</code>.</li>
+      <li><strong>Post-Deploy Steps</strong> — Create superuser, seed initial data, verify health endpoint.</li>
+      <li><strong>Verify Deployment</strong> — Go-live checklist items to run after every deployment.</li>
+    </ol>
+  </section>
+
+  <footer>
+    <a href="semester2_documentation.html">← Docs Sem 2</a>
+    <nav class="footer-nav">
+      <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+      <a href="semester4_documentation.html">Next: Docs Sem 4 →</a>
+    </nav>
+  </footer>
+</div>
+</body>
+</html>

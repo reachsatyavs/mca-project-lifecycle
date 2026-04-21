@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maintenance — Semester 4 | Online Food Delivery System</title>
+  <link rel="stylesheet" href="child_page_styles.css">
+</head>
+<body>
+<div class="page-wrap">
+  <nav class="breadcrumb">
+    <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+    <span class="sep">›</span><span>Semester 4</span>
+    <span class="sep">›</span><span>Maintenance</span>
+  </nav>
+  <header class="page-header">
+    <div class="sem-badge sem-4">Semester 4 — Production</div>
+    <h1>Maintenance — Hotfixes, Version Updates &amp; Post-Deployment Review</h1>
+    <div class="project-tag">Example Project: <strong>Online Food Delivery System</strong></div>
+    <p class="header-desc">Production maintenance is the final phase of the software lifecycle. It covers emergency hotfixes, scheduled dependency updates, post-deployment reviews, and logging enhancements for future versions.</p>
+  </header>
+  <nav class="topic-nav blue-nav">
+    <div class="topic-nav-label">Jump to section</div>
+    <a href="#hotfixes">1. Hotfixes</a>
+    <a href="#version-updates">2. Version Updates</a>
+    <a href="#post-deploy">3. Post-Deployment Review</a>
+    <a href="#enhancement-log">4. Enhancement Log</a>
+  </nav>
+
+  <section class="section" id="hotfixes">
+    <div class="section-header">
+      <div class="section-icon icon-blue">🚑</div>
+      <div class="section-title-group">
+        <h2>1. Hotfixes</h2>
+        <p>Emergency fixes for P1/P2 production bugs</p>
+      </div>
+    </div>
+    <p>A <strong>hotfix</strong> is an emergency code change deployed outside the normal sprint cycle to fix a critical production bug. The key constraint: speed + safety. Fix fast, but don't break anything else.</p>
+    <h3>Hotfix Decision Matrix</h3>
+    <table>
+      <thead><tr><th>Scenario</th><th>Severity</th><th>Response</th><th>Timeline</th></tr></thead>
+      <tbody>
+        <tr><td>Orders cannot be placed — payment gateway errors</td><td>P1 Critical</td><td>Hotfix immediately; roll back if fix takes &gt; 2 hours</td><td>&lt; 2 hours</td></tr>
+        <tr><td>Login broken for new registrations</td><td>P1 Critical</td><td>Hotfix within 4 hours; post incident report</td><td>&lt; 4 hours</td></tr>
+        <tr><td>Order history showing wrong customer's orders</td><td>P1 Security</td><td>Take down affected page immediately; hotfix within 24 hours</td><td>&lt; 24 hours</td></tr>
+        <tr><td>Restaurant ratings not updating</td><td>P2 Major</td><td>Fix in next sprint (1–3 days); workaround if available</td><td>1–3 days</td></tr>
+        <tr><td>Footer links broken on mobile</td><td>P3 Minor</td><td>Fix in next scheduled maintenance</td><td>Next sprint</td></tr>
+      </tbody>
+    </table>
+    <h3>Real Hotfixes in Food Delivery</h3>
+    <p>These are plausible hotfixes a student team might encounter in Semester 4:</p>
+    <ul>
+      <li><strong>HF-001:</strong> Razorpay updated their checkout.js CDN URL — old URL returns 404. Fix: update CDN URL in base template.</li>
+      <li><strong>HF-002:</strong> Express.js security update released (Express.js 4.2.10 patches CVE-XXXX). Fix: update package.json and redeploy.</li>
+      <li><strong>HF-003:</strong> Render free tier DB connection limit hit during demo day (25 connections). Fix: reduce database connection pool size in settings.</li>
+    </ul>
+  </section>
+
+  <section class="section" id="version-updates">
+    <div class="section-header">
+      <div class="section-icon icon-blue">⬆️</div>
+      <div class="section-title-group">
+        <h2>2. Version Updates</h2>
+        <p>Keeping dependencies secure and up-to-date</p>
+      </div>
+    </div>
+    <p>Dependencies that were current in Semester 1 may have known security vulnerabilities by Semester 4. Keeping dependencies updated is a basic security hygiene responsibility.</p>
+    <h3>Dependency Audit Commands</h3>
+    <div class="code-block"># Python backend — check for known vulnerabilities
+pip audit
+
+# Sample output:
+# Found 1 known vulnerability in 1 package:
+# name: Pillow, version: 9.3.0
+# id: PYSEC-2023-xxx, fix: upgrade to >= 10.0.1
+
+pip install --upgrade Pillow
+pip freeze > package.json
+
+# ----
+
+# Node.js frontend
+npm audit
+
+# Sample output:
+# 2 high severity vulnerabilities
+# Run `npm audit fix` to fix them
+
+npm audit fix</div>
+    <h3>Safe Update Process</h3>
+    <ol>
+      <li>Run <code class="code-inline">pip audit</code> / <code class="code-inline">npm audit</code> to identify vulnerabilities.</li>
+      <li>Update vulnerable package to patched version.</li>
+      <li>Run full test suite — ensure nothing broke.</li>
+      <li>Deploy to staging; smoke test.</li>
+      <li>Deploy to production via hotfix branch.</li>
+      <li>Document the update in the maintenance log.</li>
+    </ol>
+  </section>
+
+  <section class="section" id="post-deploy">
+    <div class="section-header">
+      <div class="section-icon icon-blue">📊</div>
+      <div class="section-title-group">
+        <h2>3. Post-Deployment Review</h2>
+        <p>Assessing production performance 2–4 weeks after go-live</p>
+      </div>
+    </div>
+    <p>The <strong>Post-Deployment Review</strong> (PDR) is conducted 2–4 weeks after the production launch. It answers: Is the system performing as expected? Are users able to use it? Are the NFRs being met in production?</p>
+    <h3>PDR Agenda</h3>
+    <ul>
+      <li><strong>Performance metrics review:</strong> Compare Sentry/UptimeRobot/Render data against NFR targets (see SLA table in <a href="semester4_logging.html">Monitoring Sem 4</a>).</li>
+      <li><strong>Error review:</strong> What are the top 5 errors in Sentry this month? Are they fixed or known?</li>
+      <li><strong>User feedback review:</strong> Any complaints from beta testers still using the system?</li>
+      <li><strong>Cost review:</strong> Is the system within free-tier limits? Any risk of incurring charges?</li>
+      <li><strong>Security review:</strong> Any new CVEs in our dependencies since go-live?</li>
+      <li><strong>Decisions:</strong> What needs to be fixed? What should go into the Enhancement Log?</li>
+    </ul>
+  </section>
+
+  <section class="section" id="enhancement-log">
+    <div class="section-header">
+      <div class="section-icon icon-blue">📝</div>
+      <div class="section-title-group">
+        <h2>4. Enhancement Log</h2>
+        <p>Recording ideas for future versions — beyond the MCA project</p>
+      </div>
+    </div>
+    <p>The <strong>Enhancement Log</strong> is a backlog of features and improvements that were explicitly out of scope for the 4-semester project but are worth building in a future version. It shows the evaluators that you understand the product's growth potential.</p>
+    <h3>Enhancement Log for Online Food Delivery System</h3>
+    <table>
+      <thead><tr><th>ID</th><th>Enhancement</th><th>Rationale</th><th>Estimated Effort</th></tr></thead>
+      <tbody>
+        <tr><td>ENH-01</td><td>Native Android/iOS app (React Native)</td><td>Majority of real food delivery usage is mobile; web-responsive is a poor substitute</td><td>1 semester</td></tr>
+        <tr><td>ENH-02</td><td>Real-time GPS tracking (Google Maps API)</td><td>Current status polling is functional but not as engaging as live map tracking</td><td>2–3 weeks</td></tr>
+        <tr><td>ENH-03</td><td>AI-powered restaurant recommendations</td><td>Personalised suggestions based on order history improve user retention</td><td>1 semester (ML model)</td></tr>
+        <tr><td>ENH-04</td><td>Promo codes and loyalty rewards</td><td>Key engagement feature in real systems; requires payment and business rule changes</td><td>3–4 weeks</td></tr>
+        <tr><td>ENH-05</td><td>Multi-restaurant ordering (food court)</td><td>Removes single-restaurant-per-cart constraint for food court scenarios</td><td>1 month</td></tr>
+        <tr><td>ENH-06</td><td>Scheduled delivery (order now, deliver at 7 PM)</td><td>Popular feature; requires scheduler (Celery Beat) and UI changes</td><td>2 weeks</td></tr>
+        <tr><td>ENH-07</td><td>WhatsApp / SMS notifications</td><td>More accessible than email for Indian demographics; requires Twilio/WhatsApp Business API</td><td>1 week</td></tr>
+        <tr><td>ENH-08</td><td>Multi-city support</td><td>Scale beyond single city; requires location-based restaurant filtering improvements</td><td>2–3 weeks</td></tr>
+      </tbody>
+    </table>
+    <div class="info-box blue">
+      <div class="info-box-title">Include in Project Report</div>
+      <p style="margin:0">Include the Enhancement Log in Chapter 8 (Conclusion &amp; Future Work) of your project report. It demonstrates product thinking — understanding the product's roadmap beyond the current semester's scope. Evaluators appreciate when students show awareness of what a production-grade system would require.</p>
+    </div>
+  </section>
+
+  <footer>
+    <a href="semester3_maintenance.html">← Maintenance Sem 3</a>
+    <nav class="footer-nav">
+      <a href="mca_project_lifecycle_4_semesters.html">← Back to Project Lifecycle</a>
+    </nav>
+  </footer>
+</div>
+</body>
+</html>

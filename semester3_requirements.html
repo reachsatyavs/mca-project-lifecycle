@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Change Requests — Semester 3 | Online Food Delivery System</title>
+  <link rel="stylesheet" href="child_page_styles.css">
+</head>
+<body>
+<div class="page-wrap">
+  <nav class="breadcrumb">
+    <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+    <span class="sep">›</span><span>Semester 3</span>
+    <span class="sep">›</span><span>Change Requests</span>
+  </nav>
+  <header class="page-header">
+    <div class="sem-badge sem-3">Semester 3 — Deliver</div>
+    <h1>Requirements — Managing Change Requests</h1>
+    <div class="project-tag">Example Project: <strong>Online Food Delivery System</strong></div>
+    <p class="header-desc">In Semester 3, the system is mostly built. Requirement changes are tightly controlled via a formal Change Request process to prevent destabilising a nearly-complete system.</p>
+  </header>
+
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon icon-orange">🔧</div>
+      <div class="section-title-group">
+        <h2>Change Requests via CR Process</h2>
+        <p>How to handle scope changes in the Deliver phase</p>
+      </div>
+    </div>
+    <p>By Semester 3, the requirements are well-established. Any new requirement or change must be submitted as a <strong>Change Request (CR)</strong> — evaluated for impact before being accepted or deferred.</p>
+    <h3>CR Evaluation Criteria in Semester 3</h3>
+    <table>
+      <thead><tr><th>Question</th><th>Example Answer (Food Delivery)</th></tr></thead>
+      <tbody>
+        <tr><td>Is this change truly necessary for the system to function?</td><td>CR: "Add promo code support" → Not necessary; defer to Semester 4 enhancement log</td></tr>
+        <tr><td>Does it affect existing tested functionality?</td><td>If yes, all affected tests must be rerun after the change</td></tr>
+        <tr><td>Can it be implemented in ≤ 3 days?</td><td>If it takes longer, it risks destabilising the Semester 3 delivery timeline</td></tr>
+        <tr><td>Is it part of a P1 bug fix?</td><td>Bug fixes are always approved; they are not CRs</td></tr>
+      </tbody>
+    </table>
+    <h3>Sample CR Log (Semester 3)</h3>
+    <table>
+      <thead><tr><th>CR ID</th><th>Request</th><th>Decision</th><th>Reason</th></tr></thead>
+      <tbody>
+        <tr><td>CR-004</td><td>Add "order again" button on order history page</td><td>✅ Approved (2 days effort)</td><td>High user value, low risk, existing order placement API reused</td></tr>
+        <tr><td>CR-005</td><td>Add WhatsApp notification alongside email</td><td>❌ Deferred to Sem 4</td><td>New third-party integration; risk to timeline; enhancement, not bug fix</td></tr>
+        <tr><td>CR-006</td><td>Change delivery fee structure (tiered pricing)</td><td>❌ Rejected</td><td>Affects business rules BR-05 and BR-06; requires testing across all order flows; too risky in Sem 3</td></tr>
+      </tbody>
+    </table>
+    <div class="info-box orange">
+      <div class="info-box-title">Semester 3 Rule: Freeze Feature Scope</div>
+      <p style="margin:0">In Semester 3, the goal is to <em>complete and test</em> what was already planned — not to add new features. Any feature not in the approved backlog is deferred to Semester 4's Enhancement Log. This discipline is what makes projects actually get finished.</p>
+    </div>
+  </section>
+
+  <footer>
+    <a href="semester2_requirements.html">← Requirements Sem 2</a>
+    <nav class="footer-nav">
+      <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+      <a href="semester3_planning.html">Next: Planning Sem 3 →</a>
+    </nav>
+  </footer>
+</div>
+</body>
+</html>

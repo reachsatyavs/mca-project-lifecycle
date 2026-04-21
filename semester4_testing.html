@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Testing — Semester 4 | Online Food Delivery System</title>
+  <link rel="stylesheet" href="child_page_styles.css">
+</head>
+<body>
+<div class="page-wrap">
+  <nav class="breadcrumb">
+    <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+    <span class="sep">›</span><span>Semester 4</span>
+    <span class="sep">›</span><span>Testing</span>
+  </nav>
+  <header class="page-header">
+    <div class="sem-badge sem-4">Semester 4 — Production</div>
+    <h1>Testing — UAT, Regression Suite &amp; Security Scan</h1>
+    <div class="project-tag">Example Project: <strong>Online Food Delivery System</strong></div>
+    <p class="header-desc">Semester 4 testing focuses on final validation before production: User Acceptance Testing by stakeholders, a full regression suite to verify nothing is broken, and a security scan to identify vulnerabilities.</p>
+  </header>
+
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon icon-blue">👤</div>
+      <div class="section-title-group">
+        <h2>UAT — User Acceptance Testing</h2>
+        <p>Stakeholders validate the system meets their expectations</p>
+      </div>
+    </div>
+    <p><strong>UAT</strong> is the final testing phase where the "business" (in your case: faculty guide + project sponsor) confirms the system satisfies the original requirements. It is not a developer activity — developers fix issues found here, but don't run the tests.</p>
+    <h3>UAT Plan for Food Delivery</h3>
+    <table>
+      <thead><tr><th>Scenario</th><th>Tester</th><th>Acceptance Condition</th></tr></thead>
+      <tbody>
+        <tr><td>Register and place first order</td><td>Faculty guide (as customer)</td><td>Order confirmed within 30 seconds; confirmation email received</td></tr>
+        <tr><td>Restaurant owner accepts order</td><td>Faculty guide (as restaurant)</td><td>Order visible on dashboard; accepted within 5 minutes; customer status updates</td></tr>
+        <tr><td>Full payment flow (online payment)</td><td>Faculty guide</td><td>Razorpay sandbox payment succeeds; invoice emailed</td></tr>
+        <tr><td>Admin approves a restaurant</td><td>Faculty guide (as admin)</td><td>Restaurant becomes visible to customers after approval</td></tr>
+        <tr><td>System performance under 20 users</td><td>QA team (load test)</td><td>All pages load under 3 seconds</td></tr>
+      </tbody>
+    </table>
+    <h3>UAT Sign-Off</h3>
+    <p>At the end of UAT, the faculty guide signs a <strong>UAT Acceptance Certificate</strong> — a single-page document confirming all UAT scenarios passed. This is a critical project deliverable for the final submission.</p>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon icon-blue">🔁</div>
+      <div class="section-title-group">
+        <h2>Regression Suite</h2>
+        <p>Ensuring new code hasn't broken existing functionality</p>
+      </div>
+    </div>
+    <p>A <strong>regression test suite</strong> is a set of tests that verify all previously working functionality still works after new code changes. In Semester 4, every hotfix and patch must pass the full regression suite before being deployed to production.</p>
+    <h3>Regression Suite for Food Delivery</h3>
+    <ul>
+      <li>All 89 unit tests (run automatically via CI/CD).</li>
+      <li>All 35 integration tests (run automatically via CI/CD).</li>
+      <li>Critical E2E scenarios (run manually before each production deploy):
+        <ul>
+          <li>Customer end-to-end order flow (add to cart → pay → track).</li>
+          <li>Restaurant order acceptance flow.</li>
+          <li>Delivery partner pickup and deliver flow.</li>
+          <li>Admin restaurant approval flow.</li>
+          <li>Password reset flow.</li>
+        </ul>
+      </li>
+    </ul>
+    <div class="info-box blue">
+      <div class="info-box-title">Automated Regression in CI</div>
+      <p style="margin:0">Unit and integration tests run automatically on every PR (GitHub Actions). E2E tests can be run in GitHub Actions on a schedule (e.g., every night) using Playwright's headless browser mode. This gives you continuous regression coverage without manual effort.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon icon-blue">🔒</div>
+      <div class="section-title-group">
+        <h2>Security Scan</h2>
+        <p>Finding and fixing vulnerabilities before production launch</p>
+      </div>
+    </div>
+    <h3>Security Checklist for Food Delivery</h3>
+    <table>
+      <thead><tr><th>Vulnerability</th><th>Check</th><th>Tool</th></tr></thead>
+      <tbody>
+        <tr><td>SQL Injection</td><td>All DB queries use ORM or parameterised queries — no string concatenation</td><td>Manual code review + OWASP ZAP</td></tr>
+        <tr><td>XSS (Cross-Site Scripting)</td><td>All user inputs escaped before rendering; CSP header set</td><td>OWASP ZAP active scan</td></tr>
+        <tr><td>CSRF</td><td>Express.js CSRF protection enabled; all state-changing requests require CSRF token</td><td>Express.js built-in + OWASP ZAP</td></tr>
+        <tr><td>Broken Auth</td><td>JWTs expire after 60 minutes; refresh tokens used correctly</td><td>Manual testing</td></tr>
+        <tr><td>Sensitive Data Exposure</td><td>Passwords hashed with bcrypt; no PII in logs; HTTPS enforced</td><td>DB inspection + Sentry config review</td></tr>
+        <tr><td>Broken Access Control</td><td>Customers cannot access admin/restaurant/partner endpoints</td><td>Manual API testing in Postman</td></tr>
+        <tr><td>Outdated Dependencies</td><td>No known CVEs in dependencies</td><td><code class="code-inline">pip audit</code> / <code class="code-inline">npm audit</code></td></tr>
+      </tbody>
+    </table>
+    <h3>Run OWASP ZAP (Free)</h3>
+    <div class="code-block"># Install OWASP ZAP (Docker)
+docker pull ghcr.io/zaproxy/zaproxy:stable
+
+# Run baseline scan against your staging URL
+docker run -t ghcr.io/zaproxy/zaproxy:stable zap-baseline.py \
+  -t https://food-staging.render.com \
+  -r zap_report.html</div>
+    <p>ZAP will scan your staging site and produce an HTML report listing all found vulnerabilities by severity. Fix High and Medium severity issues before production launch.</p>
+  </section>
+
+  <footer>
+    <a href="semester3_testing.html">← Testing Sem 3</a>
+    <nav class="footer-nav">
+      <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+    </nav>
+  </footer>
+</div>
+</body>
+</html>

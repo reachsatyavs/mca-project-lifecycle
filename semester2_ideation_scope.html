@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scope Refinements — Semester 2 | Online Food Delivery System</title>
+  <link rel="stylesheet" href="child_page_styles.css">
+</head>
+<body>
+<div class="page-wrap">
+  <nav class="breadcrumb">
+    <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+    <span class="sep">›</span><span>Semester 2</span>
+    <span class="sep">›</span><span>Scope Refinements &amp; Change Requests</span>
+  </nav>
+  <header class="page-header">
+    <div class="sem-badge sem-2">Semester 2 — Build</div>
+    <h1>Scope Refinements &amp; Change Requests</h1>
+    <div class="project-tag">Example Project: <strong>Online Food Delivery System</strong></div>
+    <p class="header-desc">As development begins in Semester 2, you'll discover things that need to change — features that are harder than expected, or new ideas from stakeholders. Managing these changes formally prevents scope creep.</p>
+  </header>
+
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon icon-green">🔄</div>
+      <div class="section-title-group">
+        <h2>Scope Refinements</h2>
+        <p>Adjustments discovered once actual development begins</p>
+      </div>
+    </div>
+    <p>After 6 months of planning (Semester 1), the Semester 2 team reviews the original scope with fresh eyes — now they know which features are harder than expected and which non-goals should be reconsidered.</p>
+    <h3>Common Refinements for Food Delivery System</h3>
+    <table>
+      <thead><tr><th>Original Scope Item</th><th>Refinement</th><th>Reason</th></tr></thead>
+      <tbody>
+        <tr><td>Real-time order tracking via auto-refresh</td><td>Changed from polling (refresh every 15s) to WebSocket for status updates</td><td>Polling caused unnecessary server load; WebSocket is cleaner with Socket.io</td></tr>
+        <tr><td>Image upload to local storage</td><td>Changed to Cloudinary (cloud-based image hosting)</td><td>Local storage doesn't persist on Render's free tier (ephemeral filesystem)</td></tr>
+        <tr><td>Single address per user</td><td>Extended to multiple addresses with a "default" flag</td><td>User testing showed this was a major usability complaint</td></tr>
+        <tr><td>Admin approval: manual email process</td><td>Admin approval via in-app dashboard with notification</td><td>Email-only approach was too slow; in-app is faster and trackable</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon icon-green">📝</div>
+      <div class="section-title-group">
+        <h2>Change Request (CR) Process</h2>
+        <p>The formal way to change scope without causing chaos</p>
+      </div>
+    </div>
+    <p>A <strong>Change Request (CR)</strong> is a formal document submitted whenever the project scope, design, or plan needs to change. Without a CR process, changes are made informally, leading to undocumented features, broken designs, and missed deadlines.</p>
+    <h3>CR Template</h3>
+    <table>
+      <tbody>
+        <tr><td><strong>CR ID</strong></td><td>CR-001</td></tr>
+        <tr><td><strong>Title</strong></td><td>Add real-time order status via WebSocket</td></tr>
+        <tr><td><strong>Requested By</strong></td><td>Backend Developer (Member B)</td></tr>
+        <tr><td><strong>Date</strong></td><td>Week 3, Semester 2</td></tr>
+        <tr><td><strong>Description</strong></td><td>Replace polling-based order status with WebSocket (Socket.io) for real-time push updates to the customer's browser when order status changes.</td></tr>
+        <tr><td><strong>Impact on Scope</strong></td><td>Adds a new technical component (Socket.io). Affects FR-304 (Order Status Tracking). No new user-facing features.</td></tr>
+        <tr><td><strong>Impact on Timeline</strong></td><td>+3 days for Member B to integrate Socket.io</td></tr>
+        <tr><td><strong>Impact on NFRs</strong></td><td>Improves NFR-2 (API response time) — status updates now push instead of pull</td></tr>
+        <tr><td><strong>Decision</strong></td><td>✅ Approved by PM and Faculty Guide on [date]</td></tr>
+        <tr><td><strong>SRS Update Required?</strong></td><td>Yes — FR-304 updated to reflect WebSocket approach</td></tr>
+      </tbody>
+    </table>
+    <div class="info-box green">
+      <div class="info-box-title">CR Process Steps</div>
+      <ol style="margin:0; padding-left:18px;">
+        <li>Team member identifies a change and fills in a CR form.</li>
+        <li>PM reviews the CR, estimates impact on time and scope.</li>
+        <li>Faculty guide approves or rejects the CR.</li>
+        <li>If approved: update relevant SRS/TDD sections and create tasks on the board.</li>
+        <li>Log the CR in a Change Log (a running table of all CRs).</li>
+      </ol>
+    </div>
+  </section>
+
+  <footer>
+    <a href="mca_project_lifecycle_4_semesters.html">← Project Lifecycle</a>
+    <nav class="footer-nav">
+      <a href="semester2_requirements.html">Next: Requirements Sem 2 →</a>
+    </nav>
+  </footer>
+</div>
+</body>
+</html>

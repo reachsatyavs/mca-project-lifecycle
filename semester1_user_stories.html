@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Stories — Semester 1 | Online Food Delivery System</title>
+  <link rel="stylesheet" href="child_page_styles.css">
+</head>
+<body>
+<div class="page-wrap">
+  <nav class="breadcrumb">
+    <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+    <span class="sep">›</span><a href="semester1_requirements.html">Requirements</a>
+    <span class="sep">›</span><span>User Stories</span>
+  </nav>
+  <header class="page-header">
+    <div class="sem-badge sem-1">Semester 1 — Foundation</div>
+    <h1>User Stories</h1>
+    <div class="project-tag">Example Project: <strong>Online Food Delivery System</strong></div>
+    <p class="header-desc">User stories capture requirements from the end user's perspective in plain, non-technical language. Each story is small enough to be built in one sprint and carries explicit acceptance criteria that drive test cases.</p>
+  </header>
+  <nav class="topic-nav">
+    <div class="topic-nav-label">Jump to section</div>
+    <a href="#format">Format &amp; Tips</a>
+    <a href="#customer">Customer Stories</a>
+    <a href="#owner">Restaurant Owner</a>
+    <a href="#partner">Delivery Partner</a>
+    <a href="#admin">Admin</a>
+  </nav>
+
+  <!-- Format -->
+  <section class="section" id="format">
+    <div class="section-header">
+      <div class="section-icon icon-purple">📖</div>
+      <div class="section-title-group">
+        <h2>Format &amp; Writing Tips</h2>
+        <p>How to write user stories that are actually useful</p>
+      </div>
+    </div>
+    <div class="info-box purple">
+      <div class="info-box-title">User Story Format</div>
+      <p style="margin:0; font-size:15px; font-weight:600;">
+        As a <em>[role]</em>, I want to <em>[action]</em>, so that <em>[benefit]</em>.
+      </p>
+    </div>
+    <h3>INVEST Checklist — Every Story Should Be:</h3>
+    <table>
+      <thead><tr><th>Letter</th><th>Meaning</th><th>Example Check</th></tr></thead>
+      <tbody>
+        <tr><td><strong>I</strong>ndependent</td><td>Can be built without another story being done first</td><td>"Login" does not depend on "View Order History"</td></tr>
+        <tr><td><strong>N</strong>egotiable</td><td>Not a fixed contract — details can change</td><td>Payment method can start with COD only</td></tr>
+        <tr><td><strong>V</strong>aluable</td><td>Delivers value to the user or business</td><td>Every story answers "why does this matter?"</td></tr>
+        <tr><td><strong>E</strong>stimable</td><td>Team can assign story points to it</td><td>Team agrees it's a 5-point story</td></tr>
+        <tr><td><strong>S</strong>mall</td><td>Fits in one sprint (2 weeks)</td><td>Split "full order flow" into 3 separate stories</td></tr>
+        <tr><td><strong>T</strong>estable</td><td>Has acceptance criteria that can be verified</td><td>"Cart shows item count badge" — easy to test</td></tr>
+      </tbody>
+    </table>
+    <p>Each story should also have <strong>Acceptance Criteria</strong> — specific conditions that must be true for the story to be "done". These become the basis for your test cases in Semester 2.</p>
+  </section>
+
+  <!-- Customer Stories -->
+  <section class="section" id="customer">
+    <div class="section-header">
+      <div class="section-icon icon-purple">🧑‍💻</div>
+      <div class="section-title-group">
+        <h2>Customer Stories</h2>
+        <p>Stories from the perspective of a food-ordering customer</p>
+      </div>
+    </div>
+
+    <div class="story-card">
+      <div class="actor">Customer · US-C01</div>
+      <div class="story-text">As a customer, I want to <strong>register an account</strong> so that I can place orders and track my order history.</div>
+      <div class="acceptance">
+        <div class="acceptance-title">Acceptance Criteria</div>
+        <ul>
+          <li>Registration form accepts name, email, phone, and password.</li>
+          <li>Password must be ≥ 8 characters with at least one number.</li>
+          <li>A verification email is sent; account is inactive until verified.</li>
+          <li>Duplicate email shows "Email already registered."</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="story-card">
+      <div class="actor">Customer · US-C02</div>
+      <div class="story-text">As a customer, I want to <strong>log in with my email and password</strong> so that I can access my saved addresses and order history.</div>
+      <div class="acceptance">
+        <div class="acceptance-title">Acceptance Criteria</div>
+        <ul>
+          <li>Valid credentials redirect to the home page; JWT is set.</li>
+          <li>Invalid credentials show "Invalid email or password" — no redirect.</li>
+          <li>Session persists across page reload via refresh token.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="story-card">
+      <div class="actor">Customer · US-C03</div>
+      <div class="story-text">As a customer, I want to <strong>search for restaurants by cuisine type</strong> so that I can quickly find food that matches my preference.</div>
+      <div class="acceptance">
+        <div class="acceptance-title">Acceptance Criteria</div>
+        <ul>
+          <li>A search bar and cuisine filter are visible on the home page.</li>
+          <li>Selecting "Chinese" shows only approved Chinese restaurants.</li>
+          <li>No matches shows a friendly "No results" message.</li>
+          <li>Results appear within 2 seconds.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="story-card">
+      <div class="actor">Customer · US-C04</div>
+      <div class="story-text">As a customer, I want to <strong>add multiple items to my cart</strong> from a restaurant so that I can order everything I need in one transaction.</div>
+      <div class="acceptance">
+        <div class="acceptance-title">Acceptance Criteria</div>
+        <ul>
+          <li>Each menu item has an "Add to Cart" button with a quantity stepper.</li>
+          <li>Cart icon shows live item count badge.</li>
+          <li>Adding items from a second restaurant shows a warning dialog: "Clear cart?"</li>
+          <li>Cart persists across page refresh (localStorage or session).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="story-card">
+      <div class="actor">Customer · US-C05</div>
+      <div class="story-text">As a customer, I want to <strong>pay online for my order</strong> so that I don't need to carry cash.</div>
+      <div class="acceptance">
+        <div class="acceptance-title">Acceptance Criteria</div>
+        <ul>
+          <li>Checkout page shows itemised breakdown (subtotal, delivery fee, taxes, total).</li>
+          <li>Customer can choose Credit Card, Debit Card, UPI, or COD.</li>
+          <li>Successful payment creates the order and redirects to tracking page.</li>
+          <li>Failed payment shows an error with a retry option — order is NOT created.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="story-card">
+      <div class="actor">Customer · US-C06</div>
+      <div class="story-text">As a customer, I want to <strong>track my order in real-time</strong> after placing it so that I know when to expect my food.</div>
+      <div class="acceptance">
+        <div class="acceptance-title">Acceptance Criteria</div>
+        <ul>
+          <li>After placing an order, customer is redirected to an order tracking page.</li>
+          <li>A visual timeline shows: Placed → Accepted → Preparing → Out for Delivery → Delivered.</li>
+          <li>Status auto-refreshes every 15 seconds without full page reload.</li>
+          <li>Email/push notification sent when status changes.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="story-card">
+      <div class="actor">Customer · US-C07</div>
+      <div class="story-text">As a customer, I want to <strong>rate and review a restaurant</strong> after delivery so that other users can make informed choices.</div>
+      <div class="acceptance">
+        <div class="acceptance-title">Acceptance Criteria</div>
+        <ul>
+          <li>"Rate Your Order" prompt appears after order status = DELIVERED.</li>
+          <li>Customer can give 1–5 stars and add an optional text comment (max 500 chars).</li>
+          <li>Each customer can only review a specific order once.</li>
+          <li>Restaurant's average rating updates within 1 minute of submission.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="story-card">
+      <div class="actor">Customer · US-C08</div>
+      <div class="story-text">As a customer, I want to <strong>view my order history</strong> so that I can reorder a favourite meal quickly.</div>
+      <div class="acceptance">
+        <div class="acceptance-title">Acceptance Criteria</div>
+        <ul>
+          <li>Order history lists all past orders sorted by date (newest first).</li>
+          <li>Each entry shows restaurant name, items, total, and status.</li>
+          <li>"Reorder" button re-adds the same items to the cart in one click.</li>
+          <li>Customer can view a full receipt/invoice for each order.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Restaurant Owner Stories -->
+  <section class="section" id="owner">
+    <div class="section-header">
+      <div class="section-icon icon-purple">🍽️</div>
+      <div class="section-title-group">
+        <h2>Restaurant Owner Stories</h2>
+        <p>Stories from the perspective of a registered restaurant owner</p>
+      </div>
+    </div>
+
+    <div class="story-card" style="background:#f0faf5; border-color:#c0e8d8;">
+      <div class="actor" style="color:#0F6E56;">Restaurant Owner · US-O01</div>
+      <div class="story-text">As a restaurant owner, I want to <strong>register my restaurant</strong> on the platform so that customers in my area can discover and order from me.</div>
+      <div class="acceptance">
+        <div class="acceptance-title">Acceptance Criteria</div>
+        <ul>
+          <li>Registration form accepts name, address, cuisine type, opening hours, FSSAI licence number.</li>
+          <li>Owner is notified by email when registration is submitted.</li>
+          <li>Restaurant is NOT visible to customers until admin approves it.</li>
+          <li>Owner receives email notification upon admin approval or rejection (with reason).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="story-card" style="background:#f0faf5; border-color:#c0e8d8;">
+      <div class="actor" style="color:#0F6E56;">Restaurant Owner · US-O02</div>
+      <div class="story-text">As a restaurant owner, I want to <strong>manage my menu online</strong> so that I can add seasonal dishes and update prices without contacting a developer.</div>
+      <div class="acceptance">
+        <div class="acceptance-title">Acceptance Criteria</div>
+        <ul>
+          <li>Dashboard has a "Menu" tab with a full list of items.</li>
+          <li>Owner can add a new item with name, price, category, photo, and veg/non-veg flag.</li>
+          <li>Owner can toggle item availability without deleting it.</li>
+          <li>Changes appear on the customer-facing menu within 30 seconds.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="story-card" style="background:#f0faf5; border-color:#c0e8d8;">
+      <div class="actor" style="color:#0F6E56;">Restaurant Owner · US-O03</div>
+      <div class="story-text">As a restaurant owner, I want to <strong>receive and manage incoming orders</strong> instantly so that I can begin preparation without delay.</div>
+      <div class="acceptance">
+        <div class="acceptance-title">Acceptance Criteria</div>
+        <ul>
+          <li>New order triggers a visual and audio notification on the dashboard.</li>
+          <li>Owner can Accept or Reject within 5 minutes; timeout = auto-reject.</li>
+          <li>Accepted orders show items, quantity, delivery address, and payment mode.</li>
+          <li>Rejected orders notify the customer with a reason.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Delivery Partner Stories -->
+  <section class="section" id="partner">
+    <div class="section-header">
+      <div class="section-icon icon-purple">🛵</div>
+      <div class="section-title-group">
+        <h2>Delivery Partner Stories</h2>
+        <p>Stories from the perspective of a delivery partner</p>
+      </div>
+    </div>
+
+    <div class="story-card" style="background:#fffbf0; border-color:#f0d890;">
+      <div class="actor" style="color:#854F0B;">Delivery Partner · US-P01</div>
+      <div class="story-text">As a delivery partner, I want to <strong>go online/offline</strong> on the platform so that I only receive orders when I am available.</div>
+      <div class="acceptance">
+        <div class="acceptance-title">Acceptance Criteria</div>
+        <ul>
+          <li>A prominent toggle on the partner portal shows Online / Offline status.</li>
+          <li>When offline, no new orders are assigned to the partner.</li>
+          <li>Going offline during an active delivery is not allowed until the order is delivered.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="story-card" style="background:#fffbf0; border-color:#f0d890;">
+      <div class="actor" style="color:#854F0B;">Delivery Partner · US-P02</div>
+      <div class="story-text">As a delivery partner, I want to <strong>see assigned orders with restaurant and customer details</strong> so that I know exactly where to go for pickup and delivery.</div>
+      <div class="acceptance">
+        <div class="acceptance-title">Acceptance Criteria</div>
+        <ul>
+          <li>Partner portal shows: restaurant name, address, item list, customer address.</li>
+          <li>Partner can mark order as "Picked Up" once collected from restaurant.</li>
+          <li>Partner can mark order as "Delivered" upon successful handover.</li>
+          <li>Customer receives push/email notification on each status change.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Admin Stories -->
+  <section class="section" id="admin">
+    <div class="section-header">
+      <div class="section-icon icon-purple">🔧</div>
+      <div class="section-title-group">
+        <h2>Admin Stories</h2>
+        <p>Stories from the perspective of the platform administrator</p>
+      </div>
+    </div>
+
+    <div class="story-card" style="background:#f0f7ff; border-color:#b8d4f0;">
+      <div class="actor" style="color:#185FA5;">Admin · US-A01</div>
+      <div class="story-text">As an admin, I want to <strong>approve or reject new restaurant registrations</strong> so that only legitimate, verified restaurants are listed on the platform.</div>
+      <div class="acceptance">
+        <div class="acceptance-title">Acceptance Criteria</div>
+        <ul>
+          <li>Admin dashboard shows a list of pending restaurant applications.</li>
+          <li>Admin can view submitted details and approve or reject with a reason.</li>
+          <li>Restaurant owner is notified by email upon approval or rejection.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="story-card" style="background:#f0f7ff; border-color:#b8d4f0;">
+      <div class="actor" style="color:#185FA5;">Admin · US-A02</div>
+      <div class="story-text">As an admin, I want to <strong>view platform-wide analytics</strong> so that I can monitor the health and growth of the platform.</div>
+      <div class="acceptance">
+        <div class="acceptance-title">Acceptance Criteria</div>
+        <ul>
+          <li>Dashboard shows: total orders today, total revenue today, active restaurants, active users.</li>
+          <li>Trend charts show daily order volume for the past 30 days.</li>
+          <li>Admin can filter statistics by date range.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="story-card" style="background:#f0f7ff; border-color:#b8d4f0;">
+      <div class="actor" style="color:#185FA5;">Admin · US-A03</div>
+      <div class="story-text">As an admin, I want to <strong>suspend or ban a user account</strong> so that I can remove bad actors from the platform.</div>
+      <div class="acceptance">
+        <div class="acceptance-title">Acceptance Criteria</div>
+        <ul>
+          <li>Admin can search for any user by name or email.</li>
+          <li>Admin can suspend (temporary) or ban (permanent) a user with a reason.</li>
+          <li>Suspended/banned users see a clear message when they try to log in.</li>
+          <li>Suspension can be reversed by admin.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="info-box purple">
+      <div class="info-box-title">User Stories → Sprint Backlog</div>
+      <p style="margin:0">These stories form the <strong>Product Backlog</strong>. In Sprint Planning (Semester 2), the team selects the top-priority stories from the backlog and commits to completing them within the 2-week sprint. The Sprint Backlog is the subset of stories selected for one sprint.</p>
+    </div>
+  </section>
+
+  <footer>
+    <a href="semester1_requirements.html">← Requirements Overview</a>
+    <nav class="footer-nav">
+      <a href="semester1_use_cases.html">Use Cases →</a>
+      <a href="semester1_test_cases.html">Test Cases →</a>
+    </nav>
+  </footer>
+</div>
+</body>
+</html>
