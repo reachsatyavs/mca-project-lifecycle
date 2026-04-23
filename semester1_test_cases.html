@@ -74,12 +74,111 @@
     <div class="project-tag">Example Project: <strong>Online Food Delivery System</strong></div>
     <p class="header-desc">Test planning happens in Semester 1 — but the actual test cases are <strong>written in Semester 2</strong> and <strong>executed in Semester 3</strong>. This document defines the testing strategy, scope, types of testing, and the template format that will guide Semester 2.</p>
   </header>
+  <!-- Traceability navigation -->
+  <style>
+    .nav-flow {
+      display: flex; align-items: center; flex-wrap: wrap;
+      border: 2px solid #c47a10; border-radius: 10px; overflow: hidden;
+      margin: 16px 0;
+    }
+    .nav-flow-step { flex:1; min-width:120px; padding:12px 14px; text-align:center; position:relative; }
+    .nav-flow-step:not(:last-child)::after {
+      content:'›'; position:absolute; right:-6px; top:50%;
+      transform:translateY(-50%); font-size:20px; color:#c47a10; font-weight:700; z-index:1;
+    }
+    .nfs-1 { background:#EEEDFE; }
+    .nfs-2 { background:#e8f5ff; }
+    .nfs-3 { background:#efffee; }
+    .nfs-4 { background:#E1F5EE; }
+    .nfs-5 { background:#FFF3E0; }
+    .nfs-label { font-size:10px; text-transform:uppercase; letter-spacing:0.5px; color:#888; margin-bottom:3px; font-weight:700; }
+    .nfs-title { font-size:12px; font-weight:800; }
+    .nfs-1 .nfs-title { color:#3C3489; }
+    .nfs-2 .nfs-title { color:#185FA5; }
+    .nfs-3 .nfs-title { color:#0a6640; }
+    .nfs-4 .nfs-title { color:#0F6E56; }
+    .nfs-5 .nfs-title { color:#7a5a0a; }
+    .nfs-link { font-size:10.5px; color:inherit; text-decoration:none; margin-top:3px; display:block; opacity:0.7; }
+    .nfs-link:hover { opacity:1; text-decoration:underline; }
+    .nfs-active { outline: 3px solid #c47a10; }
+
+    /* Security & Performance test cards */
+    .sec-card {
+      background: #fff8f8; border: 1px solid #f5c0c0;
+      border-left: 5px solid #c62828; border-radius: 8px;
+      padding: 14px 18px; margin-bottom: 14px;
+    }
+    .perf-card {
+      background: #f0f7ff; border: 1px solid #b8d4f0;
+      border-left: 5px solid #185FA5; border-radius: 8px;
+      padding: 14px 18px; margin-bottom: 14px;
+    }
+    .sec-id {
+      font-size: 11px; font-weight: 800; color: #c62828;
+      text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 6px;
+    }
+    .perf-id {
+      font-size: 11px; font-weight: 800; color: #185FA5;
+      text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 6px;
+    }
+    .sec-title, .perf-title {
+      font-size: 14px; font-weight: 700; color: #1a1a2e; margin-bottom: 10px;
+    }
+    .sec-table, .perf-table {
+      width: 100%; border-collapse: collapse; font-size: 12.5px; margin: 0;
+    }
+    .sec-table td:first-child, .perf-table td:first-child {
+      font-weight: 600; color: #777; width: 120px; padding: 4px 10px 4px 0; vertical-align: top;
+    }
+    .sec-table td:last-child, .perf-table td:last-child {
+      color: #333; padding: 4px 0;
+    }
+    .badge-owasp {
+      display:inline-block; font-size:10.5px; font-weight:700; padding:2px 9px;
+      border-radius:4px; background:#fde8e8; color:#c62828; border:1px solid #f5b8b8;
+    }
+    .badge-nfr {
+      display:inline-block; font-size:10.5px; font-weight:700; padding:2px 9px;
+      border-radius:4px; background:#E6F1FB; color:#185FA5; border:1px solid #b8d4f0;
+    }
+  </style>
+
+  <div class="nav-flow">
+    <div class="nav-flow-step nfs-1">
+      <div class="nfs-label">Document</div>
+      <div class="nfs-title">SRS / PRD</div>
+      <a href="semester1_requirements.html" class="nfs-link">Requirements →</a>
+    </div>
+    <div class="nav-flow-step nfs-2">
+      <div class="nfs-label">Requirement</div>
+      <div class="nfs-title">User Stories</div>
+      <a href="semester1_user_stories.html" class="nfs-link">User Stories →</a>
+    </div>
+    <div class="nav-flow-step nfs-3">
+      <div class="nfs-label">Capability</div>
+      <div class="nfs-title">Features</div>
+      <a href="semester1_features.html" class="nfs-link">Feature List →</a>
+    </div>
+    <div class="nav-flow-step nfs-4">
+      <div class="nfs-label">Interaction</div>
+      <div class="nfs-title">Use Cases</div>
+      <a href="semester1_use_cases.html" class="nfs-link">Use Cases →</a>
+    </div>
+    <div class="nav-flow-step nfs-5 nfs-active">
+      <div class="nfs-label">Verification</div>
+      <div class="nfs-title">Test Cases</div>
+      <a href="semester1_test_cases.html" class="nfs-link">You are here</a>
+    </div>
+  </div>
+
   <nav class="topic-nav">
     <div class="topic-nav-label">Jump to section</div>
     <a href="#lifecycle">Testing Lifecycle</a>
     <a href="#strategy">Test Strategy</a>
     <a href="#scope">Scope &amp; Types</a>
     <a href="#template">TC Template</a>
+    <a href="#security-testing">Security Testing</a>
+    <a href="#perf-testing">Performance Testing</a>
     <a href="#planning-rtm">RTM Plan</a>
   </nav>
 
@@ -295,6 +394,238 @@
     <p style="font-size:13px; color:#555;">This gives you a planned set of <strong>~60 test cases</strong> to write in Semester 2. You don't need to write all 60 — aim for coverage of every Use Case's happy path + at least one negative path each.</p>
   </section>
 
+  <!-- Security Testing -->
+  <section class="section" id="security-testing">
+    <div class="section-header">
+      <div class="section-icon icon-purple">🔒</div>
+      <div class="section-title-group">
+        <h2>Security Testing</h2>
+        <p>Test cases that verify the system resists common security attacks — tied to NFR-4 through NFR-7</p>
+      </div>
+    </div>
+
+    <div class="info-box blue">
+      <div class="info-box-title">OWASP Top 10 Relevance</div>
+      <p style="margin:0">
+        Security test cases are derived from the <strong>OWASP Top 10</strong> — the industry standard list of the most critical web application security risks.
+        For the Online Food Delivery System the highest-risk categories are:
+        <strong>A01 Broken Access Control</strong> (role checks),
+        <strong>A03 Injection</strong> (SQL injection),
+        <strong>A07 Auth Failures</strong> (brute force, token abuse), and
+        <strong>A03 XSS</strong> (stored cross-site scripting in reviews).
+        Tool: <strong>OWASP ZAP</strong> for automated scanning; manual tests for IDOR and logic flaws.
+      </p>
+    </div>
+
+    <h3>Security Test Cases — Authentication &amp; Access Control</h3>
+
+    <div class="sec-card">
+      <div class="sec-id">SEC-01 &nbsp;<span class="badge-owasp">OWASP A07</span> · Covers F-02 · UC-02 · NFR-4 · Sprint 1</div>
+      <div class="sec-title">SQL Injection on Login Endpoint</div>
+      <table class="sec-table">
+        <tr><td>Threat</td><td>Attacker submits SQL payload in email/password to bypass authentication.</td></tr>
+        <tr><td>Precondition</td><td>Login endpoint <code>POST /api/auth/login</code> is deployed.</td></tr>
+        <tr><td>Test Data</td><td>email: <code>' OR '1'='1</code> · password: <code>anything</code></td></tr>
+        <tr><td>Steps</td><td>1. POST /api/auth/login with SQL payload. &nbsp;2. Inspect HTTP response and DB logs.</td></tr>
+        <tr><td>Expected Result</td><td>HTTP 401 · error: "INVALID_CREDENTIALS" · No token issued · No DB error exposed in response · ORM parameterised query used (verify via query log).</td></tr>
+        <tr><td>How to Pass</td><td>Use Prisma / Sequelize ORM — never raw string SQL. Parameterised queries neutralise all injection.</td></tr>
+        <tr><td>Priority</td><td>P1</td></tr>
+      </table>
+    </div>
+
+    <div class="sec-card">
+      <div class="sec-id">SEC-02 &nbsp;<span class="badge-owasp">OWASP A03</span> · Covers F-07 · UC-12 · NFR-6 · Sprint 5</div>
+      <div class="sec-title">Stored XSS in Restaurant Review Comment</div>
+      <table class="sec-table">
+        <tr><td>Threat</td><td>Attacker submits a script tag in a review comment; it executes in other users' browsers when they view the restaurant page.</td></tr>
+        <tr><td>Precondition</td><td>Authenticated customer. Order ORD-001 status = DELIVERED.</td></tr>
+        <tr><td>Test Data</td><td>comment: <code>&lt;script&gt;alert('XSS')&lt;/script&gt;</code> · rating: 3</td></tr>
+        <tr><td>Steps</td><td>1. POST /api/reviews/ with XSS payload. &nbsp;2. GET /api/restaurants/1/reviews/. &nbsp;3. Render in browser and inspect.</td></tr>
+        <tr><td>Expected Result</td><td>Script tag is stored as escaped text (e.g., <code>&amp;lt;script&amp;gt;</code>) and is never executed in the browser. No alert box appears.</td></tr>
+        <tr><td>How to Pass</td><td>HTML-escape all user-supplied content before rendering. Use React's built-in escaping or DOMPurify for HTML output.</td></tr>
+        <tr><td>Priority</td><td>P1</td></tr>
+      </table>
+    </div>
+
+    <div class="sec-card">
+      <div class="sec-id">SEC-03 &nbsp;<span class="badge-owasp">OWASP A01</span> · Covers F-10, F-14, F-16 · NFR-7 · Sprint 2</div>
+      <div class="sec-title">Broken Access Control — Customer Calls Restaurant Management API</div>
+      <table class="sec-table">
+        <tr><td>Threat</td><td>A customer (role = CUSTOMER) directly calls a restaurant owner endpoint to add a menu item or approve a restaurant, bypassing the UI role guards.</td></tr>
+        <tr><td>Precondition</td><td>Customer JWT token for priya@example.com (role = CUSTOMER).</td></tr>
+        <tr><td>Test Data</td><td>POST /api/restaurants/5/menu-items/ with valid menu item payload. Bearer token = customer JWT.</td></tr>
+        <tr><td>Steps</td><td>1. Obtain customer JWT. &nbsp;2. Send POST /api/restaurants/5/menu-items/ with customer token. &nbsp;3. Inspect response.</td></tr>
+        <tr><td>Expected Result</td><td>HTTP 403 Forbidden · error: "ACCESS_DENIED" · No menu item created in DB.</td></tr>
+        <tr><td>How to Pass</td><td>Every API route must check <code>req.user.role</code> server-side. Middleware guard: <code>requireRole('OWNER')</code>. Never rely on UI hiding alone.</td></tr>
+        <tr><td>Priority</td><td>P1</td></tr>
+      </table>
+    </div>
+
+    <div class="sec-card">
+      <div class="sec-id">SEC-04 &nbsp;<span class="badge-owasp">OWASP A01</span> · Covers F-06, F-08 · NFR-7 · Sprint 4</div>
+      <div class="sec-title">IDOR — Customer Views Another Customer's Order</div>
+      <table class="sec-table">
+        <tr><td>Threat</td><td>Insecure Direct Object Reference (IDOR): Customer A guesses Order ID and retrieves Customer B's order details, including address and payment method.</td></tr>
+        <tr><td>Precondition</td><td>Customer A JWT for user A. Order ORD-050 belongs to Customer B (different user).</td></tr>
+        <tr><td>Test Data</td><td>GET /api/orders/ORD-050/ with Customer A's JWT.</td></tr>
+        <tr><td>Steps</td><td>1. Authenticate as Customer A. &nbsp;2. GET /api/orders/ORD-050/ (Customer B's order). &nbsp;3. Inspect response.</td></tr>
+        <tr><td>Expected Result</td><td>HTTP 403 Forbidden · error: "ACCESS_DENIED" · No order data returned for the wrong customer.</td></tr>
+        <tr><td>How to Pass</td><td>Always filter DB queries by <code>WHERE order.customer_id = req.user.id</code>. Never trust the URL parameter alone.</td></tr>
+        <tr><td>Priority</td><td>P1</td></tr>
+      </table>
+    </div>
+
+    <div class="sec-card">
+      <div class="sec-id">SEC-05 &nbsp;<span class="badge-owasp">OWASP A07</span> · Covers F-02 · UC-02 · NFR-5 · Sprint 1</div>
+      <div class="sec-title">Brute Force Protection on Login</div>
+      <table class="sec-table">
+        <tr><td>Threat</td><td>Attacker makes 100+ rapid login attempts with different passwords to guess a user's credentials.</td></tr>
+        <tr><td>Precondition</td><td>User priya@example.com exists. Rate limiting middleware is deployed.</td></tr>
+        <tr><td>Test Data</td><td>POST /api/auth/login with wrong password repeated 15+ times within 60 seconds.</td></tr>
+        <tr><td>Steps</td><td>1. Send 15 failed login attempts within 60 seconds. &nbsp;2. Inspect response on the 16th attempt.</td></tr>
+        <tr><td>Expected Result</td><td>HTTP 429 Too Many Requests · error: "RATE_LIMIT_EXCEEDED" · Retry-After header present · Account NOT locked permanently (only throttled).</td></tr>
+        <tr><td>How to Pass</td><td>Implement rate limiting using <code>express-rate-limit</code>: max 15 attempts per 15 min per IP+email combination.</td></tr>
+        <tr><td>Priority</td><td>P2</td></tr>
+      </table>
+    </div>
+
+    <div class="sec-card">
+      <div class="sec-id">SEC-06 &nbsp;<span class="badge-owasp">OWASP A02</span> · NFR-5 · Sprint 1</div>
+      <div class="sec-title">HTTPS Enforcement — HTTP Redirects to HTTPS</div>
+      <table class="sec-table">
+        <tr><td>Threat</td><td>Data transmitted over plain HTTP can be intercepted (man-in-the-middle attack).</td></tr>
+        <tr><td>Precondition</td><td>Application deployed on Render (staging) with custom domain. TLS certificate active.</td></tr>
+        <tr><td>Test Data</td><td>URL: <code>http://your-app.onrender.com/</code></td></tr>
+        <tr><td>Steps</td><td>1. Open plain HTTP URL in browser (or use curl --max-redirs 0). &nbsp;2. Observe redirect behaviour.</td></tr>
+        <tr><td>Expected Result</td><td>HTTP 301 or 308 redirect to HTTPS equivalent. No content served over plain HTTP. HSTS header present in HTTPS response: <code>Strict-Transport-Security: max-age=31536000</code>.</td></tr>
+        <tr><td>How to Pass</td><td>Configure <code>res.redirect</code> middleware or set Render's "Force HTTPS" option. Add HSTS header in Express.</td></tr>
+        <tr><td>Priority</td><td>P2</td></tr>
+      </table>
+    </div>
+
+    <div class="info-box orange">
+      <div class="info-box-title">Security Testing Summary — What to Write Where</div>
+      <table style="margin:0; font-size:13px;">
+        <thead><tr><th>Attack Type</th><th>OWASP Category</th><th>Tool</th><th>When</th></tr></thead>
+        <tbody>
+          <tr><td>SQL Injection</td><td>A03 Injection</td><td>OWASP ZAP · Manual Postman</td><td>After each API endpoint is built (Sem 2)</td></tr>
+          <tr><td>Stored XSS</td><td>A03 XSS</td><td>Manual browser + ZAP active scan</td><td>After review/comment features (Sem 2)</td></tr>
+          <tr><td>Broken Access Control</td><td>A01 IDOR</td><td>Manual — swap JWT tokens in Postman</td><td>After each role-protected API (Sem 2)</td></tr>
+          <tr><td>Brute Force</td><td>A07 Auth Failures</td><td>Manual script / Burp Suite Intruder</td><td>After login deployed (Sem 2)</td></tr>
+          <tr><td>HTTPS / TLS</td><td>A02 Crypto Failures</td><td>SSL Labs / curl</td><td>After staging deployment (Sem 3)</td></tr>
+          <tr><td>Full Penetration Test</td><td>All categories</td><td>OWASP ZAP automated scan</td><td>Semester 4 — before production release</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Performance Testing -->
+  <section class="section" id="perf-testing">
+    <div class="section-header">
+      <div class="section-icon icon-purple">⚡</div>
+      <div class="section-title-group">
+        <h2>Performance Testing</h2>
+        <p>Test cases that verify the system meets response time and load targets — tied to NFR-1, NFR-2, NFR-3</p>
+      </div>
+    </div>
+
+    <div class="info-box green">
+      <div class="info-box-title">Performance Testing Goals for This Project</div>
+      <table style="margin:0; font-size:13px;">
+        <thead><tr><th>NFR</th><th>Requirement</th><th>Test Type</th><th>Tool</th></tr></thead>
+        <tbody>
+          <tr><td>NFR-1</td><td>Page load &lt; 3 seconds on 10 Mbps</td><td>Page Load / Lighthouse</td><td>Chrome DevTools / Lighthouse CI</td></tr>
+          <tr><td>NFR-2</td><td>API response &lt; 500 ms under normal load</td><td>Load Test</td><td>k6 / Locust</td></tr>
+          <tr><td>NFR-3</td><td>Handle 100 concurrent sessions without degradation</td><td>Stress Test</td><td>k6</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Performance Test Cases</h3>
+
+    <div class="perf-card">
+      <div class="perf-id">PERF-01 &nbsp;<span class="badge-nfr">NFR-1</span> · Covers F-02 · UC-02 · Sprint 3</div>
+      <div class="perf-title">Home Page — Full Load Under 3 Seconds</div>
+      <table class="perf-table">
+        <tr><td>Goal</td><td>Verify that the customer-facing home page (restaurant listing) loads within 3 seconds on a standard connection.</td></tr>
+        <tr><td>Precondition</td><td>50 approved restaurants in DB with menu items and images. Staging server running.</td></tr>
+        <tr><td>Test Tool</td><td>Google Lighthouse (in Chrome DevTools) — Simulated Throttling: Fast 3G</td></tr>
+        <tr><td>Steps</td><td>1. Open Chrome DevTools → Lighthouse tab. &nbsp;2. Set throttling to "Fast 3G". &nbsp;3. Run audit on /home. &nbsp;4. Record LCP and Total Blocking Time.</td></tr>
+        <tr><td>Expected Result</td><td>Largest Contentful Paint (LCP) ≤ 3.0 s · Performance score ≥ 70 · No layout shift &gt; 0.1</td></tr>
+        <tr><td>Pass / Fail</td><td>FAIL if LCP &gt; 3 s. Fix: image compression, lazy loading, CDN for static assets.</td></tr>
+        <tr><td>Priority</td><td>P2</td></tr>
+      </table>
+    </div>
+
+    <div class="perf-card">
+      <div class="perf-id">PERF-02 &nbsp;<span class="badge-nfr">NFR-2</span> · Covers F-03 · UC-05 · Sprint 3</div>
+      <div class="perf-title">Restaurant Search API — Response Under 500 ms (Normal Load)</div>
+      <table class="perf-table">
+        <tr><td>Goal</td><td>Verify that the restaurant search endpoint responds within 500 ms under normal load of 10 virtual users.</td></tr>
+        <tr><td>Precondition</td><td>50 restaurants in DB. Staging environment running. Database indexes on <code>cuisine_type</code> and <code>status</code> columns.</td></tr>
+        <tr><td>Test Tool</td><td>k6 load testing script</td></tr>
+        <tr><td>k6 Script</td><td><code>import http from 'k6/http';<br>
+export const options = { vus: 10, duration: '30s' };<br>
+export default function () {<br>
+&nbsp;&nbsp;const res = http.get('https://staging.api/restaurants/?cuisine=Indian');<br>
+&nbsp;&nbsp;check(res, { 'status 200': r =&gt; r.status === 200, 'p95 &lt; 500ms': r =&gt; r.timings.duration &lt; 500 });<br>
+}</code></td></tr>
+        <tr><td>Expected Result</td><td>p95 response time ≤ 500 ms · p99 ≤ 800 ms · Error rate = 0% · 0 timeouts</td></tr>
+        <tr><td>Pass / Fail</td><td>FAIL if p95 &gt; 500 ms. Fix: add DB index, implement Redis cache for restaurant listings.</td></tr>
+        <tr><td>Priority</td><td>P1</td></tr>
+      </table>
+    </div>
+
+    <div class="perf-card">
+      <div class="perf-id">PERF-03 &nbsp;<span class="badge-nfr">NFR-3</span> · Covers F-15 · UC-19 · Sprint 5</div>
+      <div class="perf-title">Concurrent Users — 50 Simultaneous Sessions Without Degradation</div>
+      <table class="perf-table">
+        <tr><td>Goal</td><td>Verify that the platform handles 50 simultaneous active users browsing and placing orders without significant latency increase.</td></tr>
+        <tr><td>Precondition</td><td>Full staging environment. 50 test user accounts seeded. Restaurants open. k6 installed.</td></tr>
+        <tr><td>Test Tool</td><td>k6 — ramp-up scenario</td></tr>
+        <tr><td>k6 Script</td><td><code>export const options = {<br>
+&nbsp;&nbsp;stages: [<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{ duration: '1m', target: 50 },   // ramp up<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{ duration: '3m', target: 50 },   // sustain<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{ duration: '1m', target: 0 },    // ramp down<br>
+&nbsp;&nbsp;],<br>
+&nbsp;&nbsp;thresholds: { http_req_duration: ['p95&lt;500'] }<br>
+};</code></td></tr>
+        <tr><td>Expected Result</td><td>p95 latency ≤ 500 ms throughout load · Error rate ≤ 1% · No OOM or crash on server · CPU &lt; 80% during sustained load</td></tr>
+        <tr><td>Pass / Fail</td><td>FAIL if error rate &gt; 1% or p95 &gt; 800 ms. Fix: horizontal scaling, DB connection pool sizing.</td></tr>
+        <tr><td>Priority</td><td>P2</td></tr>
+      </table>
+    </div>
+
+    <div class="perf-card">
+      <div class="perf-id">PERF-04 &nbsp;<span class="badge-nfr">NFR-2</span> · Covers F-05 · UC-08 · Sprint 3</div>
+      <div class="perf-title">Order Placement API — Response Under 500 ms Under Load</div>
+      <table class="perf-table">
+        <tr><td>Goal</td><td>Verify that the order placement API (the most DB-intensive endpoint) responds within 500 ms even when 20 users place orders simultaneously.</td></tr>
+        <tr><td>Precondition</td><td>20 authenticated users (tokens pre-generated). Each has a valid cart. Restaurant open.</td></tr>
+        <tr><td>Test Tool</td><td>k6 — POST /api/orders/ with authenticated payload</td></tr>
+        <tr><td>Steps</td><td>1. Run k6 with 20 VUs each posting a valid order. &nbsp;2. Record response times and DB transaction logs. &nbsp;3. Check for deadlocks.</td></tr>
+        <tr><td>Expected Result</td><td>All orders created successfully · HTTP 201 for each · p95 ≤ 500 ms · No database deadlock or constraint violation · No duplicate orders created</td></tr>
+        <tr><td>Pass / Fail</td><td>FAIL if any duplicate orders, deadlocks, or p95 &gt; 800 ms. Fix: DB transactions with optimistic locking on inventory.</td></tr>
+        <tr><td>Priority</td><td>P1</td></tr>
+      </table>
+    </div>
+
+    <div class="info-box purple">
+      <div class="info-box-title">How to Read k6 Results</div>
+      <table style="margin:0; font-size:13px;">
+        <thead><tr><th>Metric</th><th>What It Means</th><th>Your Target</th></tr></thead>
+        <tbody>
+          <tr><td><code>http_req_duration p95</code></td><td>95% of requests completed within this time</td><td>≤ 500 ms</td></tr>
+          <tr><td><code>http_req_failed</code></td><td>Percentage of requests that returned errors</td><td>≤ 1%</td></tr>
+          <tr><td><code>vus</code></td><td>Current number of active virtual users</td><td>50 at peak</td></tr>
+          <tr><td><code>iterations</code></td><td>Total number of requests completed</td><td>As high as possible</td></tr>
+          <tr><td><code>checks</code></td><td>Pass/fail on your custom assertions</td><td>100% pass</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
   <!-- RTM Plan -->
   <section class="section" id="planning-rtm">
     <div class="section-header">
@@ -312,18 +643,102 @@
     </p>
 
     <h3>RTM Structure (Semester 1 — headers only)</h3>
+    <p style="font-size:13px; color:#555; margin-bottom:10px;">Each row shows the complete chain: Feature → User Story → Use Case → Functional Req → Test Cases. Security (SEC-) and Performance (PERF-) test cases link back to Non-Functional Requirements.</p>
+    <div style="overflow-x:auto;">
     <table>
       <thead>
-        <tr><th>FR / UC</th><th>Description</th><th>Test Cases (filled in Sem 2)</th><th>Result (filled in Sem 3)</th></tr>
+        <tr><th>Feature</th><th>User Story</th><th>Use Case</th><th>FR / NFR</th><th>Description</th><th>Test Cases (filled in Sem 2)</th><th>Result (Sem 3)</th></tr>
       </thead>
       <tbody>
-        <tr><td>FR-101 · UC-01</td><td>User Registration</td><td style="color:#aaa; font-style:italic;">TC-01, TC-02, TC-03</td><td style="color:#aaa; font-style:italic;">—</td></tr>
-        <tr><td>FR-102 · UC-02</td><td>User Login</td><td style="color:#aaa; font-style:italic;">TC-04, TC-05, TC-06</td><td style="color:#aaa; font-style:italic;">—</td></tr>
-        <tr><td>FR-301 · UC-05</td><td>Browse Restaurants</td><td style="color:#aaa; font-style:italic;">TC-11, TC-12</td><td style="color:#aaa; font-style:italic;">—</td></tr>
-        <tr><td>FR-303 · UC-08</td><td>Place Order</td><td style="color:#aaa; font-style:italic;">TC-21 … TC-30</td><td style="color:#aaa; font-style:italic;">—</td></tr>
-        <tr><td>FR-601 · UC-12</td><td>Write Review</td><td style="color:#aaa; font-style:italic;">TC-46, TC-47</td><td style="color:#aaa; font-style:italic;">—</td></tr>
+        <tr>
+          <td><a href="semester1_features.html#F-01" style="font-weight:700;color:#3C3489;">F-01</a></td>
+          <td><a href="semester1_user_stories.html#customer">US-C01</a></td>
+          <td><a href="semester1_use_cases.html#uc-list">UC-01</a></td>
+          <td>FR-101</td>
+          <td>Customer Registration</td>
+          <td style="color:#aaa; font-style:italic;">TC-01, TC-02</td>
+          <td style="color:#aaa; font-style:italic;">—</td>
+        </tr>
+        <tr>
+          <td><a href="semester1_features.html#F-02" style="font-weight:700;color:#3C3489;">F-02</a></td>
+          <td><a href="semester1_user_stories.html#customer">US-C02</a></td>
+          <td><a href="semester1_use_cases.html#uc-02">UC-02</a></td>
+          <td>FR-102</td>
+          <td>Customer Login / Auth</td>
+          <td style="color:#aaa; font-style:italic;">TC-03..TC-06, SEC-01, SEC-05</td>
+          <td style="color:#aaa; font-style:italic;">—</td>
+        </tr>
+        <tr>
+          <td><a href="semester1_features.html#F-03" style="font-weight:700;color:#3C3489;">F-03</a></td>
+          <td><a href="semester1_user_stories.html#customer">US-C03</a></td>
+          <td><a href="semester1_use_cases.html#uc-list">UC-05, UC-06</a></td>
+          <td>FR-301</td>
+          <td>Restaurant Search &amp; Browse</td>
+          <td style="color:#aaa; font-style:italic;">TC-11, TC-12, PERF-02</td>
+          <td style="color:#aaa; font-style:italic;">—</td>
+        </tr>
+        <tr>
+          <td><a href="semester1_features.html#F-04" style="font-weight:700;color:#3C3489;">F-04</a></td>
+          <td><a href="semester1_user_stories.html#customer">US-C04</a></td>
+          <td><a href="semester1_use_cases.html#uc-list">UC-07</a></td>
+          <td>FR-302</td>
+          <td>Cart Management</td>
+          <td style="color:#aaa; font-style:italic;">TC-21, TC-22</td>
+          <td style="color:#aaa; font-style:italic;">—</td>
+        </tr>
+        <tr>
+          <td><a href="semester1_features.html#F-05" style="font-weight:700;color:#3C3489;">F-05</a></td>
+          <td><a href="semester1_user_stories.html#customer">US-C05</a></td>
+          <td><a href="semester1_use_cases.html#uc-06">UC-08</a></td>
+          <td>FR-303, FR-401</td>
+          <td>Online Payment &amp; Checkout</td>
+          <td style="color:#aaa; font-style:italic;">TC-23..TC-30, PERF-04</td>
+          <td style="color:#aaa; font-style:italic;">—</td>
+        </tr>
+        <tr>
+          <td><a href="semester1_features.html#F-06" style="font-weight:700;color:#3C3489;">F-06</a></td>
+          <td><a href="semester1_user_stories.html#customer">US-C06</a></td>
+          <td><a href="semester1_use_cases.html#uc-list">UC-09</a></td>
+          <td>FR-304</td>
+          <td>Real-Time Order Tracking</td>
+          <td style="color:#aaa; font-style:italic;">TC-36, TC-37, SEC-04</td>
+          <td style="color:#aaa; font-style:italic;">—</td>
+        </tr>
+        <tr>
+          <td><a href="semester1_features.html#F-07" style="font-weight:700;color:#3C3489;">F-07</a></td>
+          <td><a href="semester1_user_stories.html#customer">US-C07</a></td>
+          <td><a href="semester1_use_cases.html#uc-09">UC-12</a></td>
+          <td>FR-601</td>
+          <td>Rating &amp; Review</td>
+          <td style="color:#aaa; font-style:italic;">TC-46, TC-47, SEC-02</td>
+          <td style="color:#aaa; font-style:italic;">—</td>
+        </tr>
+        <tr>
+          <td><a href="semester1_features.html#F-10" style="font-weight:700;color:#3C3489;">F-10</a></td>
+          <td><a href="semester1_user_stories.html#owner">US-O02</a></td>
+          <td><a href="semester1_use_cases.html#uc-list">UC-14</a></td>
+          <td>FR-202</td>
+          <td>Menu Management</td>
+          <td style="color:#aaa; font-style:italic;">TC-33, TC-34, SEC-03</td>
+          <td style="color:#aaa; font-style:italic;">—</td>
+        </tr>
+        <tr style="background:#fff8f8;">
+          <td colspan="3" style="font-weight:700; color:#c62828;">Security NFRs</td>
+          <td>NFR-4..7</td>
+          <td>Auth, Injection, Access Control, HTTPS</td>
+          <td style="color:#aaa; font-style:italic;"><a href="#security-testing" style="color:#c62828;">SEC-01..SEC-06</a></td>
+          <td style="color:#aaa; font-style:italic;">—</td>
+        </tr>
+        <tr style="background:#f0f7ff;">
+          <td colspan="3" style="font-weight:700; color:#185FA5;">Performance NFRs</td>
+          <td>NFR-1..3</td>
+          <td>Page load, API response, Concurrency</td>
+          <td style="color:#aaa; font-style:italic;"><a href="#perf-testing" style="color:#185FA5;">PERF-01..PERF-04</a></td>
+          <td style="color:#aaa; font-style:italic;">—</td>
+        </tr>
       </tbody>
     </table>
+    </div>
     <p style="font-size:13px; color:#888; margin-top:6px;"><em>The greyed-out values above will be filled in with actual TC IDs during Semester 2, and with PASS/FAIL during Semester 3 alpha testing.</em></p>
 
     <div class="info-box green">

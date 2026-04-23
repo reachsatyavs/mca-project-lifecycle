@@ -5,6 +5,58 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>User Stories — Semester 1 | Online Food Delivery System</title>
   <link rel="stylesheet" href="child_page_styles.css">
+  <style>
+    /* ── Linked artefacts bar inside story cards ── */
+    .artefact-bar {
+      display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+      padding-top: 10px; margin-top: 10px;
+      border-top: 1px solid #e8e0f8;
+    }
+    .artefact-label {
+      font-size: 10.5px; font-weight: 700; color: #999;
+      text-transform: uppercase; letter-spacing: 0.4px;
+    }
+    .artefact-link {
+      display: inline-block;
+      font-size: 11.5px; font-weight: 700;
+      padding: 3px 10px; border-radius: 20px;
+      text-decoration: none; transition: opacity 0.15s;
+    }
+    .artefact-link:hover { opacity: 0.75; }
+    .link-fr   { background: #fff0e0; color: #9a3412; border: 1px solid #fdba74; }
+    .link-feat { background: #EEEDFE; color: #3C3489; }
+    .link-uc   { background: #E1F5EE; color: #0F6E56; }
+    .link-tc   { background: #FFF3E0; color: #7a5a0a; }
+    .link-sec  { background: #fde8e8; color: #c62828; }
+    .link-sep  { color: #ccc; font-size: 12px; }
+
+    /* ── Navigation flow ── */
+    .nav-flow {
+      display: flex; align-items: center; flex-wrap: wrap;
+      border: 2px solid #5147A9; border-radius: 10px; overflow: hidden;
+      margin: 16px 0;
+    }
+    .nav-flow-step { flex:1; min-width:120px; padding:12px 14px; text-align:center; position:relative; }
+    .nav-flow-step:not(:last-child)::after {
+      content:'›'; position:absolute; right:-6px; top:50%;
+      transform:translateY(-50%); font-size:20px; color:#5147A9; font-weight:700; z-index:1;
+    }
+    .nfs-1 { background:#EEEDFE; }
+    .nfs-2 { background:#e8f5ff; }
+    .nfs-3 { background:#efffee; }
+    .nfs-4 { background:#E1F5EE; }
+    .nfs-5 { background:#FFF3E0; }
+    .nfs-label { font-size:10px; text-transform:uppercase; letter-spacing:0.5px; color:#888; margin-bottom:3px; font-weight:700; }
+    .nfs-title { font-size:12px; font-weight:800; }
+    .nfs-1 .nfs-title { color:#3C3489; }
+    .nfs-2 .nfs-title { color:#185FA5; }
+    .nfs-3 .nfs-title { color:#0a6640; }
+    .nfs-4 .nfs-title { color:#0F6E56; }
+    .nfs-5 .nfs-title { color:#7a5a0a; }
+    .nfs-link { font-size:10.5px; color:inherit; text-decoration:none; margin-top:3px; display:block; opacity:0.7; }
+    .nfs-link:hover { opacity:1; text-decoration:underline; }
+    .nfs-active { outline: 3px solid #5147A9; }
+  </style>
 </head>
 <body>
 <div class="page-wrap">
@@ -19,6 +71,35 @@
     <div class="project-tag">Example Project: <strong>Online Food Delivery System</strong></div>
     <p class="header-desc">User stories capture requirements from the end user's perspective in plain, non-technical language. Each story is small enough to be built in one sprint and carries explicit acceptance criteria that drive test cases.</p>
   </header>
+  <!-- Traceability navigation -->
+  <div class="nav-flow">
+    <div class="nav-flow-step nfs-1">
+      <div class="nfs-label">Document</div>
+      <div class="nfs-title">SRS / PRD</div>
+      <a href="semester1_requirements.html" class="nfs-link">Requirements →</a>
+    </div>
+    <div class="nav-flow-step nfs-2 nfs-active">
+      <div class="nfs-label">Requirement</div>
+      <div class="nfs-title">User Stories</div>
+      <a href="semester1_user_stories.html" class="nfs-link">You are here</a>
+    </div>
+    <div class="nav-flow-step nfs-3">
+      <div class="nfs-label">Capability</div>
+      <div class="nfs-title">Features</div>
+      <a href="semester1_features.html" class="nfs-link">Feature List →</a>
+    </div>
+    <div class="nav-flow-step nfs-4">
+      <div class="nfs-label">Interaction</div>
+      <div class="nfs-title">Use Cases</div>
+      <a href="semester1_use_cases.html" class="nfs-link">Use Cases →</a>
+    </div>
+    <div class="nav-flow-step nfs-5">
+      <div class="nfs-label">Verification</div>
+      <div class="nfs-title">Test Cases</div>
+      <a href="semester1_test_cases.html" class="nfs-link">Test Cases →</a>
+    </div>
+  </div>
+
   <nav class="topic-nav">
     <div class="topic-nav-label">Jump to section</div>
     <a href="#format">Format &amp; Tips</a>
@@ -80,6 +161,20 @@
           <li>Duplicate email shows "Email already registered."</li>
         </ul>
       </div>
+      <div class="artefact-bar">
+        <span class="artefact-label">FR</span>
+        <a href="semester1_requirements.html#functional-reqs" class="artefact-link link-fr">FR-101</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Feature</span>
+        <a href="semester1_features.html#F-01" class="artefact-link link-feat">F-01 Customer Registration</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Use Case</span>
+        <a href="semester1_use_cases.html#uc-list" class="artefact-link link-uc">UC-01</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Test Cases</span>
+        <a href="semester1_test_cases.html#template" class="artefact-link link-tc">TC-01</a>
+        <a href="semester1_test_cases.html#template" class="artefact-link link-tc">TC-02</a>
+      </div>
     </div>
 
     <div class="story-card">
@@ -92,6 +187,22 @@
           <li>Invalid credentials show "Invalid email or password" — no redirect.</li>
           <li>Session persists across page reload via refresh token.</li>
         </ul>
+      </div>
+      <div class="artefact-bar">
+        <span class="artefact-label">FR</span>
+        <a href="semester1_requirements.html#functional-reqs" class="artefact-link link-fr">FR-102</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Feature</span>
+        <a href="semester1_features.html#F-02" class="artefact-link link-feat">F-02 Login &amp; Auth</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Use Case</span>
+        <a href="semester1_use_cases.html#uc-02" class="artefact-link link-uc">UC-02 Login</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Test Cases</span>
+        <a href="semester2_testing.html#test-cases" class="artefact-link link-tc">TC-01</a>
+        <a href="semester2_testing.html#test-cases" class="artefact-link link-tc">TC-02</a>
+        <a href="semester1_test_cases.html#security-testing" class="artefact-link link-sec">SEC-01</a>
+        <a href="semester1_test_cases.html#security-testing" class="artefact-link link-sec">SEC-05</a>
       </div>
     </div>
 
@@ -107,6 +218,22 @@
           <li>Results appear within 2 seconds.</li>
         </ul>
       </div>
+      <div class="artefact-bar">
+        <span class="artefact-label">FR</span>
+        <a href="semester1_requirements.html#functional-reqs" class="artefact-link link-fr">FR-301</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Feature</span>
+        <a href="semester1_features.html#F-03" class="artefact-link link-feat">F-03 Restaurant Search</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Use Cases</span>
+        <a href="semester1_use_cases.html#uc-list" class="artefact-link link-uc">UC-05</a>
+        <a href="semester1_use_cases.html#uc-list" class="artefact-link link-uc">UC-06</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Test Cases</span>
+        <a href="semester1_test_cases.html#template" class="artefact-link link-tc">TC-11</a>
+        <a href="semester1_test_cases.html#template" class="artefact-link link-tc">TC-12</a>
+        <a href="semester1_test_cases.html#perf-testing" class="artefact-link link-tc">PERF-02</a>
+      </div>
     </div>
 
     <div class="story-card">
@@ -120,6 +247,20 @@
           <li>Adding items from a second restaurant shows a warning dialog: "Clear cart?"</li>
           <li>Cart persists across page refresh (localStorage or session).</li>
         </ul>
+      </div>
+      <div class="artefact-bar">
+        <span class="artefact-label">FR</span>
+        <a href="semester1_requirements.html#functional-reqs" class="artefact-link link-fr">FR-302</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Feature</span>
+        <a href="semester1_features.html#F-04" class="artefact-link link-feat">F-04 Cart Management</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Use Case</span>
+        <a href="semester1_use_cases.html#uc-list" class="artefact-link link-uc">UC-07</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Test Cases</span>
+        <a href="semester1_test_cases.html#template" class="artefact-link link-tc">TC-21</a>
+        <a href="semester1_test_cases.html#template" class="artefact-link link-tc">TC-22</a>
       </div>
     </div>
 
@@ -135,6 +276,23 @@
           <li>Failed payment shows an error with a retry option — order is NOT created.</li>
         </ul>
       </div>
+      <div class="artefact-bar">
+        <span class="artefact-label">FR</span>
+        <a href="semester1_requirements.html#functional-reqs" class="artefact-link link-fr">FR-303</a>
+        <a href="semester1_requirements.html#functional-reqs" class="artefact-link link-fr">FR-401</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Feature</span>
+        <a href="semester1_features.html#F-05" class="artefact-link link-feat">F-05 Payment &amp; Checkout</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Use Case</span>
+        <a href="semester1_use_cases.html#uc-06" class="artefact-link link-uc">UC-08 Place Order</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Test Cases</span>
+        <a href="semester2_testing.html#test-cases" class="artefact-link link-tc">TC-04</a>
+        <a href="semester2_testing.html#test-cases" class="artefact-link link-tc">TC-05</a>
+        <a href="semester2_testing.html#test-cases" class="artefact-link link-tc">TC-06</a>
+        <a href="semester1_test_cases.html#perf-testing" class="artefact-link link-tc">PERF-04</a>
+      </div>
     </div>
 
     <div class="story-card">
@@ -148,6 +306,21 @@
           <li>Status auto-refreshes every 15 seconds without full page reload.</li>
           <li>Email/push notification sent when status changes.</li>
         </ul>
+      </div>
+      <div class="artefact-bar">
+        <span class="artefact-label">FR</span>
+        <a href="semester1_requirements.html#functional-reqs" class="artefact-link link-fr">FR-304</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Feature</span>
+        <a href="semester1_features.html#F-06" class="artefact-link link-feat">F-06 Order Tracking</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Use Case</span>
+        <a href="semester1_use_cases.html#uc-list" class="artefact-link link-uc">UC-09</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Test Cases</span>
+        <a href="semester1_test_cases.html#template" class="artefact-link link-tc">TC-36</a>
+        <a href="semester1_test_cases.html#template" class="artefact-link link-tc">TC-37</a>
+        <a href="semester1_test_cases.html#security-testing" class="artefact-link link-sec">SEC-04</a>
       </div>
     </div>
 
@@ -163,6 +336,22 @@
           <li>Restaurant's average rating updates within 1 minute of submission.</li>
         </ul>
       </div>
+      <div class="artefact-bar">
+        <span class="artefact-label">FR</span>
+        <a href="semester1_requirements.html#functional-reqs" class="artefact-link link-fr">FR-601</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Feature</span>
+        <a href="semester1_features.html#F-07" class="artefact-link link-feat">F-07 Rating &amp; Review</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Use Case</span>
+        <a href="semester1_use_cases.html#uc-09" class="artefact-link link-uc">UC-12 Write Review</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Test Cases</span>
+        <a href="semester2_testing.html#test-cases" class="artefact-link link-tc">TC-08</a>
+        <a href="semester2_testing.html#test-cases" class="artefact-link link-tc">TC-09</a>
+        <a href="semester2_testing.html#test-cases" class="artefact-link link-tc">TC-10</a>
+        <a href="semester1_test_cases.html#security-testing" class="artefact-link link-sec">SEC-02</a>
+      </div>
     </div>
 
     <div class="story-card">
@@ -176,6 +365,20 @@
           <li>"Reorder" button re-adds the same items to the cart in one click.</li>
           <li>Customer can view a full receipt/invoice for each order.</li>
         </ul>
+      </div>
+      <div class="artefact-bar">
+        <span class="artefact-label">FR</span>
+        <a href="semester1_requirements.html#functional-reqs" class="artefact-link link-fr">FR-305</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Feature</span>
+        <a href="semester1_features.html#F-08" class="artefact-link link-feat">F-08 Order History</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Use Case</span>
+        <a href="semester1_use_cases.html#uc-list" class="artefact-link link-uc">UC-11</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Test Cases</span>
+        <a href="semester1_test_cases.html#template" class="artefact-link link-tc">TC-48</a>
+        <a href="semester1_test_cases.html#security-testing" class="artefact-link link-sec">SEC-04</a>
       </div>
     </div>
   </section>
@@ -202,6 +405,20 @@
           <li>Owner receives email notification upon admin approval or rejection (with reason).</li>
         </ul>
       </div>
+      <div class="artefact-bar" style="border-top-color:#c0e8d8;">
+        <span class="artefact-label">FR</span>
+        <a href="semester1_requirements.html#functional-reqs" class="artefact-link link-fr">FR-201</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Feature</span>
+        <a href="semester1_features.html#F-09" class="artefact-link link-feat">F-09 Restaurant Registration</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Use Case</span>
+        <a href="semester1_use_cases.html#uc-list" class="artefact-link link-uc">UC-13</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Test Cases</span>
+        <a href="semester1_test_cases.html#template" class="artefact-link link-tc">TC-31</a>
+        <a href="semester1_test_cases.html#template" class="artefact-link link-tc">TC-32</a>
+      </div>
     </div>
 
     <div class="story-card" style="background:#f0faf5; border-color:#c0e8d8;">
@@ -216,6 +433,21 @@
           <li>Changes appear on the customer-facing menu within 30 seconds.</li>
         </ul>
       </div>
+      <div class="artefact-bar" style="border-top-color:#c0e8d8;">
+        <span class="artefact-label">FR</span>
+        <a href="semester1_requirements.html#functional-reqs" class="artefact-link link-fr">FR-202</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Feature</span>
+        <a href="semester1_features.html#F-10" class="artefact-link link-feat">F-10 Menu Management</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Use Case</span>
+        <a href="semester1_use_cases.html#uc-list" class="artefact-link link-uc">UC-14</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Test Cases</span>
+        <a href="semester1_test_cases.html#template" class="artefact-link link-tc">TC-33</a>
+        <a href="semester1_test_cases.html#template" class="artefact-link link-tc">TC-34</a>
+        <a href="semester1_test_cases.html#security-testing" class="artefact-link link-sec">SEC-03</a>
+      </div>
     </div>
 
     <div class="story-card" style="background:#f0faf5; border-color:#c0e8d8;">
@@ -229,6 +461,19 @@
           <li>Accepted orders show items, quantity, delivery address, and payment mode.</li>
           <li>Rejected orders notify the customer with a reason.</li>
         </ul>
+      </div>
+      <div class="artefact-bar" style="border-top-color:#c0e8d8;">
+        <span class="artefact-label">FR</span>
+        <a href="semester1_requirements.html#functional-reqs" class="artefact-link link-fr">FR-203</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Feature</span>
+        <a href="semester1_features.html#F-11" class="artefact-link link-feat">F-11 Order Management (Owner)</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Use Case</span>
+        <a href="semester1_use_cases.html#uc-list" class="artefact-link link-uc">UC-15</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Test Cases</span>
+        <a href="semester1_test_cases.html#template" class="artefact-link link-tc">TC-35</a>
       </div>
     </div>
   </section>
@@ -254,6 +499,19 @@
           <li>Going offline during an active delivery is not allowed until the order is delivered.</li>
         </ul>
       </div>
+      <div class="artefact-bar" style="border-top-color:#f0d890;">
+        <span class="artefact-label">FR</span>
+        <a href="semester1_requirements.html#functional-reqs" class="artefact-link link-fr">FR-501</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Feature</span>
+        <a href="semester1_features.html#F-12" class="artefact-link link-feat">F-12 Partner Availability</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Use Case</span>
+        <a href="semester1_use_cases.html#uc-list" class="artefact-link link-uc">UC-16</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Test Cases</span>
+        <a href="semester1_test_cases.html#template" class="artefact-link link-tc">TC-41</a>
+      </div>
     </div>
 
     <div class="story-card" style="background:#fffbf0; border-color:#f0d890;">
@@ -267,6 +525,21 @@
           <li>Partner can mark order as "Delivered" upon successful handover.</li>
           <li>Customer receives push/email notification on each status change.</li>
         </ul>
+      </div>
+      <div class="artefact-bar" style="border-top-color:#f0d890;">
+        <span class="artefact-label">FR</span>
+        <a href="semester1_requirements.html#functional-reqs" class="artefact-link link-fr">FR-502</a>
+        <a href="semester1_requirements.html#functional-reqs" class="artefact-link link-fr">FR-503</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Feature</span>
+        <a href="semester1_features.html#F-13" class="artefact-link link-feat">F-13 Order Delivery Flow</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Use Case</span>
+        <a href="semester1_use_cases.html#uc-list" class="artefact-link link-uc">UC-17</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Test Cases</span>
+        <a href="semester1_test_cases.html#template" class="artefact-link link-tc">TC-42</a>
+        <a href="semester1_test_cases.html#template" class="artefact-link link-tc">TC-43</a>
       </div>
     </div>
   </section>
@@ -292,6 +565,21 @@
           <li>Restaurant owner is notified by email upon approval or rejection.</li>
         </ul>
       </div>
+      <div class="artefact-bar" style="border-top-color:#b8d4f0;">
+        <span class="artefact-label">FR</span>
+        <a href="semester1_requirements.html#functional-reqs" class="artefact-link link-fr">FR-602</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Feature</span>
+        <a href="semester1_features.html#F-14" class="artefact-link link-feat">F-14 Restaurant Approval</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Use Case</span>
+        <a href="semester1_use_cases.html#uc-list" class="artefact-link link-uc">UC-18</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Test Cases</span>
+        <a href="semester1_test_cases.html#template" class="artefact-link link-tc">TC-51</a>
+        <a href="semester1_test_cases.html#template" class="artefact-link link-tc">TC-52</a>
+        <a href="semester1_test_cases.html#security-testing" class="artefact-link link-sec">SEC-03</a>
+      </div>
     </div>
 
     <div class="story-card" style="background:#f0f7ff; border-color:#b8d4f0;">
@@ -304,6 +592,20 @@
           <li>Trend charts show daily order volume for the past 30 days.</li>
           <li>Admin can filter statistics by date range.</li>
         </ul>
+      </div>
+      <div class="artefact-bar" style="border-top-color:#b8d4f0;">
+        <span class="artefact-label">FR</span>
+        <a href="semester1_requirements.html#functional-reqs" class="artefact-link link-fr">FR-602</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Feature</span>
+        <a href="semester1_features.html#F-15" class="artefact-link link-feat">F-15 Analytics Dashboard</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Use Case</span>
+        <a href="semester1_use_cases.html#uc-list" class="artefact-link link-uc">UC-19</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Test Cases</span>
+        <a href="semester1_test_cases.html#template" class="artefact-link link-tc">TC-55</a>
+        <a href="semester1_test_cases.html#perf-testing" class="artefact-link link-tc">PERF-03</a>
       </div>
     </div>
 
@@ -319,6 +621,21 @@
           <li>Suspension can be reversed by admin.</li>
         </ul>
       </div>
+      <div class="artefact-bar" style="border-top-color:#b8d4f0;">
+        <span class="artefact-label">FR</span>
+        <a href="semester1_requirements.html#functional-reqs" class="artefact-link link-fr">FR-603</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Feature</span>
+        <a href="semester1_features.html#F-16" class="artefact-link link-feat">F-16 User Suspension / Ban</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Use Case</span>
+        <a href="semester1_use_cases.html#uc-list" class="artefact-link link-uc">UC-20</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Test Cases</span>
+        <a href="semester1_test_cases.html#template" class="artefact-link link-tc">TC-56</a>
+        <a href="semester1_test_cases.html#template" class="artefact-link link-tc">TC-57</a>
+        <a href="semester1_test_cases.html#security-testing" class="artefact-link link-sec">SEC-03</a>
+      </div>
     </div>
 
     <div class="info-box purple">
@@ -330,6 +647,7 @@
   <footer>
     <a href="semester1_requirements.html">← Requirements Overview</a>
     <nav class="footer-nav">
+      <a href="semester1_features.html">Features →</a>
       <a href="semester1_use_cases.html">Use Cases →</a>
       <a href="semester1_test_cases.html">Test Cases →</a>
     </nav>

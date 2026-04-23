@@ -77,25 +77,25 @@
           <td style="padding:10px 14px;border-bottom:1px solid #e4e4f0;"><span style="display:inline-block;font-size:12px;font-weight:700;padding:2px 10px;border-radius:20px;background:#EEEDFE;color:#3C3489;border:1px solid #AFA9EC;">ER Diagram</span></td>
           <td style="padding:10px 14px;border-bottom:1px solid #e4e4f0;"><strong>What data do we store?</strong><br><span style="font-size:12px;color:#555;">Entities, attributes, relationships in the DB</span></td>
           <td style="padding:10px 14px;border-bottom:1px solid #e4e4f0;font-size:12px;">Entity boxes with columns; crow's foot lines</td>
-          <td style="padding:10px 14px;border-bottom:1px solid #e4e4f0;font-size:12px;">Database design / TDD</td>
+          <td style="padding:10px 14px;border-bottom:1px solid #e4e4f0;font-size:12px;"><a href="#er-diagram" style="color:#3C3489;font-weight:600;">Database design / TDD ↓</a></td>
         </tr>
         <tr style="background:#f8f8ff;">
           <td style="padding:10px 14px;border-bottom:1px solid #e4e4f0;"><span style="display:inline-block;font-size:12px;font-weight:700;padding:2px 10px;border-radius:20px;background:#E1F5EE;color:#0F6E56;border:1px solid #5DCAA5;">Flow Diagram</span></td>
           <td style="padding:10px 14px;border-bottom:1px solid #e4e4f0;"><strong>What steps happen, in what order?</strong><br><span style="font-size:12px;color:#555;">Business process logic, decisions, branches</span></td>
           <td style="padding:10px 14px;border-bottom:1px solid #e4e4f0;font-size:12px;">Ovals (start/end), rectangles (steps), diamonds (decisions)</td>
-          <td style="padding:10px 14px;border-bottom:1px solid #e4e4f0;font-size:12px;">Process design / TDD</td>
+          <td style="padding:10px 14px;border-bottom:1px solid #e4e4f0;font-size:12px;"><a href="#flow-diagrams" style="color:#0F6E56;font-weight:600;">Process design / TDD ↓</a></td>
         </tr>
         <tr>
           <td style="padding:10px 14px;border-bottom:1px solid #e4e4f0;"><span style="display:inline-block;font-size:12px;font-weight:700;padding:2px 10px;border-radius:20px;background:#FAEEDA;color:#854F0B;border:1px solid #EF9F27;">Class Diagram</span></td>
           <td style="padding:10px 14px;border-bottom:1px solid #e4e4f0;"><strong>What code objects exist and how do they relate?</strong><br><span style="font-size:12px;color:#555;">Classes, attributes, methods, inheritance</span></td>
           <td style="padding:10px 14px;border-bottom:1px solid #e4e4f0;font-size:12px;">3-part rectangles; hollow arrows (inheritance); lines (association)</td>
-          <td style="padding:10px 14px;border-bottom:1px solid #e4e4f0;font-size:12px;">OOP design / TDD</td>
+          <td style="padding:10px 14px;border-bottom:1px solid #e4e4f0;font-size:12px;"><a href="#class-diagrams" style="color:#854F0B;font-weight:600;">OOP design / TDD ↓</a></td>
         </tr>
         <tr style="background:#f8f8ff;">
           <td style="padding:10px 14px;"><span style="display:inline-block;font-size:12px;font-weight:700;padding:2px 10px;border-radius:20px;background:#E6F1FB;color:#185FA5;border:1px solid #85B7EB;">Sequence Diagram</span></td>
           <td style="padding:10px 14px;"><strong>Which components talk to each other, in what order?</strong><br><span style="font-size:12px;color:#555;">System interactions over time (Browser ↔ API ↔ DB)</span></td>
           <td style="padding:10px 14px;font-size:12px;">Vertical lifelines; horizontal message arrows</td>
-          <td style="padding:10px 14px;font-size:12px;">Interaction design / TDD</td>
+          <td style="padding:10px 14px;font-size:12px;"><a href="#sequence-diagrams" style="color:#185FA5;font-weight:600;">Interaction design / TDD ↓</a></td>
         </tr>
       </tbody>
     </table>
@@ -104,9 +104,11 @@
   <nav class="topic-nav">
     <div class="topic-nav-label">Jump to section</div>
     <a href="#architecture">1. System Architecture</a>
-    <a href="#er-diagram">2. ER Diagrams</a>
-    <a href="#class-diagrams">3. Class Diagrams</a>
-    <a href="#tech-stack">4. Tech Stack Decision</a>
+    <a href="#er-diagram">2. ER Diagrams (Database Design)</a>
+    <a href="#class-diagrams">3. Class Diagrams (OOP Design)</a>
+    <a href="#flow-diagrams">4. Flow Diagrams (Process Design)</a>
+    <a href="#sequence-diagrams">5. What Semester 2 Will Cover →</a>
+    <a href="#tech-stack">6. Tech Stack Decision</a>
   </nav>
 
   <section class="section" id="architecture">
@@ -329,80 +331,21 @@ erDiagram
       </tbody>
     </table>
 
-    <h3>Corresponding SQL (for the core tables)</h3>
-    <div class="code-block">-- Users table (parent entity for all roles)
-CREATE TABLE users (
-    user_id     SERIAL PRIMARY KEY,
-    name        VARCHAR(100) NOT NULL,
-    email       VARCHAR(255) UNIQUE NOT NULL,
-    password_hash VARCHAR(255) NOT NULL,
-    phone       VARCHAR(15),
-    role        VARCHAR(20) CHECK (role IN ('CUSTOMER','OWNER','PARTNER','ADMIN')),
-    created_at  TIMESTAMP DEFAULT NOW()
-);
-
--- Address: one user → many addresses  (1:M)
-CREATE TABLE addresses (
-    address_id  SERIAL PRIMARY KEY,
-    user_id     INT NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
-    street      VARCHAR(255) NOT NULL,
-    city        VARCHAR(100) NOT NULL,
-    pincode     VARCHAR(10),
-    lat         DECIMAL(9,6),
-    lng         DECIMAL(9,6),
-    is_default  BOOLEAN DEFAULT FALSE
-);
-
--- Restaurant: one owner-user → many restaurants  (1:M)
-CREATE TABLE restaurants (
-    restaurant_id   SERIAL PRIMARY KEY,
-    owner_id        INT NOT NULL REFERENCES users(user_id),
-    name            VARCHAR(150) NOT NULL,
-    cuisine_type    VARCHAR(50),
-    address         TEXT,
-    status          VARCHAR(20) DEFAULT 'PENDING'
-                    CHECK (status IN ('PENDING','APPROVED','REJECTED')),
-    avg_rating      DECIMAL(3,2) DEFAULT 0.00
-);
-
--- Order: one customer → many orders, one restaurant → many orders  (M:1 both)
-CREATE TABLE orders (
-    order_id        SERIAL PRIMARY KEY,
-    customer_id     INT NOT NULL REFERENCES users(user_id),
-    restaurant_id   INT NOT NULL REFERENCES restaurants(restaurant_id),
-    partner_id      INT REFERENCES users(user_id),      -- nullable until assigned
-    delivery_addr_id INT NOT NULL REFERENCES addresses(address_id),
-    status          VARCHAR(20) DEFAULT 'PLACED',
-    subtotal        DECIMAL(10,2) NOT NULL,
-    delivery_fee    DECIMAL(6,2) NOT NULL DEFAULT 40.00,
-    total_amount    DECIMAL(10,2) NOT NULL,
-    created_at      TIMESTAMP DEFAULT NOW()
-);
-
--- OrderItem: one order → many items, M items → many OrderItems  (1:M + M:1)
-CREATE TABLE order_items (
-    order_item_id   SERIAL PRIMARY KEY,
-    order_id        INT NOT NULL REFERENCES orders(order_id) ON DELETE CASCADE,
-    menu_item_id    INT NOT NULL REFERENCES menu_items(item_id),
-    quantity        INT NOT NULL CHECK (quantity > 0),
-    unit_price      DECIMAL(8,2) NOT NULL,
-    subtotal        DECIMAL(10,2) NOT NULL
-);
-
--- Payment: exactly one per order  (1:1)
-CREATE TABLE payments (
-    payment_id      SERIAL PRIMARY KEY,
-    order_id        INT UNIQUE NOT NULL REFERENCES orders(order_id),
-    gateway_txn_id  VARCHAR(100),
-    amount          DECIMAL(10,2) NOT NULL,
-    method          VARCHAR(20) CHECK (method IN ('ONLINE','COD')),
-    status          VARCHAR(20) DEFAULT 'PENDING',
-    paid_at         TIMESTAMP
-);</div>
-
     <div class="info-box green">
       <div class="info-box-title">Tool: dbdiagram.io</div>
       <p style="margin:0">Visit <strong>dbdiagram.io</strong> and paste DBML (Database Markup Language) to generate a visual ER diagram automatically. The diagram exports as PNG for your TDD. You can also import your SQL <code class="code-inline">CREATE TABLE</code> statements and it will draw the diagram for you.</p>
+    </div>
+
+    <div class="info-box orange">
+      <div class="info-box-title">🔜 SQL DDL lives in Semester 2 — DB Schema Final</div>
+      <p style="margin:0 0 8px 0">
+        The ER diagram above is a <strong>conceptual / logical design</strong> — it shows <em>what data exists and how it relates</em>, independent of any database engine or SQL dialect.
+        The physical implementation — <code class="code-inline">CREATE TABLE</code> statements, <code class="code-inline">CREATE INDEX</code>, foreign key constraints, migration scripts — belongs in <strong>Semester 2</strong>,
+        once the tech stack is finalised and you are actively building the system.
+      </p>
+      <p style="margin:0">
+        <a href="semester2_design.html#db-schema" style="font-weight:700; color:#854F0B;">→ See full SQL DDL + indexes in Semester 2 → DB Schema Final</a>
+      </p>
     </div>
   </section>
 
@@ -443,24 +386,20 @@ CREATE TABLE payments (
 %%{init: {'theme': 'dark'}}%%
 classDiagram
     class BaseUser {
-        <<abstract>>
-        #int id
-        #string name
-        #string email
-        #string passwordHash
-        #string phone
-        #bool isActive
-        #datetime createdAt
+        +int id
+        +string name
+        +string email
+        +string passwordHash
+        +string phone
+        +bool isActive
         +login(email, password) Token
         +logout() void
-        +resetPassword(token) void
-        +getProfile()* dict
-        +getRole()* string
+        +getProfile() dict
+        +getRole() string
     }
 
     class Customer {
-        -List~Address~ savedAddresses
-        -List~Order~ orderHistory
+        +Address savedAddresses
         +placeOrder(cart, address) Order
         +trackOrder(orderId) string
         +writeReview(restaurant, rating) void
@@ -469,9 +408,8 @@ classDiagram
     }
 
     class RestaurantOwner {
-        -List~Restaurant~ restaurants
+        +Restaurant restaurants
         +addRestaurant(data) Restaurant
-        +manageMenu(restaurant) void
         +acceptOrder(order) void
         +rejectOrder(order) void
         +getProfile() dict
@@ -479,15 +417,13 @@ classDiagram
     }
 
     class DeliveryPartner {
-        -string vehicleType
-        -string licenceNumber
-        -bool isAvailable
-        -float currentLat
-        -float currentLng
+        +string vehicleType
+        +string licenceNumber
+        +bool isAvailable
+        +float currentLat
+        +float currentLng
         +goOnline() void
-        +goOffline() void
         +acceptOrder(order) void
-        +markPickedUp(order) void
         +markDelivered(order) void
         +getProfile() dict
         +getRole() string
@@ -495,7 +431,6 @@ classDiagram
 
     class Admin {
         +approveRestaurant(id) void
-        +rejectRestaurant(id) void
         +suspendUser(userId) void
         +viewAnalytics() dict
         +getProfile() dict
@@ -503,27 +438,23 @@ classDiagram
     }
 
     class Order {
-        -int id
-        -OrderStatus status
-        -Decimal subtotal
-        -Decimal deliveryFee
-        -Decimal total
-        -datetime createdAt
+        +int id
+        +string status
+        +Decimal subtotal
+        +Decimal total
+        +datetime createdAt
         +calculateTotal() Decimal
         +canCancel() bool
         +transitionTo(newStatus) void
-        +getStatusHistory() List
     }
 
     class OrderItem {
-        -int id
-        -int quantity
-        -Decimal unitPrice
+        +int quantity
+        +Decimal unitPrice
         +getSubtotal() Decimal
     }
 
     class OrderService {
-        <<service>>
         +placeOrder(customer, cart) Order
         +cancelOrder(orderId) void
         +assignPartner(order) void
@@ -534,8 +465,8 @@ classDiagram
     BaseUser <|-- RestaurantOwner : extends
     BaseUser <|-- DeliveryPartner : extends
     BaseUser <|-- Admin : extends
-    Order "1" *-- "1..*" OrderItem : contains
-    Customer "1" --> "0..*" Order : places
+    Order *-- OrderItem : contains
+    Customer --> Order : places
     OrderService ..> Order : manages
     OrderService ..> DeliveryPartner : assigns
       </div>
@@ -552,97 +483,20 @@ classDiagram
       </tbody>
     </table>
 
-    <h3>JavaScript / Node.js Code: Inheritance in Practice</h3>
-    <div class="code-block">// src/models/domain/BaseUser.js
-// Abstract base class — cannot be instantiated directly
-class BaseUser {
-  constructor({ id, name, email, phone, role, isActive = true, createdAt }) {
-    if (new.target === BaseUser) {
-      throw new Error('BaseUser is abstract — instantiate a subclass (Customer, Partner, etc.)');
-    }
-    this.id = id;
-    this.name = name;
-    this.email = email;
-    this.phone = phone;
-    this.role = role;
-    this.isActive = isActive;
-    this.createdAt = createdAt;
-  }
-
-  // Concrete method — same logic for every role
-  async login(email, password) {
-    const bcrypt = require('bcryptjs');
-    const user = await prisma.user.findUnique({ where: { email } });
-    if (!user || !(await bcrypt.compare(password, user.passwordHash))) {
-      throw new Error('INVALID_CREDENTIALS');
-    }
-    return generateTokens(user);
-  }
-
-  // Abstract — MUST be overridden in each subclass
-  getProfile() {
-    throw new Error(`${this.constructor.name} must implement getProfile()`);
-  }
-}
-
-
-// src/models/domain/Customer.js
-class Customer extends BaseUser {
-  constructor(data) {
-    super({ ...data, role: 'CUSTOMER' });
-    this.savedAddresses = data.addresses ?? [];
-  }
-
-  getProfile() {                                  // ← overrides abstract method
-    return {
-      id: this.id,
-      name: this.name,
-      email: this.email,
-      addresses: this.savedAddresses
-    };
-  }
-
-  async placeOrder(cart, addressId) {             // ← Customer-only method
-    const OrderService = require('../services/order.service');
-    return OrderService.placeOrder({ customerId: this.id, cart, addressId });
-  }
-}
-
-
-// src/models/domain/DeliveryPartner.js
-class DeliveryPartner extends BaseUser {
-  constructor(data) {
-    super({ ...data, role: 'PARTNER' });
-    this.vehicleType = data.vehicleType;
-    this.licenceNumber = data.licenceNumber;
-    this.isAvailable = data.isAvailable ?? false;
-    this.currentLat = data.currentLat ?? null;
-    this.currentLng = data.currentLng ?? null;
-  }
-
-  getProfile() {                                  // ← overrides abstract method
-    return {
-      id: this.id,
-      name: this.name,
-      vehicleType: this.vehicleType,
-      isAvailable: this.isAvailable
-    };
-  }
-
-  async goOnline() {                              // ← Partner-only method
-    this.isAvailable = true;
-    await prisma.user.update({ where: { id: this.id }, data: { isAvailable: true } });
-  }
-
-  async acceptOrder(orderId) {                    // ← Partner-only method
-    await prisma.order.update({
-      where: { id: orderId },
-      data: { partnerId: this.id, status: 'OUT_FOR_DELIVERY' }
-    });
-  }
-}
-
-module.exports = { BaseUser, Customer, DeliveryPartner };</div>
+    <div class="info-box orange">
+      <div class="info-box-title">🔜 Node.js Implementation Code lives in Semester 2 — Coding</div>
+      <p style="margin:0 0 8px 0">
+        The class diagram above is a <strong>design artefact</strong> — it describes structure and intent, not syntax.
+        The actual Node.js implementation of <code class="code-inline">BaseUser</code>, <code class="code-inline">Customer</code>,
+        <code class="code-inline">DeliveryPartner</code>, and the <code class="code-inline">OrderService</code> belongs in <strong>Semester 2</strong>,
+        once the tech stack is chosen and coding has begun.
+      </p>
+      <p style="margin:0">
+        <a href="semester2_design.html#class-code" style="font-weight:700; color:#854F0B;">→ See Node.js class implementation in Semester 2 → Class Diagram to Code</a>
+        &nbsp;·&nbsp;
+        <a href="semester2_coding.html" style="font-weight:700; color:#854F0B;">→ Full coding guide in Semester 2 → Coding</a>
+      </p>
+    </div>
 
     <h3>Composition: Order contains OrderItems</h3>
     <p>
@@ -695,11 +549,235 @@ Invalid (enforced in code):
     <p>Model this as an enum with a <code class="code-inline">VALID_TRANSITIONS</code> map in your Order class. When <code class="code-inline">transition_to(new_status)</code> is called, it checks the map before updating — this enforces the FSM at the application layer, not just the database.</p>
   </section>
 
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 4 — FLOW DIAGRAMS (PROCESS DESIGN)
+       ══════════════════════════════════════════════════════════ -->
+  <section class="section" id="flow-diagrams">
+    <div class="section-header">
+      <div class="section-icon icon-green">🔀</div>
+      <div class="section-title-group">
+        <h2>4. Flow Diagrams — Process Design</h2>
+        <p>Business process logic — what steps happen, in what order, with what decisions</p>
+      </div>
+    </div>
+
+    <div class="info-box blue">
+      <div class="info-box-title">📖 What is a Flow Diagram?</div>
+      <p style="margin:0 0 10px 0">
+        A <strong>Flow Diagram</strong> (also called a Flowchart or Activity Diagram) shows the
+        <em>sequence of steps</em> in a business process — including decisions, branches, and error paths.
+        It answers the question: <strong>"What steps happen, in what order?"</strong>
+      </p>
+      <table style="width:100%; border-collapse:collapse; font-size:13px; margin-bottom:10px;">
+        <thead>
+          <tr style="background:#1e3050; color:#c0d8ff;">
+            <th style="padding:8px 12px; text-align:left;">Shape</th>
+            <th style="padding:8px 12px; text-align:left;">Name</th>
+            <th style="padding:8px 12px; text-align:left;">Meaning</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td style="padding:7px 12px; border-bottom:1px solid #d4e4f0;"><code class="code-inline">⬭ Oval</code></td><td style="padding:7px 12px; border-bottom:1px solid #d4e4f0;">Start / End (Terminal)</td><td style="padding:7px 12px; border-bottom:1px solid #d4e4f0;">Entry and exit points of the process</td></tr>
+          <tr style="background:#f0f7ff;"><td style="padding:7px 12px; border-bottom:1px solid #d4e4f0;"><code class="code-inline">▭ Rectangle</code></td><td style="padding:7px 12px; border-bottom:1px solid #d4e4f0;">Process / Action</td><td style="padding:7px 12px; border-bottom:1px solid #d4e4f0;">A step the system or user performs</td></tr>
+          <tr><td style="padding:7px 12px; border-bottom:1px solid #d4e4f0;"><code class="code-inline">◇ Diamond</code></td><td style="padding:7px 12px; border-bottom:1px solid #d4e4f0;">Decision</td><td style="padding:7px 12px; border-bottom:1px solid #d4e4f0;">Yes/No branching point</td></tr>
+          <tr style="background:#f0f7ff;"><td style="padding:7px 12px; border-bottom:1px solid #d4e4f0;"><code class="code-inline">▱ Parallelogram</code></td><td style="padding:7px 12px; border-bottom:1px solid #d4e4f0;">Input / Output</td><td style="padding:7px 12px; border-bottom:1px solid #d4e4f0;">Data received from or sent to user</td></tr>
+          <tr><td style="padding:7px 12px;"><code class="code-inline">→ Arrow</code></td><td style="padding:7px 12px;">Flow line</td><td style="padding:7px 12px;">Direction of control / sequence</td></tr>
+        </tbody>
+      </table>
+      <p style="margin:0">
+        Flow diagrams are part of the <strong>Process Design section of the TDD</strong>. They are drawn for every major user journey — Place Order, Register User, Process Payment — before coding begins.
+      </p>
+    </div>
+
+    <h3>Flow Diagram 1 — Place Order (Customer Journey)</h3>
+    <p>This is the most important business process in the system. The flowchart covers the happy path, payment failure, and restaurant timeout scenarios.</p>
+    <div class="er-diagram-wrap">
+      <div class="mermaid">
+flowchart TD
+    A([Customer opens app]) --> B[Browse restaurants & menu]
+    B --> C[Add items to cart]
+    C --> D{Cart empty?}
+    D -- Yes --> C
+    D -- No --> E[Select delivery address]
+    E --> F{Address saved?}
+    F -- No --> G[Enter new address & save]
+    G --> H
+    F -- Yes --> H[Choose saved address]
+    H --> I[Select payment method\nOnline / COD]
+    I --> J{Payment method?}
+    J -- COD --> K[Place order — status: PLACED]
+    J -- Online --> L[Redirect to payment gateway\nRazorpay]
+    L --> M{Payment successful?}
+    M -- No --> N([Show error — retry or change method])
+    M -- Yes --> K
+    K --> O[Notify restaurant — order appears in dashboard]
+    O --> P{Restaurant accepts\nwithin 5 min?}
+    P -- No / Timeout --> Q[Auto-cancel order\nRefund if paid online]
+    Q --> R([Notify customer: order cancelled])
+    P -- Yes --> S[Status: ACCEPTED → PREPARING]
+    S --> T[Assign delivery partner]
+    T --> U[Partner picks up — status: PICKED_UP]
+    U --> V[Partner delivers — status: DELIVERED]
+    V --> W[Customer gets notification]
+    W --> X{Customer reviews?}
+    X -- Yes --> Y[Submit rating & comment]
+    X -- No --> Z([Session ends])
+    Y --> Z
+
+    style A fill:#065f46,color:#d1fae5,stroke:#059669
+    style Z fill:#065f46,color:#d1fae5,stroke:#059669
+    style N fill:#7f1d1d,color:#fecaca,stroke:#ef4444
+    style R fill:#7f1d1d,color:#fecaca,stroke:#ef4444
+    style K fill:#1e3a8a,color:#bfdbfe,stroke:#3b82f6
+    style V fill:#065f46,color:#d1fae5,stroke:#059669
+      </div>
+    </div>
+
+    <div class="info-box green">
+      <div class="info-box-title">How This Flow Maps to Code</div>
+      <table style="margin:0; font-size:13px;">
+        <thead><tr><th>Flow Step</th><th>Code Component</th><th>File / Route</th></tr></thead>
+        <tbody>
+          <tr><td>Add items to cart</td><td>Cart state (frontend)</td><td><code>CartContext.js</code> or session</td></tr>
+          <tr><td>Select address</td><td>GET /api/addresses</td><td><code>address.controller.js</code></td></tr>
+          <tr><td>Place order</td><td>POST /api/orders</td><td><code>order.controller.js → OrderService</code></td></tr>
+          <tr><td>Payment gateway</td><td>POST /api/payments/initiate</td><td><code>payment.controller.js → Razorpay SDK</code></td></tr>
+          <tr><td>Restaurant notify</td><td>Webhook / polling</td><td><code>order.service.js → notifyRestaurant()</code></td></tr>
+          <tr><td>Auto-cancel timeout</td><td>Cron job / setTimeout</td><td><code>jobs/order-timeout.job.js</code></td></tr>
+          <tr><td>Status transitions</td><td>PATCH /api/orders/:id/status</td><td><code>order.service.js → transitionTo()</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Flow Diagram 2 — User Registration &amp; Login</h3>
+    <p>This flow covers the authentication process for all roles — Customer, Restaurant Owner, Delivery Partner, and Admin.</p>
+    <div class="er-diagram-wrap">
+      <div class="mermaid">
+flowchart TD
+    A([User visits app]) --> B{Has account?}
+    B -- No --> C[Click Register]
+    C --> D[Enter: name, email, phone, password, role]
+    D --> E{Email already exists?}
+    E -- Yes --> F([Show: Email already registered — Login instead])
+    E -- No --> G[Hash password with bcrypt]
+    G --> H[Save user to DB — status: ACTIVE]
+    H --> I[Send welcome email via SendGrid]
+    I --> J[Generate JWT access + refresh token]
+    J --> K([Redirect to dashboard by role])
+
+    B -- Yes --> L[Click Login]
+    L --> M[Enter email + password]
+    M --> N{User exists in DB?}
+    N -- No --> O([Invalid credentials error])
+    N -- Yes --> P{Password matches hash?}
+    P -- No --> O
+    P -- Yes --> Q{Account active?}
+    Q -- No --> R([Account suspended — contact support])
+    Q -- Yes --> J
+
+    style A fill:#065f46,color:#d1fae5,stroke:#059669
+    style K fill:#065f46,color:#d1fae5,stroke:#059669
+    style F fill:#7f1d1d,color:#fecaca,stroke:#ef4444
+    style O fill:#7f1d1d,color:#fecaca,stroke:#ef4444
+    style R fill:#7f1d1d,color:#fecaca,stroke:#ef4444
+    style J fill:#1e3a8a,color:#bfdbfe,stroke:#3b82f6
+      </div>
+    </div>
+
+    <div class="info-box purple">
+      <div class="info-box-title">Flow Diagram 3 — Restaurant Onboarding (Process Summary)</div>
+      <p style="margin:0 0 8px 0">The restaurant approval flow involves three actors — Owner, System, Admin — making it a candidate for a <strong>swimlane diagram</strong> (a flow diagram divided into horizontal lanes by actor):</p>
+      <div style="font-family:monospace; font-size:12.5px; line-height:1.9; background:#2a1540; padding:12px 16px; border-radius:8px; color:#e8d5f5;">
+        <strong style="color:#c084fc;">Owner:</strong>  Register → Fill restaurant details → Submit for approval<br>
+        <strong style="color:#818cf8;">System:</strong>  Save with status=PENDING → Notify admin<br>
+        <strong style="color:#34d399;">Admin:</strong>   Review details → Approve OR Reject (with reason)<br>
+        <strong style="color:#818cf8;">System:</strong>  Update status → Email owner result<br>
+        <strong style="color:#c084fc;">Owner:</strong>  If approved → Restaurant goes live (status=APPROVED)<br>
+        <strong style="color:#c084fc;">Owner:</strong>  If rejected → Fix issues → Resubmit
+      </div>
+      <p style="margin:8px 0 0 0; font-size:12.5px;">Maps to FR-601 (Admin Dashboard) and FR-602 (Restaurant Approval) in the <a href="semester1_requirements.html#functional-reqs" style="color:#c084fc;">SRS</a>.</p>
+    </div>
+
+    <div class="info-box orange">
+      <div class="info-box-title">Flow Diagram vs Sequence Diagram — When to Use Which</div>
+      <table style="margin:0; font-size:13px;">
+        <thead><tr><th>Aspect</th><th>Flow Diagram</th><th>Sequence Diagram</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Focus</strong></td><td>Business process logic, decisions, branches</td><td>Component interactions over time</td></tr>
+          <tr><td><strong>Audience</strong></td><td>Product manager, business analyst, faculty</td><td>Developers, system architects</td></tr>
+          <tr><td><strong>Shows actors?</strong></td><td>No (or swimlanes optionally)</td><td>Yes — lifelines for each actor/component</td></tr>
+          <tr><td><strong>Shows timing?</strong></td><td>No</td><td>Yes — messages are top-to-bottom in time</td></tr>
+          <tr><td><strong>Tool</strong></td><td>draw.io / Mermaid <code>flowchart</code></td><td>draw.io / Mermaid <code>sequenceDiagram</code></td></tr>
+          <tr><td><strong>Lives in TDD section</strong></td><td>Process Design</td><td>Interaction Design (Semester 2)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 5 — WHAT SEMESTER 2 DESIGN WILL COVER
+       ══════════════════════════════════════════════════════════ -->
+  <section class="section" id="sequence-diagrams">
+    <div class="section-header">
+      <div class="section-icon icon-green">🔜</div>
+      <div class="section-title-group">
+        <h2>5. What Semester 2 Design (TDD v2.0) Will Cover</h2>
+        <p>Design elaborations that require the tech stack to be finalised and coding to have begun</p>
+      </div>
+    </div>
+
+    <div class="info-box blue">
+      <div class="info-box-title">Why These Artefacts Live in Semester 2 — Not Here</div>
+      <p style="margin:0 0 10px 0">
+        The artefacts below are <strong>implementation-level designs</strong>. They reference specific API routes,
+        JWT libraries, database query patterns, and payment SDK calls — things that cannot be finalised until
+        the tech stack is chosen (done above) and Semester 2 coding has begun.
+        Drawing them now would mean making assumptions that may change. <strong>Design what you know; defer what you don't.</strong>
+      </p>
+      <table style="width:100%; border-collapse:collapse; font-size:13px;">
+        <thead>
+          <tr style="background:#1e3050; color:#c0d8ff;">
+            <th style="padding:8px 12px; text-align:left;">Artefact</th>
+            <th style="padding:8px 12px; text-align:left;">Why it's in Semester 2</th>
+            <th style="padding:8px 12px; text-align:left;">Where to find it</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding:8px 12px; border-bottom:1px solid #d4e4f0;"><strong>Sequence Diagrams</strong><br><span style="font-size:12px;color:#666;">Login, Place Order (full), Payment, JWT refresh, Partner assignment</span></td>
+            <td style="padding:8px 12px; border-bottom:1px solid #d4e4f0; font-size:12.5px;">Reference <code>POST /api/auth/login</code>, bcrypt, JWT sign, Razorpay SDK — all Sem 2 implementation details</td>
+            <td style="padding:8px 12px; border-bottom:1px solid #d4e4f0;"><a href="semester2_design.html#sequence" style="font-weight:700; color:#185FA5;">Sem 2 Design → Sequence Diagrams ↗</a></td>
+          </tr>
+          <tr style="background:#f8f8ff;">
+            <td style="padding:8px 12px; border-bottom:1px solid #d4e4f0;"><strong>SQL DDL + Indexes</strong><br><span style="font-size:12px;color:#666;">CREATE TABLE, CREATE INDEX, migration scripts</span></td>
+            <td style="padding:8px 12px; border-bottom:1px solid #d4e4f0; font-size:12.5px;">Physical schema depends on the chosen DB engine (PostgreSQL), ORM (Prisma), and query patterns discovered during coding</td>
+            <td style="padding:8px 12px; border-bottom:1px solid #d4e4f0;"><a href="semester2_design.html#db-schema" style="font-weight:700; color:#185FA5;">Sem 2 Design → DB Schema Final ↗</a></td>
+          </tr>
+          <tr>
+            <td style="padding:8px 12px; border-bottom:1px solid #d4e4f0;"><strong>Node.js Class Implementation</strong><br><span style="font-size:12px;color:#666;">BaseUser.js, Customer.js, OrderService.js, controllers</span></td>
+            <td style="padding:8px 12px; border-bottom:1px solid #d4e4f0; font-size:12.5px;">Code is written during Sem 2; the class diagram above is the design blueprint — code is the output</td>
+            <td style="padding:8px 12px; border-bottom:1px solid #d4e4f0;"><a href="semester2_design.html#class-code" style="font-weight:700; color:#185FA5;">Sem 2 Design → Class Diagram to Code ↗</a></td>
+          </tr>
+          <tr style="background:#f8f8ff;">
+            <td style="padding:8px 12px; border-bottom:1px solid #d4e4f0;"><strong>Detailed Flow Diagrams</strong><br><span style="font-size:12px;color:#666;">Swimlanes, partner assignment algorithm, error paths with retry logic</span></td>
+            <td style="padding:8px 12px; border-bottom:1px solid #d4e4f0; font-size:12.5px;">High-level flows are above (Sem 1). Detailed versions with system-level steps, timeouts, and retries belong in Sem 2</td>
+            <td style="padding:8px 12px; border-bottom:1px solid #d4e4f0;"><a href="semester2_design.html#flow" style="font-weight:700; color:#185FA5;">Sem 2 Design → Flow Diagrams ↗</a></td>
+          </tr>
+          <tr>
+            <td style="padding:8px 12px;"><strong>API Design (OpenAPI / Swagger)</strong><br><span style="font-size:12px;color:#666;">Endpoint definitions, request/response schemas, status codes</span></td>
+            <td style="padding:8px 12px; font-size:12.5px;">API routes cannot be specified until the system architecture and data model are stable — which happens after Sem 1 design review</td>
+            <td style="padding:8px 12px;"><a href="semester2_design.html#api-design" style="font-weight:700; color:#185FA5;">Sem 2 Design → API Design ↗</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
   <section class="section" id="tech-stack">
     <div class="section-header">
       <div class="section-icon icon-green">🛠️</div>
       <div class="section-title-group">
-        <h2>4. Tech Stack Decision</h2>
+        <h2>6. Tech Stack Decision</h2>
         <p>Choosing and justifying your technology choices</p>
       </div>
     </div>
@@ -747,12 +825,19 @@ Invalid (enforced in code):
       <p style="margin:0">Once your tech stack is chosen and approved in Semester 1, do not switch frameworks mid-project. Document your tech decision with <strong>justifications</strong> in the TDD so it cannot be questioned later without a formal Change Request.</p>
     </div>
     <div class="info-box blue">
-      <div class="info-box-title">Deliverable for This Phase</div>
-      <ul style="margin:0">
-        <li><strong>TDD v1.0</strong> — Architecture diagram, ER diagram (exported from dbdiagram.io), class diagram for core domain, tech stack decision table with justifications.</li>
-        <li>ER diagram reviewed by DB designer and faculty guide.</li>
-        <li>Tech stack approved before any Semester 2 coding begins.</li>
-      </ul>
+      <div class="info-box-title">Deliverable for This Phase — TDD v1.0 Checklist</div>
+      <table style="margin:0; font-size:13px;">
+        <thead><tr><th>Section</th><th>Artefact</th><th>Tool</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Architecture</strong></td><td>3-tier diagram with cloud deployment view</td><td>draw.io / Lucidchart</td></tr>
+          <tr><td><strong>Database Design</strong></td><td>ER Diagram — all entities, FKs, cardinality labels</td><td>dbdiagram.io → export PNG</td></tr>
+          <tr><td><strong>OOP Design</strong></td><td>Class Diagram — BaseUser hierarchy + Order composition</td><td>draw.io / Mermaid <code>classDiagram</code></td></tr>
+          <tr><td><strong>Process Design</strong></td><td>Flow Diagrams for Place Order, Register User, Restaurant Approval</td><td>draw.io / Mermaid <code>flowchart</code></td></tr>
+          <tr><td><strong>Interaction Design</strong></td><td>Sequence Diagram — Login flow (Semester 1); full flows in Semester 2</td><td>draw.io / Mermaid <code>sequenceDiagram</code></td></tr>
+          <tr><td><strong>Tech Stack</strong></td><td>Decision matrix with justifications; stack approved by faculty</td><td>Table in TDD doc</td></tr>
+        </tbody>
+      </table>
+      <p style="margin:10px 0 0 0;"><strong>Review gates:</strong> ER diagram signed off by DB reviewer · Tech stack approved before Semester 2 coding begins · Flow diagrams cross-checked against User Stories in <a href="semester1_user_stories.html">SRS User Stories</a>.</p>
     </div>
   </section>
 
@@ -760,7 +845,7 @@ Invalid (enforced in code):
     <a href="semester1_planning.html">← Planning (SPMP)</a>
     <nav class="footer-nav">
       <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
-      <a href="semester2_design.html">Next: Design Sem 2 →</a>
+      <a href="semester2_design.html">Next: Design Sem 2 — Full Sequence &amp; Flow Diagrams →</a>
     </nav>
   </footer>
 </div>

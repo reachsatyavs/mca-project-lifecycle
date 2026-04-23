@@ -5,6 +5,49 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Use Cases — Semester 1 | Online Food Delivery System</title>
   <link rel="stylesheet" href="child_page_styles.css">
+  <style>
+    .nav-flow {
+      display: flex; align-items: center; flex-wrap: wrap;
+      border: 2px solid #0F6E56; border-radius: 10px; overflow: hidden;
+      margin: 16px 0;
+    }
+    .nav-flow-step { flex:1; min-width:120px; padding:12px 14px; text-align:center; position:relative; }
+    .nav-flow-step:not(:last-child)::after {
+      content:'›'; position:absolute; right:-6px; top:50%;
+      transform:translateY(-50%); font-size:20px; color:#0F6E56; font-weight:700; z-index:1;
+    }
+    .nfs-1 { background:#EEEDFE; }
+    .nfs-2 { background:#e8f5ff; }
+    .nfs-3 { background:#efffee; }
+    .nfs-4 { background:#E1F5EE; }
+    .nfs-5 { background:#FFF3E0; }
+    .nfs-label { font-size:10px; text-transform:uppercase; letter-spacing:0.5px; color:#888; margin-bottom:3px; font-weight:700; }
+    .nfs-title { font-size:12px; font-weight:800; }
+    .nfs-1 .nfs-title { color:#3C3489; }
+    .nfs-2 .nfs-title { color:#185FA5; }
+    .nfs-3 .nfs-title { color:#0a6640; }
+    .nfs-4 .nfs-title { color:#0F6E56; }
+    .nfs-5 .nfs-title { color:#7a5a0a; }
+    .nfs-link { font-size:10.5px; color:inherit; text-decoration:none; margin-top:3px; display:block; opacity:0.7; }
+    .nfs-link:hover { opacity:1; text-decoration:underline; }
+    .nfs-active { outline: 3px solid #0F6E56; }
+
+    .artefact-bar {
+      display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+      padding-top: 10px; margin-top: 10px;
+      border-top: 1px dashed #d0ead8;
+    }
+    .artefact-label { font-size:10.5px; font-weight:700; color:#999; text-transform:uppercase; letter-spacing:0.4px; }
+    .artefact-link {
+      display:inline-block; font-size:11.5px; font-weight:700;
+      padding:3px 10px; border-radius:20px; text-decoration:none; transition:opacity 0.15s;
+    }
+    .artefact-link:hover { opacity:0.75; }
+    .link-feat { background:#EEEDFE; color:#3C3489; }
+    .link-us   { background:#e8f5e9; color:#2e7d32; }
+    .link-tc   { background:#FFF3E0; color:#7a5a0a; }
+    .link-sep  { color:#ccc; font-size:12px; }
+  </style>
 </head>
 <body>
 <div class="page-wrap">
@@ -19,13 +62,42 @@
     <div class="project-tag">Example Project: <strong>Online Food Delivery System</strong></div>
     <p class="header-desc">Use cases model how actors interact with the system to achieve a goal. They describe the complete interaction — main flow, alternate flows, pre and postconditions — and form the basis for detailed design and test planning.</p>
   </header>
+  <!-- Traceability navigation -->
+  <div class="nav-flow">
+    <div class="nav-flow-step nfs-1">
+      <div class="nfs-label">Document</div>
+      <div class="nfs-title">SRS / PRD</div>
+      <a href="semester1_requirements.html" class="nfs-link">Requirements →</a>
+    </div>
+    <div class="nav-flow-step nfs-2">
+      <div class="nfs-label">Requirement</div>
+      <div class="nfs-title">User Stories</div>
+      <a href="semester1_user_stories.html" class="nfs-link">User Stories →</a>
+    </div>
+    <div class="nav-flow-step nfs-3">
+      <div class="nfs-label">Capability</div>
+      <div class="nfs-title">Features</div>
+      <a href="semester1_features.html" class="nfs-link">Feature List →</a>
+    </div>
+    <div class="nav-flow-step nfs-4 nfs-active">
+      <div class="nfs-label">Interaction</div>
+      <div class="nfs-title">Use Cases</div>
+      <a href="semester1_use_cases.html" class="nfs-link">You are here</a>
+    </div>
+    <div class="nav-flow-step nfs-5">
+      <div class="nfs-label">Verification</div>
+      <div class="nfs-title">Test Cases</div>
+      <a href="semester1_test_cases.html" class="nfs-link">Test Cases →</a>
+    </div>
+  </div>
+
   <nav class="topic-nav">
     <div class="topic-nav-label">Jump to section</div>
     <a href="#actors">Actors</a>
     <a href="#uc-list">Use Case List</a>
-    <a href="#uc-06">UC-06: Place Order</a>
+    <a href="#uc-06">UC-08: Place Order</a>
     <a href="#uc-02">UC-02: Login</a>
-    <a href="#uc-09">UC-09: Write Review</a>
+    <a href="#uc-09">UC-12: Write Review</a>
   </nav>
 
   <!-- What is a Use Case -->
@@ -74,33 +146,135 @@
         <p>All 20 use cases for the Online Food Delivery System</p>
       </div>
     </div>
+    <div style="overflow-x:auto;">
     <table>
       <thead>
-        <tr><th>ID</th><th>Use Case</th><th>Primary Actor</th><th>Secondary Actor(s)</th><th>Related FR</th></tr>
+        <tr><th>ID</th><th>Use Case</th><th>Feature</th><th>User Story</th><th>Primary Actor</th><th>Secondary Actor(s)</th><th>Related FR</th></tr>
       </thead>
       <tbody>
-        <tr><td>UC-01</td><td>Register Account</td><td>Customer / Owner / Partner</td><td>Email Service</td><td>FR-101</td></tr>
-        <tr><td>UC-02</td><td>Login</td><td>All actors</td><td>—</td><td>FR-102</td></tr>
-        <tr><td>UC-03</td><td>Reset Password</td><td>Any user</td><td>Email Service</td><td>FR-103</td></tr>
-        <tr><td>UC-04</td><td>Update Profile</td><td>Any user</td><td>—</td><td>FR-104</td></tr>
-        <tr><td>UC-05</td><td>Browse Restaurants</td><td>Customer</td><td>—</td><td>FR-301</td></tr>
-        <tr><td>UC-06</td><td>View Menu</td><td>Customer</td><td>—</td><td>FR-301</td></tr>
-        <tr><td>UC-07</td><td>Manage Cart</td><td>Customer</td><td>—</td><td>FR-302</td></tr>
-        <tr><td>UC-08</td><td>Place Order</td><td>Customer</td><td>Payment Gateway, Email Service</td><td>FR-303, FR-401</td></tr>
-        <tr><td>UC-09</td><td>Track Order</td><td>Customer</td><td>—</td><td>FR-304</td></tr>
-        <tr><td>UC-10</td><td>Cancel Order</td><td>Customer</td><td>Email Service, Payment Gateway (refund)</td><td>FR-303, BR-03</td></tr>
-        <tr><td>UC-11</td><td>View Order History</td><td>Customer</td><td>—</td><td>FR-305</td></tr>
-        <tr><td>UC-12</td><td>Write Review</td><td>Customer</td><td>—</td><td>FR-601</td></tr>
-        <tr><td>UC-13</td><td>Register Restaurant</td><td>Restaurant Owner</td><td>Email Service</td><td>FR-201</td></tr>
-        <tr><td>UC-14</td><td>Manage Menu</td><td>Restaurant Owner</td><td>—</td><td>FR-202</td></tr>
-        <tr><td>UC-15</td><td>Accept / Reject Order</td><td>Restaurant Owner</td><td>Email Service</td><td>FR-203</td></tr>
-        <tr><td>UC-16</td><td>Go Online / Offline</td><td>Delivery Partner</td><td>—</td><td>FR-501</td></tr>
-        <tr><td>UC-17</td><td>Accept &amp; Deliver Order</td><td>Delivery Partner</td><td>—</td><td>FR-502, FR-503</td></tr>
-        <tr><td>UC-18</td><td>Approve Restaurant</td><td>Admin</td><td>Email Service</td><td>FR-602</td></tr>
-        <tr><td>UC-19</td><td>View Analytics</td><td>Admin</td><td>—</td><td>FR-602</td></tr>
-        <tr><td>UC-20</td><td>Suspend / Ban User</td><td>Admin</td><td>Email Service</td><td>FR-602</td></tr>
+        <tr>
+          <td>UC-01</td><td>Register Account</td>
+          <td><a href="semester1_features.html#F-01" style="font-weight:700;color:#3C3489;">F-01</a></td>
+          <td><a href="semester1_user_stories.html#customer">US-C01</a></td>
+          <td>Customer / Owner / Partner</td><td>Email Service</td><td>FR-101</td>
+        </tr>
+        <tr>
+          <td>UC-02</td><td><a href="#uc-02">Login</a></td>
+          <td><a href="semester1_features.html#F-02" style="font-weight:700;color:#3C3489;">F-02</a></td>
+          <td><a href="semester1_user_stories.html#customer">US-C02</a></td>
+          <td>All actors</td><td>—</td><td>FR-102</td>
+        </tr>
+        <tr>
+          <td>UC-03</td><td>Reset Password</td>
+          <td><a href="semester1_features.html#F-02" style="font-weight:700;color:#3C3489;">F-02</a></td>
+          <td><a href="semester1_user_stories.html#customer">US-C02</a></td>
+          <td>Any user</td><td>Email Service</td><td>FR-103</td>
+        </tr>
+        <tr>
+          <td>UC-04</td><td>Update Profile</td>
+          <td>—</td>
+          <td>—</td>
+          <td>Any user</td><td>—</td><td>FR-104</td>
+        </tr>
+        <tr>
+          <td>UC-05</td><td>Browse Restaurants</td>
+          <td><a href="semester1_features.html#F-03" style="font-weight:700;color:#3C3489;">F-03</a></td>
+          <td><a href="semester1_user_stories.html#customer">US-C03</a></td>
+          <td>Customer</td><td>—</td><td>FR-301</td>
+        </tr>
+        <tr>
+          <td>UC-06</td><td>View Menu</td>
+          <td><a href="semester1_features.html#F-03" style="font-weight:700;color:#3C3489;">F-03</a></td>
+          <td><a href="semester1_user_stories.html#customer">US-C03</a></td>
+          <td>Customer</td><td>—</td><td>FR-301</td>
+        </tr>
+        <tr>
+          <td>UC-07</td><td>Manage Cart</td>
+          <td><a href="semester1_features.html#F-04" style="font-weight:700;color:#3C3489;">F-04</a></td>
+          <td><a href="semester1_user_stories.html#customer">US-C04</a></td>
+          <td>Customer</td><td>—</td><td>FR-302</td>
+        </tr>
+        <tr>
+          <td>UC-08</td><td><a href="#uc-06">Place Order</a></td>
+          <td><a href="semester1_features.html#F-05" style="font-weight:700;color:#3C3489;">F-05</a></td>
+          <td><a href="semester1_user_stories.html#customer">US-C05</a></td>
+          <td>Customer</td><td>Payment Gateway, Email Service</td><td>FR-303, FR-401</td>
+        </tr>
+        <tr>
+          <td>UC-09</td><td>Track Order</td>
+          <td><a href="semester1_features.html#F-06" style="font-weight:700;color:#3C3489;">F-06</a></td>
+          <td><a href="semester1_user_stories.html#customer">US-C06</a></td>
+          <td>Customer</td><td>—</td><td>FR-304</td>
+        </tr>
+        <tr>
+          <td>UC-10</td><td>Cancel Order</td>
+          <td><a href="semester1_features.html#F-05" style="font-weight:700;color:#3C3489;">F-05</a></td>
+          <td><a href="semester1_user_stories.html#customer">US-C05</a></td>
+          <td>Customer</td><td>Email Service, Payment Gateway (refund)</td><td>FR-303, BR-03</td>
+        </tr>
+        <tr>
+          <td>UC-11</td><td>View Order History</td>
+          <td><a href="semester1_features.html#F-08" style="font-weight:700;color:#3C3489;">F-08</a></td>
+          <td><a href="semester1_user_stories.html#customer">US-C08</a></td>
+          <td>Customer</td><td>—</td><td>FR-305</td>
+        </tr>
+        <tr>
+          <td>UC-12</td><td><a href="#uc-09">Write Review</a></td>
+          <td><a href="semester1_features.html#F-07" style="font-weight:700;color:#3C3489;">F-07</a></td>
+          <td><a href="semester1_user_stories.html#customer">US-C07</a></td>
+          <td>Customer</td><td>—</td><td>FR-601</td>
+        </tr>
+        <tr>
+          <td>UC-13</td><td>Register Restaurant</td>
+          <td><a href="semester1_features.html#F-09" style="font-weight:700;color:#3C3489;">F-09</a></td>
+          <td><a href="semester1_user_stories.html#owner">US-O01</a></td>
+          <td>Restaurant Owner</td><td>Email Service</td><td>FR-201</td>
+        </tr>
+        <tr>
+          <td>UC-14</td><td>Manage Menu</td>
+          <td><a href="semester1_features.html#F-10" style="font-weight:700;color:#3C3489;">F-10</a></td>
+          <td><a href="semester1_user_stories.html#owner">US-O02</a></td>
+          <td>Restaurant Owner</td><td>—</td><td>FR-202</td>
+        </tr>
+        <tr>
+          <td>UC-15</td><td>Accept / Reject Order</td>
+          <td><a href="semester1_features.html#F-11" style="font-weight:700;color:#3C3489;">F-11</a></td>
+          <td><a href="semester1_user_stories.html#owner">US-O03</a></td>
+          <td>Restaurant Owner</td><td>Email Service</td><td>FR-203</td>
+        </tr>
+        <tr>
+          <td>UC-16</td><td>Go Online / Offline</td>
+          <td><a href="semester1_features.html#F-12" style="font-weight:700;color:#3C3489;">F-12</a></td>
+          <td><a href="semester1_user_stories.html#partner">US-P01</a></td>
+          <td>Delivery Partner</td><td>—</td><td>FR-501</td>
+        </tr>
+        <tr>
+          <td>UC-17</td><td>Accept &amp; Deliver Order</td>
+          <td><a href="semester1_features.html#F-13" style="font-weight:700;color:#3C3489;">F-13</a></td>
+          <td><a href="semester1_user_stories.html#partner">US-P02</a></td>
+          <td>Delivery Partner</td><td>—</td><td>FR-502, FR-503</td>
+        </tr>
+        <tr>
+          <td>UC-18</td><td>Approve Restaurant</td>
+          <td><a href="semester1_features.html#F-14" style="font-weight:700;color:#3C3489;">F-14</a></td>
+          <td><a href="semester1_user_stories.html#admin">US-A01</a></td>
+          <td>Admin</td><td>Email Service</td><td>FR-602</td>
+        </tr>
+        <tr>
+          <td>UC-19</td><td>View Analytics</td>
+          <td><a href="semester1_features.html#F-15" style="font-weight:700;color:#3C3489;">F-15</a></td>
+          <td><a href="semester1_user_stories.html#admin">US-A02</a></td>
+          <td>Admin</td><td>—</td><td>FR-602</td>
+        </tr>
+        <tr>
+          <td>UC-20</td><td>Suspend / Ban User</td>
+          <td><a href="semester1_features.html#F-16" style="font-weight:700;color:#3C3489;">F-16</a></td>
+          <td><a href="semester1_user_stories.html#admin">US-A03</a></td>
+          <td>Admin</td><td>Email Service</td><td>FR-602</td>
+        </tr>
       </tbody>
     </table>
+    </div>
     <div class="info-box green">
       <div class="info-box-title">«include» and «extend» Relationships</div>
       <p style="margin:0">
@@ -159,6 +333,19 @@
         <tr><td><strong>Related User Stories</strong></td><td>US-C04 (Cart), US-C05 (Payment)</td></tr>
       </tbody>
     </table>
+    <div class="artefact-bar">
+      <span class="artefact-label">User Stories</span>
+      <a href="semester1_user_stories.html#customer" class="artefact-link link-us">US-C04 Cart</a>
+      <a href="semester1_user_stories.html#customer" class="artefact-link link-us">US-C05 Payment</a>
+      <span class="link-sep">|</span>
+      <span class="artefact-label">Feature</span>
+      <a href="semester1_features.html#F-05" class="artefact-link link-feat">F-05 Payment &amp; Checkout</a>
+      <span class="link-sep">|</span>
+      <span class="artefact-label">Test Cases</span>
+      <a href="semester2_testing.html#test-cases" class="artefact-link link-tc">TC-04</a>
+      <a href="semester2_testing.html#test-cases" class="artefact-link link-tc">TC-05</a>
+      <a href="semester2_testing.html#test-cases" class="artefact-link link-tc">TC-06</a>
+    </div>
   </section>
 
   <!-- UC-02: Login -->
@@ -205,6 +392,17 @@
         <tr><td><strong>Related FRs</strong></td><td>FR-102</td></tr>
       </tbody>
     </table>
+    <div class="artefact-bar">
+      <span class="artefact-label">User Story</span>
+      <a href="semester1_user_stories.html#customer" class="artefact-link link-us">US-C02 Login</a>
+      <span class="link-sep">|</span>
+      <span class="artefact-label">Feature</span>
+      <a href="semester1_features.html#F-02" class="artefact-link link-feat">F-02 Login &amp; Auth</a>
+      <span class="link-sep">|</span>
+      <span class="artefact-label">Test Cases</span>
+      <a href="semester2_testing.html#test-cases" class="artefact-link link-tc">TC-01</a>
+      <a href="semester2_testing.html#test-cases" class="artefact-link link-tc">TC-02</a>
+    </div>
   </section>
 
   <!-- UC-12: Write Review -->
@@ -249,6 +447,18 @@
         <tr><td><strong>Related User Stories</strong></td><td>US-C07</td></tr>
       </tbody>
     </table>
+    <div class="artefact-bar">
+      <span class="artefact-label">User Story</span>
+      <a href="semester1_user_stories.html#customer" class="artefact-link link-us">US-C07 Rate &amp; Review</a>
+      <span class="link-sep">|</span>
+      <span class="artefact-label">Feature</span>
+      <a href="semester1_features.html#F-07" class="artefact-link link-feat">F-07 Rating &amp; Review</a>
+      <span class="link-sep">|</span>
+      <span class="artefact-label">Test Cases</span>
+      <a href="semester2_testing.html#test-cases" class="artefact-link link-tc">TC-08</a>
+      <a href="semester2_testing.html#test-cases" class="artefact-link link-tc">TC-09</a>
+      <a href="semester2_testing.html#test-cases" class="artefact-link link-tc">TC-10</a>
+    </div>
     <div class="info-box green">
       <div class="info-box-title">Tool Recommendation</div>
       <p style="margin:0">Draw your Use Case Diagram using <strong>draw.io</strong> (free, browser-based) or <strong>PlantUML</strong> (text-to-diagram, version-controllable). Use ovals for use cases, stick figures for actors, lines for associations, and dashed arrows for «include» / «extend» relationships.</p>
@@ -256,8 +466,9 @@
   </section>
 
   <footer>
-    <a href="semester1_user_stories.html">← User Stories</a>
+    <a href="semester1_features.html">← Features</a>
     <nav class="footer-nav">
+      <a href="semester1_user_stories.html">User Stories</a>
       <a href="semester1_requirements.html">Requirements Overview</a>
       <a href="semester1_test_cases.html">Test Cases →</a>
     </nav>

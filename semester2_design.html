@@ -54,11 +54,12 @@
   </header>
   <nav class="topic-nav green-nav">
     <div class="topic-nav-label">Jump to section</div>
-    <a href="#flow">1. Flow Diagrams</a>
+    <a href="#flow">1. Flow Diagrams (Detailed)</a>
     <a href="#sequence">2. Sequence Diagrams</a>
-    <a href="#api-design">3. API Design (OpenAPI)</a>
-    <a href="#db-schema">4. DB Schema Final</a>
-    <a href="#wireframes">5. Wireframes / UI</a>
+    <a href="#class-code">3. Class Diagram → Node.js Code</a>
+    <a href="#api-design">4. API Design (OpenAPI)</a>
+    <a href="#db-schema">5. DB Schema Final (SQL + Prisma)</a>
+    <a href="#wireframes">6. Wireframes / UI</a>
   </nav>
 
   <section class="section" id="flow">
@@ -70,71 +71,48 @@
       </div>
     </div>
 
-    <!-- ── COMPARISON PANEL ── -->
-    <div class="info-box blue" style="margin-bottom:20px;">
-      <div class="info-box-title">🤔 Students Often Confuse These Three — Here is the Difference</div>
-      <p style="margin:0 0 12px 0">All three live in the Technical Design Document (TDD), but each answers a completely different question:</p>
-      <table class="compare-table">
+    <!-- ── SEM 1 → SEM 2 PROGRESSION BANNER ── -->
+    <div style="background:linear-gradient(135deg,#0a2a1a,#0f3d28); border:1px solid #1D9E75; border-left:4px solid #1D9E75; border-radius:12px; padding:18px 22px; margin-bottom:20px;">
+      <div style="font-size:14px; font-weight:800; color:#6ee7b7; margin-bottom:10px;">📐 TDD v1.0 → TDD v2.0 — How Design Evolves Semester to Semester</div>
+      <p style="font-size:13px; color:#a7f3d0; margin:0 0 14px 0;">
+        Semester 1 established the <strong>conceptual design</strong> — the shape of the system before any code was written.
+        Semester 2 elaborates each artefact into a <strong>developer-ready blueprint</strong> — specific routes, exact SQL, component interactions, and real Node.js implementation.
+      </p>
+      <table style="width:100%; border-collapse:collapse; font-size:12.5px;">
         <thead>
           <tr>
-            <th>Diagram</th>
-            <th>Question it answers</th>
-            <th>Shapes used</th>
-            <th>Lives in</th>
+            <th style="padding:9px 12px; text-align:left; background:#052e16; color:#86efac; border-bottom:1px solid #166534;">Artefact</th>
+            <th style="padding:9px 12px; text-align:left; background:#052e16; color:#86efac; border-bottom:1px solid #166534;">Semester 1 — Conceptual Design</th>
+            <th style="padding:9px 12px; text-align:left; background:#052e16; color:#86efac; border-bottom:1px solid #166534;">Semester 2 — Detailed (this page)</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><span class="compare-badge badge-er">ER Diagram</span></td>
-            <td><strong>What data do we store?</strong><br><span style="font-size:12px;color:#555">Entities, attributes, relationships in the database</span></td>
-            <td style="font-size:12px">Entity boxes with columns; crow's foot lines (1:M, 1:1)</td>
-            <td style="font-size:12px">Database design / TDD</td>
+            <td style="padding:9px 12px; background:#0a2e1a; border-bottom:1px solid #166534;"><span class="compare-badge badge-er">ER Diagram</span></td>
+            <td style="padding:9px 12px; background:#0a2e1a; border-bottom:1px solid #166534; color:#d1fae5;">Entities, relationships, cardinality — tool: dbdiagram.io</td>
+            <td style="padding:9px 12px; background:#0a2e1a; border-bottom:1px solid #166534; color:#d1fae5;"><strong style="color:#6ee7b7;">SQL DDL</strong> — CREATE TABLE, indexes, FK constraints, Prisma schema</td>
           </tr>
           <tr>
-            <td><span class="compare-badge badge-flow">Flow Diagram</span></td>
-            <td><strong>What steps happen, in what order?</strong><br><span style="font-size:12px;color:#555">Business process logic, decisions, branches</span></td>
-            <td style="font-size:12px">Ovals (start/end), rectangles (steps), diamonds (decisions), arrows</td>
-            <td style="font-size:12px">Process design / TDD</td>
+            <td style="padding:9px 12px; background:#0d3520; border-bottom:1px solid #166534;"><span class="compare-badge badge-class">Class Diagram</span></td>
+            <td style="padding:9px 12px; background:#0d3520; border-bottom:1px solid #166534; color:#d1fae5;">BaseUser hierarchy, Order composition, domain model UML</td>
+            <td style="padding:9px 12px; background:#0d3520; border-bottom:1px solid #166534; color:#d1fae5;"><strong style="color:#6ee7b7;">Node.js code</strong> — BaseUser.js, Customer.js, OrderService.js — UML to real code</td>
           </tr>
           <tr>
-            <td><span class="compare-badge badge-class">Class Diagram</span></td>
-            <td><strong>What code objects exist and how do they relate?</strong><br><span style="font-size:12px;color:#555">Classes, attributes, methods, inheritance</span></td>
-            <td style="font-size:12px">3-part rectangles; hollow arrows (inheritance); lines (association)</td>
-            <td style="font-size:12px">OOP design / TDD</td>
+            <td style="padding:9px 12px; background:#0a2e1a; border-bottom:1px solid #166534;"><span class="compare-badge badge-flow">Flow Diagram</span></td>
+            <td style="padding:9px 12px; background:#0a2e1a; border-bottom:1px solid #166534; color:#d1fae5;">High-level business flows — Place Order, Register, Restaurant Approval</td>
+            <td style="padding:9px 12px; background:#0a2e1a; border-bottom:1px solid #166534; color:#d1fae5;"><strong style="color:#6ee7b7;">Detailed flows</strong> — partner assignment algorithm, error paths, retry logic, swimlanes</td>
           </tr>
           <tr>
-            <td><span class="compare-badge badge-seq">Sequence Diagram</span></td>
-            <td><strong>Which components talk to each other, in what order?</strong><br><span style="font-size:12px;color:#555">System interactions over time (Browser ↔ API ↔ DB)</span></td>
-            <td style="font-size:12px">Vertical lifelines; horizontal arrows (calls and responses)</td>
-            <td style="font-size:12px">Interaction design / TDD</td>
+            <td style="padding:9px 12px; background:#0d3520;"><span class="compare-badge badge-seq">Sequence Diagram</span></td>
+            <td style="padding:9px 12px; background:#0d3520; color:#d1fae5;">Concept introduced — not drawn (tech stack not yet finalised)</td>
+            <td style="padding:9px 12px; background:#0d3520; color:#d1fae5;"><strong style="color:#6ee7b7;">Full diagrams</strong> — Login, Place Order, Payment failure, JWT refresh — happy + error paths</td>
           </tr>
         </tbody>
       </table>
-      <p style="margin:8px 0 0 0; font-size:13px;">
-        <strong>Rule of thumb:</strong> Draw an ER diagram for every database you design.
-        Draw a flow diagram for every complex business process (order placement, refund, partner assignment).
-        Draw a class diagram for your key domain objects. Draw a sequence diagram for every API call that touches 3+ components.
+      <p style="margin:12px 0 0 0; font-size:12px; color:#6ee7b7;">
+        <a href="semester1_design.html" style="color:#6ee7b7; font-weight:700;">← Back to Semester 1 Design (TDD v1.0)</a>
+        &nbsp;·&nbsp; All diagrams below are implementation-level — drawn after tech stack was confirmed in Semester 1.
       </p>
-    </div>
-
-    <!-- ── DEFINITION BOX ── -->
-    <div class="info-box green">
-      <div class="info-box-title">📖 What is a Flow Diagram (Flowchart)?</div>
-      <p style="margin:0 0 8px 0">
-        A <strong>Flow Diagram (Flowchart)</strong> is a visual representation of a process
-        using standardised shapes connected by arrows. It shows the <em>sequence of steps</em>,
-        <em>decision points</em>, and <em>possible paths</em> through a workflow.
-      </p>
-      <table style="margin:6px 0 0 0; font-size:13px;">
-        <thead><tr><th>Shape</th><th>Meaning</th><th>Example in Food Delivery</th></tr></thead>
-        <tbody>
-          <tr><td>Stadium / Pill <code class="code-inline">([text])</code></td><td>Start / End (Terminator)</td><td>Customer opens checkout; Order accepted</td></tr>
-          <tr><td>Rectangle <code class="code-inline">[text]</code></td><td>Process / Action step</td><td>Add item to cart; Send confirmation email</td></tr>
-          <tr><td>Diamond <code class="code-inline">{text}</code></td><td>Decision (condition)</td><td>Cart total ≥ ₹100? Restaurant open?</td></tr>
-          <tr><td>Rounded rect <code class="code-inline">(text)</code></td><td>Sub-process / Note</td><td>Razorpay popup; Auto-retry logic</td></tr>
-          <tr><td>Arrow <code class="code-inline">--&gt;</code> with label</td><td>Flow + condition label</td><td>Yes / No on decision branches</td></tr>
-        </tbody>
-      </table>
     </div>
 
     <h3>Flow Diagram 1: Order Placement</h3>
@@ -230,7 +208,60 @@ flowchart TD
       </p>
     </div>
 
-    <h3>Sequence Diagram 1: Place Order — Happy Path ✅</h3>
+    <h3>Sequence Diagram 1: User Login &amp; Token Issuance</h3>
+    <p>Every protected route in the system depends on this flow. Shows validation, bcrypt comparison, JWT signing, and all error branches — the authentication backbone of the application.</p>
+    <div class="diagram-wrap">
+      <div class="mermaid">
+%%{init: {'theme': 'dark'}}%%
+sequenceDiagram
+    autonumber
+    actor U as User (Browser)
+    participant API as Express API
+    participant DB as PostgreSQL
+    participant BCR as bcrypt
+    participant JWT as JWT Service
+
+    U->>+API: POST /api/auth/login { email, password }
+    API->>API: express-validator — check email format & password length
+    alt Validation fails
+        API-->>U: 400 Bad Request { error: "Invalid email format" }
+    end
+    API->>+DB: SELECT * FROM users WHERE email = $1
+    DB-->>-API: User row OR null
+    alt User not found
+        API-->>U: 401 Unauthorised { error: "INVALID_CREDENTIALS" }
+    end
+    API->>+BCR: bcrypt.compare(password, user.passwordHash)
+    BCR-->>-API: true OR false
+    alt Password mismatch
+        API-->>U: 401 Unauthorised { error: "INVALID_CREDENTIALS" }
+    end
+    alt Account suspended
+        API-->>U: 403 Forbidden { error: "ACCOUNT_SUSPENDED" }
+    end
+    API->>+JWT: sign({ userId, role }, ACCESS_SECRET, "15m")
+    JWT-->>-API: accessToken
+    API->>+JWT: sign({ userId }, REFRESH_SECRET, "7d")
+    JWT-->>-API: refreshToken
+    API->>DB: UPDATE users SET last_login = NOW() WHERE id = $1
+    API-->>-U: 200 OK { accessToken, refreshToken, user: { id, name, role } }
+    U->>U: Store accessToken in memory / refreshToken in httpOnly cookie
+      </div>
+    </div>
+    <div class="info-box green" style="margin-top:-4px;">
+      <div class="info-box-title">Key Security Decisions Visible in This Diagram</div>
+      <table style="margin:0; font-size:13px;">
+        <thead><tr><th>Decision</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr><td>Same 401 error for "user not found" and "wrong password"</td><td>Prevents user enumeration — attacker cannot tell if the email exists</td></tr>
+          <tr><td>accessToken expires in 15 min</td><td>Short-lived — limits exposure if stolen</td></tr>
+          <tr><td>refreshToken expires in 7 days, stored in httpOnly cookie</td><td>Not accessible from JavaScript — prevents XSS theft</td></tr>
+          <tr><td>bcrypt.compare — not direct string comparison</td><td>bcrypt is intentionally slow; makes brute-force impractical</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Sequence Diagram 2: Place Order — Happy Path ✅</h3>
     <p>Solid arrows are <strong>calls/requests</strong>; dashed arrows are <strong>responses</strong>. Activation bars show when a component is actively processing.</p>
     <div class="diagram-wrap">
       <div class="mermaid">
@@ -266,7 +297,7 @@ sequenceDiagram
       </div>
     </div>
 
-    <h3>Sequence Diagram 2: Payment Failure — Error Path ❌</h3>
+    <h3>Sequence Diagram 3: Payment Failure — Error Path ❌</h3>
     <p>An error path diagram is just as important as the happy path. Notice that <strong>no DB write happens</strong> — the order is never created when payment fails.</p>
     <div class="diagram-wrap">
       <div class="mermaid">
@@ -301,7 +332,7 @@ sequenceDiagram
       <p style="margin:0">The order row is only inserted <em>after</em> the payment signature is verified as genuine. This prevents "ghost orders" — orders in the DB that were never paid for. <strong>Verify first, persist second.</strong></p>
     </div>
 
-    <h3>Sequence Diagram 3: Expired JWT — Authentication Error ❌</h3>
+    <h3>Sequence Diagram 4: Expired JWT — Token Refresh ❌ → ✅</h3>
     <p>Every protected endpoint must handle an expired token gracefully. The frontend silently refreshes the token and retries — the user never sees the error.</p>
     <div class="diagram-wrap">
       <div class="mermaid">
@@ -332,11 +363,220 @@ sequenceDiagram
     </div>
   </section>
 
+  <!-- ══════════════════════════════════════════════════════════
+       CLASS DIAGRAM → CODE (moved from Sem 1 — implementation level)
+       ══════════════════════════════════════════════════════════ -->
+  <section class="section" id="class-code">
+    <div class="section-header">
+      <div class="section-icon icon-green">🧩</div>
+      <div class="section-title-group">
+        <h2>3. Class Diagram → Node.js Code</h2>
+        <p>Translating the Semester 1 UML domain model into real Express.js / Prisma implementation</p>
+      </div>
+    </div>
+
+    <div class="info-box blue">
+      <div class="info-box-title">📖 From UML to Code — The Translation</div>
+      <p style="margin:0 0 8px 0">
+        The <a href="semester1_design.html#class-diagrams" style="font-weight:700;">Semester 1 class diagram</a> defined the domain model in UML.
+        Now that the tech stack is confirmed (Node.js + Prisma + PostgreSQL), we translate each UML class into a real JavaScript module.
+      </p>
+      <table style="margin:0; font-size:13px;">
+        <thead><tr><th>UML Concept</th><th>Node.js / Express equivalent</th></tr></thead>
+        <tbody>
+          <tr><td><code class="code-inline">&lt;&lt;abstract&gt;&gt; BaseUser</code></td><td>Class with <code class="code-inline">if (new.target === BaseUser) throw</code> guard</td></tr>
+          <tr><td>Inheritance <code class="code-inline">Customer extends BaseUser</code></td><td>ES6 <code class="code-inline">class Customer extends BaseUser</code></td></tr>
+          <tr><td>Abstract method <code class="code-inline">getProfile()</code></td><td>Base throws <code class="code-inline">Error("must implement")</code>; subclass overrides</td></tr>
+          <tr><td>Composition <code class="code-inline">Order ◆─ OrderItem</code></td><td><code class="code-inline">ON DELETE CASCADE</code> in SQL + Prisma nested writes</td></tr>
+          <tr><td><code class="code-inline">&lt;&lt;service&gt;&gt; OrderService</code></td><td>Singleton module — <code class="code-inline">src/services/order.service.js</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>BaseUser.js — Abstract Domain Class</h3>
+    <div class="diagram-wrap" style="padding:20px 24px;">
+      <pre style="margin:0; font-size:12.5px; color:#e8eaf0; line-height:1.75; white-space:pre-wrap; font-family:'Fira Code',monospace;">// src/models/domain/BaseUser.js
+const bcrypt = require('bcryptjs');
+const { prisma } = require('../../lib/prisma');
+const { generateTokens } = require('../../lib/jwt');
+
+class BaseUser {
+  constructor({ id, name, email, phone, role, isActive = true, createdAt }) {
+    if (new.target === BaseUser) {
+      throw new Error('BaseUser is abstract — use Customer, Owner, Partner or Admin');
+    }
+    this.id = id;
+    this.name = name;
+    this.email = email;
+    this.phone = phone;
+    this.role = role;
+    this.isActive = isActive;
+    this.createdAt = createdAt;
+  }
+
+  // Concrete — identical logic for every role
+  static async login(email, password) {
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (!user) throw Object.assign(new Error('INVALID_CREDENTIALS'), { status: 401 });
+
+    const match = await bcrypt.compare(password, user.passwordHash);
+    if (!match) throw Object.assign(new Error('INVALID_CREDENTIALS'), { status: 401 });
+
+    if (!user.isActive) throw Object.assign(new Error('ACCOUNT_SUSPENDED'), { status: 403 });
+
+    await prisma.user.update({ where: { id: user.id }, data: { lastLogin: new Date() } });
+    return generateTokens(user);   // returns { accessToken, refreshToken }
+  }
+
+  // Abstract — subclass MUST override this
+  getProfile() {
+    throw new Error(`${this.constructor.name} must implement getProfile()`);
+  }
+}
+
+module.exports = { BaseUser };</pre>
+    </div>
+
+    <h3>Customer.js — Subclass with Overrides</h3>
+    <div class="diagram-wrap" style="padding:20px 24px;">
+      <pre style="margin:0; font-size:12.5px; color:#e8eaf0; line-height:1.75; white-space:pre-wrap; font-family:'Fira Code',monospace;">// src/models/domain/Customer.js
+const { BaseUser } = require('./BaseUser');
+const { prisma } = require('../../lib/prisma');
+
+class Customer extends BaseUser {
+  constructor(data) {
+    super({ ...data, role: 'CUSTOMER' });
+    this.savedAddresses = data.addresses ?? [];
+    this.orderHistory   = data.orders ?? [];
+  }
+
+  // Override abstract method — returns Customer-specific profile
+  getProfile() {
+    return {
+      id:        this.id,
+      name:      this.name,
+      email:     this.email,
+      phone:     this.phone,
+      addresses: this.savedAddresses,
+    };
+  }
+
+  // Customer-only method — maps to OrderService
+  async placeOrder({ restaurantId, items, deliveryAddrId, paymentMethod }) {
+    const { OrderService } = require('../services/order.service');
+    return OrderService.placeOrder({
+      customerId: this.id,
+      restaurantId,
+      items,
+      deliveryAddrId,
+      paymentMethod,
+    });
+  }
+
+  async getOrderHistory() {
+    return prisma.order.findMany({
+      where: { customerId: this.id },
+      orderBy: { createdAt: 'desc' },
+      include: { items: { include: { menuItem: true } }, payment: true },
+    });
+  }
+}
+
+module.exports = { Customer };</pre>
+    </div>
+
+    <h3>OrderService.js — The Service Layer</h3>
+    <div class="diagram-wrap" style="padding:20px 24px;">
+      <pre style="margin:0; font-size:12.5px; color:#e8eaf0; line-height:1.75; white-space:pre-wrap; font-family:'Fira Code',monospace;">// src/services/order.service.js
+const { prisma } = require('../../lib/prisma');
+
+const VALID_TRANSITIONS = {
+  PLACED:    ['ACCEPTED', 'CANCELLED'],
+  ACCEPTED:  ['PREPARING', 'CANCELLED'],
+  PREPARING: ['PICKED_UP'],
+  PICKED_UP: ['DELIVERED'],
+  DELIVERED: [],   // terminal state
+  CANCELLED: [],   // terminal state
+};
+
+const OrderService = {
+
+  async placeOrder({ customerId, restaurantId, items, deliveryAddrId, paymentMethod }) {
+    // 1. Validate items + fetch current prices from DB (never trust client prices)
+    const menuItems = await prisma.menuItem.findMany({
+      where: { id: { in: items.map(i => i.menuItemId) }, isAvailable: true },
+    });
+    if (menuItems.length !== items.length) throw new Error('ITEM_UNAVAILABLE');
+
+    // 2. Calculate totals
+    const subtotal = items.reduce((sum, i) => {
+      const mi = menuItems.find(m => m.id === i.menuItemId);
+      return sum + mi.price * i.quantity;
+    }, 0);
+    const deliveryFee  = 40.00;
+    const totalAmount  = subtotal + deliveryFee;
+
+    // 3. Create order + line items in a single transaction
+    const order = await prisma.$transaction(async (tx) => {
+      const o = await tx.order.create({
+        data: {
+          customerId, restaurantId, deliveryAddrId, paymentMethod,
+          subtotal, deliveryFee, totalAmount, status: 'PLACED',
+          items: {
+            create: items.map(i => ({
+              menuItemId: i.menuItemId,
+              quantity:   i.quantity,
+              unitPrice:  menuItems.find(m => m.id === i.menuItemId).price,
+              subtotal:   menuItems.find(m => m.id === i.menuItemId).price * i.quantity,
+            })),
+          },
+        },
+        include: { items: true },
+      });
+      return o;
+    });
+
+    return order;
+  },
+
+  async transitionStatus(orderId, newStatus, actorId) {
+    const order = await prisma.order.findUniqueOrThrow({ where: { id: orderId } });
+    const allowed = VALID_TRANSITIONS[order.status];
+    if (!allowed.includes(newStatus)) {
+      throw Object.assign(
+        new Error(`Cannot move order from ${order.status} to ${newStatus}`),
+        { status: 400 }
+      );
+    }
+    return prisma.order.update({
+      where: { id: orderId },
+      data:  { status: newStatus, updatedAt: new Date() },
+    });
+  },
+};
+
+module.exports = { OrderService };</pre>
+    </div>
+
+    <div class="info-box green">
+      <div class="info-box-title">Key Engineering Decisions in the Code Above</div>
+      <table style="margin:0; font-size:13px;">
+        <thead><tr><th>Decision</th><th>Why it matters</th></tr></thead>
+        <tbody>
+          <tr><td>Prices fetched from DB — not trusted from client</td><td>Prevents price manipulation attacks ("I'll pay ₹1 for a ₹500 item")</td></tr>
+          <tr><td>Prisma <code class="code-inline">$transaction</code> for order + items</td><td>If any item insert fails, the whole order is rolled back — no partial orders</td></tr>
+          <tr><td><code class="code-inline">VALID_TRANSITIONS</code> map in service layer</td><td>Finite State Machine enforced in code — invalid status changes rejected before hitting DB</td></tr>
+          <tr><td>Abstract <code class="code-inline">getProfile()</code> throws if not overridden</td><td>Fail fast at runtime — better than silently returning wrong data</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
   <section class="section" id="api-design">
     <div class="section-header">
       <div class="section-icon icon-green">🔌</div>
       <div class="section-title-group">
-        <h2>3. API Design (OpenAPI / Swagger)</h2>
+        <h2>4. API Design (OpenAPI / Swagger)</h2>
         <p>Finalising and documenting your REST API contract</p>
       </div>
     </div>
@@ -359,27 +599,247 @@ sequenceDiagram
     <div class="section-header">
       <div class="section-icon icon-green">🗄️</div>
       <div class="section-title-group">
-        <h2>4. DB Schema (Final)</h2>
+        <h2>5. DB Schema — Physical (SQL + Prisma)</h2>
         <p>The finalised, indexed, production-ready database schema</p>
       </div>
     </div>
-    <p>The ER diagram from Semester 1 becomes a final SQL schema in Semester 2. At this stage you also add <strong>indexes</strong> for performance and <strong>foreign key constraints</strong> for data integrity.</p>
-    <h3>Critical Indexes to Add</h3>
+    <p>The <strong>conceptual ER diagram from Semester 1</strong> (entities, relationships, cardinality) now becomes a <strong>physical SQL schema</strong> — complete <code class="code-inline">CREATE TABLE</code> statements, performance indexes, and Prisma ORM schema. This is the production-ready database blueprint.</p>
+
+    <div class="info-box blue">
+      <div class="info-box-title">📖 Conceptual → Logical → Physical — The Three Levels of DB Design</div>
+      <table style="margin:0; font-size:13px;">
+        <thead><tr><th>Level</th><th>What it shows</th><th>When produced</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Conceptual</strong> (Sem 1 ER Diagram)</td><td>Entities and relationships — no SQL, no data types</td><td>Semester 1 Design</td></tr>
+          <tr><td><strong>Logical</strong> (Sem 1 ER with columns)</td><td>Tables, columns, data types, PKs and FKs — engine-independent</td><td>Semester 1 Design</td></tr>
+          <tr><td><strong>Physical</strong> (this section)</td><td>SQL DDL tuned for PostgreSQL — with indexes, constraints, defaults</td><td>Semester 2 (now)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Full SQL DDL — Production Schema (PostgreSQL)</h3>
+    <div class="diagram-wrap" style="padding:20px 24px;">
+      <pre style="margin:0; font-size:12.5px; color:#e8eaf0; line-height:1.7; white-space:pre-wrap; font-family:'Fira Code',monospace;">-- ============================================================
+-- ONLINE FOOD DELIVERY SYSTEM — Physical DB Schema v2.0
+-- Engine: PostgreSQL 15+   ORM: Prisma
+-- ============================================================
+
+-- 1. USERS (single table — all roles via role column)
+CREATE TABLE users (
+    user_id       SERIAL PRIMARY KEY,
+    name          VARCHAR(100)  NOT NULL,
+    email         VARCHAR(255)  UNIQUE NOT NULL,
+    password_hash VARCHAR(255)  NOT NULL,
+    phone         VARCHAR(15),
+    role          VARCHAR(20)   NOT NULL
+                  CHECK (role IN ('CUSTOMER','OWNER','PARTNER','ADMIN')),
+    is_active     BOOLEAN       NOT NULL DEFAULT TRUE,
+    last_login    TIMESTAMP,
+    created_at    TIMESTAMP     NOT NULL DEFAULT NOW()
+);
+CREATE INDEX idx_users_email   ON users (email);        -- fast login lookup
+CREATE INDEX idx_users_role    ON users (role);         -- filter by role
+
+-- 2. ADDRESSES
+CREATE TABLE addresses (
+    address_id  SERIAL PRIMARY KEY,
+    user_id     INT           NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
+    label       VARCHAR(50),                            -- "Home", "Office"
+    street      VARCHAR(255)  NOT NULL,
+    city        VARCHAR(100)  NOT NULL,
+    pincode     VARCHAR(10),
+    lat         DECIMAL(9,6),
+    lng         DECIMAL(9,6),
+    is_default  BOOLEAN       NOT NULL DEFAULT FALSE,
+    created_at  TIMESTAMP     NOT NULL DEFAULT NOW()
+);
+CREATE INDEX idx_addresses_user ON addresses (user_id);
+
+-- 3. RESTAURANTS
+CREATE TABLE restaurants (
+    restaurant_id  SERIAL PRIMARY KEY,
+    owner_id       INT           NOT NULL REFERENCES users(user_id),
+    name           VARCHAR(150)  NOT NULL,
+    cuisine_type   VARCHAR(50),
+    address        TEXT,
+    status         VARCHAR(20)   NOT NULL DEFAULT 'PENDING'
+                   CHECK (status IN ('PENDING','APPROVED','REJECTED','SUSPENDED')),
+    avg_rating     DECIMAL(3,2)  NOT NULL DEFAULT 0.00,
+    is_open        BOOLEAN       NOT NULL DEFAULT FALSE,
+    created_at     TIMESTAMP     NOT NULL DEFAULT NOW()
+);
+CREATE INDEX idx_restaurants_status  ON restaurants (status);
+CREATE INDEX idx_restaurants_cuisine ON restaurants (cuisine_type);
+CREATE INDEX idx_restaurants_owner   ON restaurants (owner_id);
+
+-- 4. MENU ITEMS
+CREATE TABLE menu_items (
+    item_id        SERIAL PRIMARY KEY,
+    restaurant_id  INT           NOT NULL REFERENCES restaurants(restaurant_id) ON DELETE CASCADE,
+    name           VARCHAR(150)  NOT NULL,
+    description    TEXT,
+    price          DECIMAL(8,2)  NOT NULL CHECK (price >= 0),
+    category       VARCHAR(50),
+    is_veg         BOOLEAN       NOT NULL DEFAULT TRUE,
+    is_available   BOOLEAN       NOT NULL DEFAULT TRUE,
+    image_url      VARCHAR(500),
+    created_at     TIMESTAMP     NOT NULL DEFAULT NOW()
+);
+CREATE INDEX idx_menu_restaurant ON menu_items (restaurant_id, is_available);
+
+-- 5. ORDERS
+CREATE TABLE orders (
+    order_id         SERIAL PRIMARY KEY,
+    customer_id      INT           NOT NULL REFERENCES users(user_id),
+    restaurant_id    INT           NOT NULL REFERENCES restaurants(restaurant_id),
+    partner_id       INT           REFERENCES users(user_id),   -- NULL until assigned
+    delivery_addr_id INT           NOT NULL REFERENCES addresses(address_id),
+    status           VARCHAR(20)   NOT NULL DEFAULT 'PLACED'
+                     CHECK (status IN ('PLACED','ACCEPTED','PREPARING',
+                                       'PICKED_UP','DELIVERED','CANCELLED')),
+    subtotal         DECIMAL(10,2) NOT NULL,
+    delivery_fee     DECIMAL(6,2)  NOT NULL DEFAULT 40.00,
+    total_amount     DECIMAL(10,2) NOT NULL,
+    notes            TEXT,
+    created_at       TIMESTAMP     NOT NULL DEFAULT NOW(),
+    updated_at       TIMESTAMP     NOT NULL DEFAULT NOW()
+);
+CREATE INDEX idx_orders_customer  ON orders (customer_id, created_at DESC);
+CREATE INDEX idx_orders_restaurant ON orders (restaurant_id, status);
+CREATE INDEX idx_orders_partner   ON orders (partner_id) WHERE partner_id IS NOT NULL;
+CREATE INDEX idx_orders_status    ON orders (status);
+
+-- 6. ORDER ITEMS
+CREATE TABLE order_items (
+    order_item_id  SERIAL PRIMARY KEY,
+    order_id       INT           NOT NULL REFERENCES orders(order_id) ON DELETE CASCADE,
+    menu_item_id   INT           NOT NULL REFERENCES menu_items(item_id),
+    quantity       INT           NOT NULL CHECK (quantity > 0),
+    unit_price     DECIMAL(8,2)  NOT NULL,              -- snapshot at order time
+    subtotal       DECIMAL(10,2) NOT NULL
+);
+CREATE INDEX idx_order_items_order ON order_items (order_id);
+
+-- 7. PAYMENTS
+CREATE TABLE payments (
+    payment_id      SERIAL PRIMARY KEY,
+    order_id        INT           UNIQUE NOT NULL REFERENCES orders(order_id),
+    gateway_txn_id  VARCHAR(100),                       -- Razorpay payment_id
+    amount          DECIMAL(10,2) NOT NULL,
+    method          VARCHAR(20)   CHECK (method IN ('ONLINE','COD')),
+    status          VARCHAR(20)   NOT NULL DEFAULT 'PENDING'
+                    CHECK (status IN ('PENDING','PAID','FAILED','REFUNDED')),
+    paid_at         TIMESTAMP,
+    refunded_at     TIMESTAMP
+);
+
+-- 8. REVIEWS
+CREATE TABLE reviews (
+    review_id      SERIAL PRIMARY KEY,
+    customer_id    INT  NOT NULL REFERENCES users(user_id),
+    restaurant_id  INT  NOT NULL REFERENCES restaurants(restaurant_id),
+    order_id       INT  NOT NULL REFERENCES orders(order_id),
+    rating         INT  NOT NULL CHECK (rating BETWEEN 1 AND 5),
+    comment        TEXT,
+    created_at     TIMESTAMP NOT NULL DEFAULT NOW(),
+    UNIQUE (customer_id, order_id)                     -- one review per order
+);
+CREATE INDEX idx_reviews_restaurant ON reviews (restaurant_id);</pre>
+    </div>
+
+    <h3>Critical Indexes — Explained</h3>
     <table>
-      <thead><tr><th>Table</th><th>Index Column(s)</th><th>Why</th></tr></thead>
+      <thead><tr><th>Index</th><th>Query it speeds up</th><th>Without it</th></tr></thead>
       <tbody>
-        <tr><td>users</td><td>email (UNIQUE)</td><td>Login lookup; uniqueness constraint</td></tr>
-        <tr><td>restaurants</td><td>status, cuisine_type</td><td>Filtering approved restaurants by cuisine</td></tr>
-        <tr><td>menu_items</td><td>restaurant_id, is_available</td><td>Fast menu lookup for a restaurant</td></tr>
-        <tr><td>orders</td><td>customer_id, status, created_at</td><td>Customer order history; status filtering</td></tr>
-        <tr><td>orders</td><td>restaurant_id, status</td><td>Restaurant's pending orders view</td></tr>
-        <tr><td>order_items</td><td>order_id</td><td>Fetching line items for an order</td></tr>
-        <tr><td>reviews</td><td>restaurant_id</td><td>Calculating restaurant average rating</td></tr>
+        <tr><td><code class="code-inline">idx_users_email</code></td><td><code class="code-inline">WHERE email = $1</code> on every login</td><td>Full table scan on every login attempt</td></tr>
+        <tr><td><code class="code-inline">idx_orders_customer</code> (DESC)</td><td>Customer's order history, newest first</td><td>Seq scan + sort — slow for users with 50+ orders</td></tr>
+        <tr><td><code class="code-inline">idx_orders_restaurant</code></td><td>Restaurant dashboard — pending orders</td><td>Full orders scan to find one restaurant's orders</td></tr>
+        <tr><td><code class="code-inline">idx_menu_restaurant</code></td><td>Menu page load — available items only</td><td>Loads all items then filters in app memory</td></tr>
+        <tr><td><code class="code-inline">idx_reviews_restaurant</code></td><td>Calculate <code class="code-inline">avg_rating</code> for a restaurant</td><td>Full reviews table scan to aggregate one restaurant</td></tr>
+        <tr><td><code class="code-inline">idx_orders_partner</code> (partial)</td><td>Partner's active orders — only where assigned</td><td>Scans all orders including unassigned ones</td></tr>
       </tbody>
     </table>
+
     <div class="info-box orange">
       <div class="info-box-title">Over-indexing Warning</div>
-      <p style="margin:0">Don't index every column. Each index speeds up reads but slows down writes (INSERT/UPDATE). Index columns that appear in WHERE clauses, JOIN conditions, or ORDER BY in your most frequent queries.</p>
+      <p style="margin:0">Every index speeds up reads but adds overhead to every INSERT / UPDATE. The indexes above target the most frequent read queries. Do not index every column — profile first, index second.</p>
+    </div>
+
+    <h3>Prisma Schema (ORM layer over the SQL above)</h3>
+    <div class="diagram-wrap" style="padding:20px 24px;">
+      <pre style="margin:0; font-size:12.5px; color:#e8eaf0; line-height:1.7; white-space:pre-wrap; font-family:'Fira Code',monospace;">// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int       @id @default(autoincrement()) @map("user_id")
+  name         String    @db.VarChar(100)
+  email        String    @unique @db.VarChar(255)
+  passwordHash String    @map("password_hash") @db.VarChar(255)
+  phone        String?   @db.VarChar(15)
+  role         Role
+  isActive     Boolean   @default(true) @map("is_active")
+  lastLogin    DateTime? @map("last_login")
+  createdAt    DateTime  @default(now()) @map("created_at")
+
+  addresses    Address[]
+  restaurants  Restaurant[]
+  orders       Order[]       @relation("CustomerOrders")
+  deliveries   Order[]       @relation("PartnerOrders")
+  reviews      Review[]
+
+  @@index([email])
+  @@index([role])
+  @@map("users")
+}
+
+enum Role {
+  CUSTOMER
+  OWNER
+  PARTNER
+  ADMIN
+}
+
+model Order {
+  id             Int       @id @default(autoincrement()) @map("order_id")
+  customer       User      @relation("CustomerOrders", fields: [customerId], references: [id])
+  customerId     Int       @map("customer_id")
+  restaurant     Restaurant @relation(fields: [restaurantId], references: [id])
+  restaurantId   Int       @map("restaurant_id")
+  partner        User?     @relation("PartnerOrders", fields: [partnerId], references: [id])
+  partnerId      Int?      @map("partner_id")
+  deliveryAddr   Address   @relation(fields: [deliveryAddrId], references: [id])
+  deliveryAddrId Int       @map("delivery_addr_id")
+  status         OrderStatus @default(PLACED)
+  subtotal       Decimal   @db.Decimal(10, 2)
+  deliveryFee    Decimal   @default(40.00) @map("delivery_fee") @db.Decimal(6, 2)
+  totalAmount    Decimal   @map("total_amount") @db.Decimal(10, 2)
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @updatedAt @map("updated_at")
+
+  items    OrderItem[]
+  payment  Payment?
+  review   Review?
+
+  @@index([customerId, createdAt(sort: Desc)])
+  @@index([restaurantId, status])
+  @@map("orders")
+}
+
+enum OrderStatus {
+  PLACED
+  ACCEPTED
+  PREPARING
+  PICKED_UP
+  DELIVERED
+  CANCELLED
+}</pre>
     </div>
   </section>
 
@@ -387,7 +847,7 @@ sequenceDiagram
     <div class="section-header">
       <div class="section-icon icon-green">🎨</div>
       <div class="section-title-group">
-        <h2>5. Wireframes / UI Design</h2>
+        <h2>6. Wireframes / UI Design</h2>
         <p>Sketching the user interface before writing frontend code</p>
       </div>
     </div>

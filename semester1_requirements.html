@@ -107,21 +107,79 @@
     </p>
   </header>
 
+  <!-- Traceability Navigation Flow -->
+  <style>
+    .nav-flow {
+      display: flex; align-items: center; flex-wrap: wrap;
+      border: 2px solid #5147A9; border-radius: 10px; overflow: hidden;
+      margin: 16px 0;
+    }
+    .nav-flow-step { flex:1; min-width:120px; padding:12px 14px; text-align:center; position:relative; }
+    .nav-flow-step:not(:last-child)::after {
+      content:'›'; position:absolute; right:-6px; top:50%;
+      transform:translateY(-50%); font-size:20px; color:#5147A9; font-weight:700; z-index:1;
+    }
+    .nfs-1 { background:#EEEDFE; }
+    .nfs-2 { background:#e8f5ff; }
+    .nfs-3 { background:#efffee; }
+    .nfs-4 { background:#E1F5EE; }
+    .nfs-5 { background:#FFF3E0; }
+    .nfs-label { font-size:10px; text-transform:uppercase; letter-spacing:0.5px; color:#888; margin-bottom:3px; font-weight:700; }
+    .nfs-title { font-size:12px; font-weight:800; }
+    .nfs-1 .nfs-title { color:#3C3489; }
+    .nfs-2 .nfs-title { color:#185FA5; }
+    .nfs-3 .nfs-title { color:#0a6640; }
+    .nfs-4 .nfs-title { color:#0F6E56; }
+    .nfs-5 .nfs-title { color:#7a5a0a; }
+    .nfs-link { font-size:10.5px; color:inherit; text-decoration:none; margin-top:3px; display:block; opacity:0.7; }
+    .nfs-link:hover { opacity:1; text-decoration:underline; }
+    .nfs-active { outline: 3px solid #5147A9; }
+  </style>
+
+  <div class="nav-flow">
+    <div class="nav-flow-step nfs-1 nfs-active">
+      <div class="nfs-label">Document</div>
+      <div class="nfs-title">SRS / PRD</div>
+      <a href="semester1_requirements.html" class="nfs-link">You are here</a>
+    </div>
+    <div class="nav-flow-step nfs-2">
+      <div class="nfs-label">Requirement</div>
+      <div class="nfs-title">User Stories</div>
+      <a href="semester1_user_stories.html" class="nfs-link">User Stories →</a>
+    </div>
+    <div class="nav-flow-step nfs-3">
+      <div class="nfs-label">Capability</div>
+      <div class="nfs-title">Features</div>
+      <a href="semester1_features.html" class="nfs-link">Feature List →</a>
+    </div>
+    <div class="nav-flow-step nfs-4">
+      <div class="nfs-label">Interaction</div>
+      <div class="nfs-title">Use Cases</div>
+      <a href="semester1_use_cases.html" class="nfs-link">Use Cases →</a>
+    </div>
+    <div class="nav-flow-step nfs-5">
+      <div class="nfs-label">Verification</div>
+      <div class="nfs-title">Test Cases</div>
+      <a href="semester1_test_cases.html" class="nfs-link">Test Cases →</a>
+    </div>
+  </div>
+
   <!-- Quick Navigation -->
   <nav class="topic-nav">
     <div class="topic-nav-label">On this page</div>
     <a href="#functional-reqs">1. Functional Requirements</a>
     <a href="#non-functional-reqs">2. Non-Functional Requirements</a>
     <a href="#user-stories">3. User Stories ↗</a>
-    <a href="#use-cases">4. Use Cases ↗</a>
-    <a href="#comparison">5. Story vs Use Case vs Test Case</a>
-    <a href="#test-cases">6. Test Planning ↗</a>
-    <a href="#business-rules">7. Business Rules</a>
+    <a href="#features">4. Features ↗</a>
+    <a href="#use-cases">5. Use Cases ↗</a>
+    <a href="#comparison">6. Story vs Use Case vs Test Case</a>
+    <a href="#test-cases">7. Test Planning ↗</a>
+    <a href="#business-rules">8. Business Rules</a>
   </nav>
   <div style="background:#f0f7ff; border:1px solid #b8d4f0; border-radius:8px; padding:12px 18px; margin:12px 0; font-size:13px; color:#185FA5;">
-    <strong>📂 Sections 3, 4, and 6 have been split into dedicated pages</strong> for easier navigation.
+    <strong>📂 Sections 3, 4, 5, and 7 have been split into dedicated pages</strong> for easier navigation.
     Links marked with ↗ open the full dedicated document.
-    The comparison table (Section 5) and Business Rules (Section 7) remain here.
+    The comparison table (Section 6) and Business Rules (Section 8) remain here.
   </div>
 
   <!-- ============================================================
@@ -290,8 +348,15 @@
     <div class="req-item">
       <span class="req-id red">FR-602</span>
       <div class="req-content">
-        <strong>Admin Dashboard</strong>
-        <span>The admin shall view platform-wide statistics: total orders today, revenue, active restaurants, active users. Admin shall approve/reject restaurant registrations.</span>
+        <strong>Admin Dashboard &amp; Restaurant Approval</strong>
+        <span>The admin shall view platform-wide statistics: total orders today, revenue, active restaurants, active users. Admin shall approve or reject restaurant registrations, with an optional rejection reason sent to the owner.</span>
+      </div>
+    </div>
+    <div class="req-item">
+      <span class="req-id red">FR-603</span>
+      <div class="req-content">
+        <strong>User Suspension &amp; Ban</strong>
+        <span>The admin shall be able to search for any user by name or email and apply a temporary suspension or permanent ban with a reason. Suspended/banned users shall see a clear message on login. Suspensions shall be reversible by the admin.</span>
       </div>
     </div>
 
@@ -470,13 +535,58 @@
   </section>
 
   <!-- ============================================================
-       SECTION 4 : Use Cases → dedicated page
+       SECTION 4 : Features → dedicated page
+       ============================================================ -->
+  <section class="section" id="features">
+    <div class="section-header">
+      <div class="section-icon icon-purple">🗂️</div>
+      <div class="section-title-group">
+        <h2>4. Features</h2>
+        <p>Deliverable capabilities derived from user stories — the project backlog</p>
+      </div>
+    </div>
+    <p>
+      A <strong>Feature</strong> is a discrete, deliverable capability of the system. Features sit between user stories and use cases in the traceability chain: every feature traces back to a user story (the <em>why</em>) and maps to one or more use cases (the <em>how</em>). Each feature is also verified by specific test cases.
+    </p>
+    <div style="border: 2px solid #5147A9; border-radius: 12px; padding: 24px 28px; background: linear-gradient(135deg, #f8f7ff 0%, #EEEDFE 100%); margin: 16px 0;">
+      <div style="display:flex; align-items:center; gap:14px; margin-bottom:12px;">
+        <span style="font-size:36px;">🗂️</span>
+        <div>
+          <div style="font-size:18px; font-weight:700; color:#3d3580;">Features — Full Document</div>
+          <div style="font-size:13px; color:#666; margin-top:3px;">16 features · Traceability matrix · Feature → User Story → Use Case → Test Case chain</div>
+        </div>
+      </div>
+      <p style="font-size:13.5px; color:#444; margin:0 0 16px;">
+        Includes all 16 features across Customer, Restaurant Owner, Delivery Partner, and Admin roles.
+        Each feature card shows the linked User Story (SRS source), Use Case(s), Functional Requirement,
+        and Test Cases — including security (SEC-) and performance (PERF-) test cases.
+      </p>
+      <a href="semester1_features.html" style="display:inline-block; background:#5147A9; color:#fff; font-weight:700; padding:10px 22px; border-radius:8px; text-decoration:none; font-size:14px;">
+        Open Feature List →
+      </a>
+    </div>
+    <h3>Feature Traceability at a Glance</h3>
+    <table>
+      <thead><tr><th>Feature ID</th><th>Feature</th><th>User Story</th><th>Use Case(s)</th><th>Priority</th><th>Sprint</th></tr></thead>
+      <tbody>
+        <tr><td><a href="semester1_features.html#F-01" style="font-weight:700;color:#3C3489;">F-01</a></td><td>Customer Registration</td><td><a href="semester1_user_stories.html#customer">US-C01</a></td><td><a href="semester1_use_cases.html#uc-list">UC-01</a></td><td>High</td><td><a href="semester2_planning.html#sprint1-detail" class="sprint-link sprint-s1">Sprint 1 ↗</a></td></tr>
+        <tr><td><a href="semester1_features.html#F-02" style="font-weight:700;color:#3C3489;">F-02</a></td><td>Customer Login &amp; Auth</td><td><a href="semester1_user_stories.html#customer">US-C02</a></td><td><a href="semester1_use_cases.html#uc-02">UC-02</a></td><td>High</td><td><a href="semester2_planning.html#sprint1-detail" class="sprint-link sprint-s1">Sprint 1 ↗</a></td></tr>
+        <tr><td><a href="semester1_features.html#F-03" style="font-weight:700;color:#3C3489;">F-03</a></td><td>Restaurant Search &amp; Browse</td><td><a href="semester1_user_stories.html#customer">US-C03</a></td><td><a href="semester1_use_cases.html#uc-list">UC-05, UC-06</a></td><td>High</td><td><a href="semester2_planning.html#sprint2-detail" class="sprint-link sprint-s2">Sprint 2 ↗</a></td></tr>
+        <tr><td><a href="semester1_features.html#F-04" style="font-weight:700;color:#3C3489;">F-04</a></td><td>Cart Management</td><td><a href="semester1_user_stories.html#customer">US-C04</a></td><td><a href="semester1_use_cases.html#uc-list">UC-07</a></td><td>High</td><td><a href="semester2_planning.html#backlog" class="sprint-link sprint-future">Sprint 3</a></td></tr>
+        <tr><td><a href="semester1_features.html#F-05" style="font-weight:700;color:#3C3489;">F-05</a></td><td>Online Payment &amp; Checkout</td><td><a href="semester1_user_stories.html#customer">US-C05</a></td><td><a href="semester1_use_cases.html#uc-06">UC-08</a></td><td>High</td><td><a href="semester2_planning.html#backlog" class="sprint-link sprint-future">Sprint 3</a></td></tr>
+        <tr style="color:#888;font-style:italic;"><td colspan="6" style="text-align:center; padding:8px; font-size:12px;">… 11 more features — see full Feature List →</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ============================================================
+       SECTION 5 : Use Cases → dedicated page
        ============================================================ -->
   <section class="section" id="use-cases">
     <div class="section-header">
       <div class="section-icon icon-purple">🔷</div>
       <div class="section-title-group">
-        <h2>4. Use Cases (UML)</h2>
+        <h2>5. Use Cases (UML)</h2>
         <p>Modelling system interactions between actors and the system</p>
       </div>
     </div>
@@ -496,20 +606,25 @@
         Full use case list for all actors, plus detailed walk-throughs of UC-08 (Place Order),
         UC-02 (Login), and UC-12 (Write Review) with main flows, alternate flows, and postconditions.
       </p>
-      <a href="semester1_use_cases.html" style="display:inline-block; background:#0F6E56; color:#fff; font-weight:700; padding:10px 22px; border-radius:8px; text-decoration:none; font-size:14px;">
-        Open Use Cases →
-      </a>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <a href="semester1_use_cases.html" style="display:inline-block; background:#0F6E56; color:#fff; font-weight:700; padding:10px 22px; border-radius:8px; text-decoration:none; font-size:14px;">
+          Open Use Cases →
+        </a>
+        <a href="semester1_features.html" style="display:inline-block; background:#5147A9; color:#fff; font-weight:700; padding:10px 22px; border-radius:8px; text-decoration:none; font-size:14px;">
+          Feature List →
+        </a>
+      </div>
     </div>
   </section>
 
   <!-- ============================================================
-       SECTION 5 : Comparison — User Story vs Use Case vs Test Case
+       SECTION 6 : Comparison — User Story vs Use Case vs Test Case
        ============================================================ -->
   <section class="section" id="comparison">
     <div class="section-header">
       <div class="section-icon icon-purple">🔍</div>
       <div class="section-title-group">
-        <h2>5. User Story vs Use Case vs Test Case</h2>
+        <h2>6. User Story vs Use Case vs Test Case</h2>
         <p>Students often mix these up — here is the clear difference</p>
       </div>
     </div>
@@ -753,13 +868,13 @@
   </section>
 
   <!-- ============================================================
-       SECTION 6 : Test Planning → dedicated page
+       SECTION 7 : Test Planning → dedicated page
        ============================================================ -->
   <section class="section" id="test-cases">
     <div class="section-header">
       <div class="section-icon icon-purple">🗺️</div>
       <div class="section-title-group">
-        <h2>6. Test Planning (Strategy &amp; Scope)</h2>
+        <h2>7. Test Planning (Strategy &amp; Scope)</h2>
         <p>What will be tested, how, and when — across all semesters</p>
       </div>
     </div>
@@ -800,13 +915,13 @@
   </section>
 
   <!-- ============================================================
-       SECTION 7 : Business Rules
+       SECTION 8 : Business Rules
        ============================================================ -->
   <section class="section" id="business-rules">
     <div class="section-header">
       <div class="section-icon icon-purple">⚖️</div>
       <div class="section-title-group">
-        <h2>7. Business Rules</h2>
+        <h2>8. Business Rules</h2>
         <p>Policies and constraints governing system behaviour</p>
       </div>
     </div>

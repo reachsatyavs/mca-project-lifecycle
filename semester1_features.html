@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Features — Semester 1 | Online Food Delivery System</title>
+  <link rel="stylesheet" href="child_page_styles.css">
+  <style>
+    /* ── Feature card ── */
+    .feature-card {
+      background: #fff;
+      border: 1px solid #e0e0f0;
+      border-left: 5px solid #5147A9;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 14px;
+    }
+    .feature-card.owner  { border-left-color: #0F6E56; }
+    .feature-card.partner{ border-left-color: #c47a10; }
+    .feature-card.admin  { border-left-color: #185FA5; }
+
+    .feature-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+    .feature-id {
+      font-size: 11px; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 0.6px; color: #5147A9;
+      background: #EEEDFE; padding: 3px 10px; border-radius: 4px;
+      white-space: nowrap;
+    }
+    .feature-card.owner  .feature-id { color: #0F6E56; background: #E1F5EE; }
+    .feature-card.partner .feature-id { color: #c47a10; background: #FFF3E0; }
+    .feature-card.admin  .feature-id { color: #185FA5; background: #E6F1FB; }
+
+    .feature-name {
+      font-size: 15px; font-weight: 700; color: #1a1a2e;
+      flex: 1;
+    }
+    .priority-badge {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      padding: 2px 9px; border-radius: 4px; white-space: nowrap;
+    }
+    .priority-high   { background: #fde8e8; color: #c62828; }
+    .priority-medium { background: #fff3e0; color: #c47a10; }
+    .priority-low    { background: #e8f5e9; color: #2e7d32; }
+
+    /* ── Sprint link chip ── */
+    .sprint-link {
+      display: inline-block;
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.4px;
+      padding: 2px 9px; border-radius: 4px; white-space: nowrap;
+      text-decoration: none; transition: opacity 0.15s;
+    }
+    .sprint-link:hover { opacity: 0.75; }
+    .sprint-s1 { background: #d1fae5; color: #065f46; border: 1px solid #6ee7b7; }
+    .sprint-s2 { background: #dbeafe; color: #1e3a8a; border: 1px solid #93c5fd; }
+    .sprint-future { background: #f3f4f6; color: #374151; border: 1px solid #d1d5db; }
+
+    .feature-desc {
+      font-size: 13px; color: #555; margin-bottom: 12px; line-height: 1.6;
+    }
+
+    /* ── Linked artefacts bar ── */
+    .artefact-bar {
+      display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+      padding-top: 10px;
+      border-top: 1px solid #f0f0f8;
+    }
+    .artefact-label {
+      font-size: 10.5px; font-weight: 700; color: #999;
+      text-transform: uppercase; letter-spacing: 0.4px;
+      margin-right: 2px;
+    }
+    .artefact-link {
+      display: inline-block;
+      font-size: 11.5px; font-weight: 700;
+      padding: 3px 10px; border-radius: 20px;
+      text-decoration: none;
+      transition: opacity 0.15s;
+    }
+    .artefact-link:hover { opacity: 0.75; }
+    .link-us   { background: #EEEDFE; color: #3C3489; }
+    .link-uc   { background: #E1F5EE; color: #0F6E56; }
+    .link-tc   { background: #FFF3E0; color: #7a5a0a; }
+    .link-sec  { background: #fde8e8; color: #c62828; }
+    .link-perf { background: #E6F1FB; color: #185FA5; }
+    .link-sep  { color: #ccc; font-size: 12px; }
+
+    /* ── Navigation flow ── */
+    .nav-flow {
+      display: flex; align-items: center; gap: 0;
+      flex-wrap: wrap;
+      border: 2px solid #5147A9;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 18px 0 24px;
+    }
+    .nav-flow-step {
+      flex: 1; min-width: 130px;
+      padding: 14px 16px;
+      text-align: center;
+      position: relative;
+    }
+    .nav-flow-step:not(:last-child)::after {
+      content: '›';
+      position: absolute; right: -6px; top: 50%;
+      transform: translateY(-50%);
+      font-size: 22px; color: #5147A9; z-index: 1;
+      font-weight: 700;
+    }
+    .nfs-1 { background: #EEEDFE; }
+    .nfs-2 { background: #e8f5ff; }
+    .nfs-3 { background: #efffee; }
+    .nfs-4 { background: #E1F5EE; }
+    .nfs-5 { background: #FFF3E0; }
+    .nfs-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: #888; margin-bottom: 4px; font-weight: 700; }
+    .nfs-title { font-size: 13px; font-weight: 800; }
+    .nfs-1 .nfs-title { color: #3C3489; }
+    .nfs-2 .nfs-title { color: #185FA5; }
+    .nfs-3 .nfs-title { color: #0a6640; }
+    .nfs-4 .nfs-title { color: #0F6E56; }
+    .nfs-5 .nfs-title { color: #7a5a0a; }
+    .nfs-link { font-size: 11px; color: inherit; text-decoration: none; margin-top: 4px; display: block; opacity: 0.75; }
+    .nfs-link:hover { opacity: 1; text-decoration: underline; }
+
+    /* ── Traceability matrix ── */
+    .rtm-table th { font-size: 11.5px; }
+    .rtm-table td { font-size: 12.5px; }
+    .tag-f { display:inline-block; font-size:10.5px; font-weight:700; padding:1px 7px; border-radius:3px; background:#EEEDFE; color:#3C3489; }
+    .tag-us { display:inline-block; font-size:10.5px; font-weight:700; padding:1px 7px; border-radius:3px; background:#e8f5e9; color:#2e7d32; }
+    .tag-uc { display:inline-block; font-size:10.5px; font-weight:700; padding:1px 7px; border-radius:3px; background:#E1F5EE; color:#0F6E56; }
+    .tag-tc { display:inline-block; font-size:10.5px; font-weight:700; padding:1px 7px; border-radius:3px; background:#FFF3E0; color:#7a5a0a; }
+
+    @media(max-width:680px){
+      .nav-flow { flex-direction: column; }
+      .nav-flow-step::after { content: '↓'; right:auto; top:auto; bottom:-12px; left:50%; transform:translateX(-50%); }
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <nav class="breadcrumb">
+    <a href="mca_project_lifecycle_4_semesters.html">Project Lifecycle</a>
+    <span class="sep">›</span><a href="semester1_requirements.html">Requirements</a>
+    <span class="sep">›</span><span>Features</span>
+  </nav>
+
+  <header class="page-header">
+    <div class="sem-badge sem-1">Semester 1 — Foundation</div>
+    <h1>Feature List</h1>
+    <div class="project-tag">Example Project: <strong>Online Food Delivery System</strong></div>
+    <p class="header-desc">A Feature is a deliverable capability of the system — one step more concrete than a user story but higher-level than individual tasks. Every feature traces back to a user story (SRS), maps to one or more use cases, and is verified by specific test cases. This page is the central traceability hub of the project.</p>
+  </header>
+
+  <nav class="topic-nav">
+    <div class="topic-nav-label">Jump to section</div>
+    <a href="#navigation-flow">Navigation Flow</a>
+    <a href="#feature-list">All Features</a>
+    <a href="#customer-features">Customer</a>
+    <a href="#owner-features">Restaurant Owner</a>
+    <a href="#partner-features">Delivery Partner</a>
+    <a href="#admin-features">Admin</a>
+    <a href="#rtm">Traceability Matrix</a>
+  </nav>
+
+  <!-- ============================================================
+       SRS → User Story → Feature → Use Case → Test Case flow
+       ============================================================ -->
+  <section class="section" id="navigation-flow">
+    <div class="section-header">
+      <div class="section-icon icon-purple">🗺️</div>
+      <div class="section-title-group">
+        <h2>The Traceability Chain</h2>
+        <p>How every test case links back to the SRS</p>
+      </div>
+    </div>
+
+    <div class="nav-flow">
+      <div class="nav-flow-step nfs-1">
+        <div class="nfs-label">Document</div>
+        <div class="nfs-title">SRS / PRD</div>
+        <a href="semester1_requirements.html" class="nfs-link">Requirements →</a>
+      </div>
+      <div class="nav-flow-step nfs-2">
+        <div class="nfs-label">Requirement</div>
+        <div class="nfs-title">User Stories</div>
+        <a href="semester1_user_stories.html" class="nfs-link">User Stories →</a>
+      </div>
+      <div class="nav-flow-step nfs-3">
+        <div class="nfs-label">Capability</div>
+        <div class="nfs-title">Features</div>
+        <a href="semester1_features.html" class="nfs-link">You are here</a>
+      </div>
+      <div class="nav-flow-step nfs-4">
+        <div class="nfs-label">Interaction</div>
+        <div class="nfs-title">Use Cases</div>
+        <a href="semester1_use_cases.html" class="nfs-link">Use Cases →</a>
+      </div>
+      <div class="nav-flow-step nfs-5">
+        <div class="nfs-label">Verification</div>
+        <div class="nfs-title">Test Cases</div>
+        <a href="semester1_test_cases.html" class="nfs-link">Test Cases →</a>
+      </div>
+    </div>
+
+    <div class="info-box purple">
+      <div class="info-box-title">Why Features Are the Backbone</div>
+      <table style="margin:0; font-size:13px;">
+        <thead><tr><th>Artefact</th><th>Answers</th><th>Owned by</th><th>Lives in</th></tr></thead>
+        <tbody>
+          <tr><td><strong>User Story</strong></td><td>What does the user want to achieve?</td><td>Product Owner</td><td>SRS / PRD</td></tr>
+          <tr><td><strong>Feature</strong></td><td>What deliverable capability does it produce?</td><td>BA / Tech Lead</td><td>Feature List / Backlog</td></tr>
+          <tr><td><strong>Use Case</strong></td><td>How does the system handle it, step by step?</td><td>Analyst / Designer</td><td>SRS / UML</td></tr>
+          <tr><td><strong>Test Case</strong></td><td>Was it built correctly?</td><td>Tester / Developer</td><td>Test Plan</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       ALL FEATURES SUMMARY TABLE
+       ============================================================ -->
+  <section class="section" id="feature-list">
+    <div class="section-header">
+      <div class="section-icon icon-purple">📋</div>
+      <div class="section-title-group">
+        <h2>All Features at a Glance</h2>
+        <p>16 features derived from the SRS user stories</p>
+      </div>
+    </div>
+    <div style="overflow-x:auto;">
+    <table class="rtm-table">
+      <thead>
+        <tr>
+          <th>Feature ID</th>
+          <th>Feature Name</th>
+          <th>Actor</th>
+          <th>User Story</th>
+          <th>Use Case(s)</th>
+          <th>Priority</th>
+          <th>Sprint</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><a href="#F-01" class="artefact-link link-us" style="text-decoration:none;">F-01</a></td>
+          <td>Customer Registration</td><td>Customer</td>
+          <td><a href="semester1_user_stories.html#customer">US-C01</a></td>
+          <td><a href="semester1_use_cases.html#uc-list">UC-01</a></td>
+          <td><span class="priority-badge priority-high">High</span></td><td><a href="semester2_planning.html#sprint1-detail" class="sprint-link sprint-s1">Sprint 1 ↗</a></td>
+        </tr>
+        <tr>
+          <td><a href="#F-02" class="artefact-link link-us" style="text-decoration:none;">F-02</a></td>
+          <td>Customer Login &amp; Auth</td><td>Customer</td>
+          <td><a href="semester1_user_stories.html#customer">US-C02</a></td>
+          <td><a href="semester1_use_cases.html#uc-02">UC-02</a></td>
+          <td><span class="priority-badge priority-high">High</span></td><td><a href="semester2_planning.html#sprint1-detail" class="sprint-link sprint-s1">Sprint 1 ↗</a></td>
+        </tr>
+        <tr>
+          <td><a href="#F-03" class="artefact-link link-us" style="text-decoration:none;">F-03</a></td>
+          <td>Restaurant Search &amp; Browse</td><td>Customer</td>
+          <td><a href="semester1_user_stories.html#customer">US-C03</a></td>
+          <td><a href="semester1_use_cases.html#uc-list">UC-05, UC-06</a></td>
+          <td><span class="priority-badge priority-high">High</span></td><td><a href="semester2_planning.html#sprint2-detail" class="sprint-link sprint-s2">Sprint 2 ↗</a></td>
+        </tr>
+        <tr>
+          <td><a href="#F-04" class="artefact-link link-us" style="text-decoration:none;">F-04</a></td>
+          <td>Cart Management</td><td>Customer</td>
+          <td><a href="semester1_user_stories.html#customer">US-C04</a></td>
+          <td><a href="semester1_use_cases.html#uc-list">UC-07</a></td>
+          <td><span class="priority-badge priority-high">High</span></td><td><a href="semester2_planning.html#backlog" class="sprint-link sprint-future">Sprint 3</a></td>
+        </tr>
+        <tr>
+          <td><a href="#F-05" class="artefact-link link-us" style="text-decoration:none;">F-05</a></td>
+          <td>Online Payment &amp; Checkout</td><td>Customer</td>
+          <td><a href="semester1_user_stories.html#customer">US-C05</a></td>
+          <td><a href="semester1_use_cases.html#uc-06">UC-08</a></td>
+          <td><span class="priority-badge priority-high">High</span></td><td><a href="semester2_planning.html#backlog" class="sprint-link sprint-future">Sprint 3</a></td>
+        </tr>
+        <tr>
+          <td><a href="#F-06" class="artefact-link link-us" style="text-decoration:none;">F-06</a></td>
+          <td>Real-Time Order Tracking</td><td>Customer</td>
+          <td><a href="semester1_user_stories.html#customer">US-C06</a></td>
+          <td><a href="semester1_use_cases.html#uc-list">UC-09</a></td>
+          <td><span class="priority-badge priority-high">High</span></td><td><a href="semester2_planning.html#backlog" class="sprint-link sprint-future">Sprint 4</a></td>
+        </tr>
+        <tr>
+          <td><a href="#F-07" class="artefact-link link-us" style="text-decoration:none;">F-07</a></td>
+          <td>Rating &amp; Review</td><td>Customer</td>
+          <td><a href="semester1_user_stories.html#customer">US-C07</a></td>
+          <td><a href="semester1_use_cases.html#uc-09">UC-12</a></td>
+          <td><span class="priority-badge priority-medium">Medium</span></td><td><a href="semester2_planning.html#backlog" class="sprint-link sprint-future">Sprint 5</a></td>
+        </tr>
+        <tr>
+          <td><a href="#F-08" class="artefact-link link-us" style="text-decoration:none;">F-08</a></td>
+          <td>Order History &amp; Reorder</td><td>Customer</td>
+          <td><a href="semester1_user_stories.html#customer">US-C08</a></td>
+          <td><a href="semester1_use_cases.html#uc-list">UC-11</a></td>
+          <td><span class="priority-badge priority-medium">Medium</span></td><td><a href="semester2_planning.html#backlog" class="sprint-link sprint-future">Sprint 5</a></td>
+        </tr>
+        <tr>
+          <td><a href="#F-09" class="artefact-link link-us" style="text-decoration:none;">F-09</a></td>
+          <td>Restaurant Registration</td><td>Restaurant Owner</td>
+          <td><a href="semester1_user_stories.html#owner">US-O01</a></td>
+          <td><a href="semester1_use_cases.html#uc-list">UC-13</a></td>
+          <td><span class="priority-badge priority-high">High</span></td><td><a href="semester2_planning.html#sprint2-detail" class="sprint-link sprint-s2">Sprint 2 ↗</a></td>
+        </tr>
+        <tr>
+          <td><a href="#F-10" class="artefact-link link-us" style="text-decoration:none;">F-10</a></td>
+          <td>Menu Management</td><td>Restaurant Owner</td>
+          <td><a href="semester1_user_stories.html#owner">US-O02</a></td>
+          <td><a href="semester1_use_cases.html#uc-list">UC-14</a></td>
+          <td><span class="priority-badge priority-high">High</span></td><td><a href="semester2_planning.html#sprint2-detail" class="sprint-link sprint-s2">Sprint 2 ↗</a></td>
+        </tr>
+        <tr>
+          <td><a href="#F-11" class="artefact-link link-us" style="text-decoration:none;">F-11</a></td>
+          <td>Order Management (Owner)</td><td>Restaurant Owner</td>
+          <td><a href="semester1_user_stories.html#owner">US-O03</a></td>
+          <td><a href="semester1_use_cases.html#uc-list">UC-15</a></td>
+          <td><span class="priority-badge priority-high">High</span></td><td><a href="semester2_planning.html#backlog" class="sprint-link sprint-future">Sprint 3</a></td>
+        </tr>
+        <tr>
+          <td><a href="#F-12" class="artefact-link link-us" style="text-decoration:none;">F-12</a></td>
+          <td>Partner Online / Offline</td><td>Delivery Partner</td>
+          <td><a href="semester1_user_stories.html#partner">US-P01</a></td>
+          <td><a href="semester1_use_cases.html#uc-list">UC-16</a></td>
+          <td><span class="priority-badge priority-medium">Medium</span></td><td><a href="semester2_planning.html#backlog" class="sprint-link sprint-future">Sprint 4</a></td>
+        </tr>
+        <tr>
+          <td><a href="#F-13" class="artefact-link link-us" style="text-decoration:none;">F-13</a></td>
+          <td>Order Delivery Flow</td><td>Delivery Partner</td>
+          <td><a href="semester1_user_stories.html#partner">US-P02</a></td>
+          <td><a href="semester1_use_cases.html#uc-list">UC-17</a></td>
+          <td><span class="priority-badge priority-high">High</span></td><td><a href="semester2_planning.html#backlog" class="sprint-link sprint-future">Sprint 4</a></td>
+        </tr>
+        <tr>
+          <td><a href="#F-14" class="artefact-link link-us" style="text-decoration:none;">F-14</a></td>
+          <td>Restaurant Approval (Admin)</td><td>Admin</td>
+          <td><a href="semester1_user_stories.html#admin">US-A01</a></td>
+          <td><a href="semester1_use_cases.html#uc-list">UC-18</a></td>
+          <td><span class="priority-badge priority-high">High</span></td><td><a href="semester2_planning.html#sprint1-detail" class="sprint-link sprint-s1">Sprint 1 ↗</a></td>
+        </tr>
+        <tr>
+          <td><a href="#F-15" class="artefact-link link-us" style="text-decoration:none;">F-15</a></td>
+          <td>Platform Analytics Dashboard</td><td>Admin</td>
+          <td><a href="semester1_user_stories.html#admin">US-A02</a></td>
+          <td><a href="semester1_use_cases.html#uc-list">UC-19</a></td>
+          <td><span class="priority-badge priority-medium">Medium</span></td><td><a href="semester2_planning.html#backlog" class="sprint-link sprint-future">Sprint 5</a></td>
+        </tr>
+        <tr>
+          <td><a href="#F-16" class="artefact-link link-us" style="text-decoration:none;">F-16</a></td>
+          <td>User Suspension / Ban</td><td>Admin</td>
+          <td><a href="semester1_user_stories.html#admin">US-A03</a></td>
+          <td><a href="semester1_use_cases.html#uc-list">UC-20</a></td>
+          <td><span class="priority-badge priority-medium">Medium</span></td><td><a href="semester2_planning.html#backlog" class="sprint-link sprint-future">Sprint 5</a></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CUSTOMER FEATURES (detailed)
+       ============================================================ -->
+  <section class="section" id="customer-features">
+    <div class="section-header">
+      <div class="section-icon icon-purple">🧑‍💻</div>
+      <div class="section-title-group">
+        <h2>Customer Features</h2>
+        <p>F-01 through F-08 — core customer-facing capabilities</p>
+      </div>
+    </div>
+
+    <div class="feature-card" id="F-01">
+      <div class="feature-header">
+        <span class="feature-id">F-01</span>
+        <span class="feature-name">Customer Registration</span>
+        <span class="priority-badge priority-high">High</span> <a href="semester2_planning.html#sprint1-detail" class="sprint-link sprint-s1">Sprint 1 ↗</a>
+      </div>
+      <div class="feature-desc">Allow new customers to create an account using name, email, phone, and password. Email verification is sent; account is inactive until verified. Duplicate emails are rejected.</div>
+      <div class="artefact-bar">
+        <span class="artefact-label">Traces to</span>
+        <a href="semester1_user_stories.html#customer" class="artefact-link link-us">US-C01</a>
+        <span class="link-sep">|</span>
+        <a href="semester1_use_cases.html#uc-list" class="artefact-link link-uc">UC-01 Register Account</a>
+        <span class="link-sep">|</span>
+        <a href="semester1_requirements.html#functional-reqs" class="artefact-link link-uc">FR-101</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Test Cases</span>
+        <a href="semester1_test_cases.html#template" class="artefact-link link-tc">TC-01</a>
+        <a href="semester1_test_cases.html#template" class="artefact-link link-tc">TC-02</a>
+      </div>
+    </div>
+
+    <div class="feature-card" id="F-02">
+      <div class="feature-header">
+        <span class="feature-id">F-02</span>
+        <span class="feature-name">Customer Login &amp; Authentication</span>
+        <span class="priority-badge priority-high">High</span> <a href="semester2_planning.html#sprint1-detail" class="sprint-link sprint-s1">Sprint 1 ↗</a>
+      </div>
+      <div class="feature-desc">Allow registered customers to log in with email and password. System issues JWT access token (15 min) + refresh token (7 days). Session persists across page reloads. Invalid credentials show a generic error with no hint about which field is wrong (security).</div>
+      <div class="artefact-bar">
+        <span class="artefact-label">Traces to</span>
+        <a href="semester1_user_stories.html#customer" class="artefact-link link-us">US-C02</a>
+        <span class="link-sep">|</span>
+        <a href="semester1_use_cases.html#uc-02" class="artefact-link link-uc">UC-02 Login</a>
+        <span class="link-sep">|</span>
+        <a href="semester1_requirements.html#functional-reqs" class="artefact-link link-uc">FR-102</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Test Cases</span>
+        <a href="semester2_testing.html#test-cases" class="artefact-link link-tc">TC-01</a>
+        <a href="semester2_testing.html#test-cases" class="artefact-link link-tc">TC-02</a>
+        <a href="semester1_test_cases.html#security-testing" class="artefact-link link-sec">SEC-01</a>
+        <a href="semester1_test_cases.html#security-testing" class="artefact-link link-sec">SEC-05</a>
+      </div>
+    </div>
+
+    <div class="feature-card" id="F-03">
+      <div class="feature-header">
+        <span class="feature-id">F-03</span>
+        <span class="feature-name">Restaurant Search &amp; Browse</span>
+        <span class="priority-badge priority-high">High</span> <a href="semester2_planning.html#sprint2-detail" class="sprint-link sprint-s2">Sprint 2 ↗</a>
+      </div>
+      <div class="feature-desc">Customers can search restaurants by name or filter by cuisine type, rating, and price range. Results appear within 2 seconds and show restaurant name, rating, distance, and estimated delivery time. No results shows a friendly message.</div>
+      <div class="artefact-bar">
+        <span class="artefact-label">Traces to</span>
+        <a href="semester1_user_stories.html#customer" class="artefact-link link-us">US-C03</a>
+        <span class="link-sep">|</span>
+        <a href="semester1_use_cases.html#uc-list" class="artefact-link link-uc">UC-05</a>
+        <a href="semester1_use_cases.html#uc-list" class="artefact-link link-uc">UC-06</a>
+        <span class="link-sep">|</span>
+        <a href="semester1_requirements.html#functional-reqs" class="artefact-link link-uc">FR-301</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Test Cases</span>
+        <a href="semester1_test_cases.html#template" class="artefact-link link-tc">TC-11</a>
+        <a href="semester1_test_cases.html#template" class="artefact-link link-tc">TC-12</a>
+        <a href="semester1_test_cases.html#perf-testing" class="artefact-link link-perf">PERF-02</a>
+      </div>
+    </div>
+
+    <div class="feature-card" id="F-04">
+      <div class="feature-header">
+        <span class="feature-id">F-04</span>
+        <span class="feature-name">Cart Management</span>
+        <span class="priority-badge priority-high">High</span> <a href="semester2_planning.html#backlog" class="sprint-link sprint-future">Sprint 3</a>
+      </div>
+      <div class="feature-desc">Customers can add items, update quantities, and remove items from a cart. Cart is single-restaurant and persists across page refreshes. Adding items from a second restaurant triggers a "Clear cart?" warning dialog.</div>
+      <div class="artefact-bar">
+        <span class="artefact-label">Traces to</span>
+        <a href="semester1_user_stories.html#customer" class="artefact-link link-us">US-C04</a>
+        <span class="link-sep">|</span>
+        <a href="semester1_use_cases.html#uc-list" class="artefact-link link-uc">UC-07</a>
+        <span class="link-sep">|</span>
+        <a href="semester1_requirements.html#functional-reqs" class="artefact-link link-uc">FR-302</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Test Cases</span>
+        <a href="semester1_test_cases.html#template" class="artefact-link link-tc">TC-21</a>
+        <a href="semester1_test_cases.html#template" class="artefact-link link-tc">TC-22</a>
+      </div>
+    </div>
+
+    <div class="feature-card" id="F-05">
+      <div class="feature-header">
+        <span class="feature-id">F-05</span>
+        <span class="feature-name">Online Payment &amp; Checkout</span>
+        <span class="priority-badge priority-high">High</span> <a href="semester2_planning.html#backlog" class="sprint-link sprint-future">Sprint 3</a>
+      </div>
+      <div class="feature-desc">Customer selects delivery address and payment method (Credit/Debit Card, UPI, or COD), confirms order. Payment is processed via Razorpay sandbox. Success creates order; failure shows error with retry — cart is not cleared. Invoice PDF is generated.</div>
+      <div class="artefact-bar">
+        <span class="artefact-label">Traces to</span>
+        <a href="semester1_user_stories.html#customer" class="artefact-link link-us">US-C05</a>
+        <span class="link-sep">|</span>
+        <a href="semester1_use_cases.html#uc-06" class="artefact-link link-uc">UC-08 Place Order</a>
+        <span class="link-sep">|</span>
+        <a href="semester1_requirements.html#functional-reqs" class="artefact-link link-uc">FR-303 · FR-401 · FR-402</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Test Cases</span>
+        <a href="semester2_testing.html#test-cases" class="artefact-link link-tc">TC-04</a>
+        <a href="semester2_testing.html#test-cases" class="artefact-link link-tc">TC-05</a>
+        <a href="semester2_testing.html#test-cases" class="artefact-link link-tc">TC-06</a>
+        <a href="semester1_test_cases.html#perf-testing" class="artefact-link link-perf">PERF-04</a>
+      </div>
+    </div>
+
+    <div class="feature-card" id="F-06">
+      <div class="feature-header">
+        <span class="feature-id">F-06</span>
+        <span class="feature-name">Real-Time Order Tracking</span>
+        <span class="priority-badge priority-high">High</span> <a href="semester2_planning.html#backlog" class="sprint-link sprint-future">Sprint 4</a>
+      </div>
+      <div class="feature-desc">After placing an order, customers see a visual timeline: Placed → Accepted → Preparing → Out for Delivery → Delivered. Status auto-refreshes every 15 seconds. Push/email notification sent on each status change.</div>
+      <div class="artefact-bar">
+        <span class="artefact-label">Traces to</span>
+        <a href="semester1_user_stories.html#customer" class="artefact-link link-us">US-C06</a>
+        <span class="link-sep">|</span>
+        <a href="semester1_use_cases.html#uc-list" class="artefact-link link-uc">UC-09</a>
+        <span class="link-sep">|</span>
+        <a href="semester1_requirements.html#functional-reqs" class="artefact-link link-uc">FR-304</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Test Cases</span>
+        <a href="semester1_test_cases.html#template" class="artefact-link link-tc">TC-36</a>
+        <a href="semester1_test_cases.html#template" class="artefact-link link-tc">TC-37</a>
+        <a href="semester1_test_cases.html#security-testing" class="artefact-link link-sec">SEC-04</a>
+      </div>
+    </div>
+
+    <div class="feature-card" id="F-07">
+      <div class="feature-header">
+        <span class="feature-id">F-07</span>
+        <span class="feature-name">Rating &amp; Review</span>
+        <span class="priority-badge priority-medium">Medium</span> <a href="semester2_planning.html#backlog" class="sprint-link sprint-future">Sprint 5</a>
+      </div>
+      <div class="feature-desc">After delivery, customers can rate the restaurant (1–5 stars) and add an optional text comment (max 500 characters). Only one review per order. Restaurant average rating recalculated within 1 minute.</div>
+      <div class="artefact-bar">
+        <span class="artefact-label">Traces to</span>
+        <a href="semester1_user_stories.html#customer" class="artefact-link link-us">US-C07</a>
+        <span class="link-sep">|</span>
+        <a href="semester1_use_cases.html#uc-09" class="artefact-link link-uc">UC-12 Write Review</a>
+        <span class="link-sep">|</span>
+        <a href="semester1_requirements.html#functional-reqs" class="artefact-link link-uc">FR-601</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Test Cases</span>
+        <a href="semester2_testing.html#test-cases" class="artefact-link link-tc">TC-08</a>
+        <a href="semester2_testing.html#test-cases" class="artefact-link link-tc">TC-09</a>
+        <a href="semester2_testing.html#test-cases" class="artefact-link link-tc">TC-10</a>
+        <a href="semester1_test_cases.html#security-testing" class="artefact-link link-sec">SEC-02</a>
+      </div>
+    </div>
+
+    <div class="feature-card" id="F-08">
+      <div class="feature-header">
+        <span class="feature-id">F-08</span>
+        <span class="feature-name">Order History &amp; Reorder</span>
+        <span class="priority-badge priority-medium">Medium</span> <a href="semester2_planning.html#backlog" class="sprint-link sprint-future">Sprint 5</a>
+      </div>
+      <div class="feature-desc">Customers can view all past orders sorted by date (newest first), see itemised details, and reorder a previous meal in one click. Full invoice/receipt downloadable as PDF.</div>
+      <div class="artefact-bar">
+        <span class="artefact-label">Traces to</span>
+        <a href="semester1_user_stories.html#customer" class="artefact-link link-us">US-C08</a>
+        <span class="link-sep">|</span>
+        <a href="semester1_use_cases.html#uc-list" class="artefact-link link-uc">UC-11</a>
+        <span class="link-sep">|</span>
+        <a href="semester1_requirements.html#functional-reqs" class="artefact-link link-uc">FR-305 · FR-403</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Test Cases</span>
+        <a href="semester1_test_cases.html#template" class="artefact-link link-tc">TC-48</a>
+        <a href="semester1_test_cases.html#security-testing" class="artefact-link link-sec">SEC-04</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       RESTAURANT OWNER FEATURES
+       ============================================================ -->
+  <section class="section" id="owner-features">
+    <div class="section-header">
+      <div class="section-icon icon-purple">🍽️</div>
+      <div class="section-title-group">
+        <h2>Restaurant Owner Features</h2>
+        <p>F-09 through F-11</p>
+      </div>
+    </div>
+
+    <div class="feature-card owner" id="F-09">
+      <div class="feature-header">
+        <span class="feature-id">F-09</span>
+        <span class="feature-name">Restaurant Registration &amp; Approval</span>
+        <span class="priority-badge priority-high">High</span> <a href="semester2_planning.html#sprint2-detail" class="sprint-link sprint-s2">Sprint 2 ↗</a>
+      </div>
+      <div class="feature-desc">Restaurant owners register with name, address, cuisine type, opening hours, and FSSAI licence number. Registration requires admin approval before the restaurant becomes visible to customers. Owner is notified by email on approval or rejection.</div>
+      <div class="artefact-bar">
+        <span class="artefact-label">Traces to</span>
+        <a href="semester1_user_stories.html#owner" class="artefact-link link-us">US-O01</a>
+        <span class="link-sep">|</span>
+        <a href="semester1_use_cases.html#uc-list" class="artefact-link link-uc">UC-13</a>
+        <span class="link-sep">|</span>
+        <a href="semester1_requirements.html#functional-reqs" class="artefact-link link-uc">FR-201</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Test Cases</span>
+        <a href="semester1_test_cases.html#template" class="artefact-link link-tc">TC-31</a>
+        <a href="semester1_test_cases.html#template" class="artefact-link link-tc">TC-32</a>
+      </div>
+    </div>
+
+    <div class="feature-card owner" id="F-10">
+      <div class="feature-header">
+        <span class="feature-id">F-10</span>
+        <span class="feature-name">Menu Management</span>
+        <span class="priority-badge priority-high">High</span> <a href="semester2_planning.html#sprint2-detail" class="sprint-link sprint-s2">Sprint 2 ↗</a>
+      </div>
+      <div class="feature-desc">Restaurant owners can add, edit, and delete menu items. Each item has a name, description, price, category, photo, and veg/non-veg flag. Items can be toggled available/unavailable. Changes reflect in customer menu within 30 seconds.</div>
+      <div class="artefact-bar">
+        <span class="artefact-label">Traces to</span>
+        <a href="semester1_user_stories.html#owner" class="artefact-link link-us">US-O02</a>
+        <span class="link-sep">|</span>
+        <a href="semester1_use_cases.html#uc-list" class="artefact-link link-uc">UC-14</a>
+        <span class="link-sep">|</span>
+        <a href="semester1_requirements.html#functional-reqs" class="artefact-link link-uc">FR-202</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Test Cases</span>
+        <a href="semester1_test_cases.html#template" class="artefact-link link-tc">TC-33</a>
+        <a href="semester1_test_cases.html#template" class="artefact-link link-tc">TC-34</a>
+        <a href="semester1_test_cases.html#security-testing" class="artefact-link link-sec">SEC-03</a>
+      </div>
+    </div>
+
+    <div class="feature-card owner" id="F-11">
+      <div class="feature-header">
+        <span class="feature-id">F-11</span>
+        <span class="feature-name">Order Management (Restaurant Side)</span>
+        <span class="priority-badge priority-high">High</span> <a href="semester2_planning.html#backlog" class="sprint-link sprint-future">Sprint 3</a>
+      </div>
+      <div class="feature-desc">New orders trigger a visual and audio notification on the owner dashboard. Owner can Accept or Reject within 5 minutes (auto-reject on timeout). Accepted orders display items, quantity, delivery address, and payment mode.</div>
+      <div class="artefact-bar">
+        <span class="artefact-label">Traces to</span>
+        <a href="semester1_user_stories.html#owner" class="artefact-link link-us">US-O03</a>
+        <span class="link-sep">|</span>
+        <a href="semester1_use_cases.html#uc-list" class="artefact-link link-uc">UC-15</a>
+        <span class="link-sep">|</span>
+        <a href="semester1_requirements.html#functional-reqs" class="artefact-link link-uc">FR-203</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Test Cases</span>
+        <a href="semester1_test_cases.html#template" class="artefact-link link-tc">TC-35</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       DELIVERY PARTNER FEATURES
+       ============================================================ -->
+  <section class="section" id="partner-features">
+    <div class="section-header">
+      <div class="section-icon icon-purple">🛵</div>
+      <div class="section-title-group">
+        <h2>Delivery Partner Features</h2>
+        <p>F-12 through F-13</p>
+      </div>
+    </div>
+
+    <div class="feature-card partner" id="F-12">
+      <div class="feature-header">
+        <span class="feature-id">F-12</span>
+        <span class="feature-name">Partner Online / Offline Toggle</span>
+        <span class="priority-badge priority-medium">Medium</span> <a href="semester2_planning.html#backlog" class="sprint-link sprint-future">Sprint 4</a>
+      </div>
+      <div class="feature-desc">Delivery partners can toggle their availability. When offline, no orders are assigned. Going offline is blocked during an active delivery until the order is delivered.</div>
+      <div class="artefact-bar">
+        <span class="artefact-label">Traces to</span>
+        <a href="semester1_user_stories.html#partner" class="artefact-link link-us">US-P01</a>
+        <span class="link-sep">|</span>
+        <a href="semester1_use_cases.html#uc-list" class="artefact-link link-uc">UC-16</a>
+        <span class="link-sep">|</span>
+        <a href="semester1_requirements.html#functional-reqs" class="artefact-link link-uc">FR-501</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Test Cases</span>
+        <a href="semester1_test_cases.html#template" class="artefact-link link-tc">TC-41</a>
+      </div>
+    </div>
+
+    <div class="feature-card partner" id="F-13">
+      <div class="feature-header">
+        <span class="feature-id">F-13</span>
+        <span class="feature-name">Order Delivery Flow</span>
+        <span class="priority-badge priority-high">High</span> <a href="semester2_planning.html#backlog" class="sprint-link sprint-future">Sprint 4</a>
+      </div>
+      <div class="feature-desc">Partner portal shows assigned orders with restaurant and customer details. Partner marks order as "Picked Up" and "Delivered". Each status change sends push/email notifications to the customer.</div>
+      <div class="artefact-bar">
+        <span class="artefact-label">Traces to</span>
+        <a href="semester1_user_stories.html#partner" class="artefact-link link-us">US-P02</a>
+        <span class="link-sep">|</span>
+        <a href="semester1_use_cases.html#uc-list" class="artefact-link link-uc">UC-17</a>
+        <span class="link-sep">|</span>
+        <a href="semester1_requirements.html#functional-reqs" class="artefact-link link-uc">FR-502 · FR-503</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Test Cases</span>
+        <a href="semester1_test_cases.html#template" class="artefact-link link-tc">TC-42</a>
+        <a href="semester1_test_cases.html#template" class="artefact-link link-tc">TC-43</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       ADMIN FEATURES
+       ============================================================ -->
+  <section class="section" id="admin-features">
+    <div class="section-header">
+      <div class="section-icon icon-purple">🔧</div>
+      <div class="section-title-group">
+        <h2>Admin Features</h2>
+        <p>F-14 through F-16</p>
+      </div>
+    </div>
+
+    <div class="feature-card admin" id="F-14">
+      <div class="feature-header">
+        <span class="feature-id">F-14</span>
+        <span class="feature-name">Restaurant Approval (Admin)</span>
+        <span class="priority-badge priority-high">High</span> <a href="semester2_planning.html#sprint1-detail" class="sprint-link sprint-s1">Sprint 1 ↗</a>
+      </div>
+      <div class="feature-desc">Admin reviews pending restaurant applications, inspects submitted details, and approves or rejects with a reason. Restaurant owner is notified by email on approval or rejection.</div>
+      <div class="artefact-bar">
+        <span class="artefact-label">Traces to</span>
+        <a href="semester1_user_stories.html#admin" class="artefact-link link-us">US-A01</a>
+        <span class="link-sep">|</span>
+        <a href="semester1_use_cases.html#uc-list" class="artefact-link link-uc">UC-18</a>
+        <span class="link-sep">|</span>
+        <a href="semester1_requirements.html#functional-reqs" class="artefact-link link-uc">FR-602</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Test Cases</span>
+        <a href="semester1_test_cases.html#template" class="artefact-link link-tc">TC-51</a>
+        <a href="semester1_test_cases.html#template" class="artefact-link link-tc">TC-52</a>
+        <a href="semester1_test_cases.html#security-testing" class="artefact-link link-sec">SEC-03</a>
+      </div>
+    </div>
+
+    <div class="feature-card admin" id="F-15">
+      <div class="feature-header">
+        <span class="feature-id">F-15</span>
+        <span class="feature-name">Platform Analytics Dashboard</span>
+        <span class="priority-badge priority-medium">Medium</span> <a href="semester2_planning.html#backlog" class="sprint-link sprint-future">Sprint 5</a>
+      </div>
+      <div class="feature-desc">Admin views platform-wide statistics: total orders today, total revenue, active restaurants, and active users. Trend charts show daily order volume for the past 30 days. Admin can filter by date range.</div>
+      <div class="artefact-bar">
+        <span class="artefact-label">Traces to</span>
+        <a href="semester1_user_stories.html#admin" class="artefact-link link-us">US-A02</a>
+        <span class="link-sep">|</span>
+        <a href="semester1_use_cases.html#uc-list" class="artefact-link link-uc">UC-19</a>
+        <span class="link-sep">|</span>
+        <a href="semester1_requirements.html#functional-reqs" class="artefact-link link-uc">FR-602</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Test Cases</span>
+        <a href="semester1_test_cases.html#template" class="artefact-link link-tc">TC-55</a>
+        <a href="semester1_test_cases.html#perf-testing" class="artefact-link link-perf">PERF-03</a>
+      </div>
+    </div>
+
+    <div class="feature-card admin" id="F-16">
+      <div class="feature-header">
+        <span class="feature-id">F-16</span>
+        <span class="feature-name">User Suspension / Ban</span>
+        <span class="priority-badge priority-medium">Medium</span> <a href="semester2_planning.html#backlog" class="sprint-link sprint-future">Sprint 5</a>
+      </div>
+      <div class="feature-desc">Admin can search for any user by name or email, and suspend (temporary) or ban (permanent) them with a reason. Suspended users see a clear message on login. Suspensions can be reversed by admin.</div>
+      <div class="artefact-bar">
+        <span class="artefact-label">Traces to</span>
+        <a href="semester1_user_stories.html#admin" class="artefact-link link-us">US-A03</a>
+        <span class="link-sep">|</span>
+        <a href="semester1_use_cases.html#uc-list" class="artefact-link link-uc">UC-20</a>
+        <span class="link-sep">|</span>
+        <a href="semester1_requirements.html#functional-reqs" class="artefact-link link-uc">FR-602</a>
+        <span class="link-sep">|</span>
+        <span class="artefact-label">Test Cases</span>
+        <a href="semester1_test_cases.html#template" class="artefact-link link-tc">TC-56</a>
+        <a href="semester1_test_cases.html#template" class="artefact-link link-tc">TC-57</a>
+        <a href="semester1_test_cases.html#security-testing" class="artefact-link link-sec">SEC-03</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       REQUIREMENTS TRACEABILITY MATRIX
+       ============================================================ -->
+  <section class="section" id="rtm">
+    <div class="section-header">
+      <div class="section-icon icon-purple">🔗</div>
+      <div class="section-title-group">
+        <h2>Feature Traceability Matrix</h2>
+        <p>The complete chain from SRS to Test Case — the golden thread of the project</p>
+      </div>
+    </div>
+
+    <p style="font-size:13px; color:#555; margin-bottom:12px;">
+      This matrix proves that every feature is: (a) driven by a user story in the SRS, (b) covered by at least one use case, and (c) verified by at least one test case. A missing row means an untested or unjustified feature.
+    </p>
+
+    <div style="overflow-x:auto;">
+    <table class="rtm-table">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Feature Name</th>
+          <th>User Story (SRS)</th>
+          <th>Use Case(s)</th>
+          <th>Functional Req</th>
+          <th>Test Cases</th>
+          <th>Sprint</th>
+          <th>Priority</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="tag-f">F-01</span></td>
+          <td>Customer Registration</td>
+          <td><span class="tag-us">US-C01</span></td>
+          <td><span class="tag-uc">UC-01</span></td>
+          <td>FR-101</td>
+          <td><span class="tag-tc">TC-01, TC-02</span></td>
+          <td><a href="semester2_planning.html#sprint1-detail" class="sprint-link sprint-s1">Sprint 1 ↗</a></td><td><span class="priority-badge priority-high">High</span></td>
+        </tr>
+        <tr>
+          <td><span class="tag-f">F-02</span></td>
+          <td>Customer Login &amp; Auth</td>
+          <td><span class="tag-us">US-C02</span></td>
+          <td><span class="tag-uc">UC-02</span></td>
+          <td>FR-102</td>
+          <td><span class="tag-tc">TC-01..TC-03, SEC-01, SEC-05</span></td>
+          <td><a href="semester2_planning.html#sprint1-detail" class="sprint-link sprint-s1">Sprint 1 ↗</a></td><td><span class="priority-badge priority-high">High</span></td>
+        </tr>
+        <tr>
+          <td><span class="tag-f">F-03</span></td>
+          <td>Restaurant Search</td>
+          <td><span class="tag-us">US-C03</span></td>
+          <td><span class="tag-uc">UC-05, UC-06</span></td>
+          <td>FR-301</td>
+          <td><span class="tag-tc">TC-11, TC-12, PERF-02</span></td>
+          <td><a href="semester2_planning.html#sprint2-detail" class="sprint-link sprint-s2">Sprint 2 ↗</a></td><td><span class="priority-badge priority-high">High</span></td>
+        </tr>
+        <tr>
+          <td><span class="tag-f">F-04</span></td>
+          <td>Cart Management</td>
+          <td><span class="tag-us">US-C04</span></td>
+          <td><span class="tag-uc">UC-07</span></td>
+          <td>FR-302</td>
+          <td><span class="tag-tc">TC-21, TC-22</span></td>
+          <td><a href="semester2_planning.html#backlog" class="sprint-link sprint-future">Sprint 3</a></td><td><span class="priority-badge priority-high">High</span></td>
+        </tr>
+        <tr>
+          <td><span class="tag-f">F-05</span></td>
+          <td>Online Payment &amp; Checkout</td>
+          <td><span class="tag-us">US-C05</span></td>
+          <td><span class="tag-uc">UC-08</span></td>
+          <td>FR-303, FR-401, FR-402</td>
+          <td><span class="tag-tc">TC-04..TC-06, PERF-04</span></td>
+          <td><a href="semester2_planning.html#backlog" class="sprint-link sprint-future">Sprint 3</a></td><td><span class="priority-badge priority-high">High</span></td>
+        </tr>
+        <tr>
+          <td><span class="tag-f">F-06</span></td>
+          <td>Real-Time Order Tracking</td>
+          <td><span class="tag-us">US-C06</span></td>
+          <td><span class="tag-uc">UC-09</span></td>
+          <td>FR-304</td>
+          <td><span class="tag-tc">TC-36, TC-37, SEC-04</span></td>
+          <td><a href="semester2_planning.html#backlog" class="sprint-link sprint-future">Sprint 4</a></td><td><span class="priority-badge priority-high">High</span></td>
+        </tr>
+        <tr>
+          <td><span class="tag-f">F-07</span></td>
+          <td>Rating &amp; Review</td>
+          <td><span class="tag-us">US-C07</span></td>
+          <td><span class="tag-uc">UC-12</span></td>
+          <td>FR-601</td>
+          <td><span class="tag-tc">TC-08..TC-10, SEC-02</span></td>
+          <td><a href="semester2_planning.html#backlog" class="sprint-link sprint-future">Sprint 5</a></td><td><span class="priority-badge priority-medium">Medium</span></td>
+        </tr>
+        <tr>
+          <td><span class="tag-f">F-08</span></td>
+          <td>Order History &amp; Reorder</td>
+          <td><span class="tag-us">US-C08</span></td>
+          <td><span class="tag-uc">UC-11</span></td>
+          <td>FR-305, FR-403</td>
+          <td><span class="tag-tc">TC-48, SEC-04</span></td>
+          <td><a href="semester2_planning.html#backlog" class="sprint-link sprint-future">Sprint 5</a></td><td><span class="priority-badge priority-medium">Medium</span></td>
+        </tr>
+        <tr>
+          <td><span class="tag-f">F-09</span></td>
+          <td>Restaurant Registration</td>
+          <td><span class="tag-us">US-O01</span></td>
+          <td><span class="tag-uc">UC-13</span></td>
+          <td>FR-201</td>
+          <td><span class="tag-tc">TC-31, TC-32</span></td>
+          <td><a href="semester2_planning.html#sprint2-detail" class="sprint-link sprint-s2">Sprint 2 ↗</a></td><td><span class="priority-badge priority-high">High</span></td>
+        </tr>
+        <tr>
+          <td><span class="tag-f">F-10</span></td>
+          <td>Menu Management</td>
+          <td><span class="tag-us">US-O02</span></td>
+          <td><span class="tag-uc">UC-14</span></td>
+          <td>FR-202</td>
+          <td><span class="tag-tc">TC-33, TC-34, SEC-03</span></td>
+          <td><a href="semester2_planning.html#sprint2-detail" class="sprint-link sprint-s2">Sprint 2 ↗</a></td><td><span class="priority-badge priority-high">High</span></td>
+        </tr>
+        <tr>
+          <td><span class="tag-f">F-11</span></td>
+          <td>Order Management (Owner)</td>
+          <td><span class="tag-us">US-O03</span></td>
+          <td><span class="tag-uc">UC-15</span></td>
+          <td>FR-203</td>
+          <td><span class="tag-tc">TC-35</span></td>
+          <td><a href="semester2_planning.html#backlog" class="sprint-link sprint-future">Sprint 3</a></td><td><span class="priority-badge priority-high">High</span></td>
+        </tr>
+        <tr>
+          <td><span class="tag-f">F-12</span></td>
+          <td>Partner Availability</td>
+          <td><span class="tag-us">US-P01</span></td>
+          <td><span class="tag-uc">UC-16</span></td>
+          <td>FR-501</td>
+          <td><span class="tag-tc">TC-41</span></td>
+          <td><a href="semester2_planning.html#backlog" class="sprint-link sprint-future">Sprint 4</a></td><td><span class="priority-badge priority-medium">Medium</span></td>
+        </tr>
+        <tr>
+          <td><span class="tag-f">F-13</span></td>
+          <td>Order Delivery Flow</td>
+          <td><span class="tag-us">US-P02</span></td>
+          <td><span class="tag-uc">UC-17</span></td>
+          <td>FR-502, FR-503</td>
+          <td><span class="tag-tc">TC-42, TC-43</span></td>
+          <td><a href="semester2_planning.html#backlog" class="sprint-link sprint-future">Sprint 4</a></td><td><span class="priority-badge priority-high">High</span></td>
+        </tr>
+        <tr>
+          <td><span class="tag-f">F-14</span></td>
+          <td>Restaurant Approval (Admin)</td>
+          <td><span class="tag-us">US-A01</span></td>
+          <td><span class="tag-uc">UC-18</span></td>
+          <td>FR-602</td>
+          <td><span class="tag-tc">TC-51, TC-52, SEC-03</span></td>
+          <td><a href="semester2_planning.html#sprint1-detail" class="sprint-link sprint-s1">Sprint 1 ↗</a></td><td><span class="priority-badge priority-high">High</span></td>
+        </tr>
+        <tr>
+          <td><span class="tag-f">F-15</span></td>
+          <td>Platform Analytics</td>
+          <td><span class="tag-us">US-A02</span></td>
+          <td><span class="tag-uc">UC-19</span></td>
+          <td>FR-602</td>
+          <td><span class="tag-tc">TC-55, PERF-03</span></td>
+          <td><a href="semester2_planning.html#backlog" class="sprint-link sprint-future">Sprint 5</a></td><td><span class="priority-badge priority-medium">Medium</span></td>
+        </tr>
+        <tr>
+          <td><span class="tag-f">F-16</span></td>
+          <td>User Suspension / Ban</td>
+          <td><span class="tag-us">US-A03</span></td>
+          <td><span class="tag-uc">UC-20</span></td>
+          <td>FR-602</td>
+          <td><span class="tag-tc">TC-56, TC-57, SEC-03</span></td>
+          <td><a href="semester2_planning.html#backlog" class="sprint-link sprint-future">Sprint 5</a></td><td><span class="priority-badge priority-medium">Medium</span></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="info-box green">
+      <div class="info-box-title">Key Rule — No Orphan Features</div>
+      <p style="margin:0">Every feature must have at least one user story, one use case, and one test case linked to it. A feature with no test case is untested scope. A test case with no feature is unplanned scope creep — both are red flags in a professional project review.</p>
+    </div>
+  </section>
+
+  <footer>
+    <a href="semester1_user_stories.html">← User Stories</a>
+    <nav class="footer-nav">
+      <a href="semester1_use_cases.html">Use Cases →</a>
+      <a href="semester1_test_cases.html">Test Cases →</a>
+    </nav>
+  </footer>
+
+</div>
+</body>
+</html>
