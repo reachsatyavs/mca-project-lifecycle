@@ -17,7 +17,7 @@
     <div class="sem-badge sem-3">Semester 3 — Deliver</div>
     <h1>Testing — System, E2E, Performance &amp; Beta</h1>
     <div class="project-tag">Example Project: <strong>Online Food Delivery System</strong></div>
-    <p class="header-desc">Semester 3 testing moves beyond individual unit tests to full system tests, end-to-end browser automation, performance benchmarking, and a beta testing program with real users.</p>
+    <p class="header-desc">Semester 3 testing moves beyond individual unit tests to full system tests, end-to-end browser automation, performance benchmarking, and a beta testing program with real users. Sections marked <span class="badge-good-to-have">⭐ Good to Have</span> are optional enhancements — do them if core features are complete and time allows.</p>
   </header>
   <nav class="topic-nav orange-nav">
     <div class="topic-nav-label">Jump to section</div>
@@ -36,7 +36,7 @@
     <div class="section-header">
       <div class="section-icon icon-orange">▶️</div>
       <div class="section-title-group">
-        <h2>1. Test Case Execution</h2>
+        <div class="tier-row"><h2>1. Test Case Execution</h2></div>
         <p>Running the test cases written in Semester 2 against the full deployed system</p>
       </div>
     </div>
@@ -61,17 +61,24 @@
       .ex-block { display:inline-block; font-size:11px; font-weight:700; padding:2px 10px; border-radius:4px; background:#fff3cd; color:#856404; border:1px solid #ffeeba; }
     </style>
 
-    <h3>Execution Log — Sprint 1 Feature Set (Authentication)</h3>
+    <p style="font-size:13px; color:#555; margin-bottom:10px;">
+      Each execution row traces back to the <a href="semester2_planning.html#feature-registry" style="color:#0F6E56; font-weight:600;">Feature Registry</a> (FOOD-xxx) and the
+      <a href="semester2_testing.html#test-cases" style="color:#0F6E56; font-weight:600;">Test Cases written in Semester 2</a> (TC-xx). This completes the chain:
+      <strong>Feature Plan → Sprint → Test Case Written → Test Case Executed</strong>.
+    </p>
+
+    <h3>Execution Log — Sprint 1: Authentication (FOOD-001, FOOD-002)</h3>
     <p style="font-size:13px; color:#555; margin-bottom:10px;">
       Date: Week 2 of Semester 3 &nbsp;|&nbsp; Environment: Staging (Render) &nbsp;|&nbsp; Tester: Member D &nbsp;|&nbsp; System version: v1.2.0
     </p>
     <table class="exec-table">
       <thead>
-        <tr><th>TC ID</th><th>Test Title</th><th>Expected Result</th><th>Actual Result</th><th>Status</th><th>Bug ID</th></tr>
+        <tr><th>TC ID</th><th>Feature</th><th>Test Title</th><th>Expected Result</th><th>Actual Result</th><th>Status</th><th>Bug ID</th></tr>
       </thead>
       <tbody>
         <tr>
           <td><strong>TC-01</strong></td>
+          <td style="font-weight:700;color:#0F6E56;white-space:nowrap;">FOOD-002</td>
           <td>Login — valid credentials</td>
           <td>HTTP 200, access token returned</td>
           <td>HTTP 200, tokens in body ✓</td>
@@ -80,6 +87,7 @@
         </tr>
         <tr>
           <td><strong>TC-02</strong></td>
+          <td style="font-weight:700;color:#0F6E56;white-space:nowrap;">FOOD-002</td>
           <td>Login — wrong password</td>
           <td>HTTP 401, error: INVALID_CREDENTIALS</td>
           <td>HTTP 401, correct error ✓</td>
@@ -88,6 +96,7 @@
         </tr>
         <tr>
           <td><strong>TC-03</strong></td>
+          <td style="font-weight:700;color:#0F6E56;white-space:nowrap;">FOOD-001</td>
           <td>Register — duplicate email</td>
           <td>HTTP 409, EMAIL_ALREADY_EXISTS</td>
           <td>HTTP 500 — unhandled DB constraint error ✗</td>
@@ -97,14 +106,15 @@
       </tbody>
     </table>
 
-    <h3>Execution Log — Order Placement</h3>
+    <h3>Execution Log — Sprint 3: Order Placement (FOOD-007, FOOD-008) &amp; Sprint 5: Browse (FOOD-012)</h3>
     <table class="exec-table">
       <thead>
-        <tr><th>TC ID</th><th>Test Title</th><th>Expected Result</th><th>Actual Result</th><th>Status</th><th>Bug ID</th></tr>
+        <tr><th>TC ID</th><th>Feature</th><th>Test Title</th><th>Expected Result</th><th>Actual Result</th><th>Status</th><th>Bug ID</th></tr>
       </thead>
       <tbody>
         <tr>
           <td><strong>TC-04</strong></td>
+          <td style="font-weight:700;color:#c47a10;white-space:nowrap;">FOOD-007</td>
           <td>Place order — COD success</td>
           <td>HTTP 201, status=PLACED, email sent</td>
           <td>HTTP 201 ✓, email delayed 3 min (acceptable) ✓</td>
@@ -113,6 +123,7 @@
         </tr>
         <tr>
           <td><strong>TC-05</strong></td>
+          <td style="font-weight:700;color:#c47a10;white-space:nowrap;">FOOD-008</td>
           <td>Place order — payment declined</td>
           <td>HTTP 400, no order in DB</td>
           <td>HTTP 400 ✓, order NOT created ✓</td>
@@ -121,6 +132,7 @@
         </tr>
         <tr>
           <td><strong>TC-06</strong></td>
+          <td style="font-weight:700;color:#c47a10;white-space:nowrap;">FOOD-007</td>
           <td>Cart below ₹100 minimum</td>
           <td>HTTP 400, MINIMUM_ORDER_VIOLATED</td>
           <td>HTTP 400 ✓ on API; UI button NOT disabled ✗</td>
@@ -129,6 +141,7 @@
         </tr>
         <tr>
           <td><strong>TC-07</strong></td>
+          <td style="font-weight:700;color:#6a1b9a;white-space:nowrap;">FOOD-012</td>
           <td>View closed restaurant</td>
           <td>is_open: false, checkout disabled</td>
           <td>is_open: false ✓, checkout still enabled in UI ✗</td>
@@ -138,14 +151,15 @@
       </tbody>
     </table>
 
-    <h3>Execution Log — Reviews</h3>
+    <h3>Execution Log — Sprint 8: Reviews (FOOD-018)</h3>
     <table class="exec-table">
       <thead>
-        <tr><th>TC ID</th><th>Test Title</th><th>Expected Result</th><th>Actual Result</th><th>Status</th><th>Bug ID</th></tr>
+        <tr><th>TC ID</th><th>Feature</th><th>Test Title</th><th>Expected Result</th><th>Actual Result</th><th>Status</th><th>Bug ID</th></tr>
       </thead>
       <tbody>
         <tr>
           <td><strong>TC-08</strong></td>
+          <td style="font-weight:700;color:#555;white-space:nowrap;">FOOD-018</td>
           <td>Submit review — success</td>
           <td>HTTP 201, avg rating updated</td>
           <td>HTTP 201 ✓, avg rating updated ✓</td>
@@ -154,6 +168,7 @@
         </tr>
         <tr>
           <td><strong>TC-09</strong></td>
+          <td style="font-weight:700;color:#555;white-space:nowrap;">FOOD-018</td>
           <td>Duplicate review blocked</td>
           <td>HTTP 409, REVIEW_ALREADY_EXISTS</td>
           <td>HTTP 409 ✓</td>
@@ -162,6 +177,7 @@
         </tr>
         <tr>
           <td><strong>TC-10</strong></td>
+          <td style="font-weight:700;color:#555;white-space:nowrap;">FOOD-018</td>
           <td>Review on undelivered order</td>
           <td>HTTP 400, REVIEW_NOT_ALLOWED</td>
           <td>HTTP 400 ✓</td>
@@ -206,11 +222,12 @@
     <h3>Regression Test Log (after bug fixes)</h3>
     <table class="exec-table">
       <thead>
-        <tr><th>TC ID</th><th>Bug Fixed</th><th>Fix Description</th><th>Re-run Date</th><th>Status</th></tr>
+        <tr><th>TC ID</th><th>Feature</th><th>Bug Fixed</th><th>Fix Description</th><th>Re-run Date</th><th>Status</th></tr>
       </thead>
       <tbody>
         <tr>
           <td><strong>TC-03</strong></td>
+          <td style="font-weight:700;color:#0F6E56;white-space:nowrap;">FOOD-001</td>
           <td>BUG-001</td>
           <td>Added try/catch for Prisma unique constraint on email; now returns 409</td>
           <td>Week 3 Sem 3</td>
@@ -218,6 +235,7 @@
         </tr>
         <tr>
           <td><strong>TC-06</strong></td>
+          <td style="font-weight:700;color:#c47a10;white-space:nowrap;">FOOD-007</td>
           <td>BUG-002</td>
           <td>Frontend checkout button disabled when cart total &lt; ₹100</td>
           <td>Week 3 Sem 3</td>
@@ -225,6 +243,7 @@
         </tr>
         <tr>
           <td><strong>TC-07</strong></td>
+          <td style="font-weight:700;color:#6a1b9a;white-space:nowrap;">FOOD-012</td>
           <td>BUG-003</td>
           <td>Frontend reads is_open from API and disables checkout block</td>
           <td>Week 3 Sem 3</td>
@@ -241,7 +260,7 @@
     <div class="section-header">
       <div class="section-icon icon-orange">🔬</div>
       <div class="section-title-group">
-        <h2>2. Alpha Testing</h2>
+        <div class="tier-row"><h2>2. Alpha Testing</h2></div>
         <p>Internal testing by the development team before external users</p>
       </div>
     </div>
@@ -268,10 +287,11 @@
     <div class="section-header">
       <div class="section-icon icon-orange">🤖</div>
       <div class="section-title-group">
-        <h2>3. System / End-to-End Tests</h2>
+        <div class="tier-row"><h2>3. System / End-to-End Tests</h2><span class="badge-good-to-have">⭐ Good to Have</span></div>
         <p>Automated browser-based tests of complete user journeys</p>
       </div>
     </div>
+    <div class="tier-banner good-to-have">⭐ Good to Have — Manual system testing (Section 2 Alpha) is mandatory. Automated E2E with Playwright is impressive and adds real value but is optional for MCA.</div>
     <p>E2E tests use a browser automation tool (Playwright or Selenium) to simulate a real user clicking through the application. They catch integration bugs that unit tests cannot — like a broken redirect after payment or a missing cookie.</p>
     <h3>E2E Test: Complete Order Flow (Playwright)</h3>
     <div class="code-block">// tests/e2e/order_flow.spec.ts (Playwright)
@@ -313,44 +333,55 @@ test('Customer places a complete order with COD', async ({ page }) => {
     <div class="section-header">
       <div class="section-icon icon-orange">⚡</div>
       <div class="section-title-group">
-        <h2>4. Performance Tests</h2>
+        <div class="tier-row"><h2>4. Performance Tests</h2><span class="badge-good-to-have">⭐ Good to Have</span></div>
         <p>Validating that the system meets NFR-1 (page load) and NFR-3 (concurrent users)</p>
       </div>
     </div>
-    <h3>Load Testing with Locust</h3>
-    <div class="code-block"># locustfile.py
-from locust import HttpUser, task, between
+    <div class="tier-banner good-to-have">⭐ Good to Have — A load test with results screenshot in your report is impressive. Evaluators rarely expect full perf testing at MCA level.</div>
+    <h3>Load Test Script (k6)</h3>
+    <div class="code-block">// tests/perf/restaurants.js
+import http from 'k6/http';
+import { check, sleep } from 'k6';
 
-class FoodDeliveryUser(HttpUser):
-    wait_time = between(1, 3)  # Seconds between requests
+export const options = {
+  stages: [
+    { duration: '30s', target: 10 },  // ramp up to 10 virtual users
+    { duration: '1m',  target: 30 },  // stay at 30 users for 1 minute
+    { duration: '20s', target: 0  },  // ramp down
+  ],
+  thresholds: {
+    http_req_duration: ['p(95)&lt;500'],  // 95% requests under 500 ms
+    http_req_failed:   ['rate&lt;0.01'],  // less than 1% errors
+  },
+};
 
-    def on_start(self):
-        """Login and get JWT"""
-        response = self.client.post("/api/auth/login/", json={
-            "email": "test@customer.com",
-            "password": "Test@1234"
-        })
-        self.token = response.json()["access"]
+// Login once per VU and reuse the token
+export function setup() {
+  const res = http.post('https://your-app.render.com/api/auth/login',
+    JSON.stringify({ email: 'test@customer.com', password: 'Test@1234' }),
+    { headers: { 'Content-Type': 'application/json' } });
+  return { token: JSON.parse(res.body).token };
+}
 
-    @task(3)
-    def browse_restaurants(self):
-        self.client.get("/api/restaurants/",
-            headers={"Authorization": f"Bearer {self.token}"})
+export default function (data) {
+  const headers = { Authorization: `Bearer ${data.token}` };
+  http.get('https://your-app.render.com/api/restaurants', { headers });
+  check(http.get('https://your-app.render.com/api/restaurants/1/menu', { headers }), {
+    'menu status 200': r => r.status === 200,
+  });
+  sleep(1);
+}</div>
 
-    @task(2)
-    def view_menu(self):
-        self.client.get("/api/restaurants/1/menu/",
-            headers={"Authorization": f"Bearer {self.token}"})
+    <h3>Install and Run</h3>
+    <div class="code-block"># macOS
+brew install k6
 
-    @task(1)
-    def view_order_history(self):
-        self.client.get("/api/orders/",
-            headers={"Authorization": f"Bearer {self.token}"})</div>
-    <h3>Run the Load Test</h3>
-    <div class="code-block">pip install locust
-locust -f locustfile.py --host=https://your-app.render.com
-# Open http://localhost:8089 in browser
-# Set: 50 users, spawn rate 5/sec → Start</div>
+# Run the test
+k6 run tests/perf/restaurants.js
+
+# Sample output to paste in report:
+#   http_req_duration p(95)=412ms   ← under 500ms target ✓
+#   http_req_failed   0.00%         ← 0 errors ✓</div>
     <h3>Performance Baseline Targets (from NFRs)</h3>
     <table>
       <thead><tr><th>Endpoint</th><th>Target p95 Response</th><th>Tested Result</th></tr></thead>
@@ -366,7 +397,7 @@ locust -f locustfile.py --host=https://your-app.render.com
     <div class="section-header">
       <div class="section-icon icon-orange">🐛</div>
       <div class="section-title-group">
-        <h2>5. Bug Tracking</h2>
+        <div class="tier-row"><h2>5. Bug Tracking</h2></div>
         <p>Systematic recording and resolution of all defects</p>
       </div>
     </div>
@@ -391,10 +422,11 @@ locust -f locustfile.py --host=https://your-app.render.com
     <div class="section-header">
       <div class="section-icon icon-orange">👥</div>
       <div class="section-title-group">
-        <h2>6. Beta / Peer Review Testing</h2>
+        <div class="tier-row"><h2>6. Beta / Peer Review Testing</h2><span class="badge-good-to-have">⭐ Good to Have</span></div>
         <p>Getting external users to test the system before go-live</p>
       </div>
     </div>
+    <div class="tier-banner good-to-have">⭐ Good to Have — Peer beta testing shows maturity in the testing process. If time is limited, a quick 2–3 person peer review is still valuable to mention in the report.</div>
     <p>Beta testing gives the system to real users — people who weren't involved in building it. They will discover usability issues, edge cases, and bugs the team has become blind to.</p>
     <h3>Beta Testing Plan for Food Delivery</h3>
     <ul>

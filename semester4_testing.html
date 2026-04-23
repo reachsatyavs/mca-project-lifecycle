@@ -5,6 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Testing — Semester 4 | Online Food Delivery System</title>
   <link rel="stylesheet" href="child_page_styles.css">
+  <style>
+    .sec-tc {
+      background: #fff; border: 1px solid #c8d4e8;
+      border-left: 5px solid #185FA5;
+      border-radius: 8px; padding: 14px 18px; margin-bottom: 14px;
+    }
+    .sec-tc.high { border-left-color: #c62828; }
+    .sec-tc.medium { border-left-color: #e65100; }
+    .sec-tc.low { border-left-color: #2e7d32; }
+    .sec-id { font-size: 11px; font-weight: 700; color: #185FA5; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 4px; }
+    .sec-id.high { color: #c62828; }
+    .sec-id.medium { color: #e65100; }
+    .sec-title { font-size: 14.5px; font-weight: 700; color: #1a1a2e; margin-bottom: 10px; }
+    .sec-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+    .sec-table td:first-child { font-weight: 600; color: #666; width: 130px; padding: 4px 12px 4px 0; vertical-align: top; }
+    .sec-table td:last-child { color: #333; padding: 4px 0; }
+    .sev-high { display:inline-block; font-size:10px; font-weight:700; padding:2px 8px; border-radius:4px; background:#fde8e8; color:#c62828; border:1px solid #f5c6c6; }
+    .sev-medium { display:inline-block; font-size:10px; font-weight:700; padding:2px 8px; border-radius:4px; background:#fff3e0; color:#e65100; border:1px solid #ffd0a0; }
+    .sev-low { display:inline-block; font-size:10px; font-weight:700; padding:2px 8px; border-radius:4px; background:#e8f5e9; color:#2e7d32; border:1px solid #b8ddc5; }
+    .owasp-tag { display:inline-block; font-size:10px; font-weight:700; padding:2px 8px; border-radius:4px; background:#e3f2fd; color:#1565c0; border:1px solid #90caf9; margin-left:6px; }
+    .good-have-banner {
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      border: 2px solid #5147A9; border-radius: 12px;
+      padding: 18px 22px; margin: 16px 0;
+      display: flex; gap: 16px; align-items: flex-start;
+    }
+    .good-have-icon { font-size: 32px; flex-shrink: 0; }
+    .good-have-title { font-size: 16px; font-weight: 700; color: #c8c2ff; margin-bottom: 6px; }
+    .good-have-body { font-size: 13px; color: #a0a8c0; line-height: 1.7; }
+  </style>
 </head>
 <body>
 <div class="page-wrap">
@@ -15,94 +45,349 @@
   </nav>
   <header class="page-header">
     <div class="sem-badge sem-4">Semester 4 — Production</div>
-    <h1>Testing — UAT, Regression Suite &amp; Security Scan</h1>
+    <h1>Testing — UAT, Regression Suite &amp; Security Testing</h1>
     <div class="project-tag">Example Project: <strong>Online Food Delivery System</strong></div>
-    <p class="header-desc">Semester 4 testing focuses on final validation before production: User Acceptance Testing by stakeholders, a full regression suite to verify nothing is broken, and a security scan to identify vulnerabilities.</p>
+    <p class="header-desc">Semester 4 testing is the final validation before production. Sections are labelled  (UAT, Regression) or <span class="badge-good-to-have">⭐ Good to Have</span> (Security Testing) so you know where to focus your time.</p>
   </header>
+  <nav class="topic-nav blue-nav">
+    <div class="topic-nav-label">Jump to section</div>
+    <a href="#uat">1. UAT</a>
+    <a href="#regression">2. Regression Suite</a>
+    <a href="#security-overview">3. Security Testing Overview</a>
+    <a href="#security-use-cases">4. Security Test Cases</a>
+    <a href="#owasp-scan">5. OWASP ZAP Scan</a>
+  </nav>
 
-  <section class="section">
+  <!-- Good-to-have notice -->
+  <div class="good-have-banner">
+    <div class="good-have-icon">✨</div>
+    <div>
+      <div class="good-have-title">Security Testing — "Good to Have" for MCA Students</div>
+      <div class="good-have-body">
+        UAT and Regression are <strong>required</strong> deliverables for every MCA project. Security testing is <em>above and beyond</em> — most student projects skip it entirely. If you include even 5–6 security test cases with OWASP references and evidence of fixes, it will <strong>significantly impress evaluators</strong> and differentiates your project from others. The good news: the basic tests are easy to run once you know what to look for.
+      </div>
+    </div>
+  </div>
+
+  <!-- ── UAT ── -->
+  <section class="section" id="uat">
     <div class="section-header">
       <div class="section-icon icon-blue">👤</div>
       <div class="section-title-group">
-        <h2>UAT — User Acceptance Testing</h2>
+        <div class="tier-row"><h2>1. UAT — User Acceptance Testing</h2></div>
         <p>Stakeholders validate the system meets their expectations</p>
       </div>
     </div>
-    <p><strong>UAT</strong> is the final testing phase where the "business" (in your case: faculty guide + project sponsor) confirms the system satisfies the original requirements. It is not a developer activity — developers fix issues found here, but don't run the tests.</p>
+    <p><strong>UAT</strong> is the final testing phase where the "business" (faculty guide + project sponsor) confirms the system satisfies the original requirements. It is not a developer activity — developers fix issues found here, but don't run the tests.</p>
     <h3>UAT Plan for Food Delivery</h3>
     <table>
       <thead><tr><th>Scenario</th><th>Tester</th><th>Acceptance Condition</th></tr></thead>
       <tbody>
         <tr><td>Register and place first order</td><td>Faculty guide (as customer)</td><td>Order confirmed within 30 seconds; confirmation email received</td></tr>
-        <tr><td>Restaurant owner accepts order</td><td>Faculty guide (as restaurant)</td><td>Order visible on dashboard; accepted within 5 minutes; customer status updates</td></tr>
-        <tr><td>Full payment flow (online payment)</td><td>Faculty guide</td><td>Razorpay sandbox payment succeeds; invoice emailed</td></tr>
-        <tr><td>Admin approves a restaurant</td><td>Faculty guide (as admin)</td><td>Restaurant becomes visible to customers after approval</td></tr>
+        <tr><td>Restaurant owner accepts order</td><td>Faculty guide (as restaurant)</td><td>Order visible on dashboard; accepted; customer status updates</td></tr>
+        <tr><td>Full online payment flow</td><td>Faculty guide</td><td>Razorpay sandbox succeeds; invoice emailed</td></tr>
+        <tr><td>Admin approves a restaurant</td><td>Faculty guide (as admin)</td><td>Restaurant visible to customers after approval</td></tr>
         <tr><td>System performance under 20 users</td><td>QA team (load test)</td><td>All pages load under 3 seconds</td></tr>
       </tbody>
     </table>
-    <h3>UAT Sign-Off</h3>
-    <p>At the end of UAT, the faculty guide signs a <strong>UAT Acceptance Certificate</strong> — a single-page document confirming all UAT scenarios passed. This is a critical project deliverable for the final submission.</p>
+    <div class="info-box blue">
+      <div class="info-box-title">UAT Sign-Off Certificate</div>
+      <p style="margin:0">At the end of UAT, the faculty guide signs a <strong>UAT Acceptance Certificate</strong> — a one-page document confirming all scenarios passed and the system is accepted for production. This is a critical deliverable for the final submission report.</p>
+    </div>
   </section>
 
-  <section class="section">
+  <!-- ── Regression ── -->
+  <section class="section" id="regression">
     <div class="section-header">
       <div class="section-icon icon-blue">🔁</div>
       <div class="section-title-group">
-        <h2>Regression Suite</h2>
+        <div class="tier-row"><h2>2. Regression Suite</h2></div>
         <p>Ensuring new code hasn't broken existing functionality</p>
       </div>
     </div>
-    <p>A <strong>regression test suite</strong> is a set of tests that verify all previously working functionality still works after new code changes. In Semester 4, every hotfix and patch must pass the full regression suite before being deployed to production.</p>
+    <p>A <strong>regression suite</strong> re-verifies all previously working functionality after new code changes. In Semester 4, every hotfix must pass the full regression suite before deploying to production.</p>
     <h3>Regression Suite for Food Delivery</h3>
     <ul>
-      <li>All 89 unit tests (run automatically via CI/CD).</li>
-      <li>All 35 integration tests (run automatically via CI/CD).</li>
-      <li>Critical E2E scenarios (run manually before each production deploy):
+      <li>All unit tests (Jest) — run automatically on every PR via GitHub Actions.</li>
+      <li>All integration tests (Jest + Supertest) — run automatically via CI.</li>
+      <li>Critical E2E scenarios run manually before each production deploy:
         <ul>
-          <li>Customer end-to-end order flow (add to cart → pay → track).</li>
-          <li>Restaurant order acceptance flow.</li>
-          <li>Delivery partner pickup and deliver flow.</li>
-          <li>Admin restaurant approval flow.</li>
-          <li>Password reset flow.</li>
+          <li>Customer end-to-end: add to cart → pay → track → delivered</li>
+          <li>Restaurant owner: accept order → mark ready</li>
+          <li>Delivery partner: pickup → deliver → status update</li>
+          <li>Admin: approve restaurant, suspend user</li>
+          <li>Password reset flow</li>
         </ul>
       </li>
     </ul>
     <div class="info-box blue">
-      <div class="info-box-title">Automated Regression in CI</div>
-      <p style="margin:0">Unit and integration tests run automatically on every PR (GitHub Actions). E2E tests can be run in GitHub Actions on a schedule (e.g., every night) using Playwright's headless browser mode. This gives you continuous regression coverage without manual effort.</p>
+      <div class="info-box-title">Automated Regression in CI/CD</div>
+      <p style="margin:0">Unit and integration tests run on every PR (GitHub Actions). Schedule Playwright E2E tests to run nightly: <code>schedule: cron: '0 2 * * *'</code> in your workflow YAML. This gives continuous regression coverage without manual effort.</p>
     </div>
   </section>
 
-  <section class="section">
+  <!-- ── Security Overview ── -->
+  <section class="section" id="security-overview">
     <div class="section-header">
       <div class="section-icon icon-blue">🔒</div>
       <div class="section-title-group">
-        <h2>Security Scan</h2>
-        <p>Finding and fixing vulnerabilities before production launch</p>
+        <div class="tier-row"><h2>3. Security Testing Overview</h2><span class="badge-good-to-have">⭐ Good to Have</span></div>
+        <p>What to test, the OWASP Top 10, and how to approach it</p>
       </div>
     </div>
-    <h3>Security Checklist for Food Delivery</h3>
+    <div class="tier-banner good-to-have">⭐ Good to Have — Sections 3, 4, and 5 are all optional but will strongly impress evaluators if included.</div>
+
+    <p>Security testing verifies that the system is resistant to attacks. For a food delivery app, the two most valuable things to protect are <strong>user data</strong> (PII, payment info) and <strong>business logic</strong> (orders can only be placed by verified customers, not bots).</p>
+
+    <h3>Relevant OWASP Top 10 for a Food Delivery App</h3>
     <table>
-      <thead><tr><th>Vulnerability</th><th>Check</th><th>Tool</th></tr></thead>
+      <thead><tr><th>#</th><th>OWASP Category</th><th>What it means for Food Delivery</th><th>Priority</th></tr></thead>
       <tbody>
-        <tr><td>SQL Injection</td><td>All DB queries use ORM or parameterised queries — no string concatenation</td><td>Manual code review + OWASP ZAP</td></tr>
-        <tr><td>XSS (Cross-Site Scripting)</td><td>All user inputs escaped before rendering; CSP header set</td><td>OWASP ZAP active scan</td></tr>
-        <tr><td>CSRF</td><td>Express.js CSRF protection enabled; all state-changing requests require CSRF token</td><td>Express.js built-in + OWASP ZAP</td></tr>
-        <tr><td>Broken Auth</td><td>JWTs expire after 60 minutes; refresh tokens used correctly</td><td>Manual testing</td></tr>
-        <tr><td>Sensitive Data Exposure</td><td>Passwords hashed with bcrypt; no PII in logs; HTTPS enforced</td><td>DB inspection + Sentry config review</td></tr>
-        <tr><td>Broken Access Control</td><td>Customers cannot access admin/restaurant/partner endpoints</td><td>Manual API testing in Postman</td></tr>
-        <tr><td>Outdated Dependencies</td><td>No known CVEs in dependencies</td><td><code class="code-inline">pip audit</code> / <code class="code-inline">npm audit</code></td></tr>
+        <tr><td><strong>A01</strong></td><td>Broken Access Control</td><td>Customer A can view/cancel Customer B's orders; customer calls admin APIs</td><td><span class="sev-high">HIGH</span></td></tr>
+        <tr><td><strong>A02</strong></td><td>Cryptographic Failures</td><td>Passwords stored in plain text; JWTs signed with weak secret; HTTP instead of HTTPS</td><td><span class="sev-high">HIGH</span></td></tr>
+        <tr><td><strong>A03</strong></td><td>Injection</td><td>SQL injection via search input or order notes; NoSQL injection</td><td><span class="sev-high">HIGH</span></td></tr>
+        <tr><td><strong>A04</strong></td><td>Insecure Design</td><td>No rate limiting on login → brute-force attack; no minimum order validation in backend</td><td><span class="sev-medium">MEDIUM</span></td></tr>
+        <tr><td><strong>A07</strong></td><td>Identification &amp; Auth Failures</td><td>JWT never expires; no token revocation; session fixation</td><td><span class="sev-high">HIGH</span></td></tr>
+        <tr><td><strong>A09</strong></td><td>Security Logging Failures</td><td>Failed login attempts not logged; sensitive data written to logs</td><td><span class="sev-medium">MEDIUM</span></td></tr>
+        <tr><td><strong>A10</strong></td><td>SSRF</td><td>URL parameter used to fetch external resource (e.g., menu image URL) without validation</td><td><span class="sev-low">LOW</span></td></tr>
       </tbody>
     </table>
-    <h3>Run OWASP ZAP (Free)</h3>
-    <div class="code-block"># Install OWASP ZAP (Docker)
+
+    <h3>Testing Approach by Method</h3>
+    <table>
+      <thead><tr><th>Method</th><th>What it finds</th><th>Tool</th><th>Effort</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Manual API testing</strong></td><td>Broken access control, IDOR, business logic flaws</td><td>Postman / curl</td><td>Low — just craft the right requests</td></tr>
+        <tr><td><strong>JWT manipulation</strong></td><td>Weak JWT secret, unsigned tokens, role tampering</td><td>jwt.io / Burp Suite</td><td>Low — decode and re-sign</td></tr>
+        <tr><td><strong>Dependency scan</strong></td><td>Known CVEs in npm packages</td><td><code>npm audit</code></td><td>Very low — one command</td></tr>
+        <tr><td><strong>Automated scan</strong></td><td>XSS, injection, header issues</td><td>OWASP ZAP</td><td>Medium — run against staging</td></tr>
+        <tr><td><strong>Code review</strong></td><td>Hardcoded secrets, raw SQL, unsafe eval</td><td>ESLint + manual</td><td>Low — grep for patterns</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ── Security Test Cases ── -->
+  <section class="section" id="security-use-cases">
+    <div class="section-header">
+      <div class="section-icon icon-blue">🧪</div>
+      <div class="section-title-group">
+        <h2>4. Security Test Cases</h2>
+        <p>Concrete test cases for the most impactful vulnerabilities</p>
+      </div>
+    </div>
+
+    <div class="info-box blue">
+      <div class="info-box-title">How to Read These Test Cases</div>
+      <p style="margin:0">Each test case below is something a malicious user or attacker might try. Your job is to confirm that the system <strong>correctly blocks or rejects</strong> the attack. A PASS here means the attack was stopped. A FAIL means a real vulnerability exists that must be fixed.</p>
+    </div>
+
+    <h3>Category 1 — Broken Access Control (IDOR)</h3>
+
+    <div class="sec-tc high">
+      <div class="sec-id high">SEC-01 · OWASP A01 <span class="owasp-tag">IDOR</span></div>
+      <div class="sec-title">Customer A reads Customer B's order details <span class="sev-high">HIGH</span></div>
+      <table class="sec-table">
+        <tr><td>Scenario</td><td>Every order has an integer ID (e.g., /api/orders/42). If the API doesn't check ownership, Customer A can read any order by guessing the ID.</td></tr>
+        <tr><td>Precondition</td><td>Two accounts exist: customer_a@test.com (owns order 42), customer_b@test.com (owns order 43).</td></tr>
+        <tr><td>Steps</td><td>1. Login as Customer B → get JWT token.<br>2. GET /api/orders/42 with Customer B's token.<br>3. Inspect response.</td></tr>
+        <tr><td>Expected</td><td>HTTP 403 · error: "PERMISSION_DENIED" · no order data returned.</td></tr>
+        <tr><td>Actual (buggy)</td><td>HTTP 200 · Full order details of Customer A's order returned. ← This is a real vulnerability.</td></tr>
+        <tr><td>Fix</td><td>In the order query: <code>WHERE id = :id AND customer_id = req.user.id</code> — always scope queries to the authenticated user.</td></tr>
+        <tr><td>Verified by</td><td>Re-run SEC-01 after fix → must return 403.</td></tr>
+      </table>
+    </div>
+
+    <div class="sec-tc high">
+      <div class="sec-id high">SEC-02 · OWASP A01 <span class="owasp-tag">Broken Access Control</span></div>
+      <div class="sec-title">Customer calls an Admin-only endpoint <span class="sev-high">HIGH</span></div>
+      <table class="sec-table">
+        <tr><td>Scenario</td><td>The admin endpoint PATCH /api/admin/restaurants/:id/approve should only be callable by users with role=ADMIN.</td></tr>
+        <tr><td>Steps</td><td>1. Login as a regular customer → get token.<br>2. PATCH /api/admin/restaurants/7/approve with customer's token.<br>3. Inspect response.</td></tr>
+        <tr><td>Expected</td><td>HTTP 403 · error: "PERMISSION_DENIED"</td></tr>
+        <tr><td>Actual (buggy)</td><td>HTTP 200 · Restaurant approved. ← Authorization not checked.</td></tr>
+        <tr><td>Fix</td><td>Ensure <code>authorize('ADMIN')</code> middleware wraps every admin route. Add automated test that asserts CUSTOMER role receives 403 on all /api/admin/* routes.</td></tr>
+      </table>
+    </div>
+
+    <div class="sec-tc high">
+      <div class="sec-id high">SEC-03 · OWASP A01 <span class="owasp-tag">Mass Assignment</span></div>
+      <div class="sec-title">User promotes themselves to Admin role via API body <span class="sev-high">HIGH</span></div>
+      <table class="sec-table">
+        <tr><td>Scenario</td><td>If the update-profile endpoint blindly passes the request body to the ORM, an attacker can add <code>"role": "ADMIN"</code> to the update payload.</td></tr>
+        <tr><td>Steps</td><td>1. Login as customer.<br>2. PATCH /api/users/me with body: <code>{"name": "Priya", "role": "ADMIN"}</code>.<br>3. GET /api/users/me and check the role field.</td></tr>
+        <tr><td>Expected</td><td>Role remains "CUSTOMER". The <code>role</code> field is silently ignored (not a 400 error, just not updated).</td></tr>
+        <tr><td>Fix</td><td>Use an explicit allowlist of updatable fields: <code>const { name, phone } = req.body</code> — never spread the whole body into a DB update.</td></tr>
+      </table>
+    </div>
+
+    <h3>Category 2 — Authentication &amp; JWT Vulnerabilities</h3>
+
+    <div class="sec-tc high">
+      <div class="sec-id high">SEC-04 · OWASP A07 <span class="owasp-tag">JWT Tampering</span></div>
+      <div class="sec-title">Attacker tampers with JWT payload to change their role to Admin <span class="sev-high">HIGH</span></div>
+      <table class="sec-table">
+        <tr><td>Scenario</td><td>A JWT has three parts: header.payload.signature. If the server doesn't verify the signature properly, an attacker can decode the payload, change <code>"role":"CUSTOMER"</code> to <code>"role":"ADMIN"</code>, and re-encode it.</td></tr>
+        <tr><td>Steps</td><td>1. Login as customer → copy the access token.<br>2. Go to jwt.io → paste token → modify payload: <code>"role": "ADMIN"</code>.<br>3. Change the signing algorithm to "none" (Algorithm: none attack).<br>4. Use the modified token to call GET /api/admin/users/.<br>5. Inspect response.</td></tr>
+        <tr><td>Expected</td><td>HTTP 401 · error: "INVALID_TOKEN" — signature verification fails.</td></tr>
+        <tr><td>Fix</td><td>Use <code>jwt.verify(token, process.env.JWT_SECRET, { algorithms: ['HS256'] })</code> — explicitly whitelist the algorithm. Never accept "alg: none".</td></tr>
+      </table>
+    </div>
+
+    <div class="sec-tc medium">
+      <div class="sec-id medium">SEC-05 · OWASP A07 <span class="owasp-tag">Brute Force</span></div>
+      <div class="sec-title">Attacker brute-forces login with 100 password attempts <span class="sev-medium">MEDIUM</span></div>
+      <table class="sec-table">
+        <tr><td>Scenario</td><td>If there's no rate limiting on POST /api/auth/login, an attacker can try thousands of passwords per minute against any account.</td></tr>
+        <tr><td>Steps</td><td>1. Write a loop sending 100 POST /api/auth/login requests in 10 seconds with different passwords.<br>2. Observe whether all 100 requests are processed or if the API starts rejecting them.</td></tr>
+        <tr><td>Expected</td><td>After 5 failed attempts within 5 minutes, subsequent attempts return HTTP 429 Too Many Requests.</td></tr>
+        <tr><td>Fix</td><td>Install <code>express-rate-limit</code>: <code>limiter = rateLimit({ windowMs: 5*60*1000, max: 5, message: 'Too many login attempts' })</code> — apply to the login route only.</td></tr>
+      </table>
+    </div>
+
+    <div class="sec-tc medium">
+      <div class="sec-id medium">SEC-06 · OWASP A07 <span class="owasp-tag">Token Expiry</span></div>
+      <div class="sec-title">Expired JWT is accepted after 24 hours <span class="sev-medium">MEDIUM</span></div>
+      <table class="sec-table">
+        <tr><td>Steps</td><td>1. Login and save the access token.<br>2. Wait until the token is past its expiry (or manually set a past exp in a test).<br>3. Make an API call with the expired token.</td></tr>
+        <tr><td>Expected</td><td>HTTP 401 · error: "TOKEN_EXPIRED"</td></tr>
+        <tr><td>Fix</td><td>Set <code>expiresIn: '15m'</code> when signing access tokens. Implement a refresh token endpoint so the frontend can silently renew.</td></tr>
+      </table>
+    </div>
+
+    <h3>Category 3 — Injection</h3>
+
+    <div class="sec-tc medium">
+      <div class="sec-id medium">SEC-07 · OWASP A03 <span class="owasp-tag">SQL Injection</span></div>
+      <div class="sec-title">SQL injection via restaurant search parameter <span class="sev-medium">MEDIUM</span></div>
+      <table class="sec-table">
+        <tr><td>Scenario</td><td>If the restaurant search is built by concatenating user input into a SQL string, an attacker can extract or destroy data.</td></tr>
+        <tr><td>Steps</td><td>1. GET /api/restaurants?search=Biryani' OR '1'='1<br>2. Observe whether all restaurants are returned (injection worked) or just restaurants with "Biryani" in the name.</td></tr>
+        <tr><td>Expected</td><td>Returns only restaurants matching "Biryani' OR '1'='1" as a literal string — which is zero results. No data leak.</td></tr>
+        <tr><td>Fix</td><td>Use Prisma's parameterised queries: <code>prisma.restaurant.findMany({ where: { name: { contains: searchTerm } } })</code> — Prisma always uses parameterised queries. Never use raw template literals with user input.</td></tr>
+      </table>
+    </div>
+
+    <div class="sec-tc low">
+      <div class="sec-id">SEC-08 · OWASP A03 <span class="owasp-tag">XSS</span></div>
+      <div class="sec-title">Stored XSS via restaurant review text <span class="sev-low">LOW</span></div>
+      <table class="sec-table">
+        <tr><td>Scenario</td><td>If review text is stored and displayed without sanitisation, an attacker can inject a script that runs in every other user's browser when they view the review.</td></tr>
+        <tr><td>Steps</td><td>1. Submit a review with comment: <code>&lt;script&gt;alert('XSS')&lt;/script&gt;</code><br>2. Open the restaurant's review page in a browser.<br>3. Observe whether an alert box appears.</td></tr>
+        <tr><td>Expected</td><td>The text <code>&lt;script&gt;…&lt;/script&gt;</code> is rendered as literal text, not executed. No alert box.</td></tr>
+        <tr><td>Fix</td><td>In the frontend: use React's JSX (auto-escapes HTML) or <code>textContent</code> instead of <code>innerHTML</code>. In the backend: sanitise with the <code>dompurify</code> or <code>validator</code> package before saving.</td></tr>
+      </table>
+    </div>
+
+    <h3>Category 4 — Sensitive Data &amp; Dependency Issues</h3>
+
+    <div class="sec-tc high">
+      <div class="sec-id high">SEC-09 · OWASP A02 <span class="owasp-tag">Crypto Failure</span></div>
+      <div class="sec-title">Passwords stored in plain text in the database <span class="sev-high">HIGH</span></div>
+      <table class="sec-table">
+        <tr><td>Steps</td><td>1. Register a new user with password <code>TestPass@123</code>.<br>2. Directly query the <code>users</code> table in the database.<br>3. Check the <code>password_hash</code> column for user.</td></tr>
+        <tr><td>Expected</td><td>Column shows a bcrypt hash like <code>$2b$12$eImiTXuWVxfM37uY4JANj.</code> — not the original password.</td></tr>
+        <tr><td>Fix</td><td><code>const hash = await bcrypt.hash(password, 12)</code> — always hash with bcrypt (cost factor ≥ 10) before storing. Never store plain or MD5/SHA1 hashed passwords.</td></tr>
+      </table>
+    </div>
+
+    <div class="sec-tc low">
+      <div class="sec-id">SEC-10 · OWASP A06 <span class="owasp-tag">Known CVEs</span></div>
+      <div class="sec-title">npm packages contain known vulnerabilities <span class="sev-low">LOW</span></div>
+      <table class="sec-table">
+        <tr><td>Steps</td><td>1. Run <code>npm audit</code> in the project root.<br>2. Note any High or Critical severity advisories.</td></tr>
+        <tr><td>Expected</td><td>0 high/critical vulnerabilities. If any exist, <code>npm audit fix</code> resolves most automatically.</td></tr>
+        <tr><td>Fix</td><td>Run <code>npm audit fix</code>. For breaking changes: <code>npm audit fix --force</code> then re-run tests. Add <code>npm audit --audit-level=high</code> as a step in your GitHub Actions CI to block PRs with high CVEs.</td></tr>
+      </table>
+    </div>
+
+    <h3>Security Test Summary Table</h3>
+    <table>
+      <thead><tr><th>TC ID</th><th>Vulnerability</th><th>OWASP</th><th>Severity</th><th>Easy to Test?</th></tr></thead>
+      <tbody>
+        <tr><td>SEC-01</td><td>IDOR — access another user's order</td><td>A01</td><td><span class="sev-high">HIGH</span></td><td>Yes — just change the order ID in Postman</td></tr>
+        <tr><td>SEC-02</td><td>Customer calls admin endpoint</td><td>A01</td><td><span class="sev-high">HIGH</span></td><td>Yes — use customer token on admin route</td></tr>
+        <tr><td>SEC-03</td><td>Mass assignment — self-promote to admin</td><td>A01</td><td><span class="sev-high">HIGH</span></td><td>Yes — add "role":"ADMIN" to update body</td></tr>
+        <tr><td>SEC-04</td><td>JWT "alg:none" tampering attack</td><td>A07</td><td><span class="sev-high">HIGH</span></td><td>Yes — use jwt.io decoder</td></tr>
+        <tr><td>SEC-05</td><td>Brute-force login (no rate limiting)</td><td>A07</td><td><span class="sev-medium">MEDIUM</span></td><td>Yes — write a 10-line script</td></tr>
+        <tr><td>SEC-06</td><td>Expired JWT still accepted</td><td>A07</td><td><span class="sev-medium">MEDIUM</span></td><td>Yes — check token expiry setting</td></tr>
+        <tr><td>SEC-07</td><td>SQL injection via search param</td><td>A03</td><td><span class="sev-medium">MEDIUM</span></td><td>Yes — Postman with special chars</td></tr>
+        <tr><td>SEC-08</td><td>Stored XSS in review text</td><td>A03</td><td><span class="sev-low">LOW</span></td><td>Yes — submit &lt;script&gt; tag in review</td></tr>
+        <tr><td>SEC-09</td><td>Plain-text passwords in DB</td><td>A02</td><td><span class="sev-high">HIGH</span></td><td>Yes — query DB directly</td></tr>
+        <tr><td>SEC-10</td><td>Known CVEs in npm packages</td><td>A06</td><td><span class="sev-low">LOW</span></td><td>Yes — one command: npm audit</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ── OWASP ZAP ── -->
+  <section class="section" id="owasp-scan">
+    <div class="section-header">
+      <div class="section-icon icon-blue">🕵️</div>
+      <div class="section-title-group">
+        <h2>5. OWASP ZAP Automated Scan</h2>
+        <p>Running a free automated security scanner against your staging environment</p>
+      </div>
+    </div>
+
+    <p>OWASP ZAP (Zed Attack Proxy) is a free, open-source security scanner maintained by OWASP. Run it against your <em>staging</em> URL — never against production or other people's sites.</p>
+
+    <h3>Run OWASP ZAP (Docker — no install needed)</h3>
+    <div class="code-block"># Pull the official OWASP ZAP image
 docker pull ghcr.io/zaproxy/zaproxy:stable
 
-# Run baseline scan against your staging URL
+# Run a baseline scan — passive checks, no active attacks
+# Replace the URL with your staging URL
 docker run -t ghcr.io/zaproxy/zaproxy:stable zap-baseline.py \
   -t https://food-staging.render.com \
-  -r zap_report.html</div>
-    <p>ZAP will scan your staging site and produce an HTML report listing all found vulnerabilities by severity. Fix High and Medium severity issues before production launch.</p>
+  -r zap_report.html
+
+# Run a full active scan (more thorough — takes 10–30 min)
+docker run -t ghcr.io/zaproxy/zaproxy:stable zap-full-scan.py \
+  -t https://food-staging.render.com \
+  -r zap_full_report.html</div>
+
+    <h3>Reading the ZAP Report</h3>
+    <table>
+      <thead><tr><th>Alert Level</th><th>Action</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td><span class="sev-high">HIGH</span></td><td>Must fix before production launch</td><td>SQL injection found, missing auth on endpoint</td></tr>
+        <tr><td><span class="sev-medium">MEDIUM</span></td><td>Fix before final submission</td><td>Missing Content-Security-Policy header, no rate limiting</td></tr>
+        <tr><td><span class="sev-low">LOW</span></td><td>Note in project report; fix if time permits</td><td>Missing X-Content-Type-Options header</td></tr>
+        <tr><td>Informational</td><td>Informational only — no action needed</td><td>Server header reveals Express.js version</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Quick Security Headers Fix (Express.js)</h3>
+    <div class="code-block">// src/app.js — add before route registration
+const helmet = require('helmet');
+
+app.use(helmet());
+// helmet() sets 15 security headers in one line, including:
+//   Content-Security-Policy
+//   X-Content-Type-Options: nosniff
+//   X-Frame-Options: DENY
+//   Strict-Transport-Security (HSTS)
+//   X-XSS-Protection
+
+// Rate limiting for auth endpoints
+const rateLimit = require('express-rate-limit');
+const loginLimiter = rateLimit({
+  windowMs: 5 * 60 * 1000,   // 5 minutes
+  max: 5,                     // max 5 attempts per window
+  message: { error: 'TOO_MANY_ATTEMPTS', retryAfter: '5 minutes' }
+});
+app.use('/api/auth/login', loginLimiter);</div>
+
+    <div class="info-box blue">
+      <div class="info-box-title">What to Include in Your Project Report</div>
+      <p style="margin:0">
+        To impress evaluators, include a 2-page "Security Testing" appendix in your final report:
+        <strong>(1)</strong> OWASP ZAP scan results screenshot (before &amp; after fixes),
+        <strong>(2)</strong> table of security TCs with PASS/FAIL,
+        <strong>(3)</strong> npm audit output showing 0 high vulnerabilities,
+        <strong>(4)</strong> brief paragraph explaining how bcrypt, JWT expiry, and helmet protect the system.
+        This takes one afternoon and sets your project apart from 90% of other MCA submissions.
+      </p>
+    </div>
   </section>
 
   <footer>

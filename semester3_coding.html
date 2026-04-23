@@ -17,7 +17,7 @@
     <div class="sem-badge sem-3">Semester 3 — Deliver</div>
     <h1>Coding — Frontend, Integration &amp; Feature Completion</h1>
     <div class="project-tag">Example Project: <strong>Online Food Delivery System</strong></div>
-    <p class="header-desc">Semester 3 completes the frontend, integrates all layers together, and refactors code to production quality. Every feature from the SRS is either implemented or explicitly deferred.</p>
+    <p class="header-desc">Semester 3 completes the frontend, integrates all layers together, and refactors code to production quality. Every feature from the SRS is either implemented or explicitly deferred. Sections marked <span class="badge-good-to-have">⭐ Good to Have</span> are optional enhancements — do them if core features are complete and time allows.</p>
   </header>
   <nav class="topic-nav orange-nav">
     <div class="topic-nav-label">Jump to section</div>
@@ -25,17 +25,24 @@
     <a href="#integration">2. Integration Layer</a>
     <a href="#feature-complete">3. Feature Completion</a>
     <a href="#refactoring">4. Refactoring</a>
+    <a href="#websocket">5. Real-Time (WebSocket)</a>
   </nav>
 
+  <!-- ============================================================ -->
   <section class="section" id="frontend">
     <div class="section-header">
       <div class="section-icon icon-orange">🎨</div>
       <div class="section-title-group">
-        <h2>1. Frontend / UI Completion</h2>
+        <div class="tier-row">
+          <h2>1. Frontend / UI Completion</h2>
+          
+        </div>
         <p>Building all remaining screens to production quality</p>
       </div>
     </div>
-    <p>Semester 3 completes all frontend screens that weren't finished in Semester 2. The focus is on polish: responsive design, loading states, error states, and empty states.</p>
+
+    <p>Semester 3 completes all frontend screens not finished in Semester 2. The focus is on polish: responsive design, loading states, error states, and empty states.</p>
+
     <h3>Frontend Checklist by Portal</h3>
     <table>
       <thead><tr><th>Portal</th><th>Screen</th><th>Status Target</th></tr></thead>
@@ -44,7 +51,7 @@
         <tr><td>Restaurant detail — menu with categories</td><td>Images loaded from Cloudinary</td></tr>
         <tr><td>Cart — quantity controls, subtotal</td><td>Persists across pages (localStorage)</td></tr>
         <tr><td>Checkout — address + payment selection</td><td>Single page, no redirect loops</td></tr>
-        <tr><td>Order tracking — live status timeline</td><td>Auto-refresh every 15s or WebSocket</td></tr>
+        <tr><td>Order tracking — live status timeline</td><td>Auto-refresh every 15 s or WebSocket</td></tr>
         <tr><td>Order history — with reorder button</td><td>Paginated (20 per page)</td></tr>
         <tr><td>Profile — address management</td><td>Add, edit, delete, set default</td></tr>
         <tr><td rowspan="3"><strong>Restaurant Portal</strong></td><td>Dashboard — incoming orders</td><td>Real-time notification badge</td></tr>
@@ -57,6 +64,7 @@
         <tr><td>Analytics dashboard</td><td>Orders today, revenue, top restaurants</td></tr>
       </tbody>
     </table>
+
     <h3>Frontend Error States (Often Forgotten)</h3>
     <div class="info-box orange">
       <div class="info-box-title">Always Handle These States</div>
@@ -65,37 +73,66 @@
         <li><strong>Empty state:</strong> "No restaurants found" instead of blank page.</li>
         <li><strong>Error state:</strong> "Something went wrong, please try again" with retry button.</li>
         <li><strong>Offline state:</strong> Browser offline detection with user-friendly message.</li>
-        <li><strong>403/401:</strong> Redirect to login page (don't show blank screen).</li>
+        <li><strong>403/401:</strong> Redirect to login page (don't show a blank screen).</li>
       </ul>
     </div>
+
+    <h3>React Component — Order Status Timeline</h3>
+    <div class="code-block">// src/components/OrderTimeline.jsx
+const STEPS = ['Confirmed', 'Preparing', 'Out for Delivery', 'Delivered'];
+
+export function OrderTimeline({ currentStatus }) {
+  const currentIndex = STEPS.indexOf(currentStatus);
+
+  return (
+    &lt;div className="timeline"&gt;
+      {STEPS.map((step, i) =&gt; (
+        &lt;div key={step} className={`step ${i &lt;= currentIndex ? 'done' : ''}`}&gt;
+          &lt;div className="dot"&gt;{i &lt; currentIndex ? '✓' : i + 1}&lt;/div&gt;
+          &lt;span&gt;{step}&lt;/span&gt;
+        &lt;/div&gt;
+      ))}
+    &lt;/div&gt;
+  );
+}
+
+// Usage:
+// &lt;OrderTimeline currentStatus="Preparing" /&gt;
+// — dots 1 (Confirmed) and 2 (Preparing) will be highlighted</div>
   </section>
 
+  <!-- ============================================================ -->
   <section class="section" id="integration">
     <div class="section-header">
       <div class="section-icon icon-orange">🔗</div>
       <div class="section-title-group">
-        <h2>2. Integration Layer</h2>
+        <div class="tier-row">
+          <h2>2. Integration Layer</h2>
+          
+        </div>
         <p>Connecting frontend to backend and all external services</p>
       </div>
     </div>
-    <p>Integration means ensuring that all parts of the system work together correctly — the frontend calls the right API endpoints, error responses from the backend are displayed properly on the frontend, and all external services (payment, email, image storage) work in the integrated system.</p>
+
+    <p>Integration means ensuring that all parts of the system work together correctly — the frontend calls the right API endpoints, error responses from the backend are shown properly on the frontend, and all external services (payment, email, image storage) work in the integrated system.</p>
+
     <h3>Frontend API Client (React / Axios)</h3>
     <div class="code-block">// src/api/client.js
 import axios from 'axios';
 
 const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL, // from .env
+  baseURL: import.meta.env.VITE_API_BASE_URL,  // e.g. https://food-api.render.com
   headers: { 'Content-Type': 'application/json' }
 });
 
-// Attach JWT token to every request
+// Attach JWT token to every request automatically
 apiClient.interceptors.request.use(config => {
   const token = localStorage.getItem('accessToken');
   if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
 
-// Handle 401 — redirect to login
+// Handle 401 globally — redirect to login
 apiClient.interceptors.response.use(
   response => response,
   error => {
@@ -108,60 +145,375 @@ apiClient.interceptors.response.use(
 );
 
 export default apiClient;</div>
-    <h3>CORS Configuration (Backend)</h3>
-    <div class="code-block"># settings/production.py
-CORS_ALLOWED_ORIGINS = [
-    "https://your-frontend.vercel.app",
-]
-CORS_ALLOW_CREDENTIALS = True  # Required for cookie-based auth</div>
+
+    <h3>Using the API Client in a Component</h3>
+    <div class="code-block">// src/pages/RestaurantList.jsx
+import { useState, useEffect } from 'react';
+import apiClient from '../api/client';
+
+export function RestaurantList() {
+  const [restaurants, setRestaurants] = useState([]);
+  const [loading, setLoading]         = useState(true);
+  const [error, setError]             = useState(null);
+
+  useEffect(() => {
+    apiClient.get('/api/restaurants')
+      .then(res => setRestaurants(res.data.data))
+      .catch(err => setError(err.message))
+      .finally(() => setLoading(false));
+  }, []);
+
+  if (loading) return &lt;Spinner /&gt;;
+  if (error)   return &lt;ErrorBanner message={error} /&gt;;
+  if (!restaurants.length) return &lt;EmptyState text="No restaurants found" /&gt;;
+
+  return restaurants.map(r =&gt; &lt;RestaurantCard key={r.id} restaurant={r} /&gt;);
+}</div>
+
+    <h3>CORS Configuration (Node.js / Express Backend)</h3>
+    <div class="code-block">// src/app.js
+const cors = require('cors');
+
+const allowedOrigins = [
+  'http://localhost:5173',              // local Vite dev server
+  'https://your-frontend.vercel.app',  // production frontend
+];
+
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error(`CORS blocked: ${origin}`));
+    }
+  },
+  credentials: true,  // required if you use cookies/sessions
+}));</div>
+
+    <h3>External Service Integration Checklist</h3>
+    <table>
+      <thead><tr><th>Service</th><th>Purpose</th><th>Integration Point</th><th>Test It By</th></tr></thead>
+      <tbody>
+        <tr><td>Razorpay / Stripe</td><td>Payment processing</td><td>Backend: <code class="code-inline">POST /api/payments/create-order</code></td><td>Use sandbox keys + test card</td></tr>
+        <tr><td>Cloudinary</td><td>Image storage</td><td>Backend: image upload endpoint</td><td>Upload a menu item photo</td></tr>
+        <tr><td>Nodemailer / SendGrid</td><td>Email notifications</td><td>Backend: order confirmation email</td><td>Place an order, check inbox</td></tr>
+        <tr><td>Google Maps / Mapbox</td><td>Delivery distance display</td><td>Frontend: restaurant detail page</td><td>Verify map renders with pin</td></tr>
+      </tbody>
+    </table>
   </section>
 
+  <!-- ============================================================ -->
   <section class="section" id="feature-complete">
     <div class="section-header">
       <div class="section-icon icon-orange">✅</div>
       <div class="section-title-group">
-        <h2>3. Feature Completion</h2>
+        <div class="tier-row">
+          <h2>3. Feature Completion</h2>
+          
+        </div>
         <p>Definition of Done for every feature</p>
       </div>
     </div>
-    <p>A feature is only "done" when it meets the <strong>Definition of Done (DoD)</strong> — not when a developer says "I'm done coding."</p>
+
+    <p>A feature is only "done" when it meets the <strong>Definition of Done (DoD)</strong>.</p>
     <h3>Definition of Done Checklist</h3>
     <ul>
-      <li>Feature is implemented and matches acceptance criteria.</li>
+      <li>Feature is implemented and matches all acceptance criteria in the User Story.</li>
       <li>Unit tests written and passing (coverage maintained at ≥ 70%).</li>
-      <li>Integration test written for the main success and failure paths.</li>
+      <li>Integration test written for the main success and one failure path.</li>
       <li>Code reviewed and approved by one other team member.</li>
-      <li>PR merged to develop branch (not just sitting in a local branch).</li>
-      <li>Feature is deployed to staging and manually smoke-tested.</li>
-      <li>Any new API endpoints are documented in Swagger.</li>
+      <li>PR merged to <code class="code-inline">develop</code> branch (not sitting in a local branch).</li>
+      <li>Feature deployed to staging and manually smoke-tested.</li>
+      <li>Any new API endpoints documented in Swagger.</li>
       <li>No P1 or P2 bugs open against this feature.</li>
     </ul>
+
+    <h3>Feature Completion Status Tracker</h3>
+    <p style="font-size:13px; color:#555; margin-bottom:10px;">
+      Each row is validated against the <a href="semester2_planning.html#feature-registry" style="color:#0F6E56; font-weight:600;">Feature Registry in Sprint Planning</a>.
+      FOOD-xxx IDs and Sprint assignments come from there — this table just adds the Semester 3 completion status.
+    </p>
+    <div style="overflow-x:auto;">
+    <table>
+      <thead>
+        <tr>
+          <th>FOOD-ID</th>
+          <th>Feature</th>
+          <th>Sprint (Planned)</th>
+          <th>Test Cases</th>
+          <th>Backend</th>
+          <th>Frontend</th>
+          <th>Tests Pass</th>
+          <th>On Staging</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background:#f6fdf8;">
+          <td style="font-weight:700;color:#0F6E56;">FOOD-001</td>
+          <td>User Registration</td><td>Sprint 1</td><td>TC-03</td>
+          <td>✅</td><td>✅</td><td>✅</td><td>✅</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;color:#0F6E56;">FOOD-002</td>
+          <td>User Login + JWT</td><td>Sprint 1</td><td>TC-01, TC-02</td>
+          <td>✅</td><td>✅</td><td>✅</td><td>✅</td>
+        </tr>
+        <tr style="background:#f6fdf8;">
+          <td style="font-weight:700;color:#0F6E56;">FOOD-003</td>
+          <td>Staging Deployment &amp; CI/CD</td><td>Sprint 1</td><td>—</td>
+          <td>✅</td><td>✅</td><td>✅</td><td>✅</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;color:#1565c0;">FOOD-004</td>
+          <td>Restaurant CRUD API</td><td>Sprint 2</td><td>—</td>
+          <td>✅</td><td>✅</td><td>✅</td><td>✅</td>
+        </tr>
+        <tr style="background:#f6fdf8;">
+          <td style="font-weight:700;color:#1565c0;">FOOD-005</td>
+          <td>Menu Item CRUD API</td><td>Sprint 2</td><td>—</td>
+          <td>✅</td><td>✅</td><td>✅</td><td>✅</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;color:#1565c0;">FOOD-006</td>
+          <td>Admin Restaurant Approval</td><td>Sprint 2</td><td>—</td>
+          <td>✅</td><td>✅</td><td>✅</td><td>✅</td>
+        </tr>
+        <tr style="background:#f6fdf8;">
+          <td style="font-weight:700;color:#c47a10;">FOOD-007</td>
+          <td>Place Order API</td><td>Sprint 3</td><td>TC-04, TC-06</td>
+          <td>✅</td><td>✅</td><td>✅</td><td>✅</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;color:#c47a10;">FOOD-008</td>
+          <td>Payment Gateway</td><td>Sprint 3</td><td>TC-05</td>
+          <td>✅</td><td>✅</td><td>⏳</td><td>✅</td>
+        </tr>
+        <tr style="background:#f6fdf8;">
+          <td style="font-weight:700;color:#c62828;">FOOD-009</td>
+          <td>Order Status FSM</td><td>Sprint 4</td><td>—</td>
+          <td>✅</td><td>✅</td><td>✅</td><td>✅</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;color:#c62828;">FOOD-010</td>
+          <td>Delivery Partner Module</td><td>Sprint 4</td><td>—</td>
+          <td>✅</td><td>⏳</td><td>⏳</td><td>❌</td>
+        </tr>
+        <tr style="background:#f6fdf8;">
+          <td style="font-weight:700;color:#6a1b9a;">FOOD-012</td>
+          <td>Browse &amp; Search Restaurants (frontend)</td><td>Sprint 5</td><td>TC-07</td>
+          <td>✅</td><td>✅</td><td>✅</td><td>✅</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;color:#6a1b9a;">FOOD-013</td>
+          <td>Restaurant Menu &amp; Cart (frontend)</td><td>Sprint 5</td><td>—</td>
+          <td>✅</td><td>✅</td><td>✅</td><td>✅</td>
+        </tr>
+        <tr style="background:#f6fdf8;">
+          <td style="font-weight:700;color:#283593;">FOOD-014</td>
+          <td>Checkout &amp; Payment (frontend)</td><td>Sprint 6</td><td>TC-04</td>
+          <td>✅</td><td>✅</td><td>✅</td><td>✅</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;color:#283593;">FOOD-015</td>
+          <td>Order Tracking page</td><td>Sprint 6</td><td>—</td>
+          <td>✅</td><td>⏳</td><td>⏳</td><td>❌</td>
+        </tr>
+        <tr style="background:#f6fdf8;">
+          <td style="font-weight:700;color:#00695c;">FOOD-016</td>
+          <td>Restaurant Owner Dashboard</td><td>Sprint 7</td><td>—</td>
+          <td>✅</td><td>⏳</td><td>❌</td><td>❌</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;color:#555;">FOOD-018</td>
+          <td>Reviews &amp; Ratings</td><td>Sprint 8</td><td>TC-08, TC-09, TC-10</td>
+          <td>✅</td><td>✅</td><td>✅</td><td>✅</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <p style="font-size:12px; color:#777; margin-top:6px;">
+      ✅ = Complete &nbsp;|&nbsp; ⏳ = In Progress &nbsp;|&nbsp; ❌ = Not started &nbsp;|&nbsp;
+      Features not listed (FOOD-011, FOOD-017, FOOD-019, FOOD-020) are deferred to backlog or sprint overflow.
+      See <a href="semester2_planning.html#feature-registry" style="color:#0F6E56;">Feature Registry</a> for the complete list.
+    </p>
   </section>
 
+  <!-- ============================================================ -->
   <section class="section" id="refactoring">
     <div class="section-header">
       <div class="section-icon icon-orange">♻️</div>
       <div class="section-title-group">
-        <h2>4. Refactoring</h2>
+        <div class="tier-row">
+          <h2>4. Refactoring</h2>
+          <span class="badge-good-to-have">⭐ Good to Have</span>
+        </div>
         <p>Improving code quality without changing external behaviour</p>
       </div>
     </div>
-    <p><strong>Refactoring</strong> is changing the internal structure of code to make it cleaner, more efficient, or more maintainable — without adding new features or fixing bugs. In Semester 3, you refactor code that was written quickly in Semester 2.</p>
+    <div class="tier-banner good-to-have">⭐ Good to Have — Improves maintainability and code review feedback. Do this if all mandatory features are complete and time permits.</div>
+
+    <p><strong>Refactoring</strong> is changing the internal structure of code to make it cleaner, more efficient, or more maintainable — without adding new features or fixing bugs. In Semester 3, you refactor code written quickly in Semester 2.</p>
+
     <h3>Common Refactoring Targets in Food Delivery</h3>
     <table>
       <thead><tr><th>Problem</th><th>Refactoring</th></tr></thead>
       <tbody>
-        <tr><td>Order placement logic is all in the view (fat view anti-pattern)</td><td>Extract to an <code class="code-inline">OrderService</code> class — view just calls service methods</td></tr>
-        <tr><td>Database queries duplicated across views</td><td>Extract to a <code class="code-inline">RestaurantRepository</code> class or Manager</td></tr>
-        <tr><td>Magic numbers scattered in code (e.g., <code class="code-inline">if total &gt; 500</code>)</td><td>Move to named constants: <code class="code-inline">FREE_DELIVERY_THRESHOLD = 500</code></td></tr>
-        <tr><td>N+1 query in restaurant listing (loads menu for each restaurant)</td><td>Use <code class="code-inline">prefetch_related('menuitem_set')</code></td></tr>
-        <tr><td>Password reset logic duplicated in two endpoints</td><td>Extract to <code class="code-inline">PasswordResetService</code></td></tr>
+        <tr><td>Order placement logic is all in the controller (fat controller)</td><td>Extract to an <code class="code-inline">OrderService</code> class — controller just calls service methods</td></tr>
+        <tr><td>Database queries duplicated across controllers</td><td>Extract to a <code class="code-inline">RestaurantRepository</code> module using Prisma</td></tr>
+        <tr><td>Magic numbers scattered in code (e.g., <code class="code-inline">if (total &gt; 500)</code>)</td><td>Move to named constants: <code class="code-inline">const FREE_DELIVERY_THRESHOLD = 500;</code></td></tr>
+        <tr><td>N+1 query in restaurant listing</td><td>Use Prisma <code class="code-inline">include: { menuItems: true }</code> in one query</td></tr>
+        <tr><td>Password reset logic duplicated in two routes</td><td>Extract to <code class="code-inline">PasswordResetService</code></td></tr>
       </tbody>
     </table>
+
+    <h3>Refactoring Example — Fat Controller → Service Layer</h3>
+    <div class="code-block">// BEFORE: All logic in controller (hard to test)
+// src/controllers/order.controller.js
+async function create(req, res) {
+  const { restaurant_id, items, delivery_address_id } = req.body;
+  const restaurant = await prisma.restaurant.findUnique({ where: { id: restaurant_id } });
+  if (!restaurant) return res.status(404).json({ error: 'Restaurant not found' });
+  let total = 0;
+  for (const item of items) {
+    const menuItem = await prisma.menuItem.findUnique({ where: { id: item.menu_item_id } });
+    total += menuItem.price * item.quantity;
+  }
+  if (total &lt; restaurant.minimum_order) return res.status(400).json({ error: 'Below minimum' });
+  const order = await prisma.order.create({ data: { ... } });
+  res.status(201).json({ data: order });
+}
+
+// AFTER: Controller delegates to service (easy to unit-test)
+// src/services/order.service.js
+class OrderService {
+  async placeOrder({ customerId, restaurantId, items, addressId }) {
+    const restaurant = await this._findRestaurantOrThrow(restaurantId);
+    const { lineItems, total } = await this._calculateTotal(items);
+    this._assertMinimumOrder(total, restaurant.minimum_order);
+    return prisma.order.create({ data: { customerId, restaurantId, total, items: { create: lineItems } } });
+  }
+  // ... private methods
+}
+
+// src/controllers/order.controller.js  (now thin)
+const orderService = new OrderService();
+async function create(req, res) {
+  const order = await orderService.placeOrder({ customerId: req.user.id, ...req.body });
+  res.status(201).json({ data: order });
+}</div>
+
     <div class="info-box orange">
-      <div class="info-box-title">Refactoring Rule</div>
+      <div class="info-box-title">Golden Rule of Refactoring</div>
       <p style="margin:0">Only refactor code that has unit tests. If you refactor without tests, you might silently break behaviour. The test suite is your safety net — it tells you instantly if a refactor broke something.</p>
     </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <section class="section" id="websocket">
+    <div class="section-header">
+      <div class="section-icon icon-orange">⚡</div>
+      <div class="section-title-group">
+        <div class="tier-row">
+          <h2>5. Real-Time Updates (WebSocket / Socket.io)</h2>
+          <span class="badge-good-to-have">⭐ Good to Have</span>
+        </div>
+        <p>Push live order status updates without polling</p>
+      </div>
+    </div>
+    <div class="tier-banner good-to-have">⭐ Good to Have — Real-time order tracking is a "wow" feature for evaluators. If time is short, polling every 15 s is a perfectly acceptable fallback.</div>
+
+    <p>Instead of the frontend calling the API every 15 seconds to check order status (<em>polling</em>), WebSocket pushes updates from server to browser the instant the status changes. This is how real food delivery apps work.</p>
+
+    <h3>Polling vs WebSocket Comparison</h3>
+    <table>
+      <thead><tr><th></th><th>Polling (every 15 s)</th><th>WebSocket (Socket.io)</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Complexity</strong></td><td>Simple — just a setInterval + fetch</td><td>Moderate — needs socket server + client</td></tr>
+        <tr><td><strong>Server load</strong></td><td>High — 4 req/min per user</td><td>Low — 1 persistent connection per user</td></tr>
+        <tr><td><strong>User experience</strong></td><td>Up to 15 s delay</td><td>Instant (&lt; 1 s)</td></tr>
+        <tr><td><strong>Recommended for</strong></td><td>Simpler projects, limited time</td><td>Impressive demo, final submission polish</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Backend: Socket.io Setup (Express)</h3>
+    <div class="code-block">// src/server.js
+const http    = require('http');
+const { Server } = require('socket.io');
+const app     = require('./app');
+
+const httpServer = http.createServer(app);
+const io = new Server(httpServer, {
+  cors: { origin: process.env.FRONTEND_URL, credentials: true }
+});
+
+// Share io instance with the rest of the app
+app.set('io', io);
+
+io.on('connection', (socket) => {
+  console.log(`Client connected: ${socket.id}`);
+
+  // Customer joins a room named after their order ID
+  socket.on('track_order', (orderId) => {
+    socket.join(`order:${orderId}`);
+    console.log(`${socket.id} tracking order ${orderId}`);
+  });
+
+  socket.on('disconnect', () => {
+    console.log(`Client disconnected: ${socket.id}`);
+  });
+});
+
+httpServer.listen(process.env.PORT || 3000);</div>
+
+    <h3>Backend: Emit Status Update When Order Changes</h3>
+    <div class="code-block">// src/controllers/order.controller.js
+async function updateStatus(req, res) {
+  const { id } = req.params;
+  const { status } = req.body;
+
+  const order = await prisma.order.update({
+    where: { id: parseInt(id) },
+    data: { status }
+  });
+
+  // Push real-time update to all clients tracking this order
+  const io = req.app.get('io');
+  io.to(`order:${id}`).emit('order_status_updated', {
+    orderId: id,
+    status,
+    updatedAt: new Date().toISOString()
+  });
+
+  res.json({ data: order });
+}</div>
+
+    <h3>Frontend: Listen for Updates (React)</h3>
+    <div class="code-block">// src/pages/OrderTracking.jsx
+import { useEffect, useState } from 'react';
+import { io } from 'socket.io-client';
+
+export function OrderTracking({ orderId }) {
+  const [status, setStatus] = useState('Confirmed');
+
+  useEffect(() => {
+    const socket = io(import.meta.env.VITE_API_BASE_URL);
+
+    // Tell the server which order to track
+    socket.emit('track_order', orderId);
+
+    // Listen for status updates
+    socket.on('order_status_updated', ({ status: newStatus }) => {
+      setStatus(newStatus);
+    });
+
+    // Cleanup on unmount
+    return () => socket.disconnect();
+  }, [orderId]);
+
+  return &lt;OrderTimeline currentStatus={status} /&gt;;
+}
+
+// Install: npm install socket.io-client</div>
   </section>
 
   <footer>

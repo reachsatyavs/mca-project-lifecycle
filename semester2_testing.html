@@ -225,7 +225,7 @@ describe('POST /api/orders/', () => {
     </style>
 
     <div class="tc-row">
-      <div class="tc-row-id">TC-01 · Covers UC-02 · FR-102 · US-C02</div>
+      <div class="tc-row-id">TC-01 · <span style="background:#e8f5ed;color:#0F6E56;padding:1px 6px;border-radius:3px;font-size:10.5px;">FOOD-002</span> · Covers UC-02 · FR-102 · US-C02 · Sprint 1</div>
       <div class="tc-row-title">Login with valid credentials <span class="badge-happy">Happy Path</span></div>
       <table class="tc-mini-table">
         <tr><td>Precondition</td><td>User priya@example.com exists, email verified, account active.</td></tr>
@@ -238,7 +238,7 @@ describe('POST /api/orders/', () => {
     </div>
 
     <div class="tc-row">
-      <div class="tc-row-id">TC-02 · Covers UC-02 · FR-102 · US-C02</div>
+      <div class="tc-row-id">TC-02 · <span style="background:#e8f5ed;color:#0F6E56;padding:1px 6px;border-radius:3px;font-size:10.5px;">FOOD-002</span> · Covers UC-02 · FR-102 · US-C02 · Sprint 1</div>
       <div class="tc-row-title">Login with wrong password <span class="badge-neg">Negative</span></div>
       <table class="tc-mini-table">
         <tr><td>Precondition</td><td>User priya@example.com exists.</td></tr>
@@ -251,7 +251,7 @@ describe('POST /api/orders/', () => {
     </div>
 
     <div class="tc-row">
-      <div class="tc-row-id">TC-03 · Covers UC-01 · FR-101 · US-C01</div>
+      <div class="tc-row-id">TC-03 · <span style="background:#e8f5ed;color:#0F6E56;padding:1px 6px;border-radius:3px;font-size:10.5px;">FOOD-001</span> · Covers UC-01 · FR-101 · US-C01 · Sprint 1</div>
       <div class="tc-row-title">Register with duplicate email <span class="badge-neg">Negative</span></div>
       <table class="tc-mini-table">
         <tr><td>Precondition</td><td>User priya@example.com already exists in DB.</td></tr>
@@ -266,7 +266,7 @@ describe('POST /api/orders/', () => {
     <h3>Test Cases — Order Placement Module</h3>
 
     <div class="tc-row" style="border-left-color: #185FA5;">
-      <div class="tc-row-id" style="color:#185FA5;">TC-04 · Covers UC-08 · FR-303 · FR-402 · US-C05</div>
+      <div class="tc-row-id" style="color:#185FA5;">TC-04 · <span style="background:#e3f2fd;color:#1565c0;padding:1px 6px;border-radius:3px;font-size:10.5px;">FOOD-007</span> · Covers UC-08 · FR-303 · FR-402 · US-C05 · Sprint 3</div>
       <div class="tc-row-title">Place order with Cash on Delivery — success <span class="badge-happy">Happy Path</span></div>
       <table class="tc-mini-table">
         <tr><td>Precondition</td><td>Customer logged in. Cart: 2× Paneer Tikka ₹180 + 1× Naan ₹60 = ₹420. Restaurant open.</td></tr>
@@ -279,7 +279,7 @@ describe('POST /api/orders/', () => {
     </div>
 
     <div class="tc-row" style="border-left-color: #185FA5;">
-      <div class="tc-row-id" style="color:#185FA5;">TC-05 · Covers UC-08 · FR-303 · FR-401</div>
+      <div class="tc-row-id" style="color:#185FA5;">TC-05 · <span style="background:#e3f2fd;color:#1565c0;padding:1px 6px;border-radius:3px;font-size:10.5px;">FOOD-008</span> · Covers UC-09 · FR-303 · FR-401 · Sprint 3</div>
       <div class="tc-row-title">Place order — payment gateway declines card <span class="badge-neg">Negative</span></div>
       <table class="tc-mini-table">
         <tr><td>Precondition</td><td>Customer logged in. Cart total = ₹420. Restaurant open.</td></tr>
@@ -292,7 +292,7 @@ describe('POST /api/orders/', () => {
     </div>
 
     <div class="tc-row" style="border-left-color: #185FA5;">
-      <div class="tc-row-id" style="color:#185FA5;">TC-06 · Covers UC-08 · BR-02</div>
+      <div class="tc-row-id" style="color:#185FA5;">TC-06 · <span style="background:#e3f2fd;color:#1565c0;padding:1px 6px;border-radius:3px;font-size:10.5px;">FOOD-007</span> · Covers UC-08 · BR-02 · Sprint 3</div>
       <div class="tc-row-title">Place order — cart total below ₹100 minimum <span class="badge-boundary">Boundary</span></div>
       <table class="tc-mini-table">
         <tr><td>Precondition</td><td>Customer logged in. Cart contains 1× item = ₹99.</td></tr>
@@ -305,7 +305,7 @@ describe('POST /api/orders/', () => {
     </div>
 
     <div class="tc-row" style="border-left-color: #185FA5;">
-      <div class="tc-row-id" style="color:#185FA5;">TC-07 · Covers UC-05 · FR-301 · BR-13</div>
+      <div class="tc-row-id" style="color:#185FA5;">TC-07 · <span style="background:#e3f2fd;color:#1565c0;padding:1px 6px;border-radius:3px;font-size:10.5px;">FOOD-012</span> · Covers UC-04 · FR-301 · BR-13 · Sprint 5</div>
       <div class="tc-row-title">View restaurant that is currently closed <span class="badge-neg">Negative</span></div>
       <table class="tc-mini-table">
         <tr><td>Precondition</td><td>Restaurant "Spice Garden" has hours 10:00–23:00. Test run at 08:30 AM.</td></tr>
@@ -320,7 +320,7 @@ describe('POST /api/orders/', () => {
     <h3>Test Cases — Reviews Module</h3>
 
     <div class="tc-row" style="border-left-color: #c47a10;">
-      <div class="tc-row-id" style="color:#c47a10;">TC-08 · Covers UC-12 · FR-601 · US-C07</div>
+      <div class="tc-row-id" style="color:#c47a10;">TC-08 · <span style="background:#fff3e0;color:#c47a10;padding:1px 6px;border-radius:3px;font-size:10.5px;">FOOD-018</span> · Covers UC-12 · FR-601 · US-C07 · Sprint 8</div>
       <div class="tc-row-title">Submit review for delivered order <span class="badge-happy">Happy Path</span></div>
       <table class="tc-mini-table">
         <tr><td>Precondition</td><td>Order ORD-001 status = DELIVERED. No existing review for this order.</td></tr>
@@ -333,7 +333,7 @@ describe('POST /api/orders/', () => {
     </div>
 
     <div class="tc-row" style="border-left-color: #c47a10;">
-      <div class="tc-row-id" style="color:#c47a10;">TC-09 · Covers UC-12 · FR-601 · BR-10</div>
+      <div class="tc-row-id" style="color:#c47a10;">TC-09 · <span style="background:#fff3e0;color:#c47a10;padding:1px 6px;border-radius:3px;font-size:10.5px;">FOOD-018</span> · Covers UC-12 · FR-601 · BR-10 · Sprint 8</div>
       <div class="tc-row-title">Attempt duplicate review on same order <span class="badge-neg">Negative</span></div>
       <table class="tc-mini-table">
         <tr><td>Precondition</td><td>Order ORD-001 already has a review by this customer.</td></tr>
@@ -346,7 +346,7 @@ describe('POST /api/orders/', () => {
     </div>
 
     <div class="tc-row" style="border-left-color: #c47a10;">
-      <div class="tc-row-id" style="color:#c47a10;">TC-10 · Covers UC-12 · FR-601</div>
+      <div class="tc-row-id" style="color:#c47a10;">TC-10 · <span style="background:#fff3e0;color:#c47a10;padding:1px 6px;border-radius:3px;font-size:10.5px;">FOOD-018</span> · Covers UC-12 · FR-601 · Sprint 8</div>
       <div class="tc-row-title">Attempt review on order not yet delivered <span class="badge-neg">Negative</span></div>
       <table class="tc-mini-table">
         <tr><td>Precondition</td><td>Order ORD-002 has status = "PREPARING" (not DELIVERED).</td></tr>
@@ -358,24 +358,39 @@ describe('POST /api/orders/', () => {
       </table>
     </div>
 
-    <h3>Requirements Traceability Matrix (Semester 2 — TCs Written, Not Yet Executed)</h3>
+    <h3>Requirements Traceability Matrix (Semester 2 — Golden Thread)</h3>
+    <p style="font-size:13px; color:#555; margin-bottom:10px;">
+      This matrix shows the full traceability chain: <strong>Feature → Sprint → User Story → Use Case → Test Case</strong>. Status column is completed in Semester 3 after execution.
+    </p>
+    <div style="overflow-x:auto;">
     <table>
       <thead>
-        <tr><th>TC ID</th><th>Test Title</th><th>UC</th><th>FR / BR</th><th>Priority</th><th>Status</th></tr>
+        <tr>
+          <th>TC ID</th>
+          <th>Feature (FOOD-ID)</th>
+          <th>Sprint</th>
+          <th>Test Title</th>
+          <th>User Story</th>
+          <th>Use Case</th>
+          <th>FR / BR</th>
+          <th>Priority</th>
+          <th>Status (Sem 3)</th>
+        </tr>
       </thead>
       <tbody>
-        <tr><td>TC-01</td><td>Login — valid</td><td>UC-02</td><td>FR-102</td><td>P1</td><td style="color:#888; font-style:italic;">Not Executed</td></tr>
-        <tr><td>TC-02</td><td>Login — wrong password</td><td>UC-02</td><td>FR-102</td><td>P1</td><td style="color:#888; font-style:italic;">Not Executed</td></tr>
-        <tr><td>TC-03</td><td>Register — duplicate email</td><td>UC-01</td><td>FR-101</td><td>P1</td><td style="color:#888; font-style:italic;">Not Executed</td></tr>
-        <tr><td>TC-04</td><td>Place order — COD success</td><td>UC-08</td><td>FR-303, FR-402</td><td>P1</td><td style="color:#888; font-style:italic;">Not Executed</td></tr>
-        <tr><td>TC-05</td><td>Place order — payment declined</td><td>UC-08</td><td>FR-303, FR-401</td><td>P1</td><td style="color:#888; font-style:italic;">Not Executed</td></tr>
-        <tr><td>TC-06</td><td>Cart below ₹100 minimum</td><td>UC-08</td><td>BR-02</td><td>P1</td><td style="color:#888; font-style:italic;">Not Executed</td></tr>
-        <tr><td>TC-07</td><td>View closed restaurant</td><td>UC-05</td><td>FR-301, BR-13</td><td>P2</td><td style="color:#888; font-style:italic;">Not Executed</td></tr>
-        <tr><td>TC-08</td><td>Submit review — success</td><td>UC-12</td><td>FR-601</td><td>P2</td><td style="color:#888; font-style:italic;">Not Executed</td></tr>
-        <tr><td>TC-09</td><td>Duplicate review blocked</td><td>UC-12</td><td>FR-601, BR-10</td><td>P2</td><td style="color:#888; font-style:italic;">Not Executed</td></tr>
-        <tr><td>TC-10</td><td>Review on undelivered order</td><td>UC-12</td><td>FR-601</td><td>P1</td><td style="color:#888; font-style:italic;">Not Executed</td></tr>
+        <tr><td><strong>TC-01</strong></td><td style="font-weight:700;color:#0F6E56;">FOOD-002</td><td>Sprint 1</td><td>Login — valid credentials</td><td>US-C02</td><td>UC-02</td><td>FR-102</td><td>P1</td><td style="color:#888; font-style:italic;">→ Sem 3</td></tr>
+        <tr><td><strong>TC-02</strong></td><td style="font-weight:700;color:#0F6E56;">FOOD-002</td><td>Sprint 1</td><td>Login — wrong password</td><td>US-C02</td><td>UC-02</td><td>FR-102</td><td>P1</td><td style="color:#888; font-style:italic;">→ Sem 3</td></tr>
+        <tr><td><strong>TC-03</strong></td><td style="font-weight:700;color:#0F6E56;">FOOD-001</td><td>Sprint 1</td><td>Register — duplicate email</td><td>US-C01</td><td>UC-01</td><td>FR-101</td><td>P1</td><td style="color:#888; font-style:italic;">→ Sem 3</td></tr>
+        <tr><td><strong>TC-04</strong></td><td style="font-weight:700;color:#185FA5;">FOOD-007</td><td>Sprint 3</td><td>Place order — COD success</td><td>US-C05</td><td>UC-08</td><td>FR-303, FR-402</td><td>P1</td><td style="color:#888; font-style:italic;">→ Sem 3</td></tr>
+        <tr><td><strong>TC-05</strong></td><td style="font-weight:700;color:#185FA5;">FOOD-008</td><td>Sprint 3</td><td>Place order — payment declined</td><td>US-C06</td><td>UC-09</td><td>FR-303, FR-401</td><td>P1</td><td style="color:#888; font-style:italic;">→ Sem 3</td></tr>
+        <tr><td><strong>TC-06</strong></td><td style="font-weight:700;color:#185FA5;">FOOD-007</td><td>Sprint 3</td><td>Cart below ₹100 minimum</td><td>—</td><td>UC-08</td><td>BR-02</td><td>P1</td><td style="color:#888; font-style:italic;">→ Sem 3</td></tr>
+        <tr><td><strong>TC-07</strong></td><td style="font-weight:700;color:#6a1b9a;">FOOD-012</td><td>Sprint 5</td><td>View closed restaurant</td><td>US-C03</td><td>UC-04</td><td>FR-301, BR-13</td><td>P2</td><td style="color:#888; font-style:italic;">→ Sem 3</td></tr>
+        <tr><td><strong>TC-08</strong></td><td style="font-weight:700;color:#c47a10;">FOOD-018</td><td>Sprint 8</td><td>Submit review — success</td><td>US-C07</td><td>UC-12</td><td>FR-601</td><td>P2</td><td style="color:#888; font-style:italic;">→ Sem 3</td></tr>
+        <tr><td><strong>TC-09</strong></td><td style="font-weight:700;color:#c47a10;">FOOD-018</td><td>Sprint 8</td><td>Duplicate review blocked</td><td>US-C07</td><td>UC-12</td><td>FR-601, BR-10</td><td>P2</td><td style="color:#888; font-style:italic;">→ Sem 3</td></tr>
+        <tr><td><strong>TC-10</strong></td><td style="font-weight:700;color:#c47a10;">FOOD-018</td><td>Sprint 8</td><td>Review on undelivered order</td><td>US-C07</td><td>UC-12</td><td>FR-601</td><td>P1</td><td style="color:#888; font-style:italic;">→ Sem 3</td></tr>
       </tbody>
     </table>
+    </div>
 
     <div class="info-box green">
       <div class="info-box-title">Next Step — Semester 3</div>

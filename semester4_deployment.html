@@ -19,8 +19,15 @@
     <div class="project-tag">Example Project: <strong>Online Food Delivery System</strong></div>
     <p class="header-desc">Semester 4 completes the deployment story: the final production launch, a complete CD pipeline with manual approval gate, and a tested rollback strategy for emergencies.</p>
   </header>
+  <nav class="topic-nav blue-nav">
+    <div class="topic-nav-label">Jump to section</div>
+    <a href="#production-deployment">Production Deployment</a>
+    <a href="#cd-pipeline-final">CD Pipeline — Final</a>
+    <a href="#rollback-strategy">Rollback Strategy</a>
+  </nav>
 
-  <section class="section">
+
+  <section class="section" id="production-deployment">
     <div class="section-header">
       <div class="section-icon icon-blue">🚀</div>
       <div class="section-title-group">
@@ -44,7 +51,7 @@
     <p>For zero-downtime deployment, consider a <strong>Blue-Green</strong> strategy: run two identical environments (Blue = current production, Green = new version). Switch traffic to Green once verified, keep Blue as instant rollback. Render supports this via preview environments.</p>
   </section>
 
-  <section class="section">
+  <section class="section" id="cd-pipeline-final">
     <div class="section-header">
       <div class="section-icon icon-blue">⚙️</div>
       <div class="section-title-group">
@@ -80,7 +87,7 @@ jobs:
     <p>The <code class="code-inline">workflow_dispatch</code> trigger means this CD pipeline only runs when a team member manually triggers it — not on every push. The <code class="code-inline">environment: production</code> setting can require a second-person approval in GitHub's environment protection rules.</p>
   </section>
 
-  <section class="section">
+  <section class="section" id="rollback-strategy">
     <div class="section-header">
       <div class="section-icon icon-blue">⏪</div>
       <div class="section-title-group">
