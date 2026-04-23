@@ -146,6 +146,40 @@
 
   <main class="main">
 
+    <!-- ── Living Document Banner ── -->
+    <div style="background:linear-gradient(135deg,#12122a,#1a1a3a); border:1px solid #3c3478; border-left:4px solid #7c6ff7; border-radius:12px; padding:20px 24px; margin-bottom:36px;">
+      <div style="display:flex; align-items:flex-start; gap:14px; flex-wrap:wrap;">
+        <div style="font-size:32px; flex-shrink:0;">🔗</div>
+        <div style="flex:1; min-width:240px;">
+          <div style="font-size:15px; font-weight:800; color:#fff; margin-bottom:6px;">This is a Living, Traceable Document — Not a One-Time Submission</div>
+          <p style="font-size:13px; color:#a0a8c0; line-height:1.75; margin-bottom:12px;">
+            Every document in this reference site is connected to every other document through a deliberate <strong style="color:#c5bef5;">traceability chain</strong>:
+            <strong style="color:#c5bef5;">SRS → User Stories → Features → Use Cases → Test Cases → Sprint Items → Change Requests</strong>.
+            This chain is built up progressively — Semester 1 captures intent, Semester 2 elaborates into engineering detail, Semester 3 closes the loop with test execution, and Semester 4 finalises with release notes.
+          </p>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:10px; margin-bottom:14px;">
+            <div style="background:rgba(124,111,247,0.1); border:1px solid #3c3478; border-radius:8px; padding:10px 14px;">
+              <div style="font-size:11px; font-weight:700; color:#7c6ff7; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px;">Forward Traceability</div>
+              <div style="font-size:12px; color:#a0a8c0; line-height:1.6;">FR-101 → F-01 → US-C01 → UC-01 → TC-01<br>If a requirement changes, you immediately know what features, test cases, and sprints are affected.</div>
+            </div>
+            <div style="background:rgba(124,111,247,0.1); border:1px solid #3c3478; border-radius:8px; padding:10px 14px;">
+              <div style="font-size:11px; font-weight:700; color:#7c6ff7; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px;">Backward Traceability</div>
+              <div style="font-size:12px; color:#a0a8c0; line-height:1.6;">TC-01 → UC-01 → US-C01 → FR-101<br>Every test case links back to a requirement. No orphan tests. No untested features.</div>
+            </div>
+            <div style="background:rgba(124,111,247,0.1); border:1px solid #3c3478; border-radius:8px; padding:10px 14px;">
+              <div style="font-size:11px; font-weight:700; color:#7c6ff7; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px;">Change Control</div>
+              <div style="font-size:12px; color:#a0a8c0; line-height:1.6;">Every scope change is a formal CR with impact analysis and faculty sign-off — not a silent code addition that contradicts the SRS.</div>
+            </div>
+          </div>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+            <a href="semester1_features.html#rtm" style="display:inline-block; background:#5147A9; color:#fff; font-weight:700; padding:7px 16px; border-radius:6px; text-decoration:none; font-size:12.5px;">View Full Traceability Matrix →</a>
+            <a href="semester2_planning.html#change-log" style="display:inline-block; background:rgba(124,111,247,0.15); border:1px solid #5147A9; color:#c5bef5; font-weight:700; padding:7px 16px; border-radius:6px; text-decoration:none; font-size:12.5px;">Change Request Log →</a>
+            <a href="semester1_requirements.html#functional-reqs" style="display:inline-block; background:rgba(124,111,247,0.15); border:1px solid #5147A9; color:#c5bef5; font-weight:700; padding:7px 16px; border-radius:6px; text-decoration:none; font-size:12.5px;">SRS / FRD →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="section-label">Semester 1 — Foundation</div>
     <div class="cards">
       <a href="semester1_ideation_scope.html" class="card">
@@ -157,14 +191,20 @@
       <a href="semester1_requirements.html" class="card">
         <span class="card-arrow">→</span>
         <div class="card-sem sem1">Semester 1</div>
-        <div class="card-title">📋 Requirements (SRS)</div>
-        <div class="card-desc">Functional requirements, NFRs, business rules, and links to user stories, use cases, and test planning.</div>
+        <div class="card-title">📋 Requirements (SRS / FRD)</div>
+        <div class="card-desc">FR-101 → FR-603 across 6 categories · NFRs · Business rules · Feature traceability table with sprint links — the golden thread from which every User Story, Feature, Use Case, and Test Case is derived.</div>
       </a>
       <a href="semester1_user_stories.html" class="card">
         <span class="card-arrow">→</span>
         <div class="card-sem sem1">Semester 1</div>
         <div class="card-title">📝 User Stories</div>
-        <div class="card-desc">11 stories across Customer, Restaurant Owner, Delivery Partner, and Admin roles with acceptance criteria.</div>
+        <div class="card-desc">16 stories across Customer, Restaurant Owner, Delivery Partner, and Admin roles — each linked to FR, Feature, Use Case, and Test Case.</div>
+      </a>
+      <a href="semester1_features.html" class="card">
+        <span class="card-arrow">→</span>
+        <div class="card-sem sem1">Semester 1</div>
+        <div class="card-title">🗂️ Features (F-01 … F-16)</div>
+        <div class="card-desc">16 product features with priority, sprint assignment, and full traceability matrix — FRD → Feature → User Story → Use Case → Test Case → Sprint.</div>
       </a>
       <a href="semester1_use_cases.html" class="card">
         <span class="card-arrow">→</span>
@@ -215,8 +255,8 @@
       <a href="semester2_planning.html" class="card">
         <span class="card-arrow">→</span>
         <div class="card-sem sem2">Semester 2</div>
-        <div class="card-title">🏃 Sprint Planning</div>
-        <div class="card-desc">8-sprint plan, product backlog, Sprint 1 deep dive with ticket-level task breakdown (FOOD-001 … FOOD-033).</div>
+        <div class="card-title">🏃 Sprint Planning &amp; Backlog</div>
+        <div class="card-desc">8-sprint plan · Feature registry · Sprint 1 &amp; 2 deep dives (FOOD-001 … FOOD-033) · Full backlog grooming (Sprints 1–8) · <strong style="color:#6fc898;">Change Request Log</strong> (CR-001 … CR-005) with impact analysis and decision trail.</div>
       </a>
       <a href="semester2_coding.html" class="card">
         <span class="card-arrow">→</span>
@@ -234,11 +274,17 @@
 
     <div class="section-label">Semester 3 — Deliver</div>
     <div class="cards">
+      <a href="semester3_coding.html" class="card">
+        <span class="card-arrow">→</span>
+        <div class="card-sem sem3">Semester 3</div>
+        <div class="card-title">💻 Coding — Frontend &amp; Integration</div>
+        <div class="card-desc">Frontend completion, Axios API client, CORS config, feature completion DoD, refactoring. <span style="background:#f0faf5;color:#1a7a45;font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;margin-left:4px;">✨</span> WebSocket real-time order tracking (good to have).</div>
+      </a>
       <a href="semester3_testing.html" class="card">
         <span class="card-arrow">→</span>
         <div class="card-sem sem3">Semester 3</div>
         <div class="card-title">▶️ Execute Test Cases</div>
-        <div class="card-desc">Full TC execution log — PASS/FAIL results, regression after fixes, E2E Playwright tests, performance tests.</div>
+        <div class="card-desc">TC execution log (mandatory), Alpha testing (mandatory). <span style="background:#f0faf5;color:#1a7a45;font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;margin-left:4px;">✨</span> E2E Playwright + performance tests (good to have).</div>
       </a>
       <a href="semester3_deployment.html" class="card">
         <span class="card-arrow">→</span>
@@ -250,17 +296,23 @@
         <span class="card-arrow">→</span>
         <div class="card-sem sem3">Semester 3</div>
         <div class="card-title">📊 Logging &amp; Monitoring</div>
-        <div class="card-desc">Winston logging, structured logs, error tracking, uptime monitoring.</div>
+        <div class="card-desc">Sentry + UptimeRobot (mandatory basics). <span style="background:#f0faf5;color:#1a7a45;font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;margin-left:4px;">✨</span> Health dashboards, alert rules, structured pino logs (good to have).</div>
       </a>
     </div>
 
     <div class="section-label">Semester 4 — Maintain</div>
     <div class="cards">
+      <a href="semester4_coding.html" class="card">
+        <span class="card-arrow">→</span>
+        <div class="card-sem sem4">Semester 4</div>
+        <div class="card-title">🔧 Coding — Bug Fixes &amp; Hardening</div>
+        <div class="card-desc">Hotfix workflow (mandatory). <span style="background:#2a2850;color:#a0a8f8;font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;margin-left:4px;">✨ Good to Have</span> — Playwright E2E automation, k6 performance testing, input validation, rate limiting.</div>
+      </a>
       <a href="semester4_testing.html" class="card">
         <span class="card-arrow">→</span>
         <div class="card-sem sem4">Semester 4</div>
-        <div class="card-title">🔒 Security Testing</div>
-        <div class="card-desc">OWASP ZAP, penetration testing, JWT hardening, SQL injection prevention.</div>
+        <div class="card-title">🔒 UAT, Regression &amp; Security Testing</div>
+        <div class="card-desc">User Acceptance Testing, regression suite, and security scan. <span style="background:#2a2850;color:#a0a8f8;font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;margin-left:4px;">✨ Good to Have</span> — Security testing (OWASP, JWT attacks, IDOR) is above-average for MCA projects and will impress evaluators.</div>
       </a>
       <a href="semester4_deployment.html" class="card">
         <span class="card-arrow">→</span>
@@ -285,7 +337,8 @@
   </main>
 
   <footer>
-    Built as an MCA project reference — all diagrams, code, and documents are worked examples using an Online Food Delivery System as the case study.
+    Built as an MCA project reference — all diagrams, code, and documents are worked examples using an <strong>Online Food Delivery System</strong> as the case study.
+    This is a <em>living document</em>: traceability links, sprint records, change requests, and test coverage grow with every semester. All artefacts remain interlinked and mutually consistent.
   </footer>
 
 </body>

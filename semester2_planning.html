@@ -22,9 +22,12 @@
   <nav class="topic-nav green-nav">
     <div class="topic-nav-label">Jump to section</div>
     <a href="#sprint-planning">1. Sprint Planning</a>
+    <a href="#feature-registry">→ Feature Registry</a>
     <a href="#sprint1-detail">→ Sprint 1 Deep Dive</a>
+    <a href="#sprint2-detail">→ Sprint 2 Deep Dive</a>
     <a href="#backlog">2. Backlog Grooming</a>
     <a href="#timeline">3. Revised Timeline</a>
+    <a href="#change-log">4. Change Request Log</a>
   </nav>
 
   <section class="section" id="sprint-planning">
@@ -50,6 +53,247 @@
         <tr><td><strong>Sprint 8</strong></td><td>15–16</td><td>Bug fixing, unit tests, API documentation (Swagger), Semester 2 review prep</td><td>Milestone M6: Alpha release — full order flow on staging</td></tr>
       </tbody>
     </table>
+    <!-- ──────────────────────────────────────────────────── -->
+    <h3 id="feature-registry" style="margin-top:28px;">Feature Registry &amp; Traceability Map</h3>
+    <p style="font-size:13.5px; color:#444; margin-bottom:12px;">
+      This table is the <strong>single source of truth</strong> for the project. Every feature has a unique <strong>FOOD-xxx ID</strong> that is reused in Sprint tasks, test cases, feature completion checks, and execution logs — forming an unbroken traceability chain across all semesters.
+    </p>
+    <div class="info-box green" style="margin-bottom:16px;">
+      <div class="info-box-title">Traceability chain in this table</div>
+      <p style="margin:0; font-size:13px;">
+        <strong>Sprint</strong> → <strong>FOOD-xxx</strong> (sprint feature) →
+        <a href="semester1_features.html" style="color:#0F6E56; font-weight:700;">SRS Feature List (F-ID) ↗</a> →
+        <a href="semester1_user_stories.html" style="color:#0F6E56; font-weight:700;">User Stories ↗</a> →
+        <a href="semester1_requirements.html" style="color:#0F6E56; font-weight:700;">SRS / Requirements ↗</a>
+        &nbsp;|&nbsp; validated by <strong>Test Cases</strong> (written Sem 2, executed Sem 3).
+      </p>
+    </div>
+    <style>
+      .ftr-table { width:100%; border-collapse:collapse; font-size:12.5px; }
+      .ftr-table th { background:#0F6E56; color:#fff; padding:8px 10px; text-align:left; white-space:nowrap; }
+      .ftr-table td { padding:7px 10px; border-bottom:1px solid #e8efe8; vertical-align:top; }
+      .ftr-table tr:nth-child(even) { background:#f6fdf8; }
+      .ftr-table tr:hover { background:#e8f5ed; }
+      .food-id { font-weight:700; color:#0F6E56; white-space:nowrap; }
+      .sprint-tag { display:inline-block; font-size:10.5px; font-weight:700; padding:2px 7px; border-radius:4px; white-space:nowrap; }
+      .s1 { background:#e8f5ed; color:#0F6E56; }
+      .s2 { background:#e3f2fd; color:#1565c0; }
+      .s3 { background:#fff3e0; color:#c47a10; }
+      .s4 { background:#fce4ec; color:#c62828; }
+      .s5 { background:#f3e5f5; color:#6a1b9a; }
+      .s6 { background:#e8eaf6; color:#283593; }
+      .s7 { background:#e0f7fa; color:#00695c; }
+      .s8 { background:#fafafa; color:#555; border:1px solid #ddd; }
+      .tc-link { color:#185FA5; font-weight:600; }
+      .must { color:#c62828; font-weight:700; font-size:11px; }
+      .should { color:#c47a10; font-weight:700; font-size:11px; }
+      .nice { color:#2e7d32; font-weight:700; font-size:11px; }
+    </style>
+    <style>
+      .f-link { display:inline-block; font-size:10.5px; font-weight:700; padding:1px 7px; border-radius:3px; background:#EEEDFE; color:#3C3489; text-decoration:none; }
+      .f-link:hover { opacity:0.75; }
+    </style>
+    <div style="overflow-x:auto;">
+    <table class="ftr-table">
+      <thead>
+        <tr>
+          <th>FOOD-ID</th>
+          <th>Feature</th>
+          <th>SRS Feature</th>
+          <th>Module</th>
+          <th>Sprint</th>
+          <th>Priority</th>
+          <th>User Story</th>
+          <th>Use Case</th>
+          <th>Test Cases</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="food-id">FOOD-001</td>
+          <td>User Registration (register + verify email)</td>
+          <td><a href="semester1_features.html#F-01" class="f-link">F-01</a></td>
+          <td>Auth</td><td><a href="#sprint1-detail" class="sprint-tag s1" style="text-decoration:none; cursor:pointer;">Sprint 1 ↗</a></td><td><span class="must">🔴 Must</span></td>
+          <td><a href="semester1_user_stories.html#customer" style="color:#0F6E56; font-weight:600;">US-C01</a></td>
+          <td><a href="semester1_use_cases.html#uc-list" style="color:#0F6E56; font-weight:600;">UC-01</a></td>
+          <td><a href="semester2_testing.html#test-cases" class="tc-link">TC-03</a></td>
+        </tr>
+        <tr>
+          <td class="food-id">FOOD-002</td>
+          <td>User Login with JWT (access + refresh tokens)</td>
+          <td><a href="semester1_features.html#F-02" class="f-link">F-02</a></td>
+          <td>Auth</td><td><a href="#sprint1-detail" class="sprint-tag s1" style="text-decoration:none; cursor:pointer;">Sprint 1 ↗</a></td><td><span class="must">🔴 Must</span></td>
+          <td><a href="semester1_user_stories.html#customer" style="color:#0F6E56; font-weight:600;">US-C02</a></td>
+          <td><a href="semester1_use_cases.html#uc-02" style="color:#0F6E56; font-weight:600;">UC-02</a></td>
+          <td><a href="semester2_testing.html#test-cases" class="tc-link">TC-01, TC-02</a></td>
+        </tr>
+        <tr>
+          <td class="food-id">FOOD-003</td>
+          <td>Staging Deployment &amp; CI/CD pipeline</td>
+          <td>—</td>
+          <td>DevOps</td><td><a href="#sprint1-detail" class="sprint-tag s1" style="text-decoration:none; cursor:pointer;">Sprint 1 ↗</a></td><td><span class="must">🔴 Must</span></td>
+          <td>—</td><td>—</td><td>—</td>
+        </tr>
+        <tr>
+          <td class="food-id">FOOD-004</td>
+          <td>Restaurant CRUD API (create, list, update, approve)</td>
+          <td><a href="semester1_features.html#F-09" class="f-link">F-09</a></td>
+          <td>Restaurant</td><td><a href="#sprint2-detail" class="sprint-tag s2" style="text-decoration:none; cursor:pointer;">Sprint 2 ↗</a></td><td><span class="must">🔴 Must</span></td>
+          <td><a href="semester1_user_stories.html#owner" style="color:#0F6E56; font-weight:600;">US-O01</a></td>
+          <td><a href="semester1_use_cases.html#uc-list" style="color:#0F6E56; font-weight:600;">UC-13</a></td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td class="food-id">FOOD-005</td>
+          <td>Menu Item CRUD API</td>
+          <td><a href="semester1_features.html#F-10" class="f-link">F-10</a></td>
+          <td>Restaurant</td><td><a href="#sprint2-detail" class="sprint-tag s2" style="text-decoration:none; cursor:pointer;">Sprint 2 ↗</a></td><td><span class="must">🔴 Must</span></td>
+          <td><a href="semester1_user_stories.html#owner" style="color:#0F6E56; font-weight:600;">US-O02</a></td>
+          <td><a href="semester1_use_cases.html#uc-list" style="color:#0F6E56; font-weight:600;">UC-14</a></td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td class="food-id">FOOD-006</td>
+          <td>Admin Restaurant Approval workflow</td>
+          <td><a href="semester1_features.html#F-14" class="f-link">F-14</a></td>
+          <td>Admin</td><td><a href="#sprint2-detail" class="sprint-tag s2" style="text-decoration:none; cursor:pointer;">Sprint 2 ↗</a></td><td><span class="must">🔴 Must</span></td>
+          <td><a href="semester1_user_stories.html#admin" style="color:#0F6E56; font-weight:600;">US-A01</a></td>
+          <td><a href="semester1_use_cases.html#uc-list" style="color:#0F6E56; font-weight:600;">UC-18</a></td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td class="food-id">FOOD-007</td>
+          <td>Place Order API (cart → order → confirmation)</td>
+          <td><a href="semester1_features.html#F-05" class="f-link">F-05</a></td>
+          <td>Order</td><td><span class="sprint-tag s3">Sprint 3</span></td><td><span class="must">🔴 Must</span></td>
+          <td><a href="semester1_user_stories.html#customer" style="color:#0F6E56; font-weight:600;">US-C05</a></td>
+          <td><a href="semester1_use_cases.html#uc-06" style="color:#0F6E56; font-weight:600;">UC-08</a></td>
+          <td><a href="semester2_testing.html#test-cases" class="tc-link">TC-04, TC-06</a></td>
+        </tr>
+        <tr>
+          <td class="food-id">FOOD-008</td>
+          <td>Payment Gateway integration (Razorpay / Stripe)</td>
+          <td><a href="semester1_features.html#F-05" class="f-link">F-05</a></td>
+          <td>Payment</td><td><span class="sprint-tag s3">Sprint 3</span></td><td><span class="must">🔴 Must</span></td>
+          <td><a href="semester1_user_stories.html#customer" style="color:#0F6E56; font-weight:600;">US-C05</a></td>
+          <td><a href="semester1_use_cases.html#uc-06" style="color:#0F6E56; font-weight:600;">UC-08</a></td>
+          <td><a href="semester2_testing.html#test-cases" class="tc-link">TC-05</a></td>
+        </tr>
+        <tr>
+          <td class="food-id">FOOD-009</td>
+          <td>Order Status FSM (PLACED → PREPARING → … → DELIVERED)</td>
+          <td><a href="semester1_features.html#F-06" class="f-link">F-06</a></td>
+          <td>Order</td><td><span class="sprint-tag s4">Sprint 4</span></td><td><span class="must">🔴 Must</span></td>
+          <td><a href="semester1_user_stories.html#customer" style="color:#0F6E56; font-weight:600;">US-C06</a></td>
+          <td><a href="semester1_use_cases.html#uc-list" style="color:#0F6E56; font-weight:600;">UC-09</a></td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td class="food-id">FOOD-010</td>
+          <td>Delivery Partner Module (assign, pickup, deliver)</td>
+          <td><a href="semester1_features.html#F-13" class="f-link">F-13</a></td>
+          <td>Delivery</td><td><span class="sprint-tag s4">Sprint 4</span></td><td><span class="should">🟡 Should</span></td>
+          <td><a href="semester1_user_stories.html#partner" style="color:#0F6E56; font-weight:600;">US-P02</a></td>
+          <td><a href="semester1_use_cases.html#uc-list" style="color:#0F6E56; font-weight:600;">UC-17</a></td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td class="food-id">FOOD-011</td>
+          <td>Email Notifications (order confirmation, status change)</td>
+          <td>—</td>
+          <td>Notification</td><td><span class="sprint-tag s4">Sprint 4</span></td><td><span class="should">🟡 Should</span></td>
+          <td>—</td><td>—</td><td>—</td>
+        </tr>
+        <tr>
+          <td class="food-id">FOOD-012</td>
+          <td>Customer Home — Browse &amp; Search Restaurants (frontend)</td>
+          <td><a href="semester1_features.html#F-03" class="f-link">F-03</a></td>
+          <td>Frontend</td><td><span class="sprint-tag s5">Sprint 5</span></td><td><span class="must">🔴 Must</span></td>
+          <td><a href="semester1_user_stories.html#customer" style="color:#0F6E56; font-weight:600;">US-C03</a></td>
+          <td><a href="semester1_use_cases.html#uc-list" style="color:#0F6E56; font-weight:600;">UC-05</a></td>
+          <td><a href="semester2_testing.html#test-cases" class="tc-link">TC-07</a></td>
+        </tr>
+        <tr>
+          <td class="food-id">FOOD-013</td>
+          <td>Restaurant Menu &amp; Cart (frontend)</td>
+          <td><a href="semester1_features.html#F-04" class="f-link">F-04</a></td>
+          <td>Frontend</td><td><span class="sprint-tag s5">Sprint 5</span></td><td><span class="must">🔴 Must</span></td>
+          <td><a href="semester1_user_stories.html#customer" style="color:#0F6E56; font-weight:600;">US-C04</a></td>
+          <td><a href="semester1_use_cases.html#uc-list" style="color:#0F6E56; font-weight:600;">UC-07</a></td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td class="food-id">FOOD-014</td>
+          <td>Checkout &amp; Payment flow (frontend)</td>
+          <td><a href="semester1_features.html#F-05" class="f-link">F-05</a></td>
+          <td>Frontend</td><td><span class="sprint-tag s6">Sprint 6</span></td><td><span class="must">🔴 Must</span></td>
+          <td><a href="semester1_user_stories.html#customer" style="color:#0F6E56; font-weight:600;">US-C05</a></td>
+          <td><a href="semester1_use_cases.html#uc-06" style="color:#0F6E56; font-weight:600;">UC-08</a></td>
+          <td><a href="semester2_testing.html#test-cases" class="tc-link">TC-04</a></td>
+        </tr>
+        <tr>
+          <td class="food-id">FOOD-015</td>
+          <td>Order Tracking page — live status timeline (frontend)</td>
+          <td><a href="semester1_features.html#F-06" class="f-link">F-06</a></td>
+          <td>Frontend</td><td><span class="sprint-tag s6">Sprint 6</span></td><td><span class="must">🔴 Must</span></td>
+          <td><a href="semester1_user_stories.html#customer" style="color:#0F6E56; font-weight:600;">US-C06</a></td>
+          <td><a href="semester1_use_cases.html#uc-list" style="color:#0F6E56; font-weight:600;">UC-09</a></td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td class="food-id">FOOD-016</td>
+          <td>Restaurant Owner Dashboard (accept/reject, menu mgmt)</td>
+          <td><a href="semester1_features.html#F-11" class="f-link">F-11</a></td>
+          <td>Frontend</td><td><span class="sprint-tag s7">Sprint 7</span></td><td><span class="should">🟡 Should</span></td>
+          <td><a href="semester1_user_stories.html#owner" style="color:#0F6E56; font-weight:600;">US-O03</a></td>
+          <td><a href="semester1_use_cases.html#uc-list" style="color:#0F6E56; font-weight:600;">UC-15</a></td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td class="food-id">FOOD-017</td>
+          <td>Delivery Partner Portal (available orders, status updates)</td>
+          <td><a href="semester1_features.html#F-12" class="f-link">F-12</a> <a href="semester1_features.html#F-13" class="f-link">F-13</a></td>
+          <td>Frontend</td><td><span class="sprint-tag s7">Sprint 7</span></td><td><span class="should">🟡 Should</span></td>
+          <td><a href="semester1_user_stories.html#partner" style="color:#0F6E56; font-weight:600;">US-P01</a></td>
+          <td><a href="semester1_use_cases.html#uc-list" style="color:#0F6E56; font-weight:600;">UC-16, UC-17</a></td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td class="food-id">FOOD-018</td>
+          <td>Reviews &amp; Ratings system</td>
+          <td><a href="semester1_features.html#F-07" class="f-link">F-07</a></td>
+          <td>Review</td><td><span class="sprint-tag s8">Sprint 8</span></td><td><span class="nice">🟢 Nice</span></td>
+          <td><a href="semester1_user_stories.html#customer" style="color:#0F6E56; font-weight:600;">US-C07</a></td>
+          <td><a href="semester1_use_cases.html#uc-09" style="color:#0F6E56; font-weight:600;">UC-12</a></td>
+          <td><a href="semester2_testing.html#test-cases" class="tc-link">TC-08, TC-09, TC-10</a></td>
+        </tr>
+        <tr>
+          <td class="food-id">FOOD-019</td>
+          <td>Swagger / OpenAPI documentation</td>
+          <td>—</td>
+          <td>DevOps</td><td><span class="sprint-tag s8">Sprint 8</span></td><td><span class="should">🟡 Should</span></td>
+          <td>—</td><td>—</td><td>—</td>
+        </tr>
+        <tr>
+          <td class="food-id">FOOD-020</td>
+          <td>Admin Analytics Dashboard</td>
+          <td><a href="semester1_features.html#F-15" class="f-link">F-15</a></td>
+          <td>Admin</td><td><span class="sprint-tag s8">Sprint 8</span></td><td><span class="nice">🟢 Nice</span></td>
+          <td><a href="semester1_user_stories.html#admin" style="color:#0F6E56; font-weight:600;">US-A02</a></td>
+          <td><a href="semester1_use_cases.html#uc-list" style="color:#0F6E56; font-weight:600;">UC-19</a></td>
+          <td>—</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <p style="font-size:12px; color:#777; margin-top:8px;">
+      ← The <strong>SRS Feature</strong> column links each sprint item back to the
+      <a href="semester1_features.html" style="color:#3C3489;">Feature List</a>, which in turn links to the
+      <a href="semester1_user_stories.html" style="color:#3C3489;">User Stories</a> and the
+      <a href="semester1_requirements.html" style="color:#3C3489;">SRS/Requirements document</a>.
+      Features without Test Cases are covered by integration tests or manual smoke tests during Alpha Testing (Semester 3).
+    </p>
+
     <!-- ──────────────────────────────────────────────────── -->
     <h3 id="sprint1-detail">Sprint 1 Deep Dive — Authentication &amp; Project Setup</h3>
     <!-- ──────────────────────────────────────────────────── -->
@@ -80,6 +324,13 @@
     <div style="border:1px solid #0F6E56; border-radius:8px; overflow:hidden; margin-bottom:16px;">
       <div style="background:#0F6E56; color:#fff; padding:10px 16px; font-weight:700; font-size:14px;">
         FOOD-001 — User Registration &nbsp;<span style="font-weight:400; font-size:12px; opacity:0.8;">5 story points · Owner: Member B</span>
+        <div style="margin-top:6px; display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
+          <a href="semester1_features.html#F-01" style="display:inline-block; font-size:10.5px; font-weight:700; padding:2px 8px; border-radius:3px; background:rgba(255,255,255,0.2); color:#fff; text-decoration:none;">F-01 Customer Registration</a>
+          <a href="semester1_user_stories.html#customer" style="display:inline-block; font-size:10.5px; font-weight:700; padding:2px 8px; border-radius:3px; background:rgba(255,255,255,0.15); color:#fff; text-decoration:none;">US-C01 User Story</a>
+          <a href="semester1_use_cases.html#uc-list" style="display:inline-block; font-size:10.5px; font-weight:700; padding:2px 8px; border-radius:3px; background:rgba(255,255,255,0.15); color:#fff; text-decoration:none;">UC-01 Use Case</a>
+          <a href="semester1_requirements.html#functional-reqs" style="display:inline-block; font-size:10.5px; font-weight:700; padding:2px 8px; border-radius:3px; background:rgba(255,255,255,0.15); color:#fff; text-decoration:none;">FR-101 SRS</a>
+          <a href="semester2_testing.html#test-cases" style="display:inline-block; font-size:10.5px; font-weight:700; padding:2px 8px; border-radius:3px; background:rgba(255,255,255,0.15); color:#fff; text-decoration:none;">TC-03 Test Case</a>
+        </div>
       </div>
       <table style="margin:0; font-size:13px;">
         <thead><tr><th>Ticket #</th><th>Task Description</th><th>Points</th><th>Acceptance</th></tr></thead>
@@ -116,6 +367,13 @@
     <div style="border:1px solid #185FA5; border-radius:8px; overflow:hidden; margin-bottom:16px;">
       <div style="background:#185FA5; color:#fff; padding:10px 16px; font-weight:700; font-size:14px;">
         FOOD-002 — User Login with JWT &nbsp;<span style="font-weight:400; font-size:12px; opacity:0.8;">5 story points · Owner: Member B</span>
+        <div style="margin-top:6px; display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
+          <a href="semester1_features.html#F-02" style="display:inline-block; font-size:10.5px; font-weight:700; padding:2px 8px; border-radius:3px; background:rgba(255,255,255,0.2); color:#fff; text-decoration:none;">F-02 Login &amp; Auth</a>
+          <a href="semester1_user_stories.html#customer" style="display:inline-block; font-size:10.5px; font-weight:700; padding:2px 8px; border-radius:3px; background:rgba(255,255,255,0.15); color:#fff; text-decoration:none;">US-C02 User Story</a>
+          <a href="semester1_use_cases.html#uc-02" style="display:inline-block; font-size:10.5px; font-weight:700; padding:2px 8px; border-radius:3px; background:rgba(255,255,255,0.15); color:#fff; text-decoration:none;">UC-02 Use Case</a>
+          <a href="semester1_requirements.html#functional-reqs" style="display:inline-block; font-size:10.5px; font-weight:700; padding:2px 8px; border-radius:3px; background:rgba(255,255,255,0.15); color:#fff; text-decoration:none;">FR-102 SRS</a>
+          <a href="semester2_testing.html#test-cases" style="display:inline-block; font-size:10.5px; font-weight:700; padding:2px 8px; border-radius:3px; background:rgba(255,255,255,0.15); color:#fff; text-decoration:none;">TC-01, TC-02 Test Cases</a>
+        </div>
       </div>
       <table style="margin:0; font-size:13px;">
         <thead><tr><th>Ticket #</th><th>Task Description</th><th>Points</th><th>Acceptance</th></tr></thead>
@@ -152,6 +410,10 @@
     <div style="border:1px solid #c47a10; border-radius:8px; overflow:hidden; margin-bottom:16px;">
       <div style="background:#c47a10; color:#fff; padding:10px 16px; font-weight:700; font-size:14px;">
         FOOD-003 — Deploy to Staging &nbsp;<span style="font-weight:400; font-size:12px; opacity:0.8;">3 story points · Owner: Member A</span>
+        <div style="margin-top:6px; display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
+          <a href="semester1_requirements.html#non-functional-reqs" style="display:inline-block; font-size:10.5px; font-weight:700; padding:2px 8px; border-radius:3px; background:rgba(255,255,255,0.2); color:#fff; text-decoration:none;">NFR-10 Uptime SRS</a>
+          <span style="font-size:10.5px; opacity:0.8;">No user story — DevOps infrastructure task</span>
+        </div>
       </div>
       <table style="margin:0; font-size:13px;">
         <thead><tr><th>Ticket #</th><th>Task Description</th><th>Points</th><th>Acceptance</th></tr></thead>
@@ -191,6 +453,189 @@
       </ul>
     </div>
 
+    <!-- ──────────────────────────────────────────────────── -->
+    <h3 id="sprint2-detail">Sprint 2 Deep Dive — Restaurant &amp; Menu APIs</h3>
+    <!-- ──────────────────────────────────────────────────── -->
+    <div style="background:#f0f4ff; border:2px solid #3C3489; border-radius:10px; padding:16px 20px; margin:12px 0 20px;">
+      <div style="font-size:13px; color:#3C3489; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px;">Sprint 2 Goal</div>
+      <div style="font-size:15px; font-weight:600; color:#1a1a2e;">"A restaurant owner can register a restaurant and add menu items. An admin can approve the restaurant so that it appears in the public listing."</div>
+      <div style="display:flex; gap:20px; margin-top:12px; font-size:13px; color:#444; flex-wrap:wrap;">
+        <span>📅 <strong>Duration:</strong> Weeks 3–4</span>
+        <span>📊 <strong>Committed points:</strong> 13</span>
+        <span>👥 <strong>Team:</strong> All 4 members</span>
+        <span>🎯 <strong>Demo:</strong> Restaurant created &amp; approved via Postman; menu items visible on public endpoint</span>
+      </div>
+    </div>
+
+    <h4 style="margin:18px 0 10px; color:#3C3489;">Stories Committed to Sprint 2</h4>
+    <table>
+      <thead><tr><th>Ticket</th><th>Story</th><th>SRS Feature</th><th>Points</th><th>Owner</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr style="background:#f8f8ff;">
+          <td><strong>FOOD-004</strong></td>
+          <td>Restaurant CRUD API (create, list, search, update)</td>
+          <td><a href="semester1_features.html#F-09" class="f-link">F-09</a></td>
+          <td>5</td><td>Member A</td><td>🔵 In Sprint</td>
+        </tr>
+        <tr style="background:#f8f8ff;">
+          <td><strong>FOOD-005</strong></td>
+          <td>Menu Item CRUD API (add, list, toggle availability)</td>
+          <td><a href="semester1_features.html#F-10" class="f-link">F-10</a></td>
+          <td>5</td><td>Member C</td><td>🔵 In Sprint</td>
+        </tr>
+        <tr style="background:#f8f8ff;">
+          <td><strong>FOOD-006</strong></td>
+          <td>Admin Restaurant Approval workflow</td>
+          <td><a href="semester1_features.html#F-14" class="f-link">F-14</a></td>
+          <td>3</td><td>Member D</td><td>🔵 In Sprint</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4 style="margin:18px 0 10px; color:#3C3489;">Task Breakdown with Ticket Numbers</h4>
+    <p style="font-size:13px; color:#555; margin-bottom:12px;">Each story is broken into 2–5 concrete engineering tasks. Ticket numbers follow the format <code>FOOD-&lt;story&gt;&lt;task&gt;</code>.</p>
+
+    <!-- FOOD-004 tasks -->
+    <div style="border:1px solid #3C3489; border-radius:8px; overflow:hidden; margin-bottom:16px;">
+      <div style="background:#3C3489; color:#fff; padding:10px 16px; font-weight:700; font-size:14px;">
+        FOOD-004 — Restaurant CRUD API &nbsp;<span style="font-weight:400; font-size:12px; opacity:0.8;">5 story points · Owner: Member A</span>
+        <div style="margin-top:6px; display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
+          <a href="semester1_features.html#F-09" style="display:inline-block; font-size:10.5px; font-weight:700; padding:2px 8px; border-radius:3px; background:rgba(255,255,255,0.2); color:#fff; text-decoration:none;">F-09 Restaurant Management</a>
+          <a href="semester1_user_stories.html#owner" style="display:inline-block; font-size:10.5px; font-weight:700; padding:2px 8px; border-radius:3px; background:rgba(255,255,255,0.15); color:#fff; text-decoration:none;">US-O01 User Story</a>
+          <a href="semester1_use_cases.html#uc-list" style="display:inline-block; font-size:10.5px; font-weight:700; padding:2px 8px; border-radius:3px; background:rgba(255,255,255,0.15); color:#fff; text-decoration:none;">UC-13 Use Case</a>
+          <a href="semester1_requirements.html#functional-reqs" style="display:inline-block; font-size:10.5px; font-weight:700; padding:2px 8px; border-radius:3px; background:rgba(255,255,255,0.15); color:#fff; text-decoration:none;">FR-201 SRS</a>
+          <a href="semester2_testing.html#test-cases" style="display:inline-block; font-size:10.5px; font-weight:700; padding:2px 8px; border-radius:3px; background:rgba(255,255,255,0.15); color:#fff; text-decoration:none;">TC-06 Test Case</a>
+        </div>
+      </div>
+      <table style="margin:0; font-size:13px;">
+        <thead><tr><th>Ticket #</th><th>Task Description</th><th>Points</th><th>Acceptance Criteria</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>FOOD-0041</strong></td>
+            <td>Create DB schema — <code>restaurants</code>, <code>cuisines</code>, <code>operating_hours</code> tables; FK from restaurants to users (owner)</td>
+            <td>1</td>
+            <td>Migration runs cleanly; unique constraint on (owner_id, name); index on cuisine_type</td>
+          </tr>
+          <tr style="background:#f8f8ff;">
+            <td><strong>FOOD-0042</strong></td>
+            <td><code>POST /api/restaurants/</code> — owner submits registration (name, address, cuisine, hours); sets status = <code>PENDING</code></td>
+            <td>1</td>
+            <td>Returns 201 with restaurant object; status = PENDING; 400 if required fields missing; 403 if caller is not OWNER role</td>
+          </tr>
+          <tr>
+            <td><strong>FOOD-0043</strong></td>
+            <td><code>GET /api/restaurants/</code> — public listing (approved only); query params: <code>?cuisine=</code>, <code>?search=</code>, <code>?page=</code></td>
+            <td>1</td>
+            <td>Returns paginated list; only APPROVED restaurants visible; search matches name or city; 200 OK</td>
+          </tr>
+          <tr style="background:#f8f8ff;">
+            <td><strong>FOOD-0044</strong></td>
+            <td><code>PUT /api/restaurants/:id</code> — owner updates restaurant details; auth guard ensures only the owning user can update</td>
+            <td>1</td>
+            <td>Returns updated restaurant; 403 if different owner; 404 if not found; updated_at refreshed</td>
+          </tr>
+          <tr>
+            <td><strong>FOOD-0045</strong></td>
+            <td>Integration tests for restaurant endpoints (Supertest) — create, list, unauthorised access, invalid cuisine</td>
+            <td>1</td>
+            <td>≥ 80% branch coverage; all tests green in CI; Postman collection updated</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- FOOD-005 tasks -->
+    <div style="border:1px solid #7B5EA7; border-radius:8px; overflow:hidden; margin-bottom:16px;">
+      <div style="background:#7B5EA7; color:#fff; padding:10px 16px; font-weight:700; font-size:14px;">
+        FOOD-005 — Menu Item CRUD API &nbsp;<span style="font-weight:400; font-size:12px; opacity:0.8;">5 story points · Owner: Member C</span>
+        <div style="margin-top:6px; display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
+          <a href="semester1_features.html#F-10" style="display:inline-block; font-size:10.5px; font-weight:700; padding:2px 8px; border-radius:3px; background:rgba(255,255,255,0.2); color:#fff; text-decoration:none;">F-10 Menu Management</a>
+          <a href="semester1_user_stories.html#owner" style="display:inline-block; font-size:10.5px; font-weight:700; padding:2px 8px; border-radius:3px; background:rgba(255,255,255,0.15); color:#fff; text-decoration:none;">US-O02 User Story</a>
+          <a href="semester1_use_cases.html#uc-list" style="display:inline-block; font-size:10.5px; font-weight:700; padding:2px 8px; border-radius:3px; background:rgba(255,255,255,0.15); color:#fff; text-decoration:none;">UC-14 Use Case</a>
+          <a href="semester1_requirements.html#functional-reqs" style="display:inline-block; font-size:10.5px; font-weight:700; padding:2px 8px; border-radius:3px; background:rgba(255,255,255,0.15); color:#fff; text-decoration:none;">FR-202 SRS</a>
+          <a href="semester2_testing.html#test-cases" style="display:inline-block; font-size:10.5px; font-weight:700; padding:2px 8px; border-radius:3px; background:rgba(255,255,255,0.15); color:#fff; text-decoration:none;">TC-07 Test Case</a>
+        </div>
+      </div>
+      <table style="margin:0; font-size:13px;">
+        <thead><tr><th>Ticket #</th><th>Task Description</th><th>Points</th><th>Acceptance Criteria</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>FOOD-0051</strong></td>
+            <td>Create <code>menu_items</code> and <code>categories</code> DB tables; FK to restaurants; columns: name, description, price, category, is_veg, is_available, photo_url</td>
+            <td>1</td>
+            <td>Migration runs; CHECK constraint on price > 0; index on (restaurant_id, category)</td>
+          </tr>
+          <tr style="background:#f8f8ff;">
+            <td><strong>FOOD-0052</strong></td>
+            <td><code>POST /api/restaurants/:id/menu-items/</code> — owner adds item (name, price, category, veg flag, optional photo URL)</td>
+            <td>2</td>
+            <td>Returns 201 with item object; 400 if price ≤ 0 or name missing; 403 if not restaurant owner; category must be in allowed enum</td>
+          </tr>
+          <tr>
+            <td><strong>FOOD-0053</strong></td>
+            <td><code>GET /api/restaurants/:id/menu-items/</code> — public view of available items; filter by <code>?category=</code> and <code>?is_veg=true</code></td>
+            <td>1</td>
+            <td>Returns only <code>is_available=true</code> items to public; owners see all items; 200 OK with pagination</td>
+          </tr>
+          <tr style="background:#f8f8ff;">
+            <td><strong>FOOD-0054</strong></td>
+            <td><code>PATCH /api/restaurants/:id/menu-items/:itemId/</code> — owner toggles availability, updates price or name; soft-delete via <code>is_available=false</code></td>
+            <td>1</td>
+            <td>Returns updated item; 403 if different owner; price change logged in audit table; deleted items hidden from public list</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- FOOD-006 tasks -->
+    <div style="border:1px solid #B45309; border-radius:8px; overflow:hidden; margin-bottom:16px;">
+      <div style="background:#B45309; color:#fff; padding:10px 16px; font-weight:700; font-size:14px;">
+        FOOD-006 — Admin Restaurant Approval &nbsp;<span style="font-weight:400; font-size:12px; opacity:0.8;">3 story points · Owner: Member D</span>
+        <div style="margin-top:6px; display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
+          <a href="semester1_features.html#F-14" style="display:inline-block; font-size:10.5px; font-weight:700; padding:2px 8px; border-radius:3px; background:rgba(255,255,255,0.2); color:#fff; text-decoration:none;">F-14 Admin Approval</a>
+          <a href="semester1_user_stories.html#admin" style="display:inline-block; font-size:10.5px; font-weight:700; padding:2px 8px; border-radius:3px; background:rgba(255,255,255,0.15); color:#fff; text-decoration:none;">US-A01 User Story</a>
+          <a href="semester1_use_cases.html#uc-list" style="display:inline-block; font-size:10.5px; font-weight:700; padding:2px 8px; border-radius:3px; background:rgba(255,255,255,0.15); color:#fff; text-decoration:none;">UC-18 Use Case</a>
+          <a href="semester1_requirements.html#functional-reqs" style="display:inline-block; font-size:10.5px; font-weight:700; padding:2px 8px; border-radius:3px; background:rgba(255,255,255,0.15); color:#fff; text-decoration:none;">FR-602 SRS</a>
+          <a href="semester2_testing.html#test-cases" style="display:inline-block; font-size:10.5px; font-weight:700; padding:2px 8px; border-radius:3px; background:rgba(255,255,255,0.15); color:#fff; text-decoration:none;">TC-Admin Test Case</a>
+        </div>
+      </div>
+      <table style="margin:0; font-size:13px;">
+        <thead><tr><th>Ticket #</th><th>Task Description</th><th>Points</th><th>Acceptance Criteria</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>FOOD-0061</strong></td>
+            <td><code>GET /api/admin/restaurants/?status=PENDING</code> — admin lists pending restaurant applications with owner contact details</td>
+            <td>1</td>
+            <td>Returns paginated list of PENDING restaurants; 403 if caller is not ADMIN role; empty array (not 404) if none pending</td>
+          </tr>
+          <tr style="background:#f8f8ff;">
+            <td><strong>FOOD-0062</strong></td>
+            <td><code>POST /api/admin/restaurants/:id/approve</code> — sets status = APPROVED; triggers approval email to owner via SendGrid/Nodemailer</td>
+            <td>1</td>
+            <td>Status changes to APPROVED; restaurant appears in public listing immediately; owner receives email; idempotent (re-approving already-approved is a no-op)</td>
+          </tr>
+          <tr>
+            <td><strong>FOOD-0063</strong></td>
+            <td><code>POST /api/admin/restaurants/:id/reject</code> — sets status = REJECTED; requires <code>reason</code> body field; triggers rejection email to owner</td>
+            <td>1</td>
+            <td>Status = REJECTED; restaurant hidden from public listing; owner receives reason via email; reason stored in DB for audit</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4 style="margin:18px 0 10px; color:#3C3489;">Sprint 2 Definition of Done</h4>
+    <div style="background:#f5f0ff; border:1px solid #c4b5fd; border-radius:8px; padding:14px 18px; margin-bottom:24px;">
+      <ul style="margin:0; padding-left:18px; font-size:13.5px; line-height:2;">
+        <li>All code reviewed via Pull Request and merged to <code>main</code>.</li>
+        <li>Unit + integration tests pass (<code>npm test</code>) with ≥ 80% branch coverage (Jest + Supertest).</li>
+        <li>No ESLint errors (<code>npm run lint</code> exits 0).</li>
+        <li>All 3 endpoints reachable on staging URL and tested via shared Postman collection.</li>
+        <li>Swagger docs updated for all Sprint 2 endpoints (<code>/api-docs</code> shows restaurant &amp; menu routes).</li>
+        <li>Sprint Review demo: owner registers a restaurant → admin approves it → restaurant appears in public listing → owner adds 3 menu items → public listing shows the menu.</li>
+      </ul>
+    </div>
+
     <h3>Sprint Ceremony Schedule</h3>
     <table>
       <thead><tr><th>Event</th><th>When</th><th>Duration</th><th>Purpose</th></tr></thead>
@@ -212,25 +657,252 @@
       </div>
     </div>
     <p>The <strong>Product Backlog</strong> is a prioritised list of all features, bug fixes, and technical tasks. <strong>Backlog Grooming</strong> (also called refinement) is the weekly process of reviewing, estimating, and ordering backlog items so the team always knows what to work on next.</p>
-    <h3>Sample Product Backlog (Top Priority Items)</h3>
-    <table>
-      <thead><tr><th>Priority</th><th>Story / Task</th><th>Story Points</th><th>Sprint</th></tr></thead>
+    <p style="font-size:13.5px; color:#444;">The table below shows the <em>living state</em> of the backlog at the end of Semester 2, Week 4 — after Sprint 1 is complete and Sprint 2 is underway. Items are pulled from the backlog into a sprint when the team has capacity and the item is estimated &amp; refined.</p>
+
+    <!-- Backlog status legend -->
+    <div style="display:flex; gap:12px; flex-wrap:wrap; margin:10px 0 16px; font-size:12.5px;">
+      <span style="background:#d1fae5; color:#065f46; border:1px solid #6ee7b7; border-radius:20px; padding:3px 12px; font-weight:600;">✅ Done — Sprint 1</span>
+      <span style="background:#eff6ff; color:#1e3a8a; border:1px solid #93c5fd; border-radius:20px; padding:3px 12px; font-weight:600;">🔵 In Sprint — Sprint 2</span>
+      <span style="background:#f3f4f6; color:#374151; border:1px solid #d1d5db; border-radius:20px; padding:3px 12px; font-weight:600;">📋 Backlog</span>
+    </div>
+
+    <h3>Product Backlog — All Items (Sprints 1–8)</h3>
+    <div style="overflow-x:auto;">
+    <table style="font-size:13px; min-width:860px;">
+      <thead>
+        <tr>
+          <th>Ticket</th>
+          <th>Story / Feature</th>
+          <th>SRS Feature</th>
+          <th>Priority</th>
+          <th>Points</th>
+          <th>Sprint</th>
+          <th>Status</th>
+        </tr>
+      </thead>
       <tbody>
-        <tr><td>🔴 Must Have</td><td>User registration and login with JWT</td><td>5</td><td>Sprint 1</td></tr>
-        <tr><td>🔴 Must Have</td><td>Restaurant listing API (GET /api/restaurants/)</td><td>3</td><td>Sprint 2</td></tr>
-        <tr><td>🔴 Must Have</td><td>Menu items API (GET /api/restaurants/{id}/menu/)</td><td>3</td><td>Sprint 2</td></tr>
-        <tr><td>🔴 Must Have</td><td>Place order API with payment gateway integration</td><td>8</td><td>Sprint 3</td></tr>
-        <tr><td>🔴 Must Have</td><td>Order status FSM + transitions</td><td>5</td><td>Sprint 4</td></tr>
-        <tr><td>🟡 Should Have</td><td>Email notifications (order confirmation, status change)</td><td>3</td><td>Sprint 4</td></tr>
-        <tr><td>🟡 Should Have</td><td>Restaurant owner dashboard (accept/reject orders)</td><td>5</td><td>Sprint 7</td></tr>
-        <tr><td>🟡 Should Have</td><td>Delivery partner portal</td><td>5</td><td>Sprint 7</td></tr>
-        <tr><td>🟢 Nice to Have</td><td>Rating and review system</td><td>3</td><td>Sprint 8</td></tr>
-        <tr><td>🟢 Nice to Have</td><td>Admin analytics dashboard</td><td>5</td><td>Semester 3</td></tr>
+        <!-- ── SPRINT 1 — DONE ── -->
+        <tr>
+          <td colspan="7" style="background:#d1fae5; color:#065f46; font-weight:700; font-size:12px; padding:6px 12px; letter-spacing:0.4px;">
+            ✅ SPRINT 1 — Authentication &amp; Project Setup &nbsp;·&nbsp; Weeks 1–2 &nbsp;·&nbsp; 13 points committed &nbsp;·&nbsp; STATUS: DONE
+          </td>
+        </tr>
+        <tr style="background:#f0fdf4;">
+          <td><a href="#sprint1-detail" style="color:#065f46; font-weight:700;">FOOD-001</a></td>
+          <td>User Registration (register, verify email)</td>
+          <td><a href="semester1_features.html#F-01" class="f-link">F-01</a></td>
+          <td>🔴 Must Have</td><td>5</td>
+          <td><a href="#sprint1-detail" class="sprint-tag s1" style="text-decoration:none; cursor:pointer;">Sprint 1 ↗</a></td>
+          <td><span style="color:#065f46; font-weight:600;">✅ Done</span></td>
+        </tr>
+        <tr style="background:#f0fdf4;">
+          <td><a href="#sprint1-detail" style="color:#065f46; font-weight:700;">FOOD-002</a></td>
+          <td>User Login with JWT (access + refresh tokens)</td>
+          <td><a href="semester1_features.html#F-02" class="f-link">F-02</a></td>
+          <td>🔴 Must Have</td><td>5</td>
+          <td><a href="#sprint1-detail" class="sprint-tag s1" style="text-decoration:none; cursor:pointer;">Sprint 1 ↗</a></td>
+          <td><span style="color:#065f46; font-weight:600;">✅ Done</span></td>
+        </tr>
+        <tr style="background:#f0fdf4;">
+          <td><a href="#sprint1-detail" style="color:#065f46; font-weight:700;">FOOD-003</a></td>
+          <td>Deploy to Staging (Render / Railway + health check)</td>
+          <td>—</td>
+          <td>🔴 Must Have</td><td>3</td>
+          <td><a href="#sprint1-detail" class="sprint-tag s1" style="text-decoration:none; cursor:pointer;">Sprint 1 ↗</a></td>
+          <td><span style="color:#065f46; font-weight:600;">✅ Done</span></td>
+        </tr>
+
+        <!-- ── SPRINT 2 — IN SPRINT ── -->
+        <tr>
+          <td colspan="7" style="background:#dbeafe; color:#1e3a8a; font-weight:700; font-size:12px; padding:6px 12px; letter-spacing:0.4px;">
+            🔵 SPRINT 2 — Restaurant &amp; Menu APIs + Admin Approval &nbsp;·&nbsp; Weeks 3–4 &nbsp;·&nbsp; 13 points committed &nbsp;·&nbsp; STATUS: IN SPRINT
+          </td>
+        </tr>
+        <tr style="background:#eff6ff;">
+          <td><a href="#sprint2-detail" style="color:#1e3a8a; font-weight:700;">FOOD-004</a></td>
+          <td>Restaurant CRUD API (create, list, search, update)</td>
+          <td><a href="semester1_features.html#F-09" class="f-link">F-09</a></td>
+          <td>🔴 Must Have</td><td>5</td>
+          <td><a href="#sprint2-detail" class="sprint-tag s2" style="text-decoration:none; cursor:pointer;">Sprint 2 ↗</a></td>
+          <td><span style="color:#1e3a8a; font-weight:600;">🔵 In Sprint</span></td>
+        </tr>
+        <tr style="background:#eff6ff;">
+          <td><a href="#sprint2-detail" style="color:#1e3a8a; font-weight:700;">FOOD-005</a></td>
+          <td>Menu Item CRUD API (add, list, toggle availability)</td>
+          <td><a href="semester1_features.html#F-10" class="f-link">F-10</a></td>
+          <td>🔴 Must Have</td><td>5</td>
+          <td><a href="#sprint2-detail" class="sprint-tag s2" style="text-decoration:none; cursor:pointer;">Sprint 2 ↗</a></td>
+          <td><span style="color:#1e3a8a; font-weight:600;">🔵 In Sprint</span></td>
+        </tr>
+        <tr style="background:#eff6ff;">
+          <td><a href="#sprint2-detail" style="color:#1e3a8a; font-weight:700;">FOOD-006</a></td>
+          <td>Admin Restaurant Approval workflow (approve / reject + email)</td>
+          <td><a href="semester1_features.html#F-14" class="f-link">F-14</a></td>
+          <td>🔴 Must Have</td><td>3</td>
+          <td><a href="#sprint2-detail" class="sprint-tag s2" style="text-decoration:none; cursor:pointer;">Sprint 2 ↗</a></td>
+          <td><span style="color:#1e3a8a; font-weight:600;">🔵 In Sprint</span></td>
+        </tr>
+
+        <!-- ── SPRINTS 3–4 — BACKLOG ── -->
+        <tr>
+          <td colspan="7" style="background:#f3f4f6; color:#374151; font-weight:700; font-size:12px; padding:6px 12px; letter-spacing:0.4px;">
+            📋 SPRINTS 3–4 — Order Management &nbsp;·&nbsp; Weeks 5–8 &nbsp;·&nbsp; STATUS: BACKLOG
+          </td>
+        </tr>
+        <tr>
+          <td class="food-id">FOOD-007</td>
+          <td>Place Order API with cart + payment gateway (Razorpay/Stripe)</td>
+          <td><a href="semester1_features.html#F-03" class="f-link">F-03</a></td>
+          <td>🔴 Must Have</td><td>8</td>
+          <td><span class="sprint-tag s3">Sprint 3</span></td>
+          <td><span style="color:#6b7280;">📋 Backlog</span></td>
+        </tr>
+        <tr style="background:#f8f8ff;">
+          <td class="food-id">FOOD-008</td>
+          <td>Order Status FSM (PLACED → ACCEPTED → READY → DELIVERED)</td>
+          <td><a href="semester1_features.html#F-04" class="f-link">F-04</a></td>
+          <td>🔴 Must Have</td><td>5</td>
+          <td><span class="sprint-tag s3">Sprint 3</span></td>
+          <td><span style="color:#6b7280;">📋 Backlog</span></td>
+        </tr>
+        <tr>
+          <td class="food-id">FOOD-009</td>
+          <td>Email notifications (order confirmation, status change)</td>
+          <td><a href="semester1_features.html#F-05" class="f-link">F-05</a></td>
+          <td>🟡 Should Have</td><td>3</td>
+          <td><span class="sprint-tag s4">Sprint 4</span></td>
+          <td><span style="color:#6b7280;">📋 Backlog</span></td>
+        </tr>
+        <tr style="background:#f8f8ff;">
+          <td class="food-id">FOOD-010</td>
+          <td>Order history &amp; re-order API</td>
+          <td><a href="semester1_features.html#F-06" class="f-link">F-06</a></td>
+          <td>🟡 Should Have</td><td>3</td>
+          <td><span class="sprint-tag s4">Sprint 4</span></td>
+          <td><span style="color:#6b7280;">📋 Backlog</span></td>
+        </tr>
+
+        <!-- ── SPRINTS 5–6 — BACKLOG ── -->
+        <tr>
+          <td colspan="7" style="background:#f3f4f6; color:#374151; font-weight:700; font-size:12px; padding:6px 12px; letter-spacing:0.4px;">
+            📋 SPRINTS 5–6 — Delivery Tracking &amp; Payments &nbsp;·&nbsp; Weeks 9–12 &nbsp;·&nbsp; STATUS: BACKLOG
+          </td>
+        </tr>
+        <tr>
+          <td class="food-id">FOOD-011</td>
+          <td>Delivery partner assignment &amp; real-time location tracking</td>
+          <td><a href="semester1_features.html#F-11" class="f-link">F-11</a></td>
+          <td>🔴 Must Have</td><td>8</td>
+          <td><span class="sprint-tag s5">Sprint 5</span></td>
+          <td><span style="color:#6b7280;">📋 Backlog</span></td>
+        </tr>
+        <tr style="background:#f8f8ff;">
+          <td class="food-id">FOOD-012</td>
+          <td>Payment refunds &amp; cancellation flow</td>
+          <td><a href="semester1_features.html#F-13" class="f-link">F-13</a></td>
+          <td>🟡 Should Have</td><td>5</td>
+          <td><span class="sprint-tag s5">Sprint 5</span></td>
+          <td><span style="color:#6b7280;">📋 Backlog</span></td>
+        </tr>
+        <tr>
+          <td class="food-id">FOOD-013</td>
+          <td>Promo codes &amp; discount engine</td>
+          <td><a href="semester1_features.html#F-16" class="f-link">F-16</a></td>
+          <td>🟡 Should Have</td><td>5</td>
+          <td><span class="sprint-tag s6">Sprint 6</span></td>
+          <td><span style="color:#6b7280;">📋 Backlog</span></td>
+        </tr>
+        <tr style="background:#f8f8ff;">
+          <td class="food-id">FOOD-014</td>
+          <td>Push notifications (Firebase FCM) for order &amp; delivery updates</td>
+          <td><a href="semester1_features.html#F-08" class="f-link">F-08</a></td>
+          <td>🟡 Should Have</td><td>3</td>
+          <td><span class="sprint-tag s6">Sprint 6</span></td>
+          <td><span style="color:#6b7280;">📋 Backlog</span></td>
+        </tr>
+
+        <!-- ── SPRINTS 7–8 — BACKLOG ── -->
+        <tr>
+          <td colspan="7" style="background:#f3f4f6; color:#374151; font-weight:700; font-size:12px; padding:6px 12px; letter-spacing:0.4px;">
+            📋 SPRINTS 7–8 — Dashboards, Reviews &amp; Admin &nbsp;·&nbsp; Weeks 13–16 &nbsp;·&nbsp; STATUS: BACKLOG
+          </td>
+        </tr>
+        <tr>
+          <td class="food-id">FOOD-015</td>
+          <td>Restaurant owner dashboard (accept / reject orders, revenue summary)</td>
+          <td><a href="semester1_features.html#F-12" class="f-link">F-12</a></td>
+          <td>🟡 Should Have</td><td>5</td>
+          <td><span class="sprint-tag s7">Sprint 7</span></td>
+          <td><span style="color:#6b7280;">📋 Backlog</span></td>
+        </tr>
+        <tr style="background:#f8f8ff;">
+          <td class="food-id">FOOD-016</td>
+          <td>Delivery partner portal (claim deliveries, update status)</td>
+          <td><a href="semester1_features.html#F-11" class="f-link">F-11</a></td>
+          <td>🟡 Should Have</td><td>5</td>
+          <td><span class="sprint-tag s7">Sprint 7</span></td>
+          <td><span style="color:#6b7280;">📋 Backlog</span></td>
+        </tr>
+        <tr>
+          <td class="food-id">FOOD-017</td>
+          <td>User address book &amp; saved payment methods</td>
+          <td><a href="semester1_features.html#F-01" class="f-link">F-01</a></td>
+          <td>🟡 Should Have</td><td>3</td>
+          <td><span class="sprint-tag s7">Sprint 7</span></td>
+          <td><span style="color:#6b7280;">📋 Backlog</span></td>
+        </tr>
+        <tr style="background:#f8f8ff;">
+          <td class="food-id">FOOD-018</td>
+          <td>Reviews &amp; Ratings system (customer posts, owner replies)</td>
+          <td><a href="semester1_features.html#F-07" class="f-link">F-07</a></td>
+          <td>🟢 Nice to Have</td><td>3</td>
+          <td><span class="sprint-tag s8">Sprint 8</span></td>
+          <td><span style="color:#6b7280;">📋 Backlog</span></td>
+        </tr>
+        <tr>
+          <td class="food-id">FOOD-019</td>
+          <td>Swagger / OpenAPI documentation (full spec export)</td>
+          <td>—</td>
+          <td>🟡 Should Have</td><td>2</td>
+          <td><span class="sprint-tag s8">Sprint 8</span></td>
+          <td><span style="color:#6b7280;">📋 Backlog</span></td>
+        </tr>
+        <tr style="background:#f8f8ff;">
+          <td class="food-id">FOOD-020</td>
+          <td>Admin Analytics Dashboard (revenue, orders, top restaurants)</td>
+          <td><a href="semester1_features.html#F-15" class="f-link">F-15</a></td>
+          <td>🟢 Nice to Have</td><td>5</td>
+          <td><span class="sprint-tag s8">Sprint 8</span></td>
+          <td><span style="color:#6b7280;">📋 Backlog</span></td>
+        </tr>
       </tbody>
     </table>
+    </div>
+
+    <!-- Backlog velocity summary -->
+    <div style="display:flex; gap:16px; flex-wrap:wrap; margin:16px 0;">
+      <div style="flex:1; min-width:180px; background:#d1fae5; border:1px solid #6ee7b7; border-radius:8px; padding:12px 16px; text-align:center;">
+        <div style="font-size:22px; font-weight:800; color:#065f46;">13</div>
+        <div style="font-size:12px; color:#065f46; font-weight:600;">Points — Sprint 1 Done ✅</div>
+      </div>
+      <div style="flex:1; min-width:180px; background:#dbeafe; border:1px solid #93c5fd; border-radius:8px; padding:12px 16px; text-align:center;">
+        <div style="font-size:22px; font-weight:800; color:#1e3a8a;">13</div>
+        <div style="font-size:12px; color:#1e3a8a; font-weight:600;">Points — Sprint 2 In Sprint 🔵</div>
+      </div>
+      <div style="flex:1; min-width:180px; background:#f3f4f6; border:1px solid #d1d5db; border-radius:8px; padding:12px 16px; text-align:center;">
+        <div style="font-size:22px; font-weight:800; color:#374151;">75</div>
+        <div style="font-size:12px; color:#374151; font-weight:600;">Points — Remaining Backlog 📋</div>
+      </div>
+      <div style="flex:1; min-width:180px; background:#fefce8; border:1px solid #fcd34d; border-radius:8px; padding:12px 16px; text-align:center;">
+        <div style="font-size:22px; font-weight:800; color:#92400e;">101</div>
+        <div style="font-size:12px; color:#92400e; font-weight:600;">Total Backlog Points</div>
+      </div>
+    </div>
+
     <div class="info-box green">
-      <div class="info-box-title">Story Points</div>
-      <p style="margin:0">Story points measure effort/complexity, not hours. Use the Fibonacci scale: 1, 2, 3, 5, 8, 13. A 1-point task is trivial (e.g., update a text label). An 8-point task is complex (e.g., full payment integration). Your team's average velocity (points per sprint) becomes your planning baseline.</p>
+      <div class="info-box-title">How Backlog Management Works</div>
+      <p style="margin:0 0 8px;">Story points measure effort/complexity, not hours. Use the Fibonacci scale: 1, 2, 3, 5, 8, 13. A 1-point task is trivial (e.g., update a text label). An 8-point task is complex (e.g., full payment integration).</p>
+      <p style="margin:0;">During each <strong>Sprint Planning</strong> ceremony, the team pulls the top-priority backlog items into the upcoming sprint — only as many points as the team's <em>velocity</em> allows. Once Sprint 1 was done (13 points in 2 weeks), the team confirmed a velocity of ~13 points/sprint and pulled FOOD-004, 005, 006 into Sprint 2. The remaining items stay ordered in the backlog, ready for grooming before Sprint 3.</p>
     </div>
   </section>
 
@@ -253,6 +925,294 @@
     <div class="info-box orange">
       <div class="info-box-title">Be Honest with Your Faculty Guide</div>
       <p style="margin:0">If you are behind schedule, say so early. A revised timeline presented in Week 4 is manageable. A surprise reveal in Week 16 is a crisis. Good project management is about transparency, not perfection.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="section" id="change-log">
+    <div class="section-header">
+      <div class="section-icon icon-green">🔄</div>
+      <div class="section-title-group">
+        <h2>4. Change Request Log</h2>
+        <p>Controlled tracking of every scope, requirement, or design change across all semesters</p>
+      </div>
+    </div>
+
+    <p>A <strong>Change Request (CR)</strong> is the formal mechanism for proposing any modification to the agreed baseline — whether that is a new feature, a removed feature, a revised requirement, or a design pivot. Every CR is logged, evaluated for impact, and either approved or rejected before any work begins. This prevents silent scope creep and keeps the SRS honest.</p>
+
+    <!-- When to raise a CR -->
+    <div class="info-box blue" style="margin-bottom:18px;">
+      <div class="info-box-title">When to Raise a CR — Triggers</div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; font-size:13px; margin-top:4px;">
+        <div>✅ A new requirement discovered during coding</div>
+        <div>✅ A feature that is technically infeasible as specified</div>
+        <div>✅ Faculty guide feedback requiring a design change</div>
+        <div>✅ A feature being descoped due to time pressure</div>
+        <div>✅ A bug fix that requires changing the SRS/design</div>
+        <div>✅ A third-party API or library change forcing a pivot</div>
+        <div>✅ Peer/beta feedback revealing a UX gap</div>
+        <div>✅ A security finding that changes how auth works</div>
+      </div>
+    </div>
+
+    <!-- CR vs Bug distinction -->
+    <div style="background:#fff8f0; border:1px solid #f59e0b; border-left:4px solid #d97706; border-radius:8px; padding:14px 18px; margin-bottom:20px; font-size:13px;">
+      <strong style="color:#92400e;">⚠️ CR vs Bug — Know the Difference</strong>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:8px;">
+        <div>
+          <div style="font-weight:700; color:#92400e; margin-bottom:4px;">Change Request (CR)</div>
+          The system does what the SRS says, but the SRS needs to change. Example: "The SRS says email-only login — we now want to add Google OAuth." That's a CR because the requirement itself is changing.
+        </div>
+        <div>
+          <div style="font-weight:700; color:#c62828; margin-bottom:4px;">Bug / Defect</div>
+          The system does NOT do what the SRS says. Example: "The SRS says login should return a JWT, but the API returns a session cookie instead." That's a bug — fix it, no CR needed.
+        </div>
+      </div>
+    </div>
+
+    <!-- CR Lifecycle -->
+    <h3>CR Lifecycle</h3>
+    <div style="display:flex; align-items:center; gap:0; margin:14px 0 22px; flex-wrap:wrap;">
+      <div style="background:#EEEDFE; border:2px solid #5147A9; border-radius:8px; padding:10px 14px; text-align:center; min-width:100px; flex:1;">
+        <div style="font-size:18px;">✍️</div>
+        <div style="font-size:11px; font-weight:700; color:#3C3489; margin-top:4px;">1. Draft</div>
+        <div style="font-size:10px; color:#666;">CR raised by any team member</div>
+      </div>
+      <div style="font-size:20px; color:#5147A9; padding:0 6px; font-weight:700;">→</div>
+      <div style="background:#e8f5ff; border:2px solid #185FA5; border-radius:8px; padding:10px 14px; text-align:center; min-width:100px; flex:1;">
+        <div style="font-size:18px;">🔍</div>
+        <div style="font-size:11px; font-weight:700; color:#185FA5; margin-top:4px;">2. Review</div>
+        <div style="font-size:10px; color:#666;">Team + faculty guide assess impact</div>
+      </div>
+      <div style="font-size:20px; color:#5147A9; padding:0 6px; font-weight:700;">→</div>
+      <div style="background:#f0faf5; border:2px solid #0F6E56; border-radius:8px; padding:10px 14px; text-align:center; min-width:100px; flex:1;">
+        <div style="font-size:18px;">⚖️</div>
+        <div style="font-size:11px; font-weight:700; color:#0F6E56; margin-top:4px;">3. Decision</div>
+        <div style="font-size:10px; color:#666;">Approved / Rejected / Deferred</div>
+      </div>
+      <div style="font-size:20px; color:#5147A9; padding:0 6px; font-weight:700;">→</div>
+      <div style="background:#fff3e0; border:2px solid #c47a10; border-radius:8px; padding:10px 14px; text-align:center; min-width:100px; flex:1;">
+        <div style="font-size:18px;">🛠️</div>
+        <div style="font-size:11px; font-weight:700; color:#c47a10; margin-top:4px;">4. Implement</div>
+        <div style="font-size:10px; color:#666;">SRS + backlog + sprint updated</div>
+      </div>
+      <div style="font-size:20px; color:#5147A9; padding:0 6px; font-weight:700;">→</div>
+      <div style="background:#f0f4ff; border:2px solid #3C3489; border-radius:8px; padding:10px 14px; text-align:center; min-width:100px; flex:1;">
+        <div style="font-size:18px;">✅</div>
+        <div style="font-size:11px; font-weight:700; color:#3C3489; margin-top:4px;">5. Closed</div>
+        <div style="font-size:10px; color:#666;">Verified in test; CR log updated</div>
+      </div>
+    </div>
+
+    <!-- CR Summary Table -->
+    <h3>Change Request Log — All CRs</h3>
+    <div style="overflow-x:auto;">
+    <table style="font-size:13px; min-width:900px;">
+      <thead>
+        <tr>
+          <th>CR ID</th>
+          <th>Title</th>
+          <th>Raised By</th>
+          <th>Week</th>
+          <th>Affected FR / Feature</th>
+          <th>Impact</th>
+          <th>Decision</th>
+          <th>Implemented In</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background:#f0fdf4;">
+          <td><strong style="color:#065f46;">CR-001</strong></td>
+          <td>Add OTP-based login as alternative to password</td>
+          <td>Member B</td>
+          <td>Sem 2, Wk 3</td>
+          <td>
+            <a href="semester1_requirements.html#functional-reqs" class="f-link">FR-102</a>
+            <a href="semester1_features.html#F-02" class="f-link">F-02</a>
+          </td>
+          <td>+3 pts · SMS gateway (Twilio)</td>
+          <td><span style="background:#d1fae5; color:#065f46; font-weight:700; padding:2px 10px; border-radius:20px; font-size:11px;">✅ Approved</span></td>
+          <td><a href="#sprint2-detail" class="sprint-link sprint-s2">Sprint 2 ↗</a></td>
+        </tr>
+        <tr>
+          <td><strong style="color:#065f46;">CR-002</strong></td>
+          <td>Descope real-time GPS tracking to Semester 3</td>
+          <td>Member A</td>
+          <td>Sem 2, Wk 5</td>
+          <td>
+            <a href="semester1_requirements.html#functional-reqs" class="f-link">FR-502</a>
+            <a href="semester1_features.html#F-13" class="f-link">F-13</a>
+          </td>
+          <td>−8 pts · Moves to Sem 3 backlog</td>
+          <td><span style="background:#d1fae5; color:#065f46; font-weight:700; padding:2px 10px; border-radius:20px; font-size:11px;">✅ Approved</span></td>
+          <td>Backlog → Sem 3</td>
+        </tr>
+        <tr style="background:#fff8f0;">
+          <td><strong style="color:#c62828;">CR-003</strong></td>
+          <td>Add real-time chat between customer and restaurant</td>
+          <td>Member C</td>
+          <td>Sem 2, Wk 4</td>
+          <td>No existing FR</td>
+          <td>+13 pts · New WebSocket module · High risk</td>
+          <td><span style="background:#fde8e8; color:#c62828; font-weight:700; padding:2px 10px; border-radius:20px; font-size:11px;">❌ Rejected</span></td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td><strong style="color:#065f46;">CR-004</strong></td>
+          <td>Switch payment gateway from Razorpay to Stripe (test mode)</td>
+          <td>Member D</td>
+          <td>Sem 2, Wk 6</td>
+          <td>
+            <a href="semester1_requirements.html#functional-reqs" class="f-link">FR-401</a>
+            <a href="semester1_features.html#F-05" class="f-link">F-05</a>
+          </td>
+          <td>0 pts (API swap) · FR-401 text updated</td>
+          <td><span style="background:#d1fae5; color:#065f46; font-weight:700; padding:2px 10px; border-radius:20px; font-size:11px;">✅ Approved</span></td>
+          <td><a href="#backlog" class="sprint-link sprint-future">Sprint 3</a></td>
+        </tr>
+        <tr style="background:#fffbf0;">
+          <td><strong style="color:#92400e;">CR-005</strong></td>
+          <td>Add promo code / coupon discount engine</td>
+          <td>Member A</td>
+          <td>Sem 2, Wk 7</td>
+          <td>No existing FR (new FR-306 proposed)</td>
+          <td>+5 pts · New DB table · New API endpoint</td>
+          <td><span style="background:#fef3c7; color:#78350f; font-weight:700; padding:2px 10px; border-radius:20px; font-size:11px;">⏳ Under Review</span></td>
+          <td>TBD — Sprint 4 if approved</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <!-- ── Detailed CR Cards ── -->
+    <h3 style="margin-top:28px;">Detailed Change Request Forms</h3>
+    <p style="font-size:13px; color:#555; margin-bottom:16px;">The following full CR forms show what a properly documented change request looks like. These are the documents you would submit to your faculty guide for sign-off.</p>
+
+    <!-- CR-001 — Approved -->
+    <div style="border:2px solid #0F6E56; border-radius:10px; overflow:hidden; margin-bottom:20px;">
+      <div style="background:#0F6E56; color:#fff; padding:12px 18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+        <div>
+          <span style="font-size:11px; opacity:0.8; text-transform:uppercase; letter-spacing:0.5px;">Change Request</span>
+          <div style="font-size:16px; font-weight:800;">CR-001 — Add OTP-Based Login</div>
+        </div>
+        <span style="background:#fff; color:#065f46; font-weight:800; padding:4px 14px; border-radius:20px; font-size:12px;">✅ APPROVED</span>
+      </div>
+      <div style="padding:16px 20px; background:#f0faf5;">
+        <table style="font-size:13px; margin:0; width:100%;">
+          <tbody>
+            <tr><td style="font-weight:700; color:#555; width:160px; padding:5px 12px 5px 0; vertical-align:top;">CR ID</td><td>CR-001</td></tr>
+            <tr style="background:#e8f5f0;"><td style="font-weight:700; color:#555; padding:5px 12px 5px 0; vertical-align:top;">Date Raised</td><td>Semester 2, Week 3 (Day 15 of project)</td></tr>
+            <tr><td style="font-weight:700; color:#555; padding:5px 12px 5px 0; vertical-align:top;">Raised By</td><td>Member B (Backend Developer)</td></tr>
+            <tr style="background:#e8f5f0;"><td style="font-weight:700; color:#555; padding:5px 12px 5px 0; vertical-align:top;">Title</td><td>Add OTP (One-Time Password) via SMS as an alternative login method</td></tr>
+            <tr><td style="font-weight:700; color:#555; padding:5px 12px 5px 0; vertical-align:top;">Reason / Trigger</td><td>During Sprint 1 review, the faculty guide observed that password-only login is vulnerable to credential stuffing attacks. Adding OTP improves security (maps to NFR-4) and aligns with industry practice (Swiggy, Zomato both use OTP login). This was not in the original SRS.</td></tr>
+            <tr style="background:#e8f5f0;"><td style="font-weight:700; color:#555; padding:5px 12px 5px 0; vertical-align:top;">Affected Artefacts</td><td>
+              <a href="semester1_requirements.html#functional-reqs" style="color:#0F6E56; font-weight:600;">FR-102</a> (User Login — text updated to include OTP flow) &nbsp;·&nbsp;
+              <a href="semester1_features.html#F-02" style="color:#0F6E56; font-weight:600;">F-02</a> (Login &amp; Auth feature) &nbsp;·&nbsp;
+              <a href="semester1_user_stories.html#customer" style="color:#0F6E56; font-weight:600;">US-C02</a> (Login user story — acceptance criteria updated)
+            </td></tr>
+            <tr><td style="font-weight:700; color:#555; padding:5px 12px 5px 0; vertical-align:top;">Impact Analysis</td><td>
+              <strong>Effort:</strong> +3 story points (1 pt: Twilio integration &amp; SMS template; 1 pt: OTP generation + expiry logic in DB; 1 pt: <code>POST /api/auth/otp-login</code> endpoint + unit tests)<br>
+              <strong>Cost:</strong> Twilio free tier — 3 SMS/day limit; upgrade to paid only if load-tested<br>
+              <strong>Timeline:</strong> Adds 3 days to Sprint 2; does not delay Sprint 3<br>
+              <strong>Risk:</strong> Low — isolated to auth module; password login still works as fallback<br>
+              <strong>New DB columns:</strong> <code>otp_code</code>, <code>otp_expires_at</code> on <code>users</code> table
+            </td></tr>
+            <tr style="background:#e8f5f0;"><td style="font-weight:700; color:#555; padding:5px 12px 5px 0; vertical-align:top;">Decision</td><td><strong style="color:#065f46;">✅ Approved</strong> — Faculty guide sign-off received Sem 2, Week 3, Day 3</td></tr>
+            <tr><td style="font-weight:700; color:#555; padding:5px 12px 5px 0; vertical-align:top;">Implementation</td><td>Ticket <strong>FOOD-021</strong> created in Sprint 2 backlog. FR-102 updated in SRS. US-C02 acceptance criteria updated. SEC-01 test case updated to cover OTP brute-force test.</td></tr>
+            <tr style="background:#e8f5f0;"><td style="font-weight:700; color:#555; padding:5px 12px 5px 0; vertical-align:top;">Verification</td><td>TC-OTP-01 (valid OTP login), TC-OTP-02 (expired OTP), TC-OTP-03 (wrong OTP × 5 → lockout). All 3 pass in Sprint 2 CI pipeline.</td></tr>
+            <tr><td style="font-weight:700; color:#555; padding:5px 12px 5px 0; vertical-align:top;">Status</td><td><span style="background:#d1fae5; color:#065f46; font-weight:700; padding:2px 10px; border-radius:4px; font-size:11px;">CLOSED — implemented &amp; verified</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- CR-003 — Rejected -->
+    <div style="border:2px solid #c62828; border-radius:10px; overflow:hidden; margin-bottom:20px;">
+      <div style="background:#c62828; color:#fff; padding:12px 18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+        <div>
+          <span style="font-size:11px; opacity:0.8; text-transform:uppercase; letter-spacing:0.5px;">Change Request</span>
+          <div style="font-size:16px; font-weight:800;">CR-003 — Real-Time Chat: Customer ↔ Restaurant</div>
+        </div>
+        <span style="background:#fff; color:#c62828; font-weight:800; padding:4px 14px; border-radius:20px; font-size:12px;">❌ REJECTED</span>
+      </div>
+      <div style="padding:16px 20px; background:#fff8f8;">
+        <table style="font-size:13px; margin:0; width:100%;">
+          <tbody>
+            <tr><td style="font-weight:700; color:#555; width:160px; padding:5px 12px 5px 0; vertical-align:top;">CR ID</td><td>CR-003</td></tr>
+            <tr style="background:#fde8e8;"><td style="font-weight:700; color:#555; padding:5px 12px 5px 0; vertical-align:top;">Date Raised</td><td>Semester 2, Week 4</td></tr>
+            <tr><td style="font-weight:700; color:#555; padding:5px 12px 5px 0; vertical-align:top;">Raised By</td><td>Member C (Full-stack Developer)</td></tr>
+            <tr style="background:#fde8e8;"><td style="font-weight:700; color:#555; padding:5px 12px 5px 0; vertical-align:top;">Title</td><td>Add real-time chat between customer and restaurant (Socket.io)</td></tr>
+            <tr><td style="font-weight:700; color:#555; padding:5px 12px 5px 0; vertical-align:top;">Reason / Trigger</td><td>Member C noticed that Swiggy has a "chat with restaurant" feature. Proposed adding this to differentiate the project. No FR exists for this — it is new scope.</td></tr>
+            <tr style="background:#fde8e8;"><td style="font-weight:700; color:#555; padding:5px 12px 5px 0; vertical-align:top;">Impact Analysis</td><td>
+              <strong>Effort:</strong> +13 story points — new Socket.io server, chat DB schema, UI component, message history API<br>
+              <strong>Risk:</strong> High — WebSocket adds server complexity, increases hosting cost (stateful connections), requires load-balancing changes<br>
+              <strong>Timeline:</strong> Pushes Sprint 4 order-tracking work into Sprint 5; cascades a 2-week delay to final delivery<br>
+              <strong>Scope:</strong> Not in SRS — would require adding an entirely new FR section (FR-7: Messaging) and 3 new use cases<br>
+              <strong>Existing coverage:</strong> Push notifications (FR-503) already address the core use case of status updates
+            </td></tr>
+            <tr><td style="font-weight:700; color:#555; padding:5px 12px 5px 0; vertical-align:top;">Rejection Reason</td><td>
+              <strong style="color:#c62828;">❌ Rejected</strong> — Faculty guide decision, Sem 2 Week 4.<br>
+              <em>"The effort-to-value ratio is unfavourable at this stage. Push notifications (FR-503) already solve the communication gap. Introducing WebSocket infrastructure adds high technical risk with 5 weeks remaining in Semester 2. The team should focus on delivering the committed backlog to a high standard rather than adding new scope. This feature may be reconsidered for Semester 3 if all core features are complete."</em>
+            </td></tr>
+            <tr style="background:#fde8e8;"><td style="font-weight:700; color:#555; padding:5px 12px 5px 0; vertical-align:top;">Action</td><td>No SRS changes. No backlog changes. CR logged for reference. Feature may be raised again as CR-008 in Semester 3 if velocity permits.</td></tr>
+            <tr><td style="font-weight:700; color:#555; padding:5px 12px 5px 0; vertical-align:top;">Status</td><td><span style="background:#fde8e8; color:#c62828; font-weight:700; padding:2px 10px; border-radius:4px; font-size:11px;">CLOSED — rejected, not implemented</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- CR-005 — Pending -->
+    <div style="border:2px solid #b45309; border-radius:10px; overflow:hidden; margin-bottom:20px;">
+      <div style="background:#b45309; color:#fff; padding:12px 18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+        <div>
+          <span style="font-size:11px; opacity:0.8; text-transform:uppercase; letter-spacing:0.5px;">Change Request</span>
+          <div style="font-size:16px; font-weight:800;">CR-005 — Promo Code / Coupon Discount Engine</div>
+        </div>
+        <span style="background:#fff; color:#92400e; font-weight:800; padding:4px 14px; border-radius:20px; font-size:12px;">⏳ UNDER REVIEW</span>
+      </div>
+      <div style="padding:16px 20px; background:#fffbf0;">
+        <table style="font-size:13px; margin:0; width:100%;">
+          <tbody>
+            <tr><td style="font-weight:700; color:#555; width:160px; padding:5px 12px 5px 0; vertical-align:top;">CR ID</td><td>CR-005</td></tr>
+            <tr style="background:#fef3c7;"><td style="font-weight:700; color:#555; padding:5px 12px 5px 0; vertical-align:top;">Date Raised</td><td>Semester 2, Week 7</td></tr>
+            <tr><td style="font-weight:700; color:#555; padding:5px 12px 5px 0; vertical-align:top;">Raised By</td><td>Member A (Project Lead)</td></tr>
+            <tr style="background:#fef3c7;"><td style="font-weight:700; color:#555; padding:5px 12px 5px 0; vertical-align:top;">Title</td><td>Add promo code / coupon discount engine (e.g., FIRST20 = 20% off first order)</td></tr>
+            <tr><td style="font-weight:700; color:#555; padding:5px 12px 5px 0; vertical-align:top;">Reason / Trigger</td><td>During Sprint 2 review, the team observed that all real food delivery apps use promotional codes for customer acquisition. Adding even a basic promo engine would make the project feel production-grade and covers a common business rule evaluators look for.</td></tr>
+            <tr style="background:#fef3c7;"><td style="font-weight:700; color:#555; padding:5px 12px 5px 0; vertical-align:top;">Proposed Scope</td><td>
+              New <strong>FR-306: Promo Code Redemption</strong> — Admin creates codes with discount %, max-uses, and expiry date. Customer enters code at checkout; discount applied to order total. One code per order. Expired/invalid code shows clear error.<br><br>
+              New DB table: <code>promo_codes (code, discount_pct, max_uses, used_count, expires_at)</code><br>
+              New endpoint: <code>POST /api/orders/apply-promo</code>
+            </td></tr>
+            <tr><td style="font-weight:700; color:#555; padding:5px 12px 5px 0; vertical-align:top;">Impact Analysis</td><td>
+              <strong>Effort:</strong> +5 story points (1 pt DB schema, 1 pt API endpoint, 1 pt checkout UI change, 1 pt admin CRUD for codes, 1 pt test cases)<br>
+              <strong>Risk:</strong> Medium — touches checkout flow (FR-303) and payment calculation; must handle race conditions on max-uses<br>
+              <strong>Timeline:</strong> Fits in Sprint 4 if approved by Week 8; does not delay core delivery<br>
+              <strong>SRS changes:</strong> Add FR-306 under FR-3 Ordering; update FR-303 to reference promo deduction in order total
+            </td></tr>
+            <tr style="background:#fef3c7;"><td style="font-weight:700; color:#555; padding:5px 12px 5px 0; vertical-align:top;">Decision</td><td><strong style="color:#92400e;">⏳ Pending</strong> — Awaiting faculty guide review. Team to present impact analysis at next weekly meeting (Sem 2, Week 8).</td></tr>
+            <tr><td style="font-weight:700; color:#555; padding:5px 12px 5px 0; vertical-align:top;">Status</td><td><span style="background:#fef3c7; color:#78350f; font-weight:700; padding:2px 10px; border-radius:4px; font-size:11px;">OPEN — awaiting decision</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Change Freeze Policy -->
+    <h3>Change Freeze &amp; Escalation Policy</h3>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:20px;">
+      <div style="background:#f0f4ff; border:1px solid #c5bef5; border-left:4px solid #5147A9; border-radius:8px; padding:14px 16px;">
+        <div style="font-weight:700; color:#3C3489; font-size:13px; margin-bottom:6px;">🔒 Change Freeze — End of Semester 3</div>
+        <div style="font-size:12.5px; color:#444; line-height:1.7;">No new features or scope additions after the Semester 3 code freeze date. Only bug fixes and performance improvements are permitted in Semester 4. Any CR raised after freeze is automatically deferred to the "future enhancements" section of the final report.</div>
+      </div>
+      <div style="background:#fff8f0; border:1px solid #f59e0b; border-left:4px solid #d97706; border-radius:8px; padding:14px 16px;">
+        <div style="font-weight:700; color:#92400e; font-size:13px; margin-bottom:6px;">📣 Escalation Path</div>
+        <div style="font-size:12.5px; color:#444; line-height:1.7;">If the team cannot reach a unanimous decision on a CR within 2 working days, the Project Lead escalates to the Faculty Guide. Faculty Guide's decision is final. All escalations are logged in the CR form under "Decision" with the guide's rationale quoted directly.</div>
+      </div>
+    </div>
+
+    <div class="info-box green">
+      <div class="info-box-title">Why Evaluators Value a CR Log</div>
+      <p style="margin:0 0 8px;">A Change Request Log demonstrates that your team operated with <strong>engineering discipline</strong>, not chaos. It shows: (1) you knew your baseline, (2) you evaluated trade-offs before changing it, (3) you got stakeholder sign-off, and (4) you kept documentation honest. Most MCA projects have zero change management — a well-maintained CR log immediately sets your project apart.</p>
+      <p style="margin:0;">In the final viva, if an evaluator asks <em>"Why does your system do X when the SRS says Y?"</em> — your answer is: <em>"CR-001, approved Week 3, here is the impact analysis and faculty sign-off."</em> That is a professional answer.</p>
     </div>
   </section>
 

@@ -2,6 +2,50 @@
    Shared styles for Online Food Delivery System child pages
    ========================================================= */
 
+/* ---- Good-to-Have badge (Mandatory removed) ---- */
+.tier-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+.tier-row h2 { margin-bottom: 0; }
+
+/* badge-mandatory kept in CSS as no-op so old markup silently disappears */
+.badge-mandatory { display: none; }
+
+.badge-good-to-have {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 10.5px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.5px; padding: 3px 12px; border-radius: 20px;
+  background: #fef3c7; color: #78350f; border: 1px solid #b45309;
+  flex-shrink: 0;
+}
+.tier-banner {
+  border-radius: 8px; padding: 10px 16px; margin-bottom: 14px;
+  font-size: 13px; font-weight: 600; display: flex; align-items: flex-start; gap: 10px;
+}
+/* tier-banner.mandatory kept as no-op */
+.tier-banner.mandatory { display: none; }
+.tier-banner.good-to-have {
+  background: #fef3c7; color: #78350f;
+  border: 1px solid #b45309; border-left: 4px solid #92400e;
+}
+
+/* ---- Sprint link chips (shared across features, requirements, planning pages) ---- */
+.sprint-link {
+  display: inline-block;
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.4px;
+  padding: 2px 9px; border-radius: 4px; white-space: nowrap;
+  text-decoration: none; transition: opacity 0.15s;
+}
+.sprint-link:hover { opacity: 0.75; }
+.sprint-s1 { background: #d1fae5; color: #065f46; border: 1px solid #6ee7b7; }
+.sprint-s2 { background: #dbeafe; color: #1e3a8a; border: 1px solid #93c5fd; }
+.sprint-future { background: #f3f4f6; color: #374151; border: 1px solid #d1d5db; }
+
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
