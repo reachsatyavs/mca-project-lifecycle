@@ -26,6 +26,7 @@
     <a href="#feature-complete">3. Feature Completion</a>
     <a href="#refactoring">4. Refactoring</a>
     <a href="#websocket">5. Real-Time (WebSocket)</a>
+    <a href="#ai-agent">6. FoodBot AI Agent ✨</a>
   </nav>
 
   <!-- ============================================================ -->
@@ -514,6 +515,339 @@ export function OrderTracking({ orderId }) {
 }
 
 // Install: npm install socket.io-client</div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 6 — FOODBOT AI AGENT (MVP)
+       ══════════════════════════════════════════════════════════ -->
+  <section class="section" id="ai-agent">
+    <div class="section-header">
+      <div class="section-icon icon-blue">🤖</div>
+      <div class="section-title-group">
+        <div class="tier-row">
+          <h2>6. FoodBot — AI Agent MVP</h2>
+          <div class="tier-banner good-to-have">⭐ Good to Have</div>
+        </div>
+        <p>Ollama setup · Tool definitions · ReAct agent loop · Chat API endpoint</p>
+      </div>
+    </div>
+
+    <div class="info-box blue">
+      <div class="info-box-title">📦 What We Are Building in This Section</div>
+      <table style="margin:0; font-size:13px;">
+        <thead><tr><th>Component</th><th>File</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td>Ollama setup</td><td>Terminal / config</td><td>Install &amp; run Ollama locally, pull Llama 3.1 model</td></tr>
+          <tr><td>DB migration</td><td><code>prisma/schema.prisma</code></td><td>Add 4 new tables: session, message, ticket, wallet_credit</td></tr>
+          <tr><td>Tool definitions</td><td><code>src/ai/tools/</code></td><td>5 tools that the LLM can call — each wraps a DB/API query</td></tr>
+          <tr><td>FoodBotAgent</td><td><code>src/ai/FoodBotAgent.js</code></td><td>ReAct loop — send messages to Ollama, execute tools, loop until final answer</td></tr>
+          <tr><td>Chat endpoint</td><td><code>src/routes/ai.js</code></td><td><code>POST /api/ai/chat</code> — authenticated, saves messages, returns agent reply</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="ai-ollama-setup">Step 1 — Ollama Setup</h3>
+    <div class="diagram-wrap" style="background:#0d1117;">
+      <pre style="margin:0; font-size:12.5px; color:#e8eaf0; line-height:1.75; white-space:pre-wrap; font-family:'Fira Code',monospace;"># Install Ollama (macOS / Linux)
+brew install ollama          # macOS
+# or: curl -fsSL https://ollama.com/install.sh | sh  (Linux)
+
+# Start the Ollama server (runs on http://localhost:11434)
+ollama serve &amp;
+
+# Pull the model (one-time, ~4 GB download)
+ollama pull llama3.1:8b
+
+# Verify it works
+ollama run llama3.1:8b "Say hello"
+
+# Install npm client library in your project
+npm install ollama</pre>
+    </div>
+
+    <h3 id="ai-db-migration">Step 2 — Prisma Schema: AI Tables</h3>
+    <div class="diagram-wrap" style="background:#0d1117;">
+      <pre style="margin:0; font-size:12.5px; color:#e8eaf0; line-height:1.75; white-space:pre-wrap; font-family:'Fira Code',monospace;">// prisma/schema.prisma  — append to existing schema
+
+model AiConversationSession {
+  id             Int       @id @default(autoincrement())
+  customerId     Int
+  status         String    @default("active") // active | escalated | closed
+  contextSummary String?   @db.Text
+  createdAt      DateTime  @default(now())
+  closedAt       DateTime?
+  customer       User      @relation(fields: [customerId], references: [id])
+  messages       AiMessage[]
+  tickets        SupportTicket[]
+
+  @@index([customerId])
+  @@map("ai_conversation_sessions")
+}
+
+model AiMessage {
+  id         Int      @id @default(autoincrement())
+  sessionId  Int
+  role       String   // user | assistant | tool
+  content    String   @db.Text
+  toolName   String?
+  toolResult String?  @db.Text
+  tokensUsed Int      @default(0)
+  createdAt  DateTime @default(now())
+  session    AiConversationSession @relation(fields: [sessionId], references: [id])
+
+  @@index([sessionId])
+  @@map("ai_messages")
+}
+
+model SupportTicket {
+  id           Int       @id @default(autoincrement())
+  sessionId    Int?
+  customerId   Int
+  issueSummary String    @db.Text
+  status       String    @default("open")
+  resolution   String?   @db.Text
+  createdAt    DateTime  @default(now())
+  resolvedAt   DateTime?
+  session      AiConversationSession? @relation(fields: [sessionId], references: [id])
+  customer     User      @relation(fields: [customerId], references: [id])
+
+  @@map("support_tickets")
+}
+
+model WalletCredit {
+  id         Int      @id @default(autoincrement())
+  customerId Int
+  orderId    Int?
+  amount     Decimal  @db.Decimal(10, 2)
+  reason     String
+  appliedBy  String   @default("FoodBot-AI")
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  customer   User     @relation(fields: [customerId], references: [id])
+  order      Order?   @relation(fields: [orderId], references: [id])
+
+  @@index([customerId])
+  @@map("wallet_credits")
+}
+
+// npx prisma migrate dev --name add_ai_agent_tables</pre>
+    </div>
+
+    <h3 id="ai-tools">Step 3 — Tool Definitions</h3>
+    <p>Each tool has a Ollama-compatible <strong>JSON Schema definition</strong> (so the LLM knows what the tool accepts) and an <strong>execute function</strong> that queries the real database.</p>
+    <div class="diagram-wrap" style="background:#0d1117;">
+      <pre style="margin:0; font-size:12.5px; color:#e8eaf0; line-height:1.75; white-space:pre-wrap; font-family:'Fira Code',monospace;">// src/ai/tools/getOrderStatus.js
+const { prisma } = require('../../lib/prisma');
+
+const getOrderStatusTool = {
+  definition: {
+    type: 'function',
+    function: {
+      name: 'get_order_status',
+      description: 'Get the current status, delivery estimate, and details of a customer order.',
+      parameters: {
+        type: 'object',
+        properties: {
+          orderId: { type: 'number', description: 'The order ID to look up' }
+        },
+        required: ['orderId']
+      }
+    }
+  },
+
+  async execute({ orderId }) {
+    const order = await prisma.order.findUnique({
+      where: { id: orderId },
+      include: {
+        orderItems: { include: { menuItem: true } },
+        deliveryPartner: { select: { name: true } },
+        restaurant: { select: { name: true } }
+      }
+    });
+    if (!order) return { error: `Order ${orderId} not found` };
+    const lateBy = order.deliveredAt &amp;&amp; order.estimatedDeliveryAt
+      ? Math.round((order.deliveredAt - order.estimatedDeliveryAt) / 60000)
+      : null;
+    return {
+      orderId: order.id,
+      status: order.status,
+      restaurant: order.restaurant.name,
+      items: order.orderItems.map(i => ({ name: i.menuItem.name, qty: i.quantity, price: i.price })),
+      totalAmount: order.totalAmount,
+      deliveryPartner: order.deliveryPartner?.name,
+      lateByMinutes: lateBy
+    };
+  }
+};
+
+module.exports = { getOrderStatusTool };</pre>
+    </div>
+
+    <div class="diagram-wrap" style="background:#0d1117; margin-top:12px;">
+      <pre style="margin:0; font-size:12.5px; color:#e8eaf0; line-height:1.75; white-space:pre-wrap; font-family:'Fira Code',monospace;">// src/ai/tools/resolveIssue.js
+const { prisma } = require('../../lib/prisma');
+
+const resolveIssueTool = {
+  definition: {
+    type: 'function',
+    function: {
+      name: 'resolve_issue',
+      description: 'Apply a wallet credit as compensation for a bad experience (cold food, missing item, late delivery).',
+      parameters: {
+        type: 'object',
+        properties: {
+          customerId: { type: 'number' },
+          orderId:    { type: 'number' },
+          amount:     { type: 'number', description: 'Credit amount in rupees (50-200)' },
+          reason:     { type: 'string' }
+        },
+        required: ['customerId', 'amount', 'reason']
+      }
+    }
+  },
+
+  async execute({ customerId, orderId, amount, reason }) {
+    const credit = await prisma.walletCredit.create({
+      data: {
+        customerId,
+        orderId: orderId || null,
+        amount,
+        reason,
+        appliedBy: 'FoodBot-AI',
+        expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+      }
+    });
+    return { success: true, creditId: credit.id, amount, message: `Rs.${amount} added to wallet` };
+  }
+};
+
+module.exports = { resolveIssueTool };</pre>
+    </div>
+
+    <h3 id="ai-agent-core">Step 4 — FoodBotAgent: The ReAct Loop</h3>
+    <div class="diagram-wrap" style="background:#0d1117;">
+      <pre style="margin:0; font-size:12.5px; color:#e8eaf0; line-height:1.75; white-space:pre-wrap; font-family:'Fira Code',monospace;">// src/ai/FoodBotAgent.js
+const Ollama = require('ollama').default;
+const { prisma } = require('../lib/prisma');
+const { getOrderStatusTool }  = require('./tools/getOrderStatus');
+const { resolveIssueTool }    = require('./tools/resolveIssue');
+const { recommendDishesTool } = require('./tools/recommendDishes');
+const { ownerAnalyticsTool }  = require('./tools/ownerAnalytics');
+const { escalateToHumanTool } = require('./tools/escalateToHuman');
+
+const TOOLS   = [getOrderStatusTool, resolveIssueTool, recommendDishesTool, ownerAnalyticsTool, escalateToHumanTool];
+const TOOL_MAP = Object.fromEntries(TOOLS.map(t =&gt; [t.definition.function.name, t]));
+
+const SYSTEM_PROMPT = `You are FoodBot, a helpful customer support agent for an online food delivery platform.
+You have access to tools to check orders, resolve issues, recommend food, and analyse restaurant data.
+Always be empathetic, concise, and action-oriented. If you use a tool, wait for its result before responding.
+Never make up order details — always use the tools to get real data.`;
+
+class FoodBotAgent {
+  constructor() {
+    this.ollama = new Ollama({ host: 'http://localhost:11434' });
+    this.model  = 'llama3.1:8b';
+  }
+
+  async chat(sessionId, userId, userMessage) {
+    await prisma.aiMessage.create({ data: { sessionId, role: 'user', content: userMessage } });
+
+    const history = await prisma.aiMessage.findMany({
+      where: { sessionId },
+      orderBy: { createdAt: 'asc' },
+      take: 20
+    });
+
+    const messages = [
+      { role: 'system', content: SYSTEM_PROMPT },
+      ...history.map(m =&gt; ({ role: m.role === 'tool' ? 'tool' : m.role, content: m.content }))
+    ];
+
+    const finalResponse = await this.runReActLoop(messages, sessionId);
+
+    await prisma.aiMessage.create({ data: { sessionId, role: 'assistant', content: finalResponse } });
+    return finalResponse;
+  }
+
+  async runReActLoop(messages, sessionId) {
+    const toolDefs = TOOLS.map(t =&gt; t.definition);
+
+    for (let i = 0; i &lt; 10; i++) {
+      const { message } = await this.ollama.chat({ model: this.model, messages, tools: toolDefs });
+
+      if (!message.tool_calls || message.tool_calls.length === 0) return message.content;
+
+      for (const toolCall of message.tool_calls) {
+        const { name, arguments: args } = toolCall.function;
+        let result;
+        try { result = TOOL_MAP[name] ? await TOOL_MAP[name].execute(args) : { error: 'Unknown tool' }; }
+        catch (e) { result = { error: e.message }; }
+
+        const resultStr = JSON.stringify(result);
+        await prisma.aiMessage.create({
+          data: { sessionId, role: 'tool', content: resultStr, toolName: name, toolResult: resultStr }
+        });
+        messages.push({ role: 'assistant', content: '', tool_calls: [toolCall] });
+        messages.push({ role: 'tool', content: resultStr });
+      }
+    }
+    return 'I was unable to complete your request. Please contact support.';
+  }
+}
+
+module.exports = { FoodBotAgent };</pre>
+    </div>
+
+    <h3 id="ai-endpoint">Step 5 — Chat API Endpoint</h3>
+    <div class="diagram-wrap" style="background:#0d1117;">
+      <pre style="margin:0; font-size:12.5px; color:#e8eaf0; line-height:1.75; white-space:pre-wrap; font-family:'Fira Code',monospace;">// src/routes/ai.js
+const express = require('express');
+const router  = express.Router();
+const { prisma }        = require('../lib/prisma');
+const { FoodBotAgent }  = require('../ai/FoodBotAgent');
+const { authenticateToken } = require('../middleware/auth');
+
+const agent = new FoodBotAgent();
+
+router.post('/chat', authenticateToken, async (req, res) =&gt; {
+  try {
+    const { message, sessionId } = req.body;
+    if (!message?.trim()) return res.status(400).json({ error: 'Message cannot be empty' });
+
+    let session;
+    if (sessionId) {
+      session = await prisma.aiConversationSession.findUnique({ where: { id: sessionId } });
+      if (!session || session.customerId !== req.user.id)
+        return res.status(403).json({ error: 'Session not found or unauthorised' });
+    } else {
+      session = await prisma.aiConversationSession.create({
+        data: { customerId: req.user.id, status: 'active' }
+      });
+    }
+
+    const reply = await agent.chat(session.id, req.user.id, message);
+    res.json({ sessionId: session.id, message: reply });
+  } catch (err) {
+    console.error('[AI Chat Error]', err);
+    res.status(500).json({ error: 'AI service unavailable. Please try again.' });
+  }
+});
+
+// In app.js: app.use('/api/ai', require('./routes/ai'));
+module.exports = router;</pre>
+    </div>
+
+    <div class="info-box orange">
+      <div class="info-box-title">🔜 Semester 4 Extensions</div>
+      <p style="margin:0 0 8px 0; font-size:13px;">The MVP above is a fully working AI agent. Semester 4 adds:</p>
+      <ul style="margin:0; font-size:13px; line-height:1.8;">
+        <li><strong>RAG</strong> — embed restaurant menus for smarter, context-aware recommendations</li>
+        <li><strong>Context compression</strong> — summarise old messages to handle long sessions</li>
+        <li><strong>Proactive agent</strong> — background job scanning delayed orders and sending AI-drafted notifications</li>
+        <li><strong>Monitoring</strong> — track tool call rates, token usage, escalation rate</li>
+      </ul>
+      <p style="margin:10px 0 0 0; font-size:13px;"><a href="semester4_coding.html#ai-advanced" style="font-weight:700; color:#92400e;">→ See Semester 4 Coding — FoodBot Advanced</a></p>
+    </div>
   </section>
 
   <footer>

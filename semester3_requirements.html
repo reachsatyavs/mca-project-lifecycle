@@ -21,7 +21,8 @@
   </header>
   <nav class="topic-nav orange-nav">
     <div class="topic-nav-label">Jump to section</div>
-    <a href="#change-requests-via-cr-process">Change Requests via CR Process</a>
+    <a href="#change-requests-via-cr-process">CR Process</a>
+    <a href="#cr-007">CR-007 — FoodBot AI (FR-801…FR-806)</a>
   </nav>
 
 
@@ -56,6 +57,66 @@
     <div class="info-box orange">
       <div class="info-box-title">Semester 3 Rule: Freeze Feature Scope</div>
       <p style="margin:0">In Semester 3, the goal is to <em>complete and test</em> what was already planned — not to add new features. Any feature not in the approved backlog is deferred to Semester 4's Enhancement Log. This discipline is what makes projects actually get finished.</p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════
+       CR-007 — FOODBOT AI AGENT
+       ══════════════════════════════════════════════════════════ -->
+  <section class="section" id="cr-007">
+    <div class="section-header">
+      <div class="section-icon icon-orange">🤖</div>
+      <div class="section-title-group">
+        <h2>CR-007 — FoodBot Agentic AI Customer Support</h2>
+        <p>Change Request to introduce an AI agent feature in Semester 3</p>
+      </div>
+    </div>
+
+    <div style="background:#fff8e1; border:1px solid #f59e0b; border-left:4px solid #d97706; border-radius:10px; padding:16px 20px; margin-bottom:20px;">
+      <table style="width:100%; font-size:13px; border-collapse:collapse;">
+        <tbody>
+          <tr><td style="padding:5px 12px 5px 0; font-weight:700; color:#78350f; white-space:nowrap;">CR ID</td><td style="padding:5px 0; color:#1a1a2e;">CR-007</td><td style="padding:5px 12px 5px 24px; font-weight:700; color:#78350f; white-space:nowrap;">Status</td><td style="padding:5px 0;"><span style="background:#d1fae5; color:#065f46; border:1px solid #6ee7b7; padding:2px 10px; border-radius:20px; font-size:12px; font-weight:700;">✅ Approved</span></td></tr>
+          <tr><td style="padding:5px 12px 5px 0; font-weight:700; color:#78350f;">Title</td><td colspan="3" style="padding:5px 0; color:#1a1a2e;">Add FoodBot — Agentic AI Customer Support System (Ollama + local LLM)</td></tr>
+          <tr><td style="padding:5px 12px 5px 0; font-weight:700; color:#78350f;">Requested by</td><td style="padding:5px 0; color:#1a1a2e;">Product Team</td><td style="padding:5px 12px 5px 24px; font-weight:700; color:#78350f;">Sprint</td><td style="padding:5px 0; color:#1a1a2e;">Sprint 7 (Semester 3)</td></tr>
+          <tr><td style="padding:5px 12px 5px 0; font-weight:700; color:#78350f;">Impact</td><td colspan="3" style="padding:5px 0; color:#1a1a2e;">New: 4 DB tables, 1 API endpoint, 1 chat widget. No changes to existing tables or endpoints. Low regression risk.</td></tr>
+          <tr><td style="padding:5px 12px 5px 0; font-weight:700; color:#78350f;">Rationale</td><td colspan="3" style="padding:5px 0; color:#1a1a2e;">Differentiates the project significantly. Demonstrates advanced AI engineering. Fully additive — zero risk to existing features. Ollama runs locally with no API costs.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>New Functional Requirements — FR-8xx (AI Agent)</h3>
+    <div class="info-box blue" style="padding:16px 20px;">
+      <div class="info-box-title">FR-8xx — FoodBot Agentic AI</div>
+
+      <div style="margin-bottom:10px; padding:10px 14px; background:#f0f7ff; border-radius:8px; border-left:3px solid #3b82f6;">
+        <strong style="color:#1e3a8a;">FR-801 · Customer Support Chat</strong><br>
+        <span style="font-size:13px; color:#444;">The system shall provide a chat widget on the customer portal where users can type natural language queries about their orders, the restaurant, or delivery. The AI agent shall respond within 5 seconds on standard hardware.</span>
+      </div>
+
+      <div style="margin-bottom:10px; padding:10px 14px; background:#f0f7ff; border-radius:8px; border-left:3px solid #3b82f6;">
+        <strong style="color:#1e3a8a;">FR-802 · Order Status via Agent</strong><br>
+        <span style="font-size:13px; color:#444;">The agent shall be able to retrieve real-time order status, delivery partner location estimate, and expected delivery time by calling the <code>get_order_status</code> tool — without the customer navigating away from the chat.</span>
+      </div>
+
+      <div style="margin-bottom:10px; padding:10px 14px; background:#f0f7ff; border-radius:8px; border-left:3px solid #3b82f6;">
+        <strong style="color:#1e3a8a;">FR-803 · Issue Resolution with Compensation</strong><br>
+        <span style="font-size:13px; color:#444;">When a customer reports a delivery problem (cold food, missing item, wrong order), the agent shall investigate the order, assess the severity, and apply a proportional wallet credit (₹50–₹200) using the <code>resolve_issue</code> tool. All compensations are logged in <code>wallet_credits</code> with <code>applied_by = "FoodBot-AI"</code>.</span>
+      </div>
+
+      <div style="margin-bottom:10px; padding:10px 14px; background:#f0f7ff; border-radius:8px; border-left:3px solid #3b82f6;">
+        <strong style="color:#1e3a8a;">FR-804 · Personalised Dish Recommendations</strong><br>
+        <span style="font-size:13px; color:#444;">The agent shall analyse a customer's last 10 orders, identify taste patterns (cuisine preference, veg/non-veg, price range), and recommend a dish from a currently-open, highly-rated restaurant the customer has not previously ordered from.</span>
+      </div>
+
+      <div style="margin-bottom:10px; padding:10px 14px; background:#f0f7ff; border-radius:8px; border-left:3px solid #3b82f6;">
+        <strong style="color:#1e3a8a;">FR-805 · Human Escalation</strong><br>
+        <span style="font-size:13px; color:#444;">When the agent cannot resolve an issue (e.g. refund dispute, account problem), it shall create a <code>support_ticket</code> record and inform the customer that a human agent will respond within 2 hours. The admin panel shall display open tickets.</span>
+      </div>
+
+      <div style="padding:10px 14px; background:#f0f7ff; border-radius:8px; border-left:3px solid #3b82f6;">
+        <strong style="color:#1e3a8a;">FR-806 · Restaurant Owner Analytics Query</strong><br>
+        <span style="font-size:13px; color:#444;">Restaurant owners shall be able to ask the agent questions about their business in plain English (e.g. "Why did my revenue drop this week?"). The agent shall query revenue, orders, and review data, then synthesise a plain-English analysis.</span>
+      </div>
     </div>
   </section>
 

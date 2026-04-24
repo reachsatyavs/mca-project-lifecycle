@@ -141,6 +141,9 @@
       <span class="hero-tag">Test Cases</span>
       <span class="hero-tag">CI/CD</span>
       <span class="hero-tag">Docker</span>
+      <span class="hero-tag">Agentic AI</span>
+      <span class="hero-tag">Ollama (Local LLM)</span>
+      <span class="hero-tag">ReAct Agent</span>
     </div>
   </div>
 
@@ -298,6 +301,18 @@
         <div class="card-title">📊 Logging &amp; Monitoring</div>
         <div class="card-desc">Sentry + UptimeRobot (mandatory basics). <span style="background:#f0faf5;color:#1a7a45;font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;margin-left:4px;">✨</span> Health dashboards, alert rules, structured pino logs (good to have).</div>
       </a>
+      <a href="semester3_design.html#ai-design" class="card">
+        <span class="card-arrow">→</span>
+        <div class="card-sem sem3">Semester 3</div>
+        <div class="card-title">🤖 FoodBot — AI Agent Design <span style="background:#2a1850;color:#c4b5fd;font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;margin-left:4px;">✨ Good to Have</span></div>
+        <div class="card-desc">Architecture, class diagram, ER diagram, and sequence diagram for the FoodBot agentic AI customer support system powered by Ollama (local LLM).</div>
+      </a>
+      <a href="semester3_coding.html#ai-agent" class="card">
+        <span class="card-arrow">→</span>
+        <div class="card-sem sem3">Semester 3</div>
+        <div class="card-title">⚙️ FoodBot — AI Agent Coding <span style="background:#2a1850;color:#c4b5fd;font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;margin-left:4px;">✨ Good to Have</span></div>
+        <div class="card-desc">Ollama setup · Tool/function definitions · ReAct agent loop · Chat API endpoint — 5 agentic use cases: support, recommendations, issue resolution, owner analytics, proactive updates.</div>
+      </a>
     </div>
 
     <div class="section-label">Semester 4 — Maintain</div>
@@ -332,6 +347,83 @@
         <div class="card-title">🔧 Maintenance</div>
         <div class="card-desc">Change management, bug triage process, versioning, deprecation strategy.</div>
       </a>
+      <a href="semester4_coding.html#ai-advanced" class="card">
+        <span class="card-arrow">→</span>
+        <div class="card-sem sem4">Semester 4</div>
+        <div class="card-title">🧠 FoodBot Advanced — RAG &amp; Memory <span style="background:#2a1850;color:#c4b5fd;font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;margin-left:4px;">✨ Good to Have</span></div>
+        <div class="card-desc">RAG over restaurant menus · Conversation memory in PostgreSQL · Proactive delay notifications · AI performance monitoring — taking the agent from MVP to production quality.</div>
+      </a>
+    </div>
+
+    <!-- ── FoodBot AI Showcase ── -->
+    <div class="section-label">🤖 Agentic AI Feature — FoodBot</div>
+    <div style="background:linear-gradient(135deg,#0f0a2e,#1a1040,#0a1628); border:1px solid #5147A9; border-radius:16px; padding:28px 28px 24px; margin-bottom:36px;">
+      <div style="display:flex; align-items:flex-start; gap:16px; margin-bottom:20px; flex-wrap:wrap;">
+        <div style="font-size:48px; flex-shrink:0;">🤖</div>
+        <div style="flex:1; min-width:240px;">
+          <div style="font-size:18px; font-weight:800; color:#fff; margin-bottom:6px;">FoodBot — Agentic AI Customer Support</div>
+          <p style="font-size:13.5px; color:#a0a8c0; line-height:1.7; margin:0 0 12px 0;">
+            This project implements a <strong style="color:#c4b5fd;">local, privacy-first AI agent</strong> powered by
+            <strong style="color:#c4b5fd;">Ollama</strong> (runs on your own machine — no cloud API, no cost).
+            Unlike a simple chatbot that just generates text, FoodBot is <strong style="color:#c4b5fd;">agentic</strong> —
+            it reasons, plans, and calls real tools (order DB, restaurant data, wallet credits)
+            to take meaningful actions on behalf of the user.
+          </p>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <span style="background:rgba(124,111,247,0.2); border:1px solid #5147A9; color:#c4b5fd; padding:4px 12px; border-radius:20px; font-size:12px; font-weight:600;">Ollama + Llama 3.1</span>
+            <span style="background:rgba(124,111,247,0.2); border:1px solid #5147A9; color:#c4b5fd; padding:4px 12px; border-radius:20px; font-size:12px; font-weight:600;">ReAct Agent Pattern</span>
+            <span style="background:rgba(124,111,247,0.2); border:1px solid #5147A9; color:#c4b5fd; padding:4px 12px; border-radius:20px; font-size:12px; font-weight:600;">Tool / Function Calling</span>
+            <span style="background:rgba(124,111,247,0.2); border:1px solid #5147A9; color:#c4b5fd; padding:4px 12px; border-radius:20px; font-size:12px; font-weight:600;">Node.js + PostgreSQL</span>
+            <span style="background:rgba(124,111,247,0.2); border:1px solid #5147A9; color:#c4b5fd; padding:4px 12px; border-radius:20px; font-size:12px; font-weight:600;">RAG (Semester 4)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5 Use Case Cards -->
+      <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:12px; margin-bottom:20px;">
+
+        <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(124,111,247,0.3); border-radius:10px; padding:14px 16px;">
+          <div style="font-size:22px; margin-bottom:6px;">🛵</div>
+          <div style="font-size:13.5px; font-weight:700; color:#e8eaf0; margin-bottom:5px;">Customer Support &amp; Order Tracking</div>
+          <div style="font-size:12px; color:#80889a; line-height:1.6; margin-bottom:8px;">"Where is my order? It's been 40 minutes." — Agent checks real-time DB status, estimates delay, offers to cancel or escalate.</div>
+          <div style="font-size:11px; color:#7c6ff7; font-style:italic;">Tools used: get_order_status · cancel_order · escalate_to_human</div>
+        </div>
+
+        <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(124,111,247,0.3); border-radius:10px; padding:14px 16px;">
+          <div style="font-size:22px; margin-bottom:6px;">🍽️</div>
+          <div style="font-size:13.5px; font-weight:700; color:#e8eaf0; margin-bottom:5px;">Personalised Dinner Recommender</div>
+          <div style="font-size:12px; color:#80889a; line-height:1.6; margin-bottom:8px;">"Suggest something I haven't tried." — Agent analyses 10 past orders, identifies taste patterns, finds a highly-rated open restaurant with a trending dish the customer hasn't ordered.</div>
+          <div style="font-size:11px; color:#7c6ff7; font-style:italic;">Tools used: get_order_history · get_open_restaurants · get_trending_dishes</div>
+        </div>
+
+        <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(124,111,247,0.3); border-radius:10px; padding:14px 16px;">
+          <div style="font-size:22px; margin-bottom:6px;">😤</div>
+          <div style="font-size:13.5px; font-weight:700; color:#e8eaf0; margin-bottom:5px;">Order Issue Resolution</div>
+          <div style="font-size:12px; color:#80889a; line-height:1.6; margin-bottom:8px;">"My food arrived cold and an item was missing." — Agent investigates delivery time, checks restaurant quality history, decides fair compensation (partial refund, coupon) and applies it.</div>
+          <div style="font-size:11px; color:#7c6ff7; font-style:italic;">Tools used: get_order · check_delivery_time · apply_wallet_credit</div>
+        </div>
+
+        <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(124,111,247,0.3); border-radius:10px; padding:14px 16px;">
+          <div style="font-size:22px; margin-bottom:6px;">📊</div>
+          <div style="font-size:13.5px; font-weight:700; color:#e8eaf0; margin-bottom:5px;">Restaurant Owner Analytics</div>
+          <div style="font-size:12px; color:#80889a; line-height:1.6; margin-bottom:8px;">"Why did my revenue drop 30% this week?" — Agent queries revenue, ratings, item availability, and competitor approvals, then synthesises a plain-English root-cause analysis.</div>
+          <div style="font-size:11px; color:#7c6ff7; font-style:italic;">Tools used: get_revenue · get_reviews · get_item_availability · get_competitors</div>
+        </div>
+
+        <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(124,111,247,0.3); border-radius:10px; padding:14px 16px;">
+          <div style="font-size:22px; margin-bottom:6px;">⏰</div>
+          <div style="font-size:13.5px; font-weight:700; color:#e8eaf0; margin-bottom:5px;">Proactive Delay Notifier</div>
+          <div style="font-size:12px; color:#80889a; line-height:1.6; margin-bottom:8px;">No customer action needed — agent scans active orders on a schedule, detects delays, drafts a personalised empathetic message per customer, and adds a compensation coupon when appropriate.</div>
+          <div style="font-size:11px; color:#7c6ff7; font-style:italic;">Tools used: scan_delayed_orders · get_partner_location · send_notification · apply_coupon</div>
+        </div>
+
+      </div>
+
+      <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center; border-top:1px solid rgba(255,255,255,0.08); padding-top:16px;">
+        <a href="semester3_design.html#ai-design" style="display:inline-block; background:#5147A9; color:#fff; font-weight:700; padding:8px 18px; border-radius:7px; text-decoration:none; font-size:12.5px;">AI Agent Design (Diagrams) →</a>
+        <a href="semester3_coding.html#ai-agent" style="display:inline-block; background:rgba(124,111,247,0.15); border:1px solid #5147A9; color:#c4b5fd; font-weight:700; padding:8px 18px; border-radius:7px; text-decoration:none; font-size:12.5px;">AI Agent Coding (Ollama + Tools) →</a>
+        <a href="semester4_coding.html#ai-advanced" style="display:inline-block; background:rgba(124,111,247,0.15); border:1px solid #5147A9; color:#c4b5fd; font-weight:700; padding:8px 18px; border-radius:7px; text-decoration:none; font-size:12.5px;">Advanced AI — RAG &amp; Memory (Sem 4) →</a>
+      </div>
     </div>
 
   </main>

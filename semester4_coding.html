@@ -25,6 +25,7 @@
     <a href="#e2e-tests">2. E2E Test Automation</a>
     <a href="#perf-testing">3. Performance Testing</a>
     <a href="#hardening">4. Code Hardening</a>
+    <a href="#ai-advanced">5. FoodBot Advanced ✨</a>
   </nav>
 
   <!-- ============================================================ -->
@@ -449,6 +450,300 @@ process.on('SIGTERM', async () => {
   // Force exit after 10 seconds if still not closed
   setTimeout(() => process.exit(1), 10_000);
 });</div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 5 — FOODBOT ADVANCED (RAG + MEMORY + PROACTIVE)
+       ══════════════════════════════════════════════════════════ -->
+  <section class="section" id="ai-advanced">
+    <div class="section-header">
+      <div class="section-icon icon-blue">🧠</div>
+      <div class="section-title-group">
+        <div class="tier-row">
+          <h2>5. FoodBot Advanced — RAG, Memory &amp; Proactive Agent</h2>
+          <div class="tier-banner good-to-have">⭐ Good to Have</div>
+        </div>
+        <p>Taking the Semester 3 AI Agent from MVP to production quality</p>
+      </div>
+    </div>
+
+    <div class="info-box blue">
+      <div class="info-box-title">📈 What Gets Better in Semester 4</div>
+      <table style="margin:0; font-size:13px;">
+        <thead><tr><th>Feature</th><th>Semester 3 MVP</th><th>Semester 4 Advanced</th></tr></thead>
+        <tbody>
+          <tr><td>Recommendations</td><td>Based on order history only</td><td>RAG — embeds full restaurant menus, matches taste + dietary profile</td></tr>
+          <tr><td>Memory</td><td>Last 20 messages per session</td><td>Context compression — old messages summarised, unlimited session length</td></tr>
+          <tr><td>Agent mode</td><td>Reactive only (responds to messages)</td><td>+ Proactive — scans for delayed orders and notifies customers automatically</td></tr>
+          <tr><td>Observability</td><td>Console.log only</td><td>Monitoring dashboard: token usage, tool success rate, escalation rate, latency</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="ai-rag">Part A — RAG: Restaurant Menu Embeddings</h3>
+    <p><strong>RAG (Retrieval-Augmented Generation)</strong> solves a key limitation: the LLM doesn't have your restaurant data in its training. Instead of stuffing the entire menu into every prompt (expensive and slow), we pre-compute embeddings of menu items and retrieve only the most relevant ones at query time.</p>
+    <div class="diagram-wrap" style="background:#0d1117;">
+      <pre style="margin:0; font-size:12.5px; color:#e8eaf0; line-height:1.75; white-space:pre-wrap; font-family:'Fira Code',monospace;"># Install embedding and vector dependencies
+npm install @xenova/transformers  # local embedding model (no API key needed)
+npm install pg-vector             # pgvector extension for PostgreSQL
+
+# Enable pgvector in PostgreSQL
+# Run in psql: CREATE EXTENSION IF NOT EXISTS vector;</pre>
+    </div>
+
+    <div class="diagram-wrap" style="background:#0d1117; margin-top:12px;">
+      <pre style="margin:0; font-size:12.5px; color:#e8eaf0; line-height:1.75; white-space:pre-wrap; font-family:'Fira Code',monospace;">// src/ai/rag/embedMenus.js  —  Run this as a one-time script (or nightly cron)
+const { pipeline }  = require('@xenova/transformers');
+const { prisma }    = require('../../lib/prisma');
+const { Pool }      = require('pg');
+const pool          = new Pool({ connectionString: process.env.DATABASE_URL });
+
+async function embedMenuItems() {
+  const extractor = await pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2');
+
+  const items = await prisma.menuItem.findMany({
+    include: { restaurant: { select: { name: true, cuisineType: true } } }
+  });
+
+  for (const item of items) {
+    const text = `${item.restaurant.name} | ${item.name} | ${item.description} | ${item.restaurant.cuisineType} | Rs.${item.price}`;
+    const output = await extractor(text, { pooling: 'mean', normalize: true });
+    const embedding = Array.from(output.data);  // 384-dimensional vector
+
+    await pool.query(
+      `INSERT INTO menu_embeddings (menu_item_id, embedding, text_chunk)
+       VALUES ($1, $2::vector, $3)
+       ON CONFLICT (menu_item_id) DO UPDATE SET embedding = $2::vector`,
+      [item.id, JSON.stringify(embedding), text]
+    );
+  }
+  console.log(`Embedded ${items.length} menu items`);
+  await pool.end();
+}
+
+embedMenuItems();</pre>
+    </div>
+
+    <div class="diagram-wrap" style="background:#0d1117; margin-top:12px;">
+      <pre style="margin:0; font-size:12.5px; color:#e8eaf0; line-height:1.75; white-space:pre-wrap; font-family:'Fira Code',monospace;">// src/ai/tools/ragRecommend.js  —  RAG-powered recommendation tool
+const { pipeline }  = require('@xenova/transformers');
+const { Pool }      = require('pg');
+const { prisma }    = require('../../lib/prisma');
+const pool          = new Pool({ connectionString: process.env.DATABASE_URL });
+
+const ragRecommendTool = {
+  definition: {
+    type: 'function',
+    function: {
+      name: 'rag_recommend_dishes',
+      description: 'Recommend dishes based on customer taste profile using semantic search over restaurant menus.',
+      parameters: {
+        type: 'object',
+        properties: {
+          customerId: { type: 'number' },
+          tasteQuery:  { type: 'string', description: 'Natural language description of what the customer might enjoy, e.g. "spicy South Indian vegetarian"' }
+        },
+        required: ['customerId', 'tasteQuery']
+      }
+    }
+  },
+
+  async execute({ customerId, tasteQuery }) {
+    const extractor = await pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2');
+    const output    = await extractor(tasteQuery, { pooling: 'mean', normalize: true });
+    const queryVec  = JSON.stringify(Array.from(output.data));
+
+    // Cosine similarity search — get top 5 semantically matching menu items
+    const { rows } = await pool.query(
+      `SELECT me.text_chunk, mi.name, mi.price, r.name AS restaurant, r.rating, r.is_open,
+              1 - (me.embedding &lt;=&gt; $1::vector) AS similarity
+       FROM menu_embeddings me
+       JOIN menu_items mi ON me.menu_item_id = mi.id
+       JOIN restaurants r ON mi.restaurant_id = r.id
+       WHERE r.is_open = true
+       ORDER BY me.embedding &lt;=&gt; $1::vector
+       LIMIT 5`,
+      [queryVec]
+    );
+
+    return { recommendations: rows.map(r => ({
+      dish: r.name, price: r.price, restaurant: r.restaurant,
+      rating: r.rating, similarity: Math.round(r.similarity * 100)
+    })) };
+  }
+};
+
+module.exports = { ragRecommendTool };</pre>
+    </div>
+
+    <h3 id="ai-memory">Part B — Context Compression (Long-Session Memory)</h3>
+    <p>When a conversation exceeds 20 messages, rather than dropping old context, we ask the LLM to <strong>summarise the conversation so far</strong> into a compact paragraph. This summary replaces all old messages, keeping the context window small while preserving important facts.</p>
+    <div class="diagram-wrap" style="background:#0d1117;">
+      <pre style="margin:0; font-size:12.5px; color:#e8eaf0; line-height:1.75; white-space:pre-wrap; font-family:'Fira Code',monospace;">// src/ai/contextManager.js
+const Ollama = require('ollama').default;
+const { prisma } = require('../lib/prisma');
+const ollama = new Ollama({ host: 'http://localhost:11434' });
+
+const MESSAGE_LIMIT = 20;
+
+async function getContextMessages(sessionId) {
+  const messages = await prisma.aiMessage.findMany({
+    where: { sessionId },
+    orderBy: { createdAt: 'asc' }
+  });
+
+  if (messages.length &lt;= MESSAGE_LIMIT) {
+    return messages.map(m =&gt; ({ role: m.role === 'tool' ? 'tool' : m.role, content: m.content }));
+  }
+
+  // Messages exceed limit — compress older ones
+  const toCompress = messages.slice(0, messages.length - 10);
+  const recent     = messages.slice(messages.length - 10);
+
+  const summaryPrompt = `Summarise this conversation briefly (3-4 sentences), preserving key facts like order IDs, issues raised, compensations applied, and customer preferences:\n\n${toCompress.map(m =&gt; `${m.role}: ${m.content}`).join('\n')}`;
+
+  const { message } = await ollama.chat({
+    model: 'llama3.1:8b',
+    messages: [{ role: 'user', content: summaryPrompt }]
+  });
+
+  // Save compressed summary to session
+  await prisma.aiConversationSession.update({
+    where: { id: sessionId },
+    data: { contextSummary: message.content }
+  });
+
+  return [
+    { role: 'system', content: `Earlier conversation summary: ${message.content}` },
+    ...recent.map(m =&gt; ({ role: m.role === 'tool' ? 'tool' : m.role, content: m.content }))
+  ];
+}
+
+module.exports = { getContextMessages };</pre>
+    </div>
+
+    <h3 id="ai-proactive">Part C — Proactive Delay Notifier Agent</h3>
+    <p>This agent runs as a <strong>background scheduled job</strong> (every 5 minutes). It needs no customer to initiate a conversation — it scans for delayed orders, drafts personalised messages, and sends notifications with compensation coupons where appropriate.</p>
+    <div class="diagram-wrap" style="background:#0d1117;">
+      <pre style="margin:0; font-size:12.5px; color:#e8eaf0; line-height:1.75; white-space:pre-wrap; font-family:'Fira Code',monospace;">// src/ai/proactiveAgent.js  —  Run via: node-cron every 5 minutes
+const Ollama   = require('ollama').default;
+const { prisma } = require('../lib/prisma');
+const { resolveIssueTool } = require('./tools/resolveIssue');
+const ollama = new Ollama({ host: 'http://localhost:11434' });
+
+async function runDelayNotifierAgent() {
+  // 1. Find orders that are delayed (delivered_at > estimated_delivery_at + 15 min)
+  const delayed = await prisma.order.findMany({
+    where: {
+      status: 'OUT_FOR_DELIVERY',
+      estimatedDeliveryAt: { lt: new Date(Date.now() - 15 * 60 * 1000) },
+      delayNotificationSent: false
+    },
+    include: { customer: true, restaurant: true, orderItems: { include: { menuItem: true } } }
+  });
+
+  for (const order of delayed) {
+    const delayMins = Math.round((Date.now() - order.estimatedDeliveryAt.getTime()) / 60000);
+
+    // 2. Ask LLM to draft a personalised, empathetic message
+    const { message } = await ollama.chat({
+      model: 'llama3.1:8b',
+      messages: [{
+        role: 'user',
+        content: `Write a short, empathetic delay notification (2-3 sentences) for customer ${order.customer.name}.
+Their order from ${order.restaurant.name} is ${delayMins} minutes late.
+Items ordered: ${order.orderItems.map(i =&gt; i.menuItem.name).join(', ')}.
+Mention that a compensation coupon has been added. Be warm and apologetic, not robotic.`
+      }]
+    });
+
+    // 3. Apply compensation credit
+    const creditAmount = delayMins &gt; 30 ? 100 : 50;
+    await resolveIssueTool.execute({
+      customerId: order.customerId,
+      orderId: order.id,
+      amount: creditAmount,
+      reason: `Proactive compensation for ${delayMins}-minute delivery delay`
+    });
+
+    // 4. Send notification (via push/SMS service)
+    await prisma.notification.create({
+      data: {
+        userId: order.customerId,
+        type: 'DELAY_PROACTIVE',
+        message: message.content,
+        metadata: { orderId: order.id, delayMins, creditAmount }
+      }
+    });
+
+    // 5. Mark so we don't notify twice
+    await prisma.order.update({
+      where: { id: order.id },
+      data: { delayNotificationSent: true }
+    });
+
+    console.log(`[ProactiveAgent] Notified customer ${order.customerId} for order ${order.id} — ${delayMins}min delay`);
+  }
+}
+
+// Schedule in app.js:
+// const cron = require('node-cron');
+// cron.schedule('*/5 * * * *', runDelayNotifierAgent);
+
+module.exports = { runDelayNotifierAgent };</pre>
+    </div>
+
+    <h3 id="ai-monitoring">Part D — AI Performance Monitoring</h3>
+    <p>A simple monitoring endpoint so you can track the health of the AI feature without a third-party tool — essential for your project viva.</p>
+    <div class="diagram-wrap" style="background:#0d1117;">
+      <pre style="margin:0; font-size:12.5px; color:#e8eaf0; line-height:1.75; white-space:pre-wrap; font-family:'Fira Code',monospace;">// src/routes/aiMonitor.js  (admin only — GET /api/admin/ai/metrics)
+const express = require('express');
+const router  = express.Router();
+const { prisma } = require('../lib/prisma');
+const { authenticateToken, requireRole } = require('../middleware/auth');
+
+router.get('/metrics', authenticateToken, requireRole('ADMIN'), async (req, res) =&gt; {
+  const [totalSessions, openTickets, totalMessages, toolStats, avgTokens] = await Promise.all([
+    prisma.aiConversationSession.count(),
+    prisma.supportTicket.count({ where: { status: 'open' } }),
+    prisma.aiMessage.count(),
+    prisma.aiMessage.groupBy({
+      by: ['toolName'],
+      where: { toolName: { not: null } },
+      _count: { toolName: true }
+    }),
+    prisma.aiMessage.aggregate({ _avg: { tokensUsed: true } })
+  ]);
+
+  const escalationCount = await prisma.supportTicket.count();
+  const resolvedByAI    = await prisma.walletCredit.count({ where: { appliedBy: 'FoodBot-AI' } });
+
+  res.json({
+    totalSessions,
+    totalMessages,
+    openSupportTickets: openTickets,
+    escalationRate: totalSessions ? `${((escalationCount / totalSessions) * 100).toFixed(1)}%` : '0%',
+    issuesResolvedByAI: resolvedByAI,
+    avgTokensPerMessage: Math.round(avgTokens._avg.tokensUsed || 0),
+    toolCallBreakdown: Object.fromEntries(toolStats.map(t =&gt; [t.toolName, t._count.toolName]))
+  });
+});
+
+module.exports = router;</pre>
+    </div>
+
+    <div class="info-box green">
+      <div class="info-box-title">Key Metrics to Highlight in Your Viva</div>
+      <table style="margin:0; font-size:13px;">
+        <thead><tr><th>Metric</th><th>What it tells you</th><th>Healthy target</th></tr></thead>
+        <tbody>
+          <tr><td><code>escalationRate</code></td><td>How often the AI can't solve the problem alone</td><td>&lt; 20%</td></tr>
+          <tr><td><code>issuesResolvedByAI</code></td><td>Total compensations applied autonomously</td><td>High — reduces support staff load</td></tr>
+          <tr><td><code>avgTokensPerMessage</code></td><td>Cost proxy &amp; latency indicator</td><td>&lt; 500 tokens (fast responses)</td></tr>
+          <tr><td><code>toolCallBreakdown</code></td><td>Which tools are most used — guides future optimisation</td><td>get_order_status likely highest</td></tr>
+        </tbody>
+      </table>
+    </div>
   </section>
 
   <footer>

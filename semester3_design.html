@@ -3,8 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Design Revisions — Semester 3 | Online Food Delivery System</title>
+  <title>Design Revisions &amp; AI Agent Design — Semester 3 | Online Food Delivery System</title>
   <link rel="stylesheet" href="child_page_styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    .diagram-wrap {
+      background: #1e1e2e; border-radius: 12px;
+      padding: 24px 12px; margin: 20px 0; overflow-x: auto;
+    }
+    .diagram-wrap .mermaid { display: flex; justify-content: center; }
+    .diagram-wrap svg { max-width: 100%; height: auto; }
+  </style>
 </head>
 <body>
 <div class="page-wrap">
@@ -21,7 +30,11 @@
   </header>
   <nav class="topic-nav orange-nav">
     <div class="topic-nav-label">Jump to section</div>
-    <a href="#why-design-changes-in-semester-3">Why Design Changes in Semester 3?</a>
+    <a href="#why-design-changes-in-semester-3">1. Design Revisions</a>
+    <a href="#ai-design">2. FoodBot AI — Architecture</a>
+    <a href="#ai-class">3. AI — Class Diagram</a>
+    <a href="#ai-er">4. AI — ER Diagram</a>
+    <a href="#ai-sequence">5. AI — Sequence Diagram</a>
   </nav>
 
 
@@ -50,6 +63,377 @@
     </div>
   </section>
 
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 2 — FOODBOT AI AGENT: ARCHITECTURE
+       ══════════════════════════════════════════════════════════ -->
+  <section class="section" id="ai-design">
+    <div class="section-header">
+      <div class="section-icon icon-orange">🤖</div>
+      <div class="section-title-group">
+        <div class="tier-row">
+          <h2>2. FoodBot — Agentic AI: Architecture</h2>
+          <div class="tier-banner good-to-have">⭐ Good to Have</div>
+        </div>
+        <p>System architecture for the local LLM-powered customer support agent</p>
+      </div>
+    </div>
+
+    <div class="info-box blue">
+      <div class="info-box-title">📖 What is an Agentic AI? (vs a Chatbot)</div>
+      <table style="margin:0; font-size:13px;">
+        <thead><tr><th>Aspect</th><th>Chatbot</th><th>Agentic AI (FoodBot)</th></tr></thead>
+        <tbody>
+          <tr><td><strong>How it works</strong></td><td>Pattern-match input → return pre-written reply</td><td>LLM reasons about the message, decides which tool to call, calls it, reasons about the result, then replies</td></tr>
+          <tr><td><strong>Data access</strong></td><td>Static FAQ text only</td><td>Queries live DB: order status, reviews, revenue, partner location</td></tr>
+          <tr><td><strong>Actions</strong></td><td>None — read only</td><td>Can cancel orders, apply wallet credits, create support tickets, send notifications</td></tr>
+          <tr><td><strong>Responses</strong></td><td>Same answer for everyone</td><td>Personalised — uses customer's actual order history and context</td></tr>
+          <tr><td><strong>Pattern</strong></td><td>if/else or keyword match</td><td>ReAct loop: Reason → Act → Observe → Reason again</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>FoodBot Architecture Overview</h3>
+    <div class="diagram-wrap">
+      <div class="mermaid">
+%%{init: {'theme': 'dark'}}%%
+flowchart TD
+    subgraph Customer["👤 Customer / Owner Browser"]
+        CW["Chat Widget\n(React component)"]
+    end
+
+    subgraph API["🖥️ Express.js Backend"]
+        CE["POST /api/ai/chat\n(chat endpoint)"]
+        AO["FoodBotAgent\n(orchestrator)"]
+        TE["Tool Executor"]
+    end
+
+    subgraph LLM["🦙 Ollama (local)"]
+        OM["LLM Model\nllama3.1:8b / mistral:7b"]
+    end
+
+    subgraph Tools["🔧 Agent Tools"]
+        T1["get_order_status"]
+        T2["recommend_dishes"]
+        T3["resolve_issue"]
+        T4["get_owner_analytics"]
+        T5["send_delay_notification"]
+        T6["escalate_to_human"]
+    end
+
+    subgraph DB["🗄️ PostgreSQL"]
+        OT["orders / order_items"]
+        UT["users / reviews"]
+        AT["ai_messages / sessions"]
+        WT["wallet_credits / tickets"]
+    end
+
+    CW -->|"user message + sessionId"| CE
+    CE --> AO
+    AO -->|"messages + tool definitions"| OM
+    OM -->|"tool_call OR final text"| AO
+    AO --> TE
+    TE --> T1 & T2 & T3 & T4 & T5 & T6
+    T1 & T3 & T4 --> OT
+    T2 --> UT
+    T5 & T6 --> WT
+    AO -->|"persist messages"| AT
+    AO -->|"final response"| CE
+    CE -->|"text response"| CW
+
+    style LLM fill:#1a0a3a,stroke:#7c6ff7,color:#c4b5fd
+    style Tools fill:#0a2a1a,stroke:#1D9E75,color:#6ee7b7
+    style DB fill:#0a1628,stroke:#3b82f6,color:#93c5fd
+      </div>
+    </div>
+
+    <h3>The ReAct Loop — How the Agent Thinks</h3>
+    <div class="diagram-wrap">
+      <div class="mermaid">
+%%{init: {'theme': 'dark'}}%%
+flowchart LR
+    A(["📨 Customer Message"]) --> B["Build prompt:\nSystem Prompt +\nConversation History +\nTool Definitions"]
+    B --> C["🦙 Ollama LLM\nprocesses prompt"]
+    C --> D{"Response type?"}
+    D -->|"tool_call"| E["Extract tool name\n+ parameters"]
+    E --> F["Execute tool\nagainst DB / API"]
+    F --> G["Append tool result\nto message history"]
+    G --> C
+    D -->|"final text"| H["Send response\nto customer"]
+    H --> I["Save to\nai_messages table"]
+    I --> J(["✅ Done"])
+
+    style A fill:#1a0a3a,stroke:#7c6ff7,color:#c4b5fd
+    style J fill:#052e16,stroke:#1D9E75,color:#6ee7b7
+    style C fill:#2a1040,stroke:#7c6ff7,color:#c4b5fd
+      </div>
+    </div>
+
+    <div class="info-box orange">
+      <div class="info-box-title">Why Ollama? Why Local?</div>
+      <table style="margin:0; font-size:13px;">
+        <thead><tr><th>Concern</th><th>Cloud API (OpenAI/Gemini)</th><th>Ollama (local)</th></tr></thead>
+        <tbody>
+          <tr><td>Cost</td><td>Pay per token — adds up fast in production</td><td>Free — runs on your own hardware</td></tr>
+          <tr><td>Privacy</td><td>Customer order data sent to third-party servers</td><td>All data stays on your machine</td></tr>
+          <tr><td>Internet required</td><td>Yes</td><td>No — works offline</td></tr>
+          <tr><td>MCA project feasibility</td><td>Needs API key + billing</td><td>Just <code class="code-inline">ollama pull llama3.1:8b</code></td></tr>
+          <tr><td>Model options</td><td>GPT-4, Gemini, Claude</td><td>Llama 3.1, Mistral, Phi-3, Gemma</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 3 — AI CLASS DIAGRAM
+       ══════════════════════════════════════════════════════════ -->
+  <section class="section" id="ai-class">
+    <div class="section-header">
+      <div class="section-icon icon-orange">📐</div>
+      <div class="section-title-group">
+        <h2>3. FoodBot — Class Diagram</h2>
+        <p>Object-oriented structure of the AI agent components</p>
+      </div>
+    </div>
+    <div class="diagram-wrap">
+      <div class="mermaid">
+%%{init: {'theme': 'dark'}}%%
+classDiagram
+    class FoodBotAgent {
+        +string model
+        +string systemPrompt
+        +OllamaClient ollama
+        +Tool tools
+        +chat(sessionId, userId, message) string
+        +buildMessages(sessionId) Message
+        +runReActLoop(messages) string
+    }
+
+    class OllamaClient {
+        +string host
+        +string model
+        +chat(messages, tools) LLMResponse
+        +listModels() string
+    }
+
+    class Tool {
+        +string name
+        +string description
+        +object parameters
+        +execute(params) ToolResult
+    }
+
+    class GetOrderStatusTool {
+        +execute(orderId) ToolResult
+    }
+
+    class RecommendDishesTool {
+        +execute(customerId) ToolResult
+    }
+
+    class ResolveIssueTool {
+        +execute(orderId, issue) ToolResult
+    }
+
+    class OwnerAnalyticsTool {
+        +execute(restaurantId, period) ToolResult
+    }
+
+    class EscalateToHumanTool {
+        +execute(sessionId, summary) ToolResult
+    }
+
+    class ConversationSession {
+        +int sessionId
+        +int customerId
+        +string status
+        +datetime createdAt
+        +getMessages() Message
+    }
+
+    class Message {
+        +string role
+        +string content
+        +string toolName
+        +string toolResult
+        +datetime createdAt
+    }
+
+    FoodBotAgent --> OllamaClient : uses
+    FoodBotAgent --> Tool : orchestrates
+    FoodBotAgent --> ConversationSession : reads
+    Tool <|-- GetOrderStatusTool : extends
+    Tool <|-- RecommendDishesTool : extends
+    Tool <|-- ResolveIssueTool : extends
+    Tool <|-- OwnerAnalyticsTool : extends
+    Tool <|-- EscalateToHumanTool : extends
+    ConversationSession --> Message : contains
+      </div>
+    </div>
+    <div class="info-box green">
+      <div class="info-box-title">Design Decisions</div>
+      <table style="margin:0; font-size:13px;">
+        <thead><tr><th>Decision</th><th>Rationale</th></tr></thead>
+        <tbody>
+          <tr><td><code class="code-inline">Tool</code> abstract base class</td><td>All tools share the same interface — <code class="code-inline">execute(params)</code> — so the agent can call any tool without knowing its internals (polymorphism)</td></tr>
+          <tr><td><code class="code-inline">FoodBotAgent</code> owns the ReAct loop</td><td>Single responsibility — the agent orchestrates reasoning; tools handle actions; Ollama handles language</td></tr>
+          <tr><td><code class="code-inline">ConversationSession + Message</code> persisted in DB</td><td>Multi-turn memory — the agent knows what was said earlier in the conversation, enabling coherent dialogue</td></tr>
+          <tr><td><code class="code-inline">OllamaClient</code> separate class</td><td>Swappable — replace Ollama with OpenAI/Gemini by swapping just this class, not the agent logic</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 4 — AI ER DIAGRAM
+       ══════════════════════════════════════════════════════════ -->
+  <section class="section" id="ai-er">
+    <div class="section-header">
+      <div class="section-icon icon-orange">🗂️</div>
+      <div class="section-title-group">
+        <h2>4. FoodBot — ER Diagram (New Tables)</h2>
+        <p>New database entities required to support the AI agent</p>
+      </div>
+    </div>
+    <p>The AI agent adds <strong>4 new tables</strong> to the existing schema. No existing tables are modified — the AI layer is purely additive, which means zero risk of breaking the core system.</p>
+    <div class="diagram-wrap">
+      <div class="mermaid">
+erDiagram
+    USER {
+        int user_id PK
+        string name
+        string email
+        string role
+    }
+    AI_CONVERSATION_SESSION {
+        int session_id PK
+        int customer_id FK
+        string status
+        string context_summary
+        datetime created_at
+        datetime closed_at
+    }
+    AI_MESSAGE {
+        int message_id PK
+        int session_id FK
+        string role
+        text content
+        string tool_name
+        text tool_result
+        int tokens_used
+        datetime created_at
+    }
+    SUPPORT_TICKET {
+        int ticket_id PK
+        int session_id FK
+        int customer_id FK
+        text issue_summary
+        string status
+        text resolution
+        datetime created_at
+        datetime resolved_at
+    }
+    WALLET_CREDIT {
+        int credit_id PK
+        int customer_id FK
+        int order_id FK
+        decimal amount
+        string reason
+        string applied_by
+        datetime expires_at
+        datetime created_at
+    }
+    ORDER {
+        int order_id PK
+        int customer_id FK
+        string status
+        decimal total_amount
+    }
+
+    USER ||--o{ AI_CONVERSATION_SESSION : "has"
+    AI_CONVERSATION_SESSION ||--|{ AI_MESSAGE : "contains"
+    AI_CONVERSATION_SESSION ||--o| SUPPORT_TICKET : "may create"
+    USER ||--o{ SUPPORT_TICKET : "raised by"
+    USER ||--o{ WALLET_CREDIT : "credited to"
+    ORDER ||--o{ WALLET_CREDIT : "compensation for"
+      </div>
+    </div>
+    <h3>New Table Descriptions</h3>
+    <table>
+      <thead><tr><th>Table</th><th>Purpose</th><th>Key Fields</th></tr></thead>
+      <tbody>
+        <tr><td><code class="code-inline">ai_conversation_session</code></td><td>One row per chat session. Tracks whether a session is active, escalated, or closed. Stores a summary for long contexts.</td><td><code>status</code>: active / escalated / closed<br><code>context_summary</code>: LLM-compressed summary of old messages</td></tr>
+        <tr><td><code class="code-inline">ai_message</code></td><td>Every message in a session — user input, assistant replies, and tool call/result pairs. This is the agent's memory.</td><td><code>role</code>: user / assistant / tool<br><code>tool_name</code>: which tool was called<br><code>tool_result</code>: what the tool returned</td></tr>
+        <tr><td><code class="code-inline">support_ticket</code></td><td>Created by <code>EscalateToHumanTool</code> when the agent cannot resolve an issue. Human agent picks it up from the admin panel.</td><td><code>status</code>: open / in_progress / resolved</td></tr>
+        <tr><td><code class="code-inline">wallet_credit</code></td><td>Compensation credits applied by <code>ResolveIssueTool</code>. Applied to customer's next order automatically.</td><td><code>applied_by</code>: "FoodBot-AI" or admin name<br><code>expires_at</code>: credits expire after 30 days</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 5 — AI SEQUENCE DIAGRAM
+       ══════════════════════════════════════════════════════════ -->
+  <section class="section" id="ai-sequence">
+    <div class="section-header">
+      <div class="section-icon icon-orange">↔️</div>
+      <div class="section-title-group">
+        <h2>5. FoodBot — Sequence Diagram</h2>
+        <p>Component interactions for the Issue Resolution use case</p>
+      </div>
+    </div>
+    <p>This sequence shows <strong>UC-AI-3: Order Issue Resolution</strong> — the most complex agentic flow, where the LLM makes two sequential tool calls before generating a final response.</p>
+    <div class="diagram-wrap">
+      <div class="mermaid">
+%%{init: {'theme': 'dark'}}%%
+sequenceDiagram
+    autonumber
+    actor C as Customer
+    participant FE as Chat Widget
+    participant API as Express API
+    participant AG as FoodBotAgent
+    participant OL as Ollama LLM
+    participant DB as PostgreSQL
+
+    C->>FE: "My food arrived cold and Garlic Naan was missing"
+    FE->>+API: POST /api/ai/chat { sessionId, message }
+    API->>+AG: invoke(sessionId, userId, message)
+    AG->>DB: INSERT ai_message (role=user)
+    AG->>DB: SELECT messages WHERE session_id=? (load history)
+    DB-->>AG: conversation history (last 10 messages)
+    AG->>+OL: chat(systemPrompt + history + toolDefs)
+    Note over OL: Thinks: "User has a complaint about an order. I should get the order details first."
+    OL-->>-AG: tool_call: get_order_status { orderId: 42 }
+    AG->>DB: SELECT order + items + delivery timestamps WHERE order_id=42
+    DB-->>AG: { status: DELIVERED, delivered_at, late_by: 22min, items: [...] }
+    AG->>DB: INSERT ai_message (role=tool, tool_name=get_order_status)
+    AG->>+OL: chat(history + tool result)
+    Note over OL: Thinks: "Order was 22 min late and Garlic Naan (₹80) is confirmed in the order. Customer deserves compensation."
+    OL-->>-AG: tool_call: apply_wallet_credit { customerId: 7, amount: 120, reason: "late delivery + missing item" }
+    AG->>DB: INSERT wallet_credits { amount: 120, applied_by: "FoodBot-AI" }
+    DB-->>AG: credit_id: 15 confirmed
+    AG->>DB: INSERT ai_message (role=tool, tool_name=apply_wallet_credit)
+    AG->>+OL: chat(history + tool result)
+    Note over OL: Both tools executed. Now generate a final empathetic response.
+    OL-->>-AG: "We're really sorry about your experience! ₹120 has been added to your FoodWallet..."
+    AG->>DB: INSERT ai_message (role=assistant, content=finalResponse)
+    AG-->>-API: finalResponse text
+    API-->>-FE: 200 OK { message: "We're really sorry..." }
+    FE-->>C: Display AI response with credit confirmation
+      </div>
+    </div>
+    <div class="info-box green">
+      <div class="info-box-title">What Makes This Agentic — Not Just a Query</div>
+      <table style="margin:0; font-size:13px;">
+        <thead><tr><th>Step</th><th>What the LLM decided (not hardcoded)</th></tr></thead>
+        <tbody>
+          <tr><td>Step 7–8</td><td>LLM chose to call <code>get_order_status</code> first — it could have asked the customer for the order ID instead, but inferred it from session context</td></tr>
+          <tr><td>Step 10–12</td><td>LLM decided ₹120 (not ₹80 just for the missing item) — it reasoned that late delivery compounded the issue and compensated proportionally</td></tr>
+          <tr><td>Steps 13–16</td><td>LLM chose NOT to escalate to human — it resolved the issue itself. A different complaint might trigger escalation</td></tr>
+          <tr><td>Final response</td><td>Personalised message referencing the actual items and amounts — not a generic template</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
   <footer>
     <a href="semester2_design.html">← Design Sem 2</a>
     <nav class="footer-nav">
@@ -58,5 +442,8 @@
     </nav>
   </footer>
 </div>
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: 'dark', flowchart: { useMaxWidth: true, htmlLabels: true } });
+</script>
 </body>
 </html>
