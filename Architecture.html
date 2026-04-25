@@ -1,0 +1,1502 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Clinical Product Suite Architecture</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --panel: #ffffff;
+      --ink: #172033;
+      --muted: #697386;
+      --line: #dbe3ef;
+      --brand: #2563eb;
+      --brand-dark: #1d4ed8;
+      --green: #0f9f6e;
+      --amber: #d97706;
+      --purple: #7c3aed;
+      --red: #dc2626;
+      --shadow: 0 18px 45px rgba(15, 23, 42, 0.09);
+      --radius: 20px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: linear-gradient(135deg, #eef4ff 0%, #f7f9fc 42%, #ffffff 100%);
+      line-height: 1.55;
+    }
+
+    header {
+      padding: 56px 48px 40px;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(37, 99, 235, 0.16), transparent 24%),
+        radial-gradient(circle at 78% 8%, rgba(124, 58, 237, 0.13), transparent 24%),
+        #101828;
+      color: white;
+    }
+
+    header .eyebrow {
+      color: #a5b4fc;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-size: 13px;
+    }
+
+    header h1 {
+      margin: 12px 0 10px;
+      font-size: clamp(36px, 5vw, 64px);
+      line-height: 1.04;
+      max-width: 1050px;
+    }
+
+    header p {
+      color: #dbeafe;
+      max-width: 900px;
+      font-size: 20px;
+      margin: 0;
+    }
+
+    main {
+      width: min(1240px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 34px 0 70px;
+    }
+
+    section {
+      background: rgba(255, 255, 255, 0.86);
+      border: 1px solid rgba(219, 227, 239, 0.92);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin: 24px 0;
+      padding: 30px;
+      overflow: hidden;
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      font-size: 30px;
+      letter-spacing: -0.02em;
+    }
+
+    h3 {
+      margin: 0 0 10px;
+      font-size: 20px;
+    }
+
+    p {
+      color: var(--muted);
+      margin: 0 0 16px;
+    }
+
+    code,
+    pre {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    }
+
+    .grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .grid.two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid.three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 20px;
+      background: var(--panel);
+    }
+
+    .card strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--ink);
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 18px 0 0;
+    }
+
+    .pill {
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #1e293b;
+      background: #eef2ff;
+      border: 1px solid #dbe4ff;
+    }
+
+    .summary-lead {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 18px;
+      align-items: stretch;
+      margin: 16px 0 20px;
+    }
+
+    .summary-panel {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #ffffff;
+      padding: 20px;
+    }
+
+    .summary-panel.highlight {
+      background: linear-gradient(135deg, #eff6ff, #f5f3ff);
+      border-color: #bfdbfe;
+    }
+
+    .summary-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .summary-item {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 10px;
+      align-items: start;
+      color: #334155;
+    }
+
+    .summary-number {
+      width: 28px;
+      height: 28px;
+      border-radius: 10px;
+      background: #dbeafe;
+      color: #1d4ed8;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      font-size: 13px;
+    }
+
+    .capability-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .capability {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #f8fafc;
+      padding: 12px;
+      color: #334155;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .diagram {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #ffffff;
+      padding: 18px;
+      margin-top: 18px;
+      overflow: auto;
+    }
+
+    .note {
+      border-left: 4px solid var(--brand);
+      background: #eff6ff;
+      padding: 16px 18px;
+      border-radius: 14px;
+      color: #1e3a8a;
+      margin-top: 18px;
+    }
+
+    .suite-portal {
+      border: 1px solid #d8e1ef;
+      border-radius: 28px;
+      background: #f8fafc;
+      padding: 18px;
+      box-shadow: inset 0 1px 0 #ffffff;
+    }
+
+    .portal-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      border-radius: 20px;
+      background: #0f172a;
+      color: white;
+      margin-bottom: 16px;
+    }
+
+    .portal-top span {
+      color: #cbd5e1;
+      font-size: 13px;
+    }
+
+    .product-card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 18px;
+      min-height: 180px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .product-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      color: white;
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+
+    .button {
+      border: 0;
+      border-radius: 12px;
+      padding: 10px 14px;
+      background: var(--brand);
+      color: white;
+      font-weight: 800;
+      width: fit-content;
+    }
+
+    .button.secondary {
+      background: #e2e8f0;
+      color: #334155;
+    }
+
+    .desktop-window {
+      border: 1px solid #cbd5e1;
+      border-radius: 24px;
+      overflow: hidden;
+      background: #ffffff;
+      box-shadow: 0 24px 70px rgba(15, 23, 42, 0.18);
+    }
+
+    .window-bar {
+      height: 46px;
+      background: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 16px;
+      color: #cbd5e1;
+      font-size: 13px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #ef4444;
+    }
+
+    .dot.yellow {
+      background: #f59e0b;
+    }
+
+    .dot.green {
+      background: #22c55e;
+      margin-right: 12px;
+    }
+
+    .app-body {
+      display: grid;
+      grid-template-columns: 238px 1fr;
+      min-height: 520px;
+    }
+
+    .sidebar {
+      background: #f8fafc;
+      border-right: 1px solid var(--line);
+      padding: 18px;
+    }
+
+    .brand-block {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 900;
+      margin-bottom: 22px;
+    }
+
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--brand), var(--purple));
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 12px;
+      border-radius: 12px;
+      color: #475569;
+      font-weight: 700;
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+
+    .nav-item.active {
+      background: #dbeafe;
+      color: #1d4ed8;
+    }
+
+    .app-main {
+      padding: 22px;
+      background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    }
+
+    .app-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .status-chip {
+      padding: 8px 11px;
+      border-radius: 999px;
+      background: #ecfdf5;
+      color: #047857;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .patient-strip {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .mini-card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px;
+    }
+
+    .mini-card label {
+      display: block;
+      color: #64748b;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 6px;
+    }
+
+    .chart-panel {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px;
+      min-height: 255px;
+      position: relative;
+    }
+
+    .chart-grid {
+      height: 190px;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      background-image:
+        linear-gradient(#e2e8f0 1px, transparent 1px),
+        linear-gradient(90deg, #e2e8f0 1px, transparent 1px);
+      background-size: 42px 32px;
+      position: relative;
+    }
+
+    .plot-point {
+      width: 16px;
+      height: 16px;
+      border: 3px solid var(--red);
+      border-radius: 50%;
+      background: white;
+      position: absolute;
+    }
+
+    .plot-point.left {
+      border-color: var(--brand);
+    }
+
+    .installer {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 18px;
+    }
+
+    .install-screen {
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: white;
+      overflow: hidden;
+      min-height: 325px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .install-hero {
+      padding: 24px;
+      background: linear-gradient(135deg, #1d4ed8, #7c3aed);
+      color: white;
+      min-height: 108px;
+    }
+
+    .install-body {
+      padding: 18px;
+      flex: 1;
+    }
+
+    .check-line {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      margin: 11px 0;
+      color: #475569;
+      font-size: 14px;
+    }
+
+    .check {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #dcfce7;
+      color: #15803d;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      flex: 0 0 auto;
+      font-size: 12px;
+    }
+
+    .progress {
+      height: 10px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 16px 0;
+    }
+
+    .progress span {
+      display: block;
+      height: 100%;
+      width: 72%;
+      background: linear-gradient(90deg, var(--brand), var(--green));
+    }
+
+    .tree {
+      background: #0f172a;
+      color: #dbeafe;
+      border-radius: 18px;
+      padding: 22px;
+      overflow: auto;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .tree .muted {
+      color: #94a3b8;
+    }
+
+    .stack-architecture {
+      display: grid;
+      grid-template-columns: 150px 1fr 230px;
+      gap: 16px;
+      align-items: stretch;
+      margin-top: 22px;
+    }
+
+    .stack-label {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      background: linear-gradient(180deg, #fef3c7, #fed7aa);
+      border: 1px solid #fdba74;
+      color: #7c2d12;
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: 0.02em;
+      text-align: center;
+      min-height: 610px;
+    }
+
+    .stack-core {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .stack-layer {
+      border: 1px solid #8bb7c7;
+      border-radius: 16px;
+      background: #1f6f7a;
+      color: white;
+      padding: 14px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.18);
+    }
+
+    .stack-layer h3 {
+      color: white;
+      text-align: center;
+      margin-bottom: 12px;
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .stack-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .stack-row.three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .stack-box {
+      border-radius: 12px;
+      background: #46b6c1;
+      color: white;
+      padding: 12px 10px;
+      text-align: center;
+      font-weight: 800;
+      min-height: 48px;
+      display: grid;
+      place-items: center;
+    }
+
+    .stack-box.light {
+      background: #67d4df;
+      color: #06343d;
+    }
+
+    .stakeholders {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 14px;
+    }
+
+    .stakeholder-card {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #ffffff;
+      padding: 15px;
+    }
+
+    .stakeholder-card strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .install-flow-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .question-category {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: white;
+      padding: 18px;
+      margin: 16px 0;
+    }
+
+    .question-category h3 {
+      color: #1d4ed8;
+    }
+
+    .question-category ol {
+      margin: 10px 0 0;
+      padding-left: 22px;
+      color: #475569;
+    }
+
+    .question-category li {
+      margin: 7px 0;
+    }
+
+    .ai-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .ai-card {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #ffffff;
+      padding: 20px;
+    }
+
+    .ai-card h3 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .ai-badge {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #2563eb, #7c3aed);
+      color: white;
+      font-weight: 900;
+    }
+
+    .ai-card ul {
+      margin: 12px 0 0;
+      padding-left: 20px;
+      color: #475569;
+    }
+
+    .ai-card li {
+      margin: 8px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 14px;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    th,
+    td {
+      padding: 13px 14px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f8fafc;
+      color: #334155;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    footer {
+      width: min(1240px, calc(100% - 48px));
+      margin: 0 auto 40px;
+      color: #64748b;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    @media print {
+      body {
+        background: white;
+      }
+
+      header,
+      section {
+        box-shadow: none;
+      }
+
+      section {
+        break-inside: avoid;
+      }
+    }
+
+    @media (max-width: 900px) {
+      header {
+        padding: 36px 24px;
+      }
+
+      main {
+        width: min(100% - 24px, 1240px);
+      }
+
+      .grid.two,
+      .grid.three,
+      .installer,
+      .install-flow-grid,
+      .stack-architecture,
+      .summary-lead,
+      .capability-grid,
+      .ai-grid,
+      .patient-strip {
+        grid-template-columns: 1fr;
+      }
+
+      .stack-label {
+        writing-mode: initial;
+        transform: none;
+        min-height: auto;
+        padding: 18px;
+      }
+
+      .stack-row,
+      .stack-row.three {
+        grid-template-columns: 1fr;
+      }
+
+      .app-body {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">Desktop First, Cloud Ready</div>
+    <h1>Clinical Product Suite Architecture</h1>
+    <p>
+      A common platform for patient management, users, reports, licensing integration,
+      upgrades, backups, and shared UI, consumed by multiple desktop healthcare products.
+    </p>
+  </header>
+
+  <main>
+    <section>
+      <h2>Executive Summary</h2>
+      <div class="summary-lead">
+        <div class="summary-panel highlight">
+          <h3>Purpose of this draft</h3>
+          <p>
+            This is an early visualization draft for discussion, not a final design. It shows how
+            the current Sonique desktop product could evolve into a broader clinical product suite.
+          </p>
+          <div class="summary-list">
+            <div class="summary-item">
+              <span class="summary-number">1</span>
+              <span>Clarify the business vision for multiple clinical products.</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-number">2</span>
+              <span>Identify which capabilities should be common across products.</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-number">3</span>
+              <span>Collect decisions needed before detailed architecture and implementation.</span>
+            </div>
+          </div>
+        </div>
+        <div class="summary-panel">
+          <h3>How I am visualizing it</h3>
+          <div class="capability-grid">
+            <div class="capability">Common clinical services</div>
+            <div class="capability">Independent desktop products</div>
+            <div class="capability">Shared local database</div>
+            <div class="capability">Hosted license service</div>
+            <div class="capability">Product download portal</div>
+            <div class="capability">Future web/cloud path</div>
+          </div>
+        </div>
+      </div>
+      <div class="grid three">
+        <div class="card">
+          <strong>1. Common clinical services</strong>
+          Shared services can handle patient registration, users, clinic profile, visits, reports,
+          audit logs, backup, settings, updates, and product registration.
+        </div>
+        <div class="card">
+          <strong>2. Specialist products</strong>
+          Sonique and future products can remain independent apps, each with its own workflow,
+          device integration, report sections, branding, installer, and release cycle.
+        </div>
+        <div class="card">
+          <strong>3. Hosted web systems</strong>
+          License management, product downloads, release hosting, and later web deployments can sit
+          outside the desktop installation as hosted systems.
+        </div>
+      </div>
+      <div class="pill-row">
+        <span class="pill">Desktop first</span>
+        <span class="pill">Shared local DB</span>
+        <span class="pill">Hosted licensing</span>
+        <span class="pill">Bundled common services</span>
+        <span class="pill">TypeScript</span>
+        <span class="pill">Web compatible</span>
+      </div>
+    </section>
+
+    <section>
+      <h2>High-Level Architecture</h2>
+      <p>
+        The architecture can be visualized as a stack. At the bottom are operating system,
+        database, and runtime foundations. Above that are common platform capabilities. Product
+        applications sit on top, while hosted web systems support licensing, downloads, and future
+        cloud deployment.
+      </p>
+      <div class="stack-architecture">
+        <div class="stack-label">Clinical Product Suite Vision</div>
+        <div class="stack-core">
+          <div class="stack-layer">
+            <h3>Hosted Web Systems</h3>
+            <div class="stack-row three">
+              <div class="stack-box">License Server</div>
+              <div class="stack-box">Product Download Portal</div>
+              <div class="stack-box">Release / Update Hosting</div>
+            </div>
+          </div>
+          <div class="stack-layer">
+            <h3>Desktop Product Applications</h3>
+            <div class="stack-row three">
+              <div class="stack-box">Sonique Audiometry</div>
+              <div class="stack-box">Future Product A</div>
+              <div class="stack-box">Future Product B</div>
+            </div>
+          </div>
+          <div class="stack-layer">
+            <h3>Shared UI and Product Shell</h3>
+            <div class="stack-row">
+              <div class="stack-box light">Core UI Components</div>
+              <div class="stack-box light">Design System, Layouts, Branding</div>
+            </div>
+          </div>
+          <div class="stack-layer">
+            <h3>Common Clinical Service APIs</h3>
+            <div class="stack-row three">
+              <div class="stack-box">REST APIs on Localhost</div>
+              <div class="stack-box">Product Registry</div>
+              <div class="stack-box">Version / Update Manager</div>
+            </div>
+          </div>
+          <div class="stack-layer">
+            <h3>Common Domain Modules</h3>
+            <div class="stack-row three">
+              <div class="stack-box light">Patient, User, Clinic</div>
+              <div class="stack-box light">Visit, Reports, Audit</div>
+              <div class="stack-box light">Settings, Backup, License Client</div>
+            </div>
+          </div>
+          <div class="stack-layer">
+            <h3>Data and Runtime Foundation</h3>
+            <div class="stack-row three">
+              <div class="stack-box">Shared Clinical DB</div>
+              <div class="stack-box">Node.js / TypeScript</div>
+              <div class="stack-box">Windows / macOS</div>
+            </div>
+          </div>
+        </div>
+        <div class="stakeholders">
+          <div class="stakeholder-card">
+            <strong>Business Leadership</strong>
+            Product suite vision, licensing, packaging, and market direction.
+          </div>
+          <div class="stakeholder-card">
+            <strong>Clinical Experts</strong>
+            Product workflows, reports, patient journey, and domain-specific requirements.
+          </div>
+          <div class="stakeholder-card">
+            <strong>Engineering</strong>
+            Common services, desktop installers, database, APIs, upgrades, and future web path.
+          </div>
+        </div>
+      </div>
+      <div class="note">
+        Recommended rule: product apps should not write directly to shared patient, user,
+        clinic, report, or license data. They should use the Common Clinical Service API.
+      </div>
+    </section>
+
+    <section>
+      <h2>Desktop Installation Model</h2>
+      <p>
+        Every product installer can bundle the Common Clinical Service. The first product
+        installation creates the local platform. A second product installation detects the existing
+        platform, checks compatibility, and prompts before any shared service upgrade.
+      </p>
+      <div class="install-flow-grid">
+        <div class="diagram">
+          <h3>First Product Installation</h3>
+          <pre class="mermaid">
+flowchart TB
+  A["Install Sonique Desktop"]
+  B["No Common Clinical Service found"]
+  C["Install bundled Common Clinical Service"]
+  D["Create shared clinical database"]
+  E["Connect to hosted License Server"]
+  F["Activate product and start app"]
+
+  A --> B --> C --> D --> E --> F
+          </pre>
+        </div>
+        <div class="diagram">
+          <h3>Second Product Installation</h3>
+          <pre class="mermaid">
+flowchart TB
+  A["Install Future Product"]
+  B["Existing Common Clinical Service found"]
+  C{"Compatible version?"}
+  D["Use existing service"]
+  E["Prompt: platform upgrade required"]
+  F["Backup shared DB"]
+  G["Upgrade service and run migrations"]
+  H["Register new product and launch"]
+
+  A --> B --> C
+  C -->|Yes| D --> H
+  C -->|No, older service| E --> F --> G --> H
+  C -->|Newer incompatible| I["Block install or ask for newer product build"]
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Product Suite and Download Portal</h2>
+      <p>
+        One can think of this as a suite of products. A clinic may download only the
+        products it has licensed. Product installers can include the common platform runtime.
+      </p>
+      <div class="suite-portal">
+        <div class="portal-top">
+          <div><strong>Clinical Suite Portal</strong><br /><span>Downloads, license status, release notes</span></div>
+          <div>Clinic: Apex ENT Care</div>
+        </div>
+        <div class="grid three">
+          <div class="product-card">
+            <div>
+              <div class="product-icon" style="background:#2563eb;">S</div>
+              <h3>Sonique Audiometry</h3>
+              <p>AC, BC, FF, Speech, audiogram reports, device integration.</p>
+            </div>
+            <button class="button">Download for Desktop</button>
+          </div>
+          <div class="product-card">
+            <div>
+              <div class="product-icon" style="background:#0f9f6e;">V</div>
+              <h3>Vision Product</h3>
+              <p>Future product placeholder using the same patients and reports.</p>
+            </div>
+            <button class="button secondary">Coming Soon</button>
+          </div>
+          <div class="product-card">
+            <div>
+              <div class="product-icon" style="background:#7c3aed;">P</div>
+              <h3>Pulmonary Product</h3>
+              <p>Future product placeholder with product-specific test modules.</p>
+            </div>
+            <button class="button secondary">Request Access</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Desktop Product UI Mockup</h2>
+      <p>
+        Products use the shared Core UI for shell, navigation, patient selector, cards, buttons,
+        forms, report viewer, and theme. Each product still owns its specialist screens.
+      </p>
+      <div class="desktop-window">
+        <div class="window-bar">
+          <span class="dot"></span>
+          <span class="dot yellow"></span>
+          <span class="dot green"></span>
+          Sonique Desktop using Common Clinical Platform
+        </div>
+        <div class="app-body">
+          <aside class="sidebar">
+            <div class="brand-block">
+              <div class="brand-mark"></div>
+              <div>Sonique<br /><span style="color:#64748b;font-size:12px;">Audiometry</span></div>
+            </div>
+            <div class="nav-item active">Dashboard</div>
+            <div class="nav-item">Patients</div>
+            <div class="nav-item">Air Conduction</div>
+            <div class="nav-item">Bone Conduction</div>
+            <div class="nav-item">Reports</div>
+            <div class="nav-item">Backup</div>
+            <div class="nav-item">Settings</div>
+          </aside>
+          <main class="app-main">
+            <div class="app-toolbar">
+              <div>
+                <h3 style="margin-bottom:2px;">Audiometry Session</h3>
+                <p style="margin:0;">Shared patient data from Common Clinical Service</p>
+              </div>
+              <div class="status-chip">License Active</div>
+            </div>
+            <div class="patient-strip">
+              <div class="mini-card">
+                <label>Selected Patient</label>
+                <strong>Meera Sharma</strong>
+                <div style="color:#64748b;">PID-2026-000183 | Female | 34 yrs</div>
+              </div>
+              <div class="mini-card">
+                <label>Visit</label>
+                <strong>ENT Consultation</strong>
+                <div style="color:#64748b;">25 Apr 2026</div>
+              </div>
+              <div class="mini-card">
+                <label>Common Platform</label>
+                <strong>Service v1.3.0</strong>
+                <div style="color:#64748b;">Healthy on localhost</div>
+              </div>
+            </div>
+            <div class="chart-panel">
+              <h3>Audiogram</h3>
+              <p>Product-specific audiometry UI inside the shared app shell.</p>
+              <div class="chart-grid">
+                <span class="plot-point" style="left:85px;top:70px;"></span>
+                <span class="plot-point" style="left:165px;top:95px;"></span>
+                <span class="plot-point left" style="left:250px;top:60px;"></span>
+                <span class="plot-point left" style="left:335px;top:120px;"></span>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Installer Screen Mockups</h2>
+      <p>
+        The installer should clearly communicate that the product includes the shared platform
+        runtime, validates compatibility, protects existing data, and connects to hosted licensing.
+      </p>
+      <div class="installer">
+        <div class="install-screen">
+          <div class="install-hero">
+            <h3>Install Sonique</h3>
+            <div>Clinical Suite Desktop Product</div>
+          </div>
+          <div class="install-body">
+            <div class="check-line"><span class="check">✓</span><span>Install Sonique Audiometry app</span></div>
+            <div class="check-line"><span class="check">✓</span><span>Install or reuse Common Clinical Service</span></div>
+            <div class="check-line"><span class="check">✓</span><span>Create shared clinical database if needed</span></div>
+            <button class="button" style="margin-top:18px;">Continue</button>
+          </div>
+        </div>
+        <div class="install-screen">
+          <div class="install-hero">
+            <h3>Platform Check</h3>
+            <div>Compatibility and database safety</div>
+          </div>
+          <div class="install-body">
+            <div class="check-line"><span class="check">✓</span><span>Existing service found: v1.2.0</span></div>
+            <div class="check-line"><span class="check">✓</span><span>Required version: v1.3.x</span></div>
+            <div class="check-line"><span class="check">✓</span><span>Backup will be created before upgrade</span></div>
+            <div class="progress"><span></span></div>
+            <button class="button">Upgrade Safely</button>
+          </div>
+        </div>
+        <div class="install-screen">
+          <div class="install-hero">
+            <h3>License Activation</h3>
+            <div>Connect to hosted License Server</div>
+          </div>
+          <div class="install-body">
+            <div class="mini-card" style="margin-bottom:12px;">
+              <label>License Key</label>
+              <strong>XXXX-XXXX-XXXX-2026</strong>
+            </div>
+            <div class="check-line"><span class="check">✓</span><span>Clinic license active</span></div>
+            <div class="check-line"><span class="check">✓</span><span>Sonique Audiometry enabled</span></div>
+            <div class="check-line"><span class="check">✓</span><span>Offline grace cache configured</span></div>
+            <button class="button">Finish Setup</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Common Modules</h2>
+      <p>
+        These live in the common platform repo. Product repos consume these modules and also
+        communicate with the local Common Clinical Service.
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Module</th>
+            <th>Responsibility</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>patient-core</td><td>Patient registration, demographics, identifiers, search, duplicate detection.</td></tr>
+          <tr><td>user-core</td><td>Users, roles, permissions, login, sessions, staff profiles.</td></tr>
+          <tr><td>clinic-core</td><td>Clinic profile, branches, logo, report letterhead, contact details.</td></tr>
+          <tr><td>visit-core</td><td>Encounter or visit records shared across products.</td></tr>
+          <tr><td>report-core</td><td>Common report engine, PDF/HTML rendering, report registry, snapshots.</td></tr>
+          <tr><td>license-client</td><td>Desktop-side integration with hosted License Server, feature flags, offline cache.</td></tr>
+          <tr><td>audit-core</td><td>Audit trail for patient, report, test, user, license, and settings changes.</td></tr>
+          <tr><td>settings-core</td><td>Shared platform preferences and product-aware settings.</td></tr>
+          <tr><td>backup-core</td><td>Central backup, restore, scheduled backup, and product data inclusion.</td></tr>
+          <tr><td>db-core</td><td>Database connection, migrations, schema versioning, adapters.</td></tr>
+          <tr><td>product-registry-core</td><td>Installed products, capabilities, report plugins, licensed feature metadata.</td></tr>
+          <tr><td>update-core</td><td>Platform version checks, compatibility matrix, upgrade safety, migration orchestration.</td></tr>
+          <tr><td>shared-types</td><td>Common TypeScript contracts used by all products and services.</td></tr>
+          <tr><td>core-ui / design-system</td><td>Shared layouts, components, styling, theme, branding hooks, report viewer.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Recommended Repository Structure</h2>
+      <p>
+        The common platform should be separate from products. Each product can have its own repo,
+        installer, branding, release schedule, and product-specific modules.
+      </p>
+      <div class="grid two">
+        <div>
+          <h3>Common Platform Repo</h3>
+          <pre class="tree">clinical-platform/
+  package.json
+  pnpm-workspace.yaml
+
+  services/
+    common-clinical-service/
+      src/
+        api/
+        modules/
+        startup/
+        version/
+
+  packages/
+    patient-core/
+    user-core/
+    clinic-core/
+    visit-core/
+    report-core/
+    license-client/
+    audit-core/
+    settings-core/
+    backup-core/
+    db-core/
+    product-registry-core/
+    update-core/
+    shared-types/
+    core-ui/
+    design-system/
+
+  docs/
+    architecture/
+    api-contracts/
+    diagrams/</pre>
+        </div>
+        <div>
+          <h3>Product and Hosted Repos</h3>
+          <pre class="tree">sonique-desktop/
+  package.json
+  electron/
+  src/
+    audiometry/
+    device/
+    reports/
+    routes/
+  installer/
+    platform-bundle/
+    windows/
+    macos/
+
+future-product-desktop/
+  src/
+    product-specific-domain/
+    product-specific-reports/
+
+license-server/
+  src/
+    customers/
+    licenses/
+    activations/
+    entitlements/
+    renewals/
+  database/
+  deploy/</pre>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Version and Upgrade Strategy</h2>
+      <p>
+        Since each product bundles the platform, version compatibility must be explicit. The
+        installed Common Clinical Service should not be downgraded automatically.
+      </p>
+      <div class="diagram">
+        <pre class="mermaid">
+sequenceDiagram
+  participant Installer as Product Installer
+  participant VersionManager as update-core
+  participant Service as Common Clinical Service
+  participant Backup as backup-core
+  participant DB as Shared DB
+
+  Installer->>VersionManager: Check installed platform version
+  VersionManager->>Service: GET /health/version
+  Service-->>VersionManager: v1.2.0
+  VersionManager->>VersionManager: Compare with required range
+  VersionManager->>Backup: Create pre-upgrade backup
+  Backup->>DB: Snapshot shared database
+  VersionManager->>Service: Stop service safely
+  VersionManager->>DB: Run migrations via db-core
+  VersionManager->>Service: Start upgraded service
+  Service-->>Installer: Healthy, v1.3.0
+        </pre>
+      </div>
+    </section>
+
+    <section>
+      <h2>Questions We Have To Arrive At Answers</h2>
+      <p>
+        These questions are intentionally broad. The goal is to use the visualization above to
+        collect product vision, business model, clinical workflow, deployment, and technology
+        direction before moving into detailed design.
+      </p>
+
+      <div class="question-category">
+        <h3>Product Suite Scope</h3>
+        <ol>
+          <li>What are the first 2-3 products expected besides Sonique/Audiometry?</li>
+          <li>Will each product be a separate desktop app, or should there also be one suite/launcher app?</li>
+          <li>Should products be installable independently?</li>
+          <li>Should all products share the same company branding, or can each product have its own branding?</li>
+        </ol>
+      </div>
+
+      <div class="question-category">
+        <h3>Shared Patient Database</h3>
+        <ol start="5">
+          <li>Should one patient record be shared across all products?</li>
+          <li>Do we need a universal patient ID generated by the system?</li>
+          <li>Do clinics already have external patient IDs or hospital IDs that must be stored?</li>
+          <li>Can the same patient visit multiple clinics/branches, or is patient data local to one clinic installation?</li>
+          <li>Do we need duplicate patient detection?</li>
+          <li>What minimum patient fields are mandatory?</li>
+        </ol>
+      </div>
+
+      <div class="question-category">
+        <h3>Common Clinical Service</h3>
+        <ol start="11">
+          <li>Should the Common Clinical Service run silently in the background after installation?</li>
+          <li>Should the Common Clinical Service start automatically when the computer starts?</li>
+          <li>Should product apps connect to the Common Clinical Service using localhost on the same machine?</li>
+          <li>Should future product apps on other clinic machines connect to one desktop/server machine over LAN?</li>
+          <li>Should the Common Clinical Service expose REST APIs, or should we consider gRPC/WebSocket also?</li>
+        </ol>
+      </div>
+
+      <div class="question-category">
+        <h3>Database, Backup, And Restore</h3>
+        <ol start="16">
+          <li>For the first version, should the shared local DB be SQLite or PostgreSQL?</li>
+          <li>Is installation simplicity more important than multi-user capability for v1?</li>
+          <li>Should backup/restore be handled centrally by the Common Clinical Service?</li>
+          <li>Do we need automated scheduled backups?</li>
+          <li>Should backups include all products' data together, or allow product-wise backup/export?</li>
+        </ol>
+      </div>
+
+      <div class="question-category">
+        <h3>Users, Roles, And Security</h3>
+        <ol start="21">
+          <li>Do doctors/staff need login inside the desktop apps?</li>
+          <li>What roles are expected, such as Admin, Doctor, Technician, Receptionist, or Report Viewer?</li>
+          <li>Should each product enforce role-based access?</li>
+          <li>Should the app support multiple doctors in the same clinic?</li>
+          <li>Do we need audit logs?</li>
+        </ol>
+      </div>
+
+      <div class="question-category">
+        <h3>Reports</h3>
+        <ol start="26">
+          <li>Should there be a common report framework used by all products?</li>
+          <li>Should each product provide its own report template sections?</li>
+          <li>Can one report combine results from multiple products?</li>
+          <li>Should reports be PDF only, or also HTML, print, or image export?</li>
+          <li>Do clinics need custom letterhead, logo, header, and footer?</li>
+          <li>Should old generated reports be stored as immutable snapshots, or regenerated every time from latest data?</li>
+        </ol>
+      </div>
+
+      <div class="question-category">
+        <h3>Product-Specific Modules</h3>
+        <ol start="32">
+          <li>For Audiometry, should AC/BC/FF/Speech remain fully inside the Sonique product module?</li>
+          <li>Should product-specific test data live in the same shared DB, or should each product have its own DB?</li>
+          <li>Should common reports be allowed to read product-specific data through registered report plugins?</li>
+          <li>Should product modules register capabilities with the Common Clinical Service?</li>
+        </ol>
+      </div>
+
+      <div class="question-category">
+        <h3>Hosted License Service</h3>
+        <ol start="36">
+          <li>Should desktop apps validate license directly, or should the Common Clinical Service validate once and share status with all products?</li>
+          <li>Is license per clinic, per machine, per doctor, or per product?</li>
+          <li>Should license allow feature flags such as Device Enabled, Reports Export, or Multi-user?</li>
+          <li>Should the app work offline if the license server is unreachable?</li>
+          <li>If offline use is allowed, how long should the offline grace period be?</li>
+          <li>Should one license cover multiple products in the suite?</li>
+          <li>Should license activation bind to machine ID?</li>
+        </ol>
+      </div>
+
+      <div class="question-category">
+        <h3>Future Web Compatibility</h3>
+        <ol start="43">
+          <li>In future web mode, do we imagine cloud-hosted SaaS, customer-hosted server, or both?</li>
+          <li>Should desktop and web share the same API contracts?</li>
+          <li>Do we expect data sync between desktop offline installations and cloud later?</li>
+          <li>Should we design for multi-tenant data from the beginning?</li>
+        </ol>
+      </div>
+
+      <div class="question-category">
+        <h3>Repository And Package Strategy</h3>
+        <ol start="47">
+          <li>Do we prefer separate git repos for every core module, or one common platform repo initially?</li>
+          <li>Are we comfortable using private npm packages?</li>
+          <li>Where will code be hosted, for example GitHub private repos?</li>
+          <li>Should each product have independent release/versioning?</li>
+          <li>Should common modules follow semantic versioning, such as patient-core@1.2.0?</li>
+        </ol>
+      </div>
+
+      <div class="question-category">
+        <h3>Settings, Clinics, Doctors, And Migration</h3>
+        <ol start="52">
+          <li>Should the Common Clinical Service also own common settings/preferences?</li>
+          <li>Should clinic profile data be common, such as clinic name, address, logo, contact details, and registration number?</li>
+          <li>Should doctors/consultants be modeled separately from app users?</li>
+          <li>Should referring doctors be a separate common entity?</li>
+          <li>Should appointments/visits be part of the common platform now, or later?</li>
+          <li>Should every product create a common encounter or visit record before creating product-specific test records?</li>
+          <li>Should reports be linked to visits/encounters, patients directly, or both?</li>
+          <li>Should the system support import/export of patient data?</li>
+          <li>Should the system support migration from the current Sonique SQLite database into the new shared database?</li>
+        </ol>
+      </div>
+    </section>
+
+    <section>
+      <h2>AI Opportunities</h2>
+      <p>
+        AI can be introduced in phases. The first phase should assist clinicians and internal
+        teams without replacing clinical judgment. Later phases can use richer product data,
+        report history, and support knowledge to improve productivity and decision support.
+      </p>
+
+      <div class="ai-grid">
+        <div class="ai-card">
+          <h3><span class="ai-badge">C</span>Clinic-Level AI Use Cases</h3>
+          <p>AI features that directly help doctors, technicians, reception staff, and clinics.</p>
+          <ul>
+            <li><strong>Clinical note drafting:</strong> Generate draft notes from test results, observations, and selected templates.</li>
+            <li><strong>Report summarization:</strong> Produce patient-friendly and doctor-friendly summaries from completed tests.</li>
+            <li><strong>Abnormal result highlighting:</strong> Flag patterns that may need review, such as asymmetry or significant threshold changes.</li>
+            <li><strong>Patient history assistant:</strong> Summarize previous visits, reports, and product-specific test history.</li>
+            <li><strong>Voice-to-notes:</strong> Convert spoken observations into structured notes during or after a test.</li>
+            <li><strong>Follow-up suggestions:</strong> Suggest possible follow-up actions based on configured clinic protocols.</li>
+            <li><strong>Multilingual report explanation:</strong> Explain report findings in simple language for patients.</li>
+          </ul>
+        </div>
+
+        <div class="ai-card">
+          <h3><span class="ai-badge">P</span>Platform / Company-Level AI Use Cases</h3>
+          <p>AI features that help the company support products, customers, quality, and growth.</p>
+          <ul>
+            <li><strong>Support assistant:</strong> Answer customer questions using manuals, release notes, FAQs, and known troubleshooting steps.</li>
+            <li><strong>Installation diagnostics:</strong> Analyze logs from installers and Common Clinical Service startup failures.</li>
+            <li><strong>License and usage insights:</strong> Detect activation issues, expired licenses, and product usage trends.</li>
+            <li><strong>Release impact assistant:</strong> Summarize what changed between platform/product versions and who may be affected.</li>
+            <li><strong>Knowledge base generation:</strong> Convert support tickets and fixes into searchable help articles.</li>
+            <li><strong>Product analytics:</strong> Identify commonly used workflows, underused modules, and feature adoption by product.</li>
+            <li><strong>Internal engineering assistant:</strong> Help generate test cases, migration notes, API documentation, and support scripts.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="diagram">
+        <pre class="mermaid">
+flowchart LR
+  subgraph Clinic["Clinic Desktop Environment"]
+    Product["Product Apps<br/>Sonique, future products"]
+    Common["Common Clinical Service"]
+    LocalAI["Optional Local AI Assistant<br/>privacy-sensitive tasks"]
+    DB[("Shared Clinical DB")]
+  end
+
+  subgraph Hosted["Hosted Company Systems"]
+    License["License Server"]
+    Portal["Download / Support Portal"]
+    CompanyAI["Company AI Assistant<br/>support, analytics, knowledge base"]
+  end
+
+  Product --> Common
+  Common --> DB
+  Common -. selected clinical context .-> LocalAI
+  Common -. license and entitlement data .-> License
+  Portal --> CompanyAI
+  License --> CompanyAI
+        </pre>
+      </div>
+
+      <div class="note">
+        Important principle: AI should be assistive. Clinical decisions, final notes, and final
+        reports should remain under doctor or authorized staff review and approval.
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Clinical Product Suite Architecture Draft. Prepared for internal discussion.
+  </footer>
+
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "base",
+      themeVariables: {
+        primaryColor: "#eff6ff",
+        primaryTextColor: "#172033",
+        primaryBorderColor: "#93c5fd",
+        lineColor: "#64748b",
+        secondaryColor: "#f5f3ff",
+        tertiaryColor: "#ecfdf5"
+      }
+    });
+  </script>
+</body>
+</html>
