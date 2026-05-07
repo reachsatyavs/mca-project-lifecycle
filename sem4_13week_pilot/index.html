@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MCA Sem 4 — 13-Week Pilot Programme</title>
+  <link rel="stylesheet" href="pilot_styles.css">
+</head>
+<body>
+
+  <nav class="topnav">
+    <a href="../index.html">← Main Index</a>
+    <span class="topnav-sep">›</span>
+    <a href="index.html" class="active">Sem 4 Pilot Hub</a>
+    <span class="topnav-sep">›</span>
+    <a href="T1_ProjectCharter.html">T1 Charter</a>
+    <a href="T2_FRD.html">T2 FRD</a>
+    <a href="T3_DesignDocument.html">T3 Design</a>
+    <a href="T4_SprintPlan.html">T4 Sprint</a>
+    <a href="T5_FinalProductDoc.html">T5 Final Doc</a>
+    <a href="checklists.html">Checklists</a>
+    <a href="print_guide.html">Print Guide</a>
+    <span class="pilot-badge">13-Week Pilot · 2026</span>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-eyebrow">MCA Semester 4 · Compressed Pilot · Bangalore</div>
+    <h1>End-to-End in <span>13 Weeks</span><br>Student Project Programme</h1>
+    <p class="hero-sub">
+      A complete project-only semester — from idea to deployed, containerised product.
+      No theory classes. Every week has a deliverable, a gate, and a consultant checkpoint.
+    </p>
+    <div class="tag-row">
+      <span class="tag orange">Consultant: 2 h/week</span>
+      <span class="tag purple">Docker from Day 1</span>
+      <span class="tag green">Git = single source of truth</span>
+      <span class="tag">13 Weeks · Project Only</span>
+      <span class="tag">3 × 2-Week Sprints</span>
+      <span class="tag">2 Consultant Sessions</span>
+    </div>
+  </div>
+
+  <main class="main">
+
+    <!-- ── Consultant model ── -->
+    <div class="info-box orange">
+      <strong style="font-size:14px;color:#fff;display:block;margin-bottom:10px;">Consultant Engagement Model — BIMA MCA Sem 4</strong>
+      <ul style="list-style:disc;padding:0 0 0 18px;margin:0;display:flex;flex-direction:column;gap:4px;">
+        <li style="font-size:12.5px;padding:3px 0;"><strong>2 hours/week</strong></li>
+        <li style="font-size:12.5px;padding:3px 0;">Review weekly status reports, flag at-risk teams</li>
+        <li style="font-size:12.5px;padding:3px 0;">Spot-check 1–2 project artifacts or attend sprint demo</li>
+        <li style="font-size:12.5px;padding:3px 0;">Jump in if a team misses 2+ deadlines in a row</li>
+        <li style="font-size:12.5px;padding:3px 0;"><strong>Faculty:</strong> day-to-day execution, demos, grading</li>
+        <li style="font-size:12.5px;padding:3px 0;"><strong>Consultant:</strong> process standards, guide and recovery</li>
+      </ul>
+    </div>
+
+    <!-- ── Standards ── -->
+    <div class="info-box green">
+      <strong style="font-size:14px;color:#fff;display:block;margin-bottom:10px;">Highly Preferred Standards for Project Execution — All BIMA MCA Projects</strong>
+      <ul style="list-style:disc;padding:0 0 0 18px;margin:0;display:flex;flex-direction:column;gap:4px;">
+        <li style="font-size:12.5px;padding:3px 0;"><strong>Git repository</strong> holds all code + all documentation — no email, no WhatsApp submissions</li>
+        <li style="font-size:12.5px;padding:3px 0;">All apps run as <strong>Docker containers</strong> — Dockerfile + docker-compose.yml committed from Week 1</li>
+        <li style="font-size:12.5px;padding:3px 0;">Final demo = <code style="background:#071f14;padding:2px 6px;border-radius:4px;">docker compose up</code> on a fresh machine — no extra configuration steps</li>
+      </ul>
+    </div>
+
+    <!-- ── Git Repo Structure ── -->
+    <div class="section-label">Standard Git Repository Structure — All Teams Follow This</div>
+    <div class="git-tree">
+<span class="dir">your-project-name/</span><br>
+<span class="dim">├──</span> <span class="file">README.md</span>          <span class="dim"># How to run the project (mandatory)</span><br>
+<span class="dim">├──</span> <span class="docker-file">Dockerfile</span>         <span class="dim"># App container definition</span><br>
+<span class="dim">├──</span> <span class="docker-file">docker-compose.yml</span> <span class="dim"># All services (app + db + any others)</span><br>
+<span class="dim">├──</span> <span class="dir">src/</span>               <span class="dim"># All application source code</span><br>
+<span class="dim">│   └── ...</span><br>
+<span class="dim">└──</span> <span class="dir">docs/</span>              <span class="dim"># All project documentation</span><br>
+<span class="dim">    ├──</span> <span class="file">scope.md</span>       <span class="dim"># T1 — Project Charter &amp; Scope</span><br>
+<span class="dim">    ├──</span> <span class="file">frd.md</span>         <span class="dim"># T2 — Functional Requirements</span><br>
+<span class="dim">    ├──</span> <span class="file">design.md</span>      <span class="dim"># T3 — Software Design Document</span><br>
+<span class="dim">    ├──</span> <span class="file">test-plan.md</span>   <span class="dim"># Test cases &amp; results</span><br>
+<span class="dim">    ├──</span> <span class="file">final-report.md</span> <span class="dim"># T5 — Final Product Document</span><br>
+<span class="dim">    └──</span> <span class="dir">sprints/</span><br>
+<span class="dim">        ├──</span> <span class="file">sprint1.md</span><br>
+<span class="dim">        ├──</span> <span class="file">sprint2.md</span><br>
+<span class="dim">        └──</span> <span class="file">sprint3.md</span>
+    </div>
+
+    <!-- ── 13-Week Schedule ── -->
+    <div class="section-label">13-Week Master Schedule</div>
+
+    <!-- Ownership legend -->
+    <div style="display:flex;gap:14px;margin-bottom:14px;align-items:center;flex-wrap:wrap;">
+      <span style="font-size:12px;color:#80889a;text-transform:uppercase;letter-spacing:.08em;">Ownership legend:</span>
+      <span style="background:#1a2540;border:1px solid #3b5bdb;color:#93c5fd;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;">Faculty</span>
+      <span style="font-size:12px;color:#80889a;">Day-to-day delivery, gate sign-off, grading</span>
+      <span style="background:#2a1a08;border:1px solid #d97706;color:#fbbf24;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;">Consultant</span>
+      <span style="font-size:12px;color:#80889a;">Standards, spot-reviews, sessions, final gate</span>
+    </div>
+
+    <table class="schedule-table">
+      <thead>
+        <tr>
+          <th style="width:80px;">Weeks</th>
+          <th style="width:110px;">Phase</th>
+          <th>Student Deliverables</th>
+          <th style="width:190px;">Template</th>
+          <th style="width:190px;background:#0f1e38;color:#93c5fd;">Faculty Owns</th>
+          <th style="width:190px;background:#241508;color:#fbbf24;">Consultant Owns</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <!-- T1 — Week 1 -->
+        <tr>
+          <td style="text-align:center;font-size:13px;font-weight:700;color:#7c9ef7;">
+            Week 1
+          </td>
+          <td><span class="phase-pill ph-kickoff">T1 — Kickoff &amp; Scope</span></td>
+          <td>
+            • Form teams (3–4 students), agree on project topic, get faculty approval<br>
+            • Write Project Charter &amp; Scope doc; create Git repo with standard folder structure<br>
+            • Add <code style="font-size:11px;background:#1a1a2e;padding:1px 5px;border-radius:3px;">Dockerfile</code> stub and <code style="font-size:11px;background:#1a1a2e;padding:1px 5px;border-radius:3px;">docker-compose.yml</code> placeholder<br>
+            • Define risk register (top 3 risks + mitigation)<br>
+            • <strong>Commit:</strong> <code style="font-size:11px;background:#1a1a2e;padding:1px 5px;border-radius:3px;">docs/scope.md</code> + <code style="font-size:11px;background:#1a1a2e;padding:1px 5px;border-radius:3px;">README.md</code>
+          </td>
+          <td><a href="T1_ProjectCharter.html" class="btn btn-outline" style="font-size:11px;padding:5px 10px;">T1 — Project Charter →</a></td>
+          <td style="color:#93c5fd;font-size:12px;">
+            ✅ Topic approved by end of Week 1<br>
+            ✅ Git repo URL collected from each team<br>
+            ✅ Scope doc committed &amp; legible<br>
+            ✅ Sign off T1 gate checklist
+          </td>
+          <td style="color:#fbbf24;font-size:12px;">
+            • Spot-check select scope docs — based on faculty or student queries<br>
+            • Reject scopes too broad or vague<br>
+            • Approve only realistic 13-week deliverables
+          </td>
+        </tr>
+
+        <!-- T2 — Week 2 -->
+        <tr>
+          <td style="text-align:center;font-size:13px;font-weight:700;color:#6ee7b7;">
+            Week 2
+          </td>
+          <td><span class="phase-pill ph-req">T2 — Requirements</span></td>
+          <td>
+            • Write FRD: functional requirements (FR-01, FR-02…) + non-functional requirements<br>
+            • Write User Stories (As a… / I want… / So that…) — minimum 10<br>
+            • Write Use Cases: actor, pre-conditions, main flow, alt flow<br>
+            • Write Acceptance Criteria for each story<br>
+            • Set up Docker skeleton: <code style="font-size:11px;background:#1a1a2e;padding:1px 5px;border-radius:3px;">docker-compose.yml</code> — app + DB containers defined (no code yet)<br>
+            • <strong>Commit:</strong> <code style="font-size:11px;background:#1a1a2e;padding:1px 5px;border-radius:3px;">docs/frd.md</code><br>
+            <span style="display:inline-block;margin-top:6px;background:#2a1a08;border:1px solid #d97706;color:#fbbf24;font-size:11px;padding:3px 8px;border-radius:6px;">Consultant: Docker Orientation Session — containers, images, Dockerfile, docker-compose, .env basics</span>
+          </td>
+          <td><a href="T2_FRD.html" class="btn btn-outline" style="font-size:11px;padding:5px 10px;">T2 — FRD →</a></td>
+          <td style="color:#93c5fd;font-size:12px;">
+            ✅ ≥10 User Stories with acceptance criteria<br>
+            ✅ All FRs numbered (FR-01…)<br>
+            ✅ docker-compose.yml committed<br>
+            ✅ Sign off T2 gate checklist
+          </td>
+          <td style="color:#fbbf24;font-size:12px;">
+            • Spot-check 2 FRDs — no generic "system shall…"; must reflect actual product<br>
+            • Flag teams missing acceptance criteria<br>
+            • <strong>Deliver Docker Orientation Session</strong>
+          </td>
+        </tr>
+
+        <!-- T3 — Weeks 3–4 -->
+        <tr>
+          <td style="text-align:center;font-size:13px;font-weight:700;color:#c4b5fd;">
+            Weeks 3–4
+          </td>
+          <td><span class="phase-pill ph-design">T3 — Design</span></td>
+          <td>
+            <strong>Week 3 — High-level design:</strong><br>
+            • Architecture pattern (MVC / Client-Server / Microservices — justify choice)<br>
+            • Component/module breakdown; Docker service map (container ↔ component)<br>
+            • ER Diagram (all entities, relationships, attributes)<br>
+            • Level-1 Data Flow Diagram<br>
+            <br>
+            <strong>Week 4 — Detailed design:</strong><br>
+            • Class diagram (key classes, attributes, methods, relationships)<br>
+            • 1–2 Sequence diagrams (most important user flows)<br>
+            • UI wireframes — 2–3 key screens (hand-drawn or Figma/Excalidraw OK)<br>
+            • Requirements Traceability Matrix — every FR maps to a design component, DB table, class, and test case<br>
+            • Finalise all test case headers (linked to FRs)<br>
+            • <strong>Commit:</strong> <code style="font-size:11px;background:#1a1a2e;padding:1px 5px;border-radius:3px;">docs/design.md</code> (complete) + <code style="font-size:11px;background:#1a1a2e;padding:1px 5px;border-radius:3px;">docs/test-plan.md</code>
+          </td>
+          <td><a href="T3_DesignDocument.html" class="btn btn-outline" style="font-size:11px;padding:5px 10px;">T3 — Design Doc →</a></td>
+          <td style="color:#93c5fd;font-size:12px;">
+            ✅ Architecture pattern justified<br>
+            ✅ ER diagram covers all FRD entities<br>
+            ✅ RTM complete — every FR has a row<br>
+            ✅ <strong>Faculty signs off Design Gate — no team codes without this</strong>
+          </td>
+          <td style="color:#fbbf24;font-size:12px;">
+            • Check ER diagrams — complete? trace back to FRD?<br>
+            • <strong>GATE (end W4):</strong> Spot-review RTMs — based on faculty or student doubts; no FR may be left unmapped<br>
+            • Approve or hold each team before sprint starts
+          </td>
+        </tr>
+
+        <!-- T4 — Weeks 5–10 -->
+        <tr>
+          <td style="text-align:center;font-size:13px;font-weight:700;color:#fbbf24;">
+            Weeks<br>5 – 10<br><span style="font-size:10px;font-weight:400;color:#80889a;">(3 × 2-week sprints)</span>
+          </td>
+          <td><span class="phase-pill ph-sprint1">T4 — Build</span><br><span style="font-size:10px;color:#80889a;display:block;margin-top:4px;">Sprint 1 · 2 · 3</span></td>
+          <td>
+            <strong>Each sprint: plan → build → demo → retrospective</strong><br>
+            <br>
+            <strong>Sprint 1 (W5–6) — core features:</strong> At least one working user flow via Docker by W6 Friday<br>
+            <strong>Sprint 2 (W7–8) — secondary features + integration:</strong> All modules talking to each other; run test cases<br>
+            <strong>Sprint 3 (W9–10) — polish + stability:</strong> No new features. Fix bugs, run full test suite, validate <code style="font-size:11px;background:#1a1a2e;padding:1px 5px;border-radius:3px;">docker compose up</code> on a clean machine. <strong>CODE FREEZE end of W10.</strong><br>
+            <br>
+            Each sprint: daily commits, weekly status (done / doing / blocked), end-of-sprint demo to faculty
+          </td>
+          <td>
+            <a href="T4_SprintPlan.html" class="btn btn-outline" style="font-size:11px;padding:5px 10px;">T4 — Sprint Plan →</a><br>
+            <span style="font-size:10px;color:#80889a;">(covers all 3 sprints)</span>
+          </td>
+          <td style="color:#93c5fd;font-size:12px;">
+            ✅ Sprint 1 demo: ≥1 working user flow<br>
+            ✅ Sprint 2 demo: full end-to-end flow<br>
+            ✅ Sprint 3: code freeze, all tests run<br>
+            ✅ Retrospective committed after each sprint<br>
+            ✅ Sign off each end-of-sprint gate checklist
+          </td>
+          <td style="color:#fbbf24;font-size:12px;">
+            • Read weekly status reports<br>
+            • Flag blocked teams immediately<br>
+            • Attend/spot-check 1–2 sprint demos per sprint<br>
+            • Enforce code freeze (W10) — no exceptions without consultant approval<br>
+            • Spot-check test results table (W10)
+          </td>
+        </tr>
+
+        <!-- T5 — Weeks 11–13 -->
+        <tr>
+          <td style="text-align:center;font-size:13px;font-weight:700;color:#2dd4bf;">
+            Weeks<br>11 – 13
+          </td>
+          <td><span class="phase-pill ph-harden">T5 — Harden, Deploy &amp; Ship</span></td>
+          <td>
+            <strong>Week 11 — Deployment hardening:</strong><br>
+            • Final bug fixes only — no new features<br>
+            • Validate Docker deployment on a second machine (simulated production)<br>
+            • Write deployment guide in README (step-by-step fresh install)<br>
+            • Document environment variables, .env.example, port mapping<br>
+            <br>
+            <strong>Week 12 — Documentation &amp; dry run:</strong><br>
+            • Complete all sections of T5 Final Product Doc — commit to Git<br>
+            • Update all diagrams to reflect final code<br>
+            • Write Lessons Learned + Individual Contribution matrix<br>
+            • Prepare 10-minute presentation; dry run with faculty<br>
+            <br>
+            <strong>Week 13 — Final Demo Day:</strong><br>
+            • 10-min demo to panel (faculty + consultant + HOD)<br>
+            • Live demo: <code style="font-size:11px;background:#1a1a2e;padding:1px 5px;border-radius:3px;">docker compose up</code> on evaluator's machine<br>
+            • Submit Git repo link — all docs + code in repo<br>
+            • Commit final retrospective
+          </td>
+          <td>
+            <a href="T5_FinalProductDoc.html" class="btn btn-outline" style="font-size:11px;padding:5px 10px;">T5 — Final Doc →</a><br>
+            <a href="checklists.html#final" class="btn btn-orange" style="font-size:11px;padding:5px 10px;margin-top:6px;">Final Checklist →</a>
+          </td>
+          <td style="color:#93c5fd;font-size:12px;">
+            ✅ Deployment guide in README committed<br>
+            ✅ .env.example committed<br>
+            ✅ T5 doc complete in repo<br>
+            ✅ Diagrams updated to match final code<br>
+            ✅ Dry run demo completed (W12)<br>
+            ✅ Git repo link submitted (W13)
+          </td>
+          <td style="color:#fbbf24;font-size:12px;">
+            • Spot-check 2 deployment guides (W11)<br>
+            • Attend 1–2 dry run demos (W12)<br>
+            • Evaluate 2–3 projects in depth
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+
+    <!-- ── Template cards ── -->
+    <div class="section-label">Student Artifact Templates</div>
+    <div class="cards">
+      <a href="T1_ProjectCharter.html" class="card">
+        <span class="card-arrow">→</span>
+        <div class="card-label label-template">Week 1 · Template</div>
+        <div class="card-title">T1 — Project Charter &amp; Scope</div>
+        <div class="card-desc">Team details, problem statement, objectives, in-scope / out-of-scope, constraints, tech stack, Docker architecture plan, Git repo URL.</div>
+      </a>
+      <a href="T2_FRD.html" class="card">
+        <span class="card-arrow">→</span>
+        <div class="card-label label-template">Week 2 · Template</div>
+        <div class="card-title">T2 — FRD + User Stories + Use Cases</div>
+        <div class="card-desc">Functional &amp; non-functional requirements, user story table, use case descriptions, acceptance criteria, test case headers.</div>
+      </a>
+      <a href="T3_DesignDocument.html" class="card">
+        <span class="card-arrow">→</span>
+        <div class="card-label label-template">Weeks 3–4 · Template</div>
+        <div class="card-title">T3 — Software Design Document (Lean SDD)</div>
+        <div class="card-desc">System overview, architecture, ER diagram, Level-1 DFD, class diagram, sequence diagrams, UI wireframes, Docker map, RTM.</div>
+      </a>
+      <a href="T4_SprintPlan.html" class="card">
+        <span class="card-arrow">→</span>
+        <div class="card-label label-template">Weeks 5–10 · Template (×3)</div>
+        <div class="card-title">T4 — Sprint Plan</div>
+        <div class="card-desc">Reusable for all 3 sprints. Sprint goal, backlog table, definition of done, blockers log, end-of-sprint demo checklist.</div>
+      </a>
+      <a href="T5_FinalProductDoc.html" class="card">
+        <span class="card-arrow">→</span>
+        <div class="card-label label-template">Weeks 12–13 · Template</div>
+        <div class="card-title">T5 — Final Product Documentation</div>
+        <div class="card-desc">Consolidated: all artifacts + test results, deployment guide (Docker commands), known issues, lessons learned, individual contribution matrix.</div>
+      </a>
+    </div>
+
+    <!-- ── Checklist + Slide ── -->
+    <div class="section-label">Checklists &amp; Resources</div>
+    <div class="cards">
+      <a href="checklists.html" class="card">
+        <span class="card-arrow">→</span>
+        <div class="card-label label-checklist">Faculty + Student</div>
+        <div class="card-title">Phase Checklists (5 Gates)</div>
+        <div class="card-desc">One checklist per phase. Pass/fail gates. Faculty uses to approve progression. Consultant uses for spot checks.</div>
+      </a>
+      <a href="print_guide.html" class="card">
+        <span class="card-arrow">→</span>
+        <div class="card-label label-standard">BIMA · Print Submission</div>
+        <div class="card-title">Word / Print Document Guide</div>
+        <div class="card-desc">Exact sections, BIMA cover page format, binding type, and page limits for all 5 printed documents (D1–D5). Students take printouts from here.</div>
+      </a>
+      <a href="sample_diagrams.md" class="card">
+        <span class="card-arrow">→</span>
+        <div class="card-label label-template">Sample · Diagrams</div>
+        <div class="card-title">Sample Mermaid Diagrams</div>
+        <div class="card-desc">Ready-to-edit ER, Class, Flow, and Sequence diagrams written in Mermaid inside a Markdown file. Copy, replace names, commit to Git. Renders on GitHub automatically.</div>
+      </a>
+    </div>
+
+    <!-- ── Phase summary ── -->
+    <div class="section-label">Programme at a Glance</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:32px;">
+      <div style="background:#1a1a2e;border:1px solid #2c2c3a;border-top:3px solid #7c9ef7;border-radius:10px;padding:14px 16px;">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#7c9ef7;margin-bottom:6px;">Phase 1 · Weeks 1–2</div>
+        <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:4px;">Define</div>
+        <div style="font-size:11.5px;color:#80889a;line-height:1.6;">Scope, requirements, user stories, use cases. Git repo + Docker skeleton live.</div>
+      </div>
+      <div style="background:#1a1a2e;border:1px solid #2c2c3a;border-top:3px solid #c4b5fd;border-radius:10px;padding:14px 16px;">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#c4b5fd;margin-bottom:6px;">Phase 2 · Weeks 3–4</div>
+        <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:4px;">Design</div>
+        <div style="font-size:11.5px;color:#80889a;line-height:1.6;">Architecture, ER, DFD, class, sequence, wireframes, RTM. Design gate before any coding.</div>
+      </div>
+      <div style="background:#1a1a2e;border:1px solid #2c2c3a;border-top:3px solid #fbbf24;border-radius:10px;padding:14px 16px;">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#fbbf24;margin-bottom:6px;">Phase 3 · Weeks 5–10</div>
+        <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:4px;">Build</div>
+        <div style="font-size:11.5px;color:#80889a;line-height:1.6;">3 × 2-week sprints. Code in containers. Demo every sprint. Test as you go.</div>
+      </div>
+      <div style="background:#1a1a2e;border:1px solid #2c2c3a;border-top:3px solid #2dd4bf;border-radius:10px;padding:14px 16px;">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#2dd4bf;margin-bottom:6px;">Phase 4 · Weeks 11–12</div>
+        <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:4px;">Harden &amp; Document</div>
+        <div style="font-size:11.5px;color:#80889a;line-height:1.6;">Deploy in Docker, write deployment guide, complete all docs. Dry run demo.</div>
+      </div>
+      <div style="background:#1a1a2e;border:1px solid #2c2c3a;border-top:3px solid #fde68a;border-radius:10px;padding:14px 16px;">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#fde68a;margin-bottom:6px;">Phase 5 · Week 13</div>
+        <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:4px;">Ship</div>
+        <div style="font-size:11.5px;color:#80889a;line-height:1.6;">Final demo, repo submission, retrospective. One command to run the app.</div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    MCA Sem 4 · 13-Week Pilot Programme · 2026 · Bangalore &nbsp;|&nbsp; <a href="../index.html" style="color:#7c6ff7;">← Back to Main Reference</a>
+  </footer>
+
+</body>
+</html>

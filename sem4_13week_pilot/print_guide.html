@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Print / Word Document Guide | MCA Sem 4 Pilot — BIMA</title>
+  <link rel="stylesheet" href="pilot_styles.css">
+  <style>
+    .doc-card {
+      background: #1a1a2e;
+      border: 1px solid #2c2c3a;
+      border-radius: 14px;
+      padding: 24px 26px;
+      margin-bottom: 24px;
+    }
+    .doc-header {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 16px; flex-wrap: wrap; margin-bottom: 18px;
+      padding-bottom: 14px; border-bottom: 1px solid #2c2c3a;
+    }
+    .doc-badge {
+      display: inline-block; font-size: 10px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.5px;
+      padding: 3px 10px; border-radius: 4px; margin-bottom: 8px;
+    }
+    .doc-title { font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 4px; }
+    .doc-subtitle { font-size: 12px; color: #80889a; }
+    .doc-meta {
+      display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px;
+    }
+    .meta-pill {
+      background: rgba(255,255,255,0.05); border: 1px solid #2c2c3a;
+      border-radius: 20px; padding: 3px 12px; font-size: 11px; color: #a0a8c0;
+    }
+    .section-list { list-style: none; padding: 0; margin: 0; }
+    .section-list li {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 9px 0; border-bottom: 1px solid #1e1e30;
+      font-size: 13px; color: #c8d0e0;
+    }
+    .section-list li:last-child { border-bottom: none; }
+    .sec-num {
+      flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 800;
+    }
+    .sec-name { font-weight: 700; color: #e8eaf0; margin-bottom: 2px; }
+    .sec-desc { font-size: 11.5px; color: #80889a; line-height: 1.5; }
+    .sec-pages {
+      margin-left: auto; flex-shrink: 0;
+      font-size: 10px; font-weight: 700;
+      color: #5c6478; white-space: nowrap;
+    }
+    .cover-box {
+      background: #12121e; border: 1px solid #2c2c3a; border-radius: 10px;
+      padding: 16px 20px; margin-bottom: 18px;
+      font-size: 12.5px; color: #a0a8c0; line-height: 1.8;
+    }
+    .cover-title { font-size: 13px; font-weight: 700; color: #c4b5fd; margin-bottom: 10px; }
+    .cover-field {
+      display: flex; gap: 8px; align-items: center;
+      padding: 4px 0; border-bottom: 1px dashed #1e1e30;
+      font-size: 12px;
+    }
+    .cover-field:last-child { border-bottom: none; }
+    .field-name { color: #7c6ff7; font-weight: 700; min-width: 140px; flex-shrink: 0; }
+    .tips-box {
+      background: #0f0f1a; border: 1px solid #2c2c3a; border-left: 3px solid #5147A9;
+      border-radius: 8px; padding: 12px 16px; margin-top: 14px;
+      font-size: 12px; color: #80889a; line-height: 1.75;
+    }
+    .tips-box strong { color: #a0a8c0; }
+
+    @media print {
+      .topnav, footer, .no-print { display: none; }
+      body { background: #fff; color: #111; }
+      .doc-card { border: 1px solid #ccc; page-break-inside: avoid; background: #fff; }
+      .section-list li { border-bottom-color: #eee; }
+      .cover-box { background: #f9f9f9; border-color: #ccc; }
+      .sec-name, .doc-title { color: #111; }
+      .sec-desc, .doc-subtitle, .meta-pill { color: #555; }
+      .cover-field { border-bottom-color: #ddd; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="topnav">
+    <a href="../index.html">← Main Index</a>
+    <span class="topnav-sep">›</span>
+    <a href="index.html">Pilot Hub</a>
+    <span class="topnav-sep">›</span>
+    <a href="print_guide.html" class="active">Print / Word Guide</a>
+    <span class="pilot-badge">BIMA MCA · Sem 4 · 2025–26</span>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-eyebrow">BIMA — Bangalore Integrated Management Academy · MCA Sem 4</div>
+    <h1>Word &amp; Print<br><span>Document Guide</span></h1>
+    <p class="hero-sub">
+      Every template (T1–T5) has a corresponding Word/PDF printout students submit physically.
+      This page defines the exact sections, cover page format, and page limits for each document.
+      Git repo remains the primary record — print is the formal submission.
+    </p>
+    <div class="tag-row">
+      <span class="tag orange">5 Documents</span>
+      <span class="tag purple">BIMA Cover Page Standard</span>
+      <span class="tag green">Print = formal submission</span>
+      <span class="tag">Git = primary record</span>
+    </div>
+  </div>
+
+  <main class="main">
+
+    <div class="info-box">
+      <strong>Common cover page format:</strong> Every printed document must use the BIMA standard cover page shown in each section below.
+      The Git repo URL must appear on the cover page so the evaluator can cross-reference the digital version.
+      Font: Arial or Times New Roman, 12pt body, 1.5 line spacing, 1-inch margins.
+    </div>
+
+    <!-- ─── BIMA Standard Cover Page ─── -->
+    <div class="section-label">🏫 BIMA Standard Cover Page — All Documents</div>
+    <div class="cover-box" style="max-width:540px;">
+      <div class="cover-title">Standard Cover Page Layout</div>
+      <div class="cover-field">
+        <span class="field-name">Institution</span>
+        <span>Bangalore Integrated Management Academy (BIMA)</span>
+      </div>
+      <div class="cover-field">
+        <span class="field-name">Programme</span>
+        <span>Master of Computer Applications (MCA) — Semester 4</span>
+      </div>
+      <div class="cover-field">
+        <span class="field-name">Academic Year</span>
+        <span>2025–2026</span>
+      </div>
+      <div class="cover-field">
+        <span class="field-name">Document Title</span>
+        <span style="color:#fbbf24;">[Title specific to each document — see below]</span>
+      </div>
+      <div class="cover-field">
+        <span class="field-name">Project Title</span>
+        <span>[Full project name from T1]</span>
+      </div>
+      <div class="cover-field">
+        <span class="field-name">Team Name</span>
+        <span>[Team Name]</span>
+      </div>
+      <div class="cover-field">
+        <span class="field-name">Team Members</span>
+        <span>[Name — Roll No] × 3–4 members</span>
+      </div>
+      <div class="cover-field">
+        <span class="field-name">Faculty Mentor</span>
+        <span>[Faculty Name, Department of MCA, BIMA]</span>
+      </div>
+      <div class="cover-field">
+        <span class="field-name">Submission Date</span>
+        <span>[Date]</span>
+      </div>
+      <div class="cover-field">
+        <span class="field-name">Git Repository URL</span>
+        <span style="color:#6ee7b7;">[https://github.com/team/project]</span>
+      </div>
+      <div class="cover-field" style="border-bottom:none;">
+        <span class="field-name">Version</span>
+        <span>[e.g. 1.0 / Final]</span>
+      </div>
+    </div>
+
+    <!-- ─── D1: Project Charter ─── -->
+    <div class="section-label">📄 D1 — Project Charter &amp; Scope</div>
+    <div class="doc-card">
+      <div class="doc-header">
+        <div>
+          <div class="doc-badge" style="background:#1e2850;color:#7c9ef7;">Due: Week 1, Friday</div>
+          <div class="doc-title">Project Charter &amp; Scope Document</div>
+          <div class="doc-subtitle">Based on T1 — first document submitted for faculty approval</div>
+          <div class="doc-meta">
+            <span class="meta-pill">Est. 4–6 pages</span>
+            <span class="meta-pill">T1 template → Word</span>
+            <span class="meta-pill">Faculty signs cover page</span>
+          </div>
+        </div>
+        <a href="T1_ProjectCharter.html" class="btn btn-outline no-print" style="font-size:11px;padding:6px 14px;flex-shrink:0;">Open T1 Template →</a>
+      </div>
+
+      <div class="cover-box">
+        <div class="cover-title">Document Title for Cover Page</div>
+        <div style="font-size:15px;font-weight:700;color:#7c9ef7;text-align:center;padding:8px;">
+          "Project Charter &amp; Scope Document — v1.0"
+        </div>
+      </div>
+
+      <ul class="section-list">
+        <li>
+          <span class="sec-num" style="background:#1e2850;color:#7c9ef7;">C</span>
+          <div><div class="sec-name">Cover Page</div><div class="sec-desc">BIMA standard cover page — institution, programme, team, mentor, Git URL, date</div></div>
+          <span class="sec-pages">1 page</span>
+        </li>
+        <li>
+          <span class="sec-num" style="background:#1e2850;color:#7c9ef7;">ToC</span>
+          <div><div class="sec-name">Table of Contents</div><div class="sec-desc">Auto-generated in Word; section numbers and page numbers</div></div>
+          <span class="sec-pages">1 page</span>
+        </li>
+        <li>
+          <span class="sec-num" style="background:#1e2850;color:#7c9ef7;">1</span>
+          <div><div class="sec-name">1. Project Identification</div><div class="sec-desc">Problem statement (3–5 sentences) · Proposed solution · Stakeholder table (role, description, need)</div></div>
+          <span class="sec-pages">~1 page</span>
+        </li>
+        <li>
+          <span class="sec-num" style="background:#1e2850;color:#7c9ef7;">2</span>
+          <div><div class="sec-name">2. Objectives &amp; Success Criteria</div><div class="sec-desc">3–5 measurable objectives in "By Week 13, the system will…" format · Definition of Done</div></div>
+          <span class="sec-pages">~0.5 page</span>
+        </li>
+        <li>
+          <span class="sec-num" style="background:#1e2850;color:#7c9ef7;">3</span>
+          <div><div class="sec-name">3. Project Scope</div><div class="sec-desc">Two-column table: In-Scope (what will be built) vs Out-of-Scope (explicit exclusions)</div></div>
+          <span class="sec-pages">~1 page</span>
+        </li>
+        <li>
+          <span class="sec-num" style="background:#1e2850;color:#7c9ef7;">4</span>
+          <div><div class="sec-name">4. Constraints, Assumptions &amp; Risk Register</div><div class="sec-desc">Constraints table · Assumptions list · Risk table (risk, likelihood, impact, mitigation)</div></div>
+          <span class="sec-pages">~1 page</span>
+        </li>
+        <li>
+          <span class="sec-num" style="background:#1e2850;color:#7c9ef7;">5</span>
+          <div><div class="sec-name">5. Technology Stack &amp; Docker Architecture</div><div class="sec-desc">Tech stack table (layer, technology, reason) · Docker service map (container, image, port, purpose)</div></div>
+          <span class="sec-pages">~0.5 page</span>
+        </li>
+        <li>
+          <span class="sec-num" style="background:#1e2850;color:#7c9ef7;">6</span>
+          <div><div class="sec-name">6. Git Repository Details</div><div class="sec-desc">Repo URL · Folder structure diagram · Branching strategy · Team commit commitment</div></div>
+          <span class="sec-pages">~0.5 page</span>
+        </li>
+        <li>
+          <span class="sec-num" style="background:#1e2850;color:#7c9ef7;">S</span>
+          <div><div class="sec-name">Signatures Page</div><div class="sec-desc">Team Lead signature · All members sign · Faculty Mentor sign-off with date</div></div>
+          <span class="sec-pages">1 page</span>
+        </li>
+      </ul>
+      <div class="tips-box">
+        <strong>Print tips:</strong> Scope table should be clearly readable — use a 2-column bordered table, not a bulleted list.
+        Risk register: keep to 5–8 rows. Docker service map: 4 columns, bordered. Max 6 pages total — do not pad.
+      </div>
+    </div>
+
+    <!-- ─── D2: FRD ─── -->
+    <div class="section-label">📄 D2 — Functional Requirements Document (FRD)</div>
+    <div class="doc-card">
+      <div class="doc-header">
+        <div>
+          <div class="doc-badge" style="background:#071f14;color:#6ee7b7;">Due: Week 2, Friday</div>
+          <div class="doc-title">Functional Requirements Document</div>
+          <div class="doc-subtitle">Based on T2 — defines what the system must do; baseline for design and testing</div>
+          <div class="doc-meta">
+            <span class="meta-pill">Est. 6–10 pages</span>
+            <span class="meta-pill">T2 template → Word</span>
+            <span class="meta-pill">Faculty approves before design starts</span>
+          </div>
+        </div>
+        <a href="T2_FRD.html" class="btn btn-outline no-print" style="font-size:11px;padding:6px 14px;flex-shrink:0;">Open T2 Template →</a>
+      </div>
+
+      <div class="cover-box">
+        <div class="cover-title">Document Title for Cover Page</div>
+        <div style="font-size:15px;font-weight:700;color:#6ee7b7;text-align:center;padding:8px;">
+          "Functional Requirements Document (FRD) — v1.0"
+        </div>
+      </div>
+
+      <ul class="section-list">
+        <li>
+          <span class="sec-num" style="background:#071f14;color:#6ee7b7;">C</span>
+          <div><div class="sec-name">Cover Page + Revision History</div><div class="sec-desc">BIMA cover page · Revision table (version, author, description, date)</div></div>
+          <span class="sec-pages">1 page</span>
+        </li>
+        <li>
+          <span class="sec-num" style="background:#071f14;color:#6ee7b7;">ToC</span>
+          <div><div class="sec-name">Table of Contents</div><div class="sec-desc">Auto-generated</div></div>
+          <span class="sec-pages">1 page</span>
+        </li>
+        <li>
+          <span class="sec-num" style="background:#071f14;color:#6ee7b7;">1</span>
+          <div><div class="sec-name">1. Introduction</div><div class="sec-desc">Purpose of this document · Scope (what this FRD covers) · Definitions &amp; abbreviations table</div></div>
+          <span class="sec-pages">~0.5 page</span>
+        </li>
+        <li>
+          <span class="sec-num" style="background:#071f14;color:#6ee7b7;">2</span>
+          <div><div class="sec-name">2. Functional Requirements</div><div class="sec-desc">Numbered table: FR ID · Requirement description · Priority (High/Medium/Low) · Related user story</div></div>
+          <span class="sec-pages">1–2 pages</span>
+        </li>
+        <li>
+          <span class="sec-num" style="background:#071f14;color:#6ee7b7;">3</span>
+          <div><div class="sec-name">3. Non-Functional Requirements</div><div class="sec-desc">NFR table: NFR ID · Category · Requirement · Priority</div></div>
+          <span class="sec-pages">~0.5 page</span>
+        </li>
+        <li>
+          <span class="sec-num" style="background:#071f14;color:#6ee7b7;">4</span>
+          <div><div class="sec-name">4. User Stories</div><div class="sec-desc">Table: Story ID · As a… · I want… · So that… · Priority · Acceptance Criteria. Minimum 10 stories.</div></div>
+          <span class="sec-pages">2–3 pages</span>
+        </li>
+        <li>
+          <span class="sec-num" style="background:#071f14;color:#6ee7b7;">5</span>
+          <div><div class="sec-name">5. Use Cases</div><div class="sec-desc">Minimum 3. Each: UC ID, Actor, Pre-condition, Main Flow (numbered steps), Alternate Flow, Post-condition</div></div>
+          <span class="sec-pages">2–3 pages</span>
+        </li>
+        <li>
+          <span class="sec-num" style="background:#071f14;color:#6ee7b7;">6</span>
+          <div><div class="sec-name">6. Test Case Headers</div><div class="sec-desc">Table: TC ID · Description · Related FR · Related US · Test Type (Positive/Negative/Integration)</div></div>
+          <span class="sec-pages">1 page</span>
+        </li>
+        <li>
+          <span class="sec-num" style="background:#071f14;color:#6ee7b7;">S</span>
+          <div><div class="sec-name">Signatures Page</div><div class="sec-desc">Team Lead + Faculty sign-off</div></div>
+          <span class="sec-pages">1 page</span>
+        </li>
+      </ul>
+      <div class="tips-box">
+        <strong>Print tips:</strong> User stories table should use landscape orientation if needed — 5 columns is a lot for portrait.
+        Acceptance criteria column: keep to 1–2 lines max in the table; detailed criteria go in the system.
+        Use case flows: numbered list, not a paragraph. Do not print the interactive HTML form elements — fill first, then paste into Word.
+      </div>
+    </div>
+
+    <!-- ─── D3: SDD ─── -->
+    <div class="section-label">📄 D3 — Software Design Document (SDD)</div>
+    <div class="doc-card">
+      <div class="doc-header">
+        <div>
+          <div class="doc-badge" style="background:#1e1040;color:#c4b5fd;">Due: Week 4, Friday (Faculty Sign-off Gate)</div>
+          <div class="doc-title">Software Design Document (SDD)</div>
+          <div class="doc-subtitle">Based on T3 — the most diagram-heavy document; includes all architectural decisions</div>
+          <div class="doc-meta">
+            <span class="meta-pill">Est. 10–15 pages</span>
+            <span class="meta-pill">T3 template → Word</span>
+            <span class="meta-pill">Diagrams as embedded images</span>
+            <span class="meta-pill">Faculty gate sign-off on last page</span>
+          </div>
+        </div>
+        <a href="T3_DesignDocument.html" class="btn btn-outline no-print" style="font-size:11px;padding:6px 14px;flex-shrink:0;">Open T3 Template →</a>
+      </div>
+
+      <div class="cover-box">
+        <div class="cover-title">Document Title for Cover Page</div>
+        <div style="font-size:15px;font-weight:700;color:#c4b5fd;text-align:center;padding:8px;">
+          "Software Design Document (SDD) — v1.0"
+        </div>
+      </div>
+
+      <ul class="section-list">
+        <li>
+          <span class="sec-num" style="background:#1e1040;color:#c4b5fd;">C</span>
+          <div><div class="sec-name">Cover Page + Revision History</div><div class="sec-desc">BIMA cover page · Revision table (version, author, change description, date)</div></div>
+          <span class="sec-pages">1 page</span>
+        </li>
+        <li>
+          <span class="sec-num" style="background:#1e1040;color:#c4b5fd;">ToC</span>
+          <div><div class="sec-name">Table of Contents + List of Figures</div><div class="sec-desc">Auto-generated in Word; include figure/diagram list</div></div>
+          <span class="sec-pages">1 page</span>
+        </li>
+        <li>
+          <span class="sec-num" style="background:#1e1040;color:#c4b5fd;">1</span>
+          <div><div class="sec-name">1. Introduction</div><div class="sec-desc">Purpose · Scope · Definitions &amp; abbreviations · References (FRD version, T1 scope doc)</div></div>
+          <span class="sec-pages">~0.5 page</span>
+        </li>
+        <li>
+          <span class="sec-num" style="background:#1e1040;color:#c4b5fd;">2</span>
+          <div><div class="sec-name">2. System Overview</div><div class="sec-desc">High-level description (1 paragraph) · System Context Diagram (Figure 1 — full width)</div></div>
+          <span class="sec-pages">1 page</span>
+        </li>
+        <li>
+          <span class="sec-num" style="background:#1e1040;color:#c4b5fd;">3</span>
+          <div><div class="sec-name">3. System Architecture</div><div class="sec-desc">Pattern chosen + 2-line justification · Component table · Architecture Diagram (Figure 2)</div></div>
+          <span class="sec-pages">1–2 pages</span>
+        </li>
+        <li>
+          <span class="sec-num" style="background:#1e1040;color:#c4b5fd;">4</span>
+          <div><div class="sec-name">4. Docker Architecture &amp; Deployment Map</div><div class="sec-desc">Container services table (name, image, port, volumes, env vars) · docker-compose.yml snippet (code block)</div></div>
+          <span class="sec-pages">1 page</span>
+        </li>
+        <li>
+          <span class="sec-num" style="background:#1e1040;color:#c4b5fd;">5</span>
+          <div><div class="sec-name">5. Data Design — ER Diagram</div><div class="sec-desc">Entity table (attributes, PK, FK) · ER Diagram (Figure 3 — full page recommended) · Relationships summary</div></div>
+          <span class="sec-pages">1–2 pages</span>
+        </li>
+        <li>
+          <span class="sec-num" style="background:#1e1040;color:#c4b5fd;">6</span>
+          <div><div class="sec-name">6. Data Flow Diagram — Level 1</div><div class="sec-desc">DFD Level-1 diagram (Figure 4) · 3–5 sentence description of main data flows</div></div>
+          <span class="sec-pages">1 page</span>
+        </li>
+        <li>
+          <span class="sec-num" style="background:#1e1040;color:#c4b5fd;">7</span>
+          <div><div class="sec-name">7. Class Diagram</div><div class="sec-desc">Key classes table (attributes, methods, relationships) · Class Diagram (Figure 5)</div></div>
+          <span class="sec-pages">1–2 pages</span>
+        </li>
+        <li>
+          <span class="sec-num" style="background:#1e1040;color:#c4b5fd;">8</span>
+          <div><div class="sec-name">8. Sequence Diagrams</div><div class="sec-desc">Flow 1 — Sequence Diagram (Figure 6) + description · Flow 2 — Sequence Diagram (Figure 7) + description</div></div>
+          <span class="sec-pages">2 pages</span>
+        </li>
+        <li>
+          <span class="sec-num" style="background:#1e1040;color:#c4b5fd;">9</span>
+          <div><div class="sec-name">9. User Interface Wireframes</div><div class="sec-desc">3 key screens — each as a figure (Figures 8–10) with a brief caption explaining key elements</div></div>
+          <span class="sec-pages">1–2 pages</span>
+        </li>
+        <li>
+          <span class="sec-num" style="background:#1e1040;color:#c4b5fd;">10</span>
+          <div><div class="sec-name">10. Requirements Traceability Matrix (RTM)</div><div class="sec-desc">Table: FR ID · Requirement · Design Component · DB Table · Class(es) · TC ID(s) — all FRs must appear</div></div>
+          <span class="sec-pages">1 page</span>
+        </li>
+        <li>
+          <span class="sec-num" style="background:#1e1040;color:#c4b5fd;">S</span>
+          <div><div class="sec-name">Design Gate Sign-off</div><div class="sec-desc">Faculty sign-off with date — "Design approved. Team authorised to begin Sprint 1."</div></div>
+          <span class="sec-pages">Part of last page</span>
+        </li>
+      </ul>
+      <div class="tips-box">
+        <strong>Print tips:</strong> Every diagram must be clear and legible — if it's too small to read in print, put it on its own page.
+        Caption every figure: "Figure 1: System Context Diagram — [Project Name]". ER diagram especially must be on a full page (landscape if needed).
+        Do NOT reduce font below 10pt to fit content — reduce content instead.
+        RTM table: use condensed font (Arial Narrow 10pt) or landscape orientation.
+      </div>
+    </div>
+
+    <!-- ─── D4: Sprint Log ─── -->
+    <div class="section-label">📄 D4 — Combined Sprint Log (Sprints 1, 2 &amp; 3)</div>
+    <div class="doc-card">
+      <div class="doc-header">
+        <div>
+          <div class="doc-badge" style="background:#1f1408;color:#fbbf24;">Due: End of Sprint 3 (Week 10)</div>
+          <div class="doc-title">Combined Sprint Log</div>
+          <div class="doc-subtitle">Based on T4 — one document covering all 3 sprints; submitted after Sprint 3 demo</div>
+          <div class="doc-meta">
+            <span class="meta-pill">Est. 10–12 pages</span>
+            <span class="meta-pill">3 sprints in one doc</span>
+            <span class="meta-pill">T4 template (×3) → Word</span>
+          </div>
+        </div>
+        <a href="T4_SprintPlan.html" class="btn btn-outline no-print" style="font-size:11px;padding:6px 14px;flex-shrink:0;">Open T4 Template →</a>
+      </div>
+
+      <div class="cover-box">
+        <div class="cover-title">Document Title for Cover Page</div>
+        <div style="font-size:15px;font-weight:700;color:#fbbf24;text-align:center;padding:8px;">
+          "Combined Sprint Log — Sprints 1, 2 &amp; 3"
+        </div>
+      </div>
+
+      <ul class="section-list">
+        <li>
+          <span class="sec-num" style="background:#1f1408;color:#fbbf24;">C</span>
+          <div><div class="sec-name">Cover Page</div><div class="sec-desc">BIMA cover page with sprint date range (Week 5 – Week 10)</div></div>
+          <span class="sec-pages">1 page</span>
+        </li>
+        <li>
+          <span class="sec-num" style="background:#1f1408;color:#fbbf24;">S</span>
+          <div><div class="sec-name">Sprint Summary Overview</div><div class="sec-desc">One-page table: Sprint | Goal | Dates | Goal Achieved? | Tasks Done / Total | Key Demo Outcome</div></div>
+          <span class="sec-pages">1 page</span>
+        </li>
+        <li>
+          <span class="sec-num" style="background:#1f1408;color:#fbbf24;">1</span>
+          <div><div class="sec-name">Sprint 1 — Weeks 5–6</div><div class="sec-desc">Sprint goal · Backlog table (tasks, owner, estimate, status, DoD) · Blockers log · Weekly status summaries · Retrospective (well/wrong/change) · Demo sign-off by faculty</div></div>
+          <span class="sec-pages">3–4 pages</span>
+        </li>
+        <li>
+          <span class="sec-num" style="background:#1f0e08;color:#fb923c;">2</span>
+          <div><div class="sec-name">Sprint 2 — Weeks 7–8</div><div class="sec-desc">Same structure as Sprint 1 above</div></div>
+          <span class="sec-pages">3–4 pages</span>
+        </li>
+        <li>
+          <span class="sec-num" style="background:#200808;color:#f87171;">3</span>
+          <div><div class="sec-name">Sprint 3 — Weeks 9–10</div><div class="sec-desc">Same structure + code freeze declaration + test execution note</div></div>
+          <span class="sec-pages">3–4 pages</span>
+        </li>
+        <li>
+          <span class="sec-num" style="background:#1f1408;color:#fbbf24;">S</span>
+          <div><div class="sec-name">Faculty Sign-off (end of doc)</div><div class="sec-desc">Faculty signs confirming all 3 sprint demos were conducted and gates were passed</div></div>
+          <span class="sec-pages">Part of last page</span>
+        </li>
+      </ul>
+      <div class="tips-box">
+        <strong>Print tips:</strong> Backlog table can be printed in landscape. Each sprint starts on a new page (use Word page break).
+        Retrospective: use a 3-column table (Went Well / Went Wrong / Will Change). 
+        Do not print screenshots of code — link to Git commits instead.
+        Blockers log: only resolved blockers need be in the print version — active blockers are in the Git repo status files.
+      </div>
+    </div>
+
+    <!-- ─── D5: Final Product Doc ─── -->
+    <div class="section-label">📄 D5 — Final Product Documentation</div>
+    <div class="doc-card">
+      <div class="doc-header">
+        <div>
+          <div class="doc-badge" style="background:#1a1708;color:#fde68a;">Due: Week 13, Demo Day</div>
+          <div class="doc-title">Final Product Documentation</div>
+          <div class="doc-subtitle">Based on T5 — the complete project record; the capstone submission document for BIMA MCA</div>
+          <div class="doc-meta">
+            <span class="meta-pill">Est. 15–20 pages</span>
+            <span class="meta-pill">T5 template → Word</span>
+            <span class="meta-pill">Bound + submitted on demo day</span>
+            <span class="meta-pill">Faculty sign</span>
+          </div>
+        </div>
+        <a href="T5_FinalProductDoc.html" class="btn btn-outline no-print" style="font-size:11px;padding:6px 14px;flex-shrink:0;">Open T5 Template →</a>
+      </div>
+
+      <div class="cover-box">
+        <div class="cover-title">Document Title for Cover Page</div>
+        <div style="font-size:15px;font-weight:700;color:#fde68a;text-align:center;padding:8px;">
+          "Final Product Documentation — [Project Name] — MCA Sem 4, BIMA (2025–26)"
+        </div>
+      </div>
+
+      <ul class="section-list">
+        <li>
+          <span class="sec-num" style="background:#1a1708;color:#fde68a;">C</span>
+          <div><div class="sec-name">Cover Page</div><div class="sec-desc">BIMA cover page · All team members · Faculty mentor · Git repo URL · Submission date</div></div>
+          <span class="sec-pages">1 page</span>
+        </li>
+        <li>
+          <span class="sec-num" style="background:#1a1708;color:#fde68a;">ToC</span>
+          <div><div class="sec-name">Table of Contents + List of Figures</div><div class="sec-desc">Auto-generated; include all diagrams in the figure list</div></div>
+          <span class="sec-pages">1 page</span>
+        </li>
+        <li>
+          <span class="sec-num" style="background:#1a1708;color:#fde68a;">A</span>
+          <div><div class="sec-name">Abstract</div><div class="sec-desc">150–200 words: problem, solution, technologies, key outcomes. Standalone paragraph — evaluator reads this first.</div></div>
+          <span class="sec-pages">~0.5 page</span>
+        </li>
+        <li>
+          <span class="sec-num" style="background:#1a1708;color:#fde68a;">1</span>
+          <div><div class="sec-name">1. Project Scope — Achieved vs Planned</div><div class="sec-desc">Table: scope items from D1 vs actual completion status · Requirements summary (FR count, US count, test count)</div></div>
+          <span class="sec-pages">1 page</span>
+        </li>
+        <li>
+          <span class="sec-num" style="background:#1a1708;color:#fde68a;">2</span>
+          <div><div class="sec-name">2. Design Summary</div><div class="sec-desc">Final architecture pattern · Final tech stack table · Diagram index (figure name, file path, updated?) · Any design changes from D3</div></div>
+          <span class="sec-pages">1–2 pages</span>
+        </li>
+        <li>
+          <span class="sec-num" style="background:#1a1708;color:#fde68a;">3</span>
+          <div><div class="sec-name">3. Deployment Guide</div><div class="sec-desc">Prerequisites · Step-by-step clone &amp; run instructions · docker-compose.yml snippet · .env.example · Default test credentials for demo</div></div>
+          <span class="sec-pages">1–2 pages</span>
+        </li>
+        <li>
+          <span class="sec-num" style="background:#1a1708;color:#fde68a;">4</span>
+          <div><div class="sec-name">4. Test Results Summary</div><div class="sec-desc">Pass/fail counts (total/pass/fail/skip) · TC results table (ID, description, result, notes) · Reference to full test-plan.md in repo</div></div>
+          <span class="sec-pages">1–2 pages</span>
+        </li>
+        <li>
+          <span class="sec-num" style="background:#1a1708;color:#fde68a;">5</span>
+          <div><div class="sec-name">5. Sprint Summary</div><div class="sec-desc">3-column table: Sprint 1 / Sprint 2 / Sprint 3 — goal, achieved?, key outcomes for each</div></div>
+          <span class="sec-pages">1 page</span>
+        </li>
+        <li>
+          <span class="sec-num" style="background:#1a1708;color:#fde68a;">6</span>
+          <div><div class="sec-name">6. Known Issues &amp; Limitations</div><div class="sec-desc">Table: issue, impact, workaround. Be honest — evaluators value transparency.</div></div>
+          <span class="sec-pages">~0.5 page</span>
+        </li>
+        <li>
+          <span class="sec-num" style="background:#1a1708;color:#fde68a;">7</span>
+          <div><div class="sec-name">7. Lessons Learned</div><div class="sec-desc">3-column table: What went well · What went wrong · What we'd do differently. Plus: key technical learnings paragraph.</div></div>
+          <span class="sec-pages">1 page</span>
+        </li>
+        <li>
+          <span class="sec-num" style="background:#1a1708;color:#fde68a;">8</span>
+          <div><div class="sec-name">8. Individual Contribution Matrix</div><div class="sec-desc">Table: member name · modules/features owned · documents authored · Git contribution % — must be specific and verifiable</div></div>
+          <span class="sec-pages">~0.5 page</span>
+        </li>
+        <li>
+          <span class="sec-num" style="background:#1a1708;color:#fde68a;">9</span>
+          <div><div class="sec-name">9. Final Submission Checklist</div><div class="sec-desc">Printed version of the checklist from T5 — all items checked, team lead signed</div></div>
+          <span class="sec-pages">1 page</span>
+        </li>
+        <li>
+          <span class="sec-num" style="background:#1a1708;color:#fde68a;">S</span>
+          <div><div class="sec-name">Sign-off Page</div><div class="sec-desc">Team Lead signature · All team members · Faculty Mentor</div></div>
+          <span class="sec-pages">1 page</span>
+        </li>
+      </ul>
+      <div class="tips-box">
+        <strong>Print tips:</strong> This is a bound document — use a spiral or comb binding.
+        All diagrams from D3 must reappear here (updated to reflect final code, not initial design).
+        Deployment guide: someone who has never seen your project must be able to run it using only this guide.
+        Contribution matrix must reference actual Git commits — vague descriptions will not be accepted.
+        Abstract goes on its own page (no heading above it, centered at top of page 3).
+      </div>
+    </div>
+
+    <!-- ─── Submission summary ─── -->
+    <div class="section-label">📦 What Students Submit — Complete Checklist</div>
+    <div style="background:#1a1a2e;border:1px solid #2c2c3a;border-radius:12px;padding:20px 24px;margin-bottom:28px;">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Document</th>
+            <th style="width:80px;">Timing</th>
+            <th style="width:100px;">Pages</th>
+            <th style="width:120px;">Print Format</th>
+            <th style="width:100px;">Git Counterpart</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong style="color:#7c9ef7;">D1</strong> — Project Charter &amp; Scope</td>
+            <td style="color:#fbbf24;">Week 1</td>
+            <td>4–6</td>
+            <td>A4, stapled</td>
+            <td style="font-size:11px;color:#6ee7b7;">docs/scope.md</td>
+          </tr>
+          <tr>
+            <td><strong style="color:#6ee7b7;">D2</strong> — Functional Requirements Document</td>
+            <td style="color:#fbbf24;">Week 2</td>
+            <td>6–10</td>
+            <td>A4, stapled</td>
+            <td style="font-size:11px;color:#6ee7b7;">docs/frd.md</td>
+          </tr>
+          <tr>
+            <td><strong style="color:#c4b5fd;">D3</strong> — Software Design Document</td>
+            <td style="color:#fbbf24;">Week 4</td>
+            <td>10–15</td>
+            <td>A4, spiral bound</td>
+            <td style="font-size:11px;color:#6ee7b7;">docs/design.md</td>
+          </tr>
+          <tr>
+            <td><strong style="color:#fb923c;">D4</strong> — Combined Sprint Log</td>
+            <td style="color:#fbbf24;">Week 10</td>
+            <td>10–12</td>
+            <td>A4, spiral bound</td>
+            <td style="font-size:11px;color:#6ee7b7;">docs/sprints/</td>
+          </tr>
+          <tr>
+            <td><strong style="color:#fde68a;">D5</strong> — Final Product Documentation</td>
+            <td style="color:#fbbf24;">Week 13</td>
+            <td>15–20</td>
+            <td>A4, hard bound</td>
+            <td style="font-size:11px;color:#6ee7b7;">docs/final-report.md</td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="margin-top:14px;font-size:12px;color:#80889a;line-height:1.75;">
+        <strong style="color:#a0a8c0;">Note:</strong> D1 and D2 can be stapled (early-stage documents).
+        D3 must be spiral bound (evaluator flips through diagrams).
+        D5 (Final) is hard-bound — this is the capstone document that represents the team's semester work.
+        Git repo URL must appear on the cover page of every document.
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;">
+      <a href="index.html" class="btn btn-primary no-print">← Back to Pilot Hub</a>
+      <button onclick="window.print()" class="btn btn-outline no-print">🖨️ Print This Guide</button>
+    </div>
+
+  </main>
+
+  <footer>
+    BIMA — Bangalore Integrated Management Academy · MCA Sem 4 · Print &amp; Word Document Guide &nbsp;|&nbsp;
+    <a href="index.html" style="color:#7c6ff7;">← Pilot Hub</a>
+  </footer>
+
+</body>
+</html>
