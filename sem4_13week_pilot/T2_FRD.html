@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>T2 — FRD + User Stories + Use Cases | MCA Sem 4 Pilot</title>
+  <link rel="stylesheet" href="pilot_styles.css">
+</head>
+<body>
+
+  <nav class="topnav">
+    <a href="../index.html">← Main Index</a>
+    <span class="topnav-sep">›</span>
+    <a href="index.html">Pilot Hub</a>
+    <span class="topnav-sep">›</span>
+    <a href="T1_ProjectCharter.html">T1 Charter</a>
+    <span class="topnav-sep">›</span>
+    <a href="T2_FRD.html" class="active">T2 — FRD</a>
+    <span class="topnav-sep">›</span>
+    <a href="T3_DesignDocument.html">T3 Design →</a>
+    <span class="pilot-badge">Week 2 · Due: End of Week 2</span>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-eyebrow">Template 2 of 5 · Week 2</div>
+    <h1>Functional Requirements Document<br><span>+ User Stories + Use Cases</span></h1>
+    <p class="hero-sub">
+      Define what the system must do before designing or coding anything.
+      Commit as <code style="background:rgba(255,255,255,0.1);padding:2px 8px;border-radius:4px;">docs/frd.md</code> in your Git repo.
+    </p>
+    <div class="tag-row">
+      <span class="tag orange">Due: Week 2, Friday</span>
+      <span class="tag green">Minimum: 10 User Stories</span>
+      <span class="tag">Acceptance Criteria Required</span>
+    </div>
+  </div>
+
+  <main class="main">
+
+    <div class="info-box">
+      <strong>Instructions:</strong> Complete sections in order. Each user story must have at least one acceptance criterion.
+      Each functional requirement must trace to at least one user story. Test case <em>headers</em> are written here;
+      full test scripts go in <code>docs/test-plan.md</code>.
+    </div>
+
+    <!-- Anchor nav -->
+    <div style="background:#1a1a2e;border:1px solid #2c2c3a;border-radius:10px;padding:14px 20px;margin-bottom:28px;display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;">
+      <strong style="color:#a0a8c0;">Jump to:</strong>
+      <a href="#intro" style="color:#7c6ff7;">Introduction</a>
+      <a href="#fr" style="color:#7c6ff7;">Functional Requirements</a>
+      <a href="#nfr" style="color:#7c6ff7;">Non-Functional Requirements</a>
+      <a href="#stories" style="color:#7c6ff7;">User Stories</a>
+      <a href="#usecases" style="color:#7c6ff7;">Use Cases</a>
+      <a href="#testcases" style="color:#7c6ff7;">Test Case Headers</a>
+    </div>
+
+    <!-- 1. Introduction -->
+    <div id="intro" class="template-section">
+      <h2>1. Introduction</h2>
+      <div class="field-group">
+        <label class="field-label">1.1 Purpose of This Document</label>
+        <textarea class="field-input" rows="2" placeholder="This FRD describes all functional and non-functional requirements for [Project Name]. It is the reference document for the design phase (T3) and forms the basis of all test cases."></textarea>
+      </div>
+      <div class="field-group">
+        <label class="field-label">1.2 Definitions &amp; Abbreviations</label>
+        <textarea class="field-input" rows="3" placeholder="FR — Functional Requirement&#10;NFR — Non-Functional Requirement&#10;US — User Story&#10;UC — Use Case&#10;TC — Test Case&#10;[Add any project-specific terms]"></textarea>
+      </div>
+    </div>
+
+    <!-- 2. Functional Requirements -->
+    <div id="fr" class="template-section">
+      <h2>2. Functional Requirements</h2>
+      <p style="font-size:12.5px;color:#a0a8c0;margin-bottom:14px;">
+        List all functional requirements. Format: <strong>FR-01, FR-02…</strong>
+        Priority: <span style="color:#f87171;">High</span> = must have for demo;
+        <span style="color:#fbbf24;">Medium</span> = should have;
+        <span style="color:#6ee7b7;">Low</span> = nice to have.
+      </p>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="width:70px;">FR ID</th>
+            <th>Requirement Description</th>
+            <th style="width:80px;">Priority</th>
+            <th style="width:100px;">Related User Story</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="color:#7c9ef7;font-weight:700;">FR-01</td>
+            <td><input type="text" class="field-input" placeholder="The system shall allow users to register with email and password." style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><span style="color:#f87171;font-weight:700;">High</span></td>
+            <td>US-01</td>
+          </tr>
+          <tr>
+            <td style="color:#7c9ef7;font-weight:700;">FR-02</td>
+            <td><input type="text" class="field-input" placeholder="The system shall allow registered users to log in using email and password." style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><span style="color:#f87171;font-weight:700;">High</span></td>
+            <td>US-01</td>
+          </tr>
+          <tr>
+            <td style="color:#7c9ef7;font-weight:700;">FR-03</td>
+            <td><input type="text" class="field-input" placeholder="[Write your requirement]" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><input type="text" class="field-input" placeholder="High" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:60px;"></td>
+            <td><input type="text" class="field-input" placeholder="US-0x" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:60px;"></td>
+          </tr>
+          <tr>
+            <td style="color:#7c9ef7;font-weight:700;">FR-04</td>
+            <td><input type="text" class="field-input" placeholder="[Write your requirement]" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><input type="text" class="field-input" placeholder="Medium" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:60px;"></td>
+            <td><input type="text" class="field-input" placeholder="US-0x" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:60px;"></td>
+          </tr>
+          <tr>
+            <td style="color:#7c9ef7;font-weight:700;">FR-05</td>
+            <td><input type="text" class="field-input" placeholder="[Write your requirement]" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><input type="text" class="field-input" placeholder="" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:60px;"></td>
+            <td><input type="text" class="field-input" placeholder="" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:60px;"></td>
+          </tr>
+          <tr>
+            <td colspan="4" style="color:#5c6478;font-size:11px;font-style:italic;text-align:center;">Continue: FR-06, FR-07… Add as many rows as needed. Minimum 10 FRs recommended.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 3. Non-Functional Requirements -->
+    <div id="nfr" class="template-section">
+      <h2>3. Non-Functional Requirements</h2>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="width:70px;">NFR ID</th>
+            <th style="width:120px;">Category</th>
+            <th>Requirement</th>
+            <th style="width:80px;">Priority</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="color:#c4b5fd;font-weight:700;">NFR-01</td>
+            <td>Performance</td>
+            <td><input type="text" class="field-input" placeholder="Page load time shall not exceed 3 seconds on a standard connection." style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><span style="color:#fbbf24;">Medium</span></td>
+          </tr>
+          <tr>
+            <td style="color:#c4b5fd;font-weight:700;">NFR-02</td>
+            <td>Security</td>
+            <td><input type="text" class="field-input" placeholder="Passwords shall be stored as hashed values (bcrypt). No plain-text passwords." style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><span style="color:#f87171;">High</span></td>
+          </tr>
+          <tr>
+            <td style="color:#c4b5fd;font-weight:700;">NFR-03</td>
+            <td>Usability</td>
+            <td><input type="text" class="field-input" placeholder="The UI shall be usable on both desktop and mobile screen sizes." style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><span style="color:#fbbf24;">Medium</span></td>
+          </tr>
+          <tr>
+            <td style="color:#c4b5fd;font-weight:700;">NFR-04</td>
+            <td>Portability</td>
+            <td style="color:#6ee7b7;font-weight:600;">The entire application shall run via <code style="font-size:11px;background:#1a1a2e;padding:1px 4px;border-radius:3px;">docker compose up</code> without any manual configuration. <span style="font-size:10px;color:#fb923c;">(Mandatory)</span></td>
+            <td><span style="color:#f87171;">High</span></td>
+          </tr>
+          <tr>
+            <td style="color:#c4b5fd;font-weight:700;">NFR-05</td>
+            <td><input type="text" class="field-input" placeholder="[Category]" style="border:none;background:transparent;color:#c8d0e0;padding:0;"></td>
+            <td><input type="text" class="field-input" placeholder="[Your NFR]" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><input type="text" class="field-input" placeholder="" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:60px;"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 4. User Stories -->
+    <div id="stories" class="template-section">
+      <h2>4. User Stories</h2>
+      <p style="font-size:12.5px;color:#a0a8c0;margin-bottom:14px;">
+        Minimum 10 user stories. Format: <em>"As a [role], I want [action] so that [benefit]."</em>
+        Each story must have at least one acceptance criterion.
+      </p>
+
+      <!-- US-01 -->
+      <div style="background:#12121e;border:1px solid #2c2c3a;border-left:3px solid #7c9ef7;border-radius:8px;padding:14px 16px;margin-bottom:12px;">
+        <div style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap;">
+          <span style="background:#1e2850;color:#7c9ef7;font-size:10.5px;font-weight:800;padding:3px 10px;border-radius:4px;flex-shrink:0;">US-01</span>
+          <div style="flex:1;min-width:240px;">
+            <div style="display:grid;grid-template-columns:80px 1fr;gap:4px;margin-bottom:8px;align-items:center;">
+              <span style="font-size:11px;color:#a0a8c0;">As a</span>
+              <input type="text" class="field-input" placeholder="registered user" style="padding:4px 8px;font-size:12.5px;">
+              <span style="font-size:11px;color:#a0a8c0;">I want to</span>
+              <input type="text" class="field-input" placeholder="log in with my email and password" style="padding:4px 8px;font-size:12.5px;">
+              <span style="font-size:11px;color:#a0a8c0;">So that</span>
+              <input type="text" class="field-input" placeholder="I can access my personalised account" style="padding:4px 8px;font-size:12.5px;">
+            </div>
+            <div>
+              <span style="font-size:11px;font-weight:700;color:#6ee7b7;text-transform:uppercase;">Acceptance Criteria:</span>
+              <textarea class="field-input" rows="2" style="margin-top:5px;" placeholder="✓ Given valid credentials, login succeeds and user is redirected to dashboard.&#10;✓ Given invalid credentials, an error message is shown. Password is not visible."></textarea>
+            </div>
+          </div>
+          <div>
+            <span style="font-size:10px;color:#a0a8c0;display:block;margin-bottom:3px;">Priority</span>
+            <select class="field-input" style="width:90px;padding:4px 8px;font-size:12px;">
+              <option>High</option><option>Medium</option><option>Low</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- US-02 -->
+      <div style="background:#12121e;border:1px solid #2c2c3a;border-left:3px solid #7c9ef7;border-radius:8px;padding:14px 16px;margin-bottom:12px;">
+        <div style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap;">
+          <span style="background:#1e2850;color:#7c9ef7;font-size:10.5px;font-weight:800;padding:3px 10px;border-radius:4px;flex-shrink:0;">US-02</span>
+          <div style="flex:1;min-width:240px;">
+            <div style="display:grid;grid-template-columns:80px 1fr;gap:4px;margin-bottom:8px;align-items:center;">
+              <span style="font-size:11px;color:#a0a8c0;">As a</span>
+              <input type="text" class="field-input" placeholder="[user role]" style="padding:4px 8px;font-size:12.5px;">
+              <span style="font-size:11px;color:#a0a8c0;">I want to</span>
+              <input type="text" class="field-input" placeholder="[action]" style="padding:4px 8px;font-size:12.5px;">
+              <span style="font-size:11px;color:#a0a8c0;">So that</span>
+              <input type="text" class="field-input" placeholder="[benefit]" style="padding:4px 8px;font-size:12.5px;">
+            </div>
+            <div>
+              <span style="font-size:11px;font-weight:700;color:#6ee7b7;text-transform:uppercase;">Acceptance Criteria:</span>
+              <textarea class="field-input" rows="2" style="margin-top:5px;" placeholder="✓ Given... [describe expected behaviour]&#10;✓ Given... [alt scenario]"></textarea>
+            </div>
+          </div>
+          <div>
+            <span style="font-size:10px;color:#a0a8c0;display:block;margin-bottom:3px;">Priority</span>
+            <select class="field-input" style="width:90px;padding:4px 8px;font-size:12px;">
+              <option>High</option><option>Medium</option><option>Low</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-box" style="text-align:center;">
+        Continue adding US-03, US-04… up to US-10 (minimum) following the same format above.<br>
+        Each story = one specific user action. Don't combine multiple actions into one story.
+      </div>
+    </div>
+
+    <!-- 5. Use Cases -->
+    <div id="usecases" class="template-section">
+      <h2>5. Use Cases</h2>
+      <p style="font-size:12.5px;color:#a0a8c0;margin-bottom:14px;">
+        Write one use case per major system interaction. Cover the most important user flows first.
+        Minimum 3 use cases; ideally one per major module.
+      </p>
+
+      <!-- UC-01 -->
+      <div style="background:#12121e;border:1px solid #2c2c3a;border-radius:10px;padding:18px 20px;margin-bottom:16px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+          <span style="background:#071f14;color:#6ee7b7;font-size:10.5px;font-weight:800;padding:3px 10px;border-radius:4px;">UC-01</span>
+          <input type="text" class="field-input" placeholder="Use Case Name — e.g. User Login" style="padding:6px 10px;font-size:14px;font-weight:700;max-width:400px;">
+        </div>
+        <table class="data-table">
+          <tbody>
+            <tr>
+              <td style="width:140px;color:#a0a8c0;font-weight:700;">Actor(s)</td>
+              <td><input type="text" class="field-input" placeholder="e.g. Registered User" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            </tr>
+            <tr>
+              <td style="color:#a0a8c0;font-weight:700;">Related FRs</td>
+              <td><input type="text" class="field-input" placeholder="e.g. FR-01, FR-02" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            </tr>
+            <tr>
+              <td style="color:#a0a8c0;font-weight:700;">Pre-condition</td>
+              <td><input type="text" class="field-input" placeholder="User is not logged in. User has a registered account." style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            </tr>
+            <tr>
+              <td style="color:#6ee7b7;font-weight:700;">Main Flow</td>
+              <td>
+                <textarea class="field-input" rows="4" placeholder="1. User navigates to the login page.&#10;2. User enters email and password.&#10;3. System validates credentials.&#10;4. System redirects user to the dashboard."></textarea>
+              </td>
+            </tr>
+            <tr>
+              <td style="color:#fbbf24;font-weight:700;">Alternate Flow</td>
+              <td>
+                <textarea class="field-input" rows="2" placeholder="3a. If credentials are invalid: System shows error message. User stays on login page.&#10;3b. If account is locked: System shows account locked message with contact info."></textarea>
+              </td>
+            </tr>
+            <tr>
+              <td style="color:#a0a8c0;font-weight:700;">Post-condition</td>
+              <td><input type="text" class="field-input" placeholder="User is logged in and has a valid session." style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- UC-02 placeholder -->
+      <div style="background:#12121e;border:1px solid #2c2c3a;border-radius:10px;padding:18px 20px;margin-bottom:16px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+          <span style="background:#071f14;color:#6ee7b7;font-size:10.5px;font-weight:800;padding:3px 10px;border-radius:4px;">UC-02</span>
+          <input type="text" class="field-input" placeholder="[Use Case Name]" style="padding:6px 10px;font-size:14px;font-weight:700;max-width:400px;">
+        </div>
+        <table class="data-table">
+          <tbody>
+            <tr><td style="width:140px;color:#a0a8c0;font-weight:700;">Actor(s)</td><td><input type="text" class="field-input" placeholder="" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td></tr>
+            <tr><td style="color:#a0a8c0;font-weight:700;">Related FRs</td><td><input type="text" class="field-input" placeholder="" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td></tr>
+            <tr><td style="color:#a0a8c0;font-weight:700;">Pre-condition</td><td><input type="text" class="field-input" placeholder="" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td></tr>
+            <tr><td style="color:#6ee7b7;font-weight:700;">Main Flow</td><td><textarea class="field-input" rows="4" placeholder="1. [Step]&#10;2. [Step]&#10;3. [Step]"></textarea></td></tr>
+            <tr><td style="color:#fbbf24;font-weight:700;">Alternate Flow</td><td><textarea class="field-input" rows="2" placeholder="[Alt scenario]"></textarea></td></tr>
+            <tr><td style="color:#a0a8c0;font-weight:700;">Post-condition</td><td><input type="text" class="field-input" placeholder="" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="info-box" style="text-align:center;">Add UC-03, UC-04… for each major system flow. One use case per major module is a good rule of thumb.</div>
+    </div>
+
+    <!-- 6. Test Case Headers -->
+    <div id="testcases" class="template-section">
+      <h2>6. Test Case Headers</h2>
+      <p style="font-size:12.5px;color:#a0a8c0;margin-bottom:6px;">
+        Define test case headers here — the full test scripts with steps and actual results are filled in
+        <code>docs/test-plan.md</code> during the build phase. Each TC must trace to an FR and a User Story.
+      </p>
+      <div class="info-box" style="margin-bottom:14px;">
+        <strong>Test Types to cover:</strong> Positive (happy path) · Negative (invalid input) · Boundary (edge values) · Integration (module A + module B)
+      </div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="width:65px;">TC ID</th>
+            <th>Test Case Description</th>
+            <th style="width:70px;">Related FR</th>
+            <th style="width:70px;">Related US</th>
+            <th style="width:80px;">Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="color:#6ee7b7;font-weight:700;">TC-01</td>
+            <td><input type="text" class="field-input" placeholder="Verify successful login with valid email and password." style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td>FR-02</td>
+            <td>US-01</td>
+            <td><span style="color:#6ee7b7;font-size:11px;">Positive</span></td>
+          </tr>
+          <tr>
+            <td style="color:#6ee7b7;font-weight:700;">TC-02</td>
+            <td><input type="text" class="field-input" placeholder="Verify login fails with incorrect password and error message is displayed." style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td>FR-02</td>
+            <td>US-01</td>
+            <td><span style="color:#f87171;font-size:11px;">Negative</span></td>
+          </tr>
+          <tr>
+            <td style="color:#6ee7b7;font-weight:700;">TC-03</td>
+            <td><input type="text" class="field-input" placeholder="[Your test case]" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><input type="text" class="field-input" placeholder="FR-0x" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:50px;"></td>
+            <td><input type="text" class="field-input" placeholder="US-0x" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:50px;"></td>
+            <td><input type="text" class="field-input" placeholder="Positive" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:70px;"></td>
+          </tr>
+          <tr>
+            <td style="color:#6ee7b7;font-weight:700;">TC-04</td>
+            <td><input type="text" class="field-input" placeholder="[Your test case]" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><input type="text" class="field-input" placeholder="" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:50px;"></td>
+            <td><input type="text" class="field-input" placeholder="" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:50px;"></td>
+            <td><input type="text" class="field-input" placeholder="" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:70px;"></td>
+          </tr>
+          <tr>
+            <td colspan="5" style="color:#5c6478;font-size:11px;font-style:italic;text-align:center;">Continue TC-05 onwards. Aim for at least 2 TCs per FR. Full scripts with steps/results go in test-plan.md during build phase.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ── Week 2 Gate Checklist ── -->
+    <div style="background:#12122a;border:1px solid #3c3478;border-radius:12px;padding:20px 24px;margin-top:32px;">
+      <div style="font-size:13px;font-weight:800;color:#c4b5fd;margin-bottom:14px;">✅ Week 2 Gate — FRD Approval Checklist</div>
+      <p style="font-size:12px;color:#a0a8c0;margin-bottom:12px;">Faculty checks all items before signing off. Team cannot start Design (T3) until this gate is passed.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 24px;margin-bottom:16px;">
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#7c6ff7;margin-top:2px;flex-shrink:0;"> docs/frd.md committed to Git repo</label>
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#7c6ff7;margin-top:2px;flex-shrink:0;"> Minimum 10 user stories written</label>
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#7c6ff7;margin-top:2px;flex-shrink:0;"> Every user story has at least one acceptance criterion</label>
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#7c6ff7;margin-top:2px;flex-shrink:0;"> All FRs are numbered (FR-01, FR-02…) with priorities</label>
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#7c6ff7;margin-top:2px;flex-shrink:0;"> FRs are specific — no vague statements</label>
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#7c6ff7;margin-top:2px;flex-shrink:0;"> NFR-04 (Docker portability) is present and marked High</label>
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#7c6ff7;margin-top:2px;flex-shrink:0;"> At least 3 use cases with main flow + alternate flow</label>
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#7c6ff7;margin-top:2px;flex-shrink:0;"> Test case headers defined — TC IDs linked to FRs</label>
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#7c6ff7;margin-top:2px;flex-shrink:0;"> User stories use correct format (As a / I want / So that)</label>
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#7c6ff7;margin-top:2px;flex-shrink:0;"> Docker skeleton committed (docker-compose.yml with services)</label>
+      </div>
+      <div style="display:flex;gap:20px;flex-wrap:wrap;">
+        <div style="flex:1;min-width:180px;">
+          <div style="font-size:10px;color:#5c6478;margin-bottom:4px;">Faculty Signature</div>
+          <input type="text" class="field-input" placeholder="Faculty Name + Date" style="font-size:12px;">
+        </div>
+        <div style="flex:1;min-width:180px;">
+          <div style="font-size:10px;color:#5c6478;margin-bottom:4px;">Gate Status</div>
+          <select class="field-input" style="font-size:12px;">
+            <option>✅ Approved — team may proceed to Design</option>
+            <option>⚠️ Revisions needed — resubmit by [date]</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Print / Word Document Guide ── -->
+    <div style="background:#071a14;border:1px solid #065f46;border-left:4px solid #10b981;border-radius:12px;padding:20px 24px;margin-top:36px;">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#10b981;margin-bottom:12px;">🖨️ Word / Print Submission — D2: Functional Requirements Document</div>
+      <div style="font-size:12px;color:#a0a8c0;margin-bottom:10px;">
+        Document title on cover: <strong style="color:#6ee7b7;">"Functional Requirements Document (FRD) — v1.0"</strong> &nbsp;&middot;&nbsp;
+        Cover page, Revision History &amp; ToC are standard for all docs — <a href="print_guide.html" style="color:#7c6ff7;">see Print Guide</a>
+      </div>
+      <div style="margin-bottom:14px;">
+        <div style="font-size:11px;font-weight:700;color:#a0a8c0;text-transform:uppercase;margin-bottom:8px;">Document-Specific Sections</div>
+        <ol style="margin-left:16px;font-size:12.5px;color:#c8d0e0;line-height:2.2;">
+          <li>Functional Requirements table (FR-01, FR-02…)</li>
+          <li>Non-Functional Requirements table</li>
+          <li>User Stories — As a / I want / So that / Acceptance Criteria</li>
+          <li>Use Cases — min 3, each with main flow &amp; alternate flow</li>
+          <li>Test Case Headers (TC ID → FR → US → Type)</li>
+          <li>Signatures Page</li>
+        </ol>
+      </div>
+
+    <!-- Navigation -->
+    <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;">
+      <a href="T1_ProjectCharter.html" class="btn btn-outline">← T1 Charter</a>
+      <a href="T3_DesignDocument.html" class="btn btn-primary">Next: T3 — Design Document →</a>
+    </div>
+
+  </main>
+
+  <footer>
+    MCA Sem 4 · 13-Week Pilot · T2 — FRD + User Stories + Use Cases &nbsp;|&nbsp;
+    <a href="index.html" style="color:#7c6ff7;">← Pilot Hub</a>
+  </footer>
+
+</body>
+</html>

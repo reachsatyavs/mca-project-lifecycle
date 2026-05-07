@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>T3 — Software Design Document | MCA Sem 4 Pilot</title>
+  <link rel="stylesheet" href="pilot_styles.css">
+</head>
+<body>
+
+  <nav class="topnav">
+    <a href="../index.html">← Main Index</a>
+    <span class="topnav-sep">›</span>
+    <a href="index.html">Pilot Hub</a>
+    <span class="topnav-sep">›</span>
+    <a href="T2_FRD.html">T2 FRD</a>
+    <span class="topnav-sep">›</span>
+    <a href="T3_DesignDocument.html" class="active">T3 — Design</a>
+    <span class="topnav-sep">›</span>
+    <a href="T4_SprintPlan.html">T4 Sprint →</a>
+    <span class="pilot-badge">Weeks 3–4 · Design Gate Before Coding</span>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-eyebrow">Template 3 of 5 · Weeks 3–4</div>
+    <h1>Software Design Document<br><span>(Lean SDD)</span></h1>
+    <p class="hero-sub">
+      Week 3: High-level design (sections 1–5). Week 4: Detailed design (sections 6–10).
+      Commit as <code style="background:rgba(255,255,255,0.1);padding:2px 8px;border-radius:4px;">docs/design.md</code>.
+      Faculty sign-off required before Sprint 1 begins.
+    </p>
+    <div class="tag-row">
+      <span class="tag orange">Week 3: Sections 1–5</span>
+      <span class="tag orange">Week 4: Sections 6–10</span>
+      <span class="tag purple">Faculty Sign-off Gate</span>
+      <span class="tag green">RTM links design to FRD</span>
+    </div>
+  </div>
+
+  <main class="main">
+
+    <div class="info-box">
+      <strong>Design philosophy:</strong> Design only what you will build.
+      Every diagram must trace back to the FRD. If a feature isn't in the FRD, it shouldn't be in the design.
+      Keep diagrams simple and correct — a hand-drawn, accurate ER diagram beats a polished but wrong one.
+    </div>
+
+    <!-- Anchor nav -->
+    <div style="background:#1a1a2e;border:1px solid #2c2c3a;border-radius:10px;padding:14px 20px;margin-bottom:28px;display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;">
+      <strong style="color:#a0a8c0;">Jump to:</strong>
+      <a href="#intro" style="color:#7c6ff7;">1. Introduction</a>
+      <a href="#overview" style="color:#7c6ff7;">2. System Overview</a>
+      <a href="#architecture" style="color:#7c6ff7;">3. Architecture</a>
+      <a href="#docker" style="color:#7c6ff7;">4. Docker Map</a>
+      <a href="#data" style="color:#7c6ff7;">5. ER Diagram</a>
+      <a href="#dfd" style="color:#7c6ff7;">6. Data Flow</a>
+      <a href="#class" style="color:#7c6ff7;">7. Class Diagram</a>
+      <a href="#sequence" style="color:#7c6ff7;">8. Sequence Diagrams</a>
+      <a href="#ui" style="color:#7c6ff7;">9. UI Wireframes</a>
+      <a href="#rtm" style="color:#7c6ff7;">10. RTM</a>
+    </div>
+
+    <!-- Week 3 divider -->
+    <div style="background:#1e2850;border:1px solid #3c4878;border-radius:8px;padding:10px 16px;margin-bottom:20px;display:flex;align-items:center;gap:10px;">
+      <span style="font-size:18px;">📌</span>
+      <span style="font-size:13px;font-weight:700;color:#7c9ef7;">Week 3 Deliverables — Complete sections 1 to 5 by end of Week 3</span>
+    </div>
+
+    <!-- 1. Introduction -->
+    <div id="intro" class="template-section">
+      <h2>1. Introduction</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div class="field-group" style="grid-column:1/-1;">
+          <label class="field-label">1.1 Purpose</label>
+          <textarea class="field-input" rows="2" placeholder="This SDD describes the software architecture and detailed design for [Project Name]. It is the primary reference for the implementation team. All design decisions trace back to requirements in T2 (FRD)."></textarea>
+        </div>
+        <div class="field-group">
+          <label class="field-label">1.2 Scope</label>
+          <textarea class="field-input" rows="3" placeholder="This document covers: system architecture, database design, component interactions, key class structures, primary user flows, UI wireframes, and Docker deployment map. Refer to T2 (FRD) for requirements and T1 for project scope."></textarea>
+        </div>
+        <div class="field-group">
+          <label class="field-label">1.3 Definitions &amp; Abbreviations</label>
+          <textarea class="field-input" rows="3" placeholder="SDD — Software Design Document&#10;MVC — Model-View-Controller&#10;ER — Entity-Relationship&#10;DFD — Data Flow Diagram&#10;RTM — Requirements Traceability Matrix&#10;[Add project-specific terms]"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. System Overview -->
+    <div id="overview" class="template-section">
+      <h2>2. System Overview</h2>
+      <div class="field-group">
+        <label class="field-label">2.1 High-Level Description</label>
+        <p style="font-size:11.5px;color:#80889a;margin-bottom:6px;">1–2 paragraphs describing what the system does and how it is structured at the highest level. No technical jargon — as if explaining to a non-technical person.</p>
+        <textarea class="field-input" rows="4" placeholder="[Describe your system: what it does, who uses it, and the general flow. Example: The Library Management System is a web application that allows students to search and reserve books online, and allows librarians to manage the catalogue. It consists of a web frontend, a backend API server, and a PostgreSQL database, all running as Docker containers.]"></textarea>
+      </div>
+      <div class="field-group">
+        <label class="field-label">2.2 System Context Diagram</label>
+        <div class="diagram-placeholder">
+          <strong>System Context Diagram</strong>
+          Draw or embed a diagram showing: External Users → Your System → External Systems (if any)<br>
+          Tools: draw.io · Excalidraw · Lucidchart · hand-drawn + photo<br>
+          <span style="color:#7c6ff7;font-size:11px;">Image can be committed to docs/images/ folder in Git repo</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Architecture -->
+    <div id="architecture" class="template-section">
+      <h2>3. System Architecture</h2>
+      <div class="field-group">
+        <label class="field-label">3.1 Architecture Pattern</label>
+        <p style="font-size:11.5px;color:#80889a;margin-bottom:6px;">Choose one and justify it in 2–3 sentences.</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
+          <label style="display:flex;align-items:center;gap:6px;font-size:12.5px;background:#1a1a2e;border:1px solid #2c2c3a;border-radius:6px;padding:6px 12px;cursor:pointer;">
+            <input type="radio" name="arch" style="accent-color:#7c6ff7;"> MVC (Model-View-Controller)
+          </label>
+          <label style="display:flex;align-items:center;gap:6px;font-size:12.5px;background:#1a1a2e;border:1px solid #2c2c3a;border-radius:6px;padding:6px 12px;cursor:pointer;">
+            <input type="radio" name="arch" style="accent-color:#7c6ff7;"> Client-Server (REST API)
+          </label>
+          <label style="display:flex;align-items:center;gap:6px;font-size:12.5px;background:#1a1a2e;border:1px solid #2c2c3a;border-radius:6px;padding:6px 12px;cursor:pointer;">
+            <input type="radio" name="arch" style="accent-color:#7c6ff7;"> Layered (N-Tier)
+          </label>
+          <label style="display:flex;align-items:center;gap:6px;font-size:12.5px;background:#1a1a2e;border:1px solid #2c2c3a;border-radius:6px;padding:6px 12px;cursor:pointer;">
+            <input type="radio" name="arch" style="accent-color:#7c6ff7;"> Other (specify below)
+          </label>
+        </div>
+        <textarea class="field-input" rows="2" placeholder="We chose [pattern] because [justification]. For example: 'We chose MVC because it separates UI concerns from business logic, making it easier for team members to work on different parts independently.'"></textarea>
+      </div>
+      <div class="field-group">
+        <label class="field-label">3.2 Component Breakdown</label>
+        <p style="font-size:11.5px;color:#80889a;margin-bottom:6px;">List every major component/module and its responsibility.</p>
+        <table class="data-table">
+          <thead>
+            <tr><th>Component</th><th>Responsibility</th><th>Technology</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input type="text" class="field-input" placeholder="e.g. Frontend UI" style="border:none;background:transparent;color:#c8d0e0;padding:0;"></td>
+              <td><input type="text" class="field-input" placeholder="Renders views; handles user input; calls backend API" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+              <td><input type="text" class="field-input" placeholder="React / HTML+JS" style="border:none;background:transparent;color:#c8d0e0;padding:0;"></td>
+            </tr>
+            <tr>
+              <td><input type="text" class="field-input" placeholder="e.g. Backend API" style="border:none;background:transparent;color:#c8d0e0;padding:0;"></td>
+              <td><input type="text" class="field-input" placeholder="Handles business logic; validates input; queries DB" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+              <td><input type="text" class="field-input" placeholder="Node.js + Express" style="border:none;background:transparent;color:#c8d0e0;padding:0;"></td>
+            </tr>
+            <tr>
+              <td><input type="text" class="field-input" placeholder="e.g. Database" style="border:none;background:transparent;color:#c8d0e0;padding:0;"></td>
+              <td><input type="text" class="field-input" placeholder="Stores all persistent data; enforces data integrity" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+              <td><input type="text" class="field-input" placeholder="PostgreSQL" style="border:none;background:transparent;color:#c8d0e0;padding:0;"></td>
+            </tr>
+            <tr>
+              <td><input type="text" class="field-input" placeholder="[Add more components]" style="border:none;background:transparent;color:#c8d0e0;padding:0;"></td>
+              <td></td><td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="field-group">
+        <label class="field-label">3.3 Architecture Diagram</label>
+        <div class="diagram-placeholder">
+          <strong>Architecture / Component Diagram</strong>
+          Show components as boxes, connections as arrows. Label each arrow with what it sends (e.g. "HTTP Request", "SQL Query").<br>
+          <span style="color:#7c6ff7;font-size:11px;">Commit to docs/images/architecture.png</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Docker Map -->
+    <div id="docker" class="template-section">
+      <h2>4. Docker Architecture &amp; Deployment Map</h2>
+      <div class="info-box green" style="margin-bottom:14px;">
+        This section is mandatory. All components must be containerised from Sprint 1.
+        This map defines your <code>docker-compose.yml</code>.
+      </div>
+      <div class="field-group">
+        <label class="field-label">4.1 Container Services</label>
+        <table class="data-table">
+          <thead>
+            <tr><th>Container Name</th><th>Base Image</th><th>Exposed Port</th><th>Volumes / Mounts</th><th>Environment Variables</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="color:#fb923c;font-weight:700;"><input type="text" class="field-input" placeholder="app" style="border:none;background:transparent;color:#fb923c;padding:0;font-weight:700;"></td>
+              <td><input type="text" class="field-input" placeholder="node:20-alpine" style="border:none;background:transparent;color:#c8d0e0;padding:0;"></td>
+              <td><input type="text" class="field-input" placeholder="3000:3000" style="border:none;background:transparent;color:#c8d0e0;padding:0;"></td>
+              <td><input type="text" class="field-input" placeholder="./src:/app/src" style="border:none;background:transparent;color:#c8d0e0;padding:0;"></td>
+              <td><input type="text" class="field-input" placeholder="NODE_ENV, DB_URL" style="border:none;background:transparent;color:#c8d0e0;padding:0;"></td>
+            </tr>
+            <tr>
+              <td style="color:#fb923c;font-weight:700;"><input type="text" class="field-input" placeholder="db" style="border:none;background:transparent;color:#fb923c;padding:0;font-weight:700;"></td>
+              <td><input type="text" class="field-input" placeholder="postgres:16" style="border:none;background:transparent;color:#c8d0e0;padding:0;"></td>
+              <td><input type="text" class="field-input" placeholder="5432:5432" style="border:none;background:transparent;color:#c8d0e0;padding:0;"></td>
+              <td><input type="text" class="field-input" placeholder="pgdata:/var/lib/postgresql/data" style="border:none;background:transparent;color:#c8d0e0;padding:0;"></td>
+              <td><input type="text" class="field-input" placeholder="POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB" style="border:none;background:transparent;color:#c8d0e0;padding:0;"></td>
+            </tr>
+            <tr>
+              <td><input type="text" class="field-input" placeholder="[add more if needed]" style="border:none;background:transparent;color:#c8d0e0;padding:0;"></td>
+              <td></td><td></td><td></td><td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="field-group">
+        <label class="field-label">4.2 docker-compose.yml Stub (complete in Week 2, finalise in Week 4)</label>
+        <div class="git-tree">
+<span class="dim">version: '3.8'</span><br>
+<span class="dim">services:</span><br>
+<span class="dir">  app:</span><br>
+<span class="dim">    build: .</span><br>
+<span class="dim">    ports:</span><br>
+<span class="dim">      - "<span class="file">3000:3000</span>"</span><br>
+<span class="dim">    environment:</span><br>
+<span class="dim">      - <span class="file">NODE_ENV=development</span></span><br>
+<span class="dim">      - <span class="file">DB_URL=postgresql://user:password@db:5432/mydb</span></span><br>
+<span class="dim">    depends_on:</span><br>
+<span class="dim">      - db</span><br>
+<span class="dir">  db:</span><br>
+<span class="dim">    image: <span class="docker-file">postgres:16</span></span><br>
+<span class="dim">    environment:</span><br>
+<span class="dim">      - <span class="file">POSTGRES_USER=user</span></span><br>
+<span class="dim">      - <span class="file">POSTGRES_PASSWORD=password</span></span><br>
+<span class="dim">      - <span class="file">POSTGRES_DB=mydb</span></span><br>
+<span class="dim">    volumes:</span><br>
+<span class="dim">      - <span class="file">pgdata:/var/lib/postgresql/data</span></span><br>
+<span class="dim">volumes:</span><br>
+<span class="dim">  pgdata:</span>
+        </div>
+        <p style="font-size:11.5px;color:#80889a;margin-top:8px;">Replace values with your actual project names. Never commit real passwords — use .env file referenced via env_file.</p>
+      </div>
+    </div>
+
+    <!-- 5. ER Diagram -->
+    <div id="data" class="template-section">
+      <h2>5. Data Design — Entity-Relationship (ER) Diagram</h2>
+      <div class="field-group">
+        <label class="field-label">5.1 Entities &amp; Attributes</label>
+        <p style="font-size:11.5px;color:#80889a;margin-bottom:8px;">List every database table/entity with its columns. Mark primary keys (PK) and foreign keys (FK).</p>
+        <table class="data-table">
+          <thead>
+            <tr><th>Entity / Table</th><th>Attributes (columns)</th><th>PK</th><th>FK (references)</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="color:#c4b5fd;font-weight:700;"><input type="text" class="field-input" placeholder="e.g. users" style="border:none;background:transparent;color:#c4b5fd;padding:0;font-weight:700;"></td>
+              <td><input type="text" class="field-input" placeholder="id, email, password_hash, name, created_at" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+              <td><input type="text" class="field-input" placeholder="id" style="border:none;background:transparent;color:#fbbf24;padding:0;width:40px;"></td>
+              <td><input type="text" class="field-input" placeholder="—" style="border:none;background:transparent;color:#c8d0e0;padding:0;"></td>
+            </tr>
+            <tr>
+              <td style="color:#c4b5fd;font-weight:700;"><input type="text" class="field-input" placeholder="e.g. books" style="border:none;background:transparent;color:#c4b5fd;padding:0;font-weight:700;"></td>
+              <td><input type="text" class="field-input" placeholder="id, title, author, isbn, quantity, category_id" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+              <td><input type="text" class="field-input" placeholder="id" style="border:none;background:transparent;color:#fbbf24;padding:0;width:40px;"></td>
+              <td><input type="text" class="field-input" placeholder="category_id → categories.id" style="border:none;background:transparent;color:#c8d0e0;padding:0;"></td>
+            </tr>
+            <tr>
+              <td style="color:#c4b5fd;font-weight:700;"><input type="text" class="field-input" placeholder="[table name]" style="border:none;background:transparent;color:#c4b5fd;padding:0;font-weight:700;"></td>
+              <td><input type="text" class="field-input" placeholder="" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+              <td><input type="text" class="field-input" placeholder="" style="border:none;background:transparent;color:#fbbf24;padding:0;width:40px;"></td>
+              <td><input type="text" class="field-input" placeholder="" style="border:none;background:transparent;color:#c8d0e0;padding:0;"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="field-group">
+        <label class="field-label">5.2 ER Diagram</label>
+        <div class="diagram-placeholder">
+          <strong>ER Diagram</strong>
+          Draw entities as rectangles with attributes. Show relationships (1:1, 1:N, M:N) as lines with labels.<br>
+          Every entity from the table above must appear. Every FK relationship must be shown as a line.<br>
+          <span style="color:#7c6ff7;font-size:11px;">Commit as docs/images/er_diagram.png</span>
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">5.3 Relationships Summary</label>
+        <textarea class="field-input" rows="4" placeholder="e.g.&#10;- One USER can have many RESERVATIONS (1:N)&#10;- One BOOK belongs to one CATEGORY; one CATEGORY has many BOOKS (1:N)&#10;- One RESERVATION references one USER and one BOOK&#10;[List all relationships in plain English]"></textarea>
+      </div>
+    </div>
+
+    <!-- Week 4 divider -->
+    <div style="background:#1e1040;border:1px solid #3c2878;border-radius:8px;padding:10px 16px;margin-bottom:20px;display:flex;align-items:center;gap:10px;margin-top:8px;">
+      <span style="font-size:18px;">📌</span>
+      <span style="font-size:13px;font-weight:700;color:#c4b5fd;">Week 4 Deliverables — Complete sections 6 to 10 by end of Week 4</span>
+    </div>
+
+    <!-- 6. DFD -->
+    <div id="dfd" class="template-section">
+      <h2>6. Data Flow Diagram — Level 1</h2>
+      <p style="font-size:12.5px;color:#a0a8c0;margin-bottom:14px;">
+        Show the main data flows: where data comes from, how it is processed, where it is stored, and what goes back to the user.
+        Level 1 only — no need for level 2 detail.
+      </p>
+      <div class="field-group">
+        <label class="field-label">6.1 Level-1 DFD</label>
+        <div class="diagram-placeholder">
+          <strong>Level-1 Data Flow Diagram</strong>
+          Show: External Entities (users, external systems) → Processes (your app modules) → Data Stores (DB tables)<br>
+          Label each arrow with the data flowing (e.g. "login request", "book list", "reservation confirmation")<br>
+          <span style="color:#7c6ff7;font-size:11px;">Commit as docs/images/dfd_level1.png</span>
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">6.2 DFD Description</label>
+        <textarea class="field-input" rows="4" placeholder="Describe the main data flows in 3–5 sentences. Example: 'The user submits a search query (external input) which is received by the Search Process. The Search Process queries the Books Data Store and returns matching results to the user. A reservation request flows from the user through the Reservation Process, which validates availability in the Books data store before writing to the Reservations data store.'"></textarea>
+      </div>
+    </div>
+
+    <!-- 7. Class Diagram -->
+    <div id="class" class="template-section">
+      <h2>7. Class Diagram (Key Classes Only)</h2>
+      <div class="info-box" style="margin-bottom:14px;">
+        Show the most important classes in your system — typically 4–8 classes. You do NOT need a class for every table.
+        Focus on classes with significant logic (not just data containers).
+      </div>
+      <div class="field-group">
+        <label class="field-label">7.1 Key Classes</label>
+        <table class="data-table">
+          <thead>
+            <tr><th>Class Name</th><th>Key Attributes</th><th>Key Methods</th><th>Relationships</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="color:#7c9ef7;font-weight:700;"><input type="text" class="field-input" placeholder="e.g. User" style="border:none;background:transparent;color:#7c9ef7;padding:0;font-weight:700;"></td>
+              <td><input type="text" class="field-input" placeholder="id, email, passwordHash, role" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+              <td><input type="text" class="field-input" placeholder="login(), register(), updateProfile()" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+              <td><input type="text" class="field-input" placeholder="has many Reservations" style="border:none;background:transparent;color:#c8d0e0;padding:0;"></td>
+            </tr>
+            <tr>
+              <td style="color:#7c9ef7;font-weight:700;"><input type="text" class="field-input" placeholder="e.g. Book" style="border:none;background:transparent;color:#7c9ef7;padding:0;font-weight:700;"></td>
+              <td><input type="text" class="field-input" placeholder="id, title, author, quantity" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+              <td><input type="text" class="field-input" placeholder="isAvailable(), updateQuantity()" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+              <td><input type="text" class="field-input" placeholder="belongs to Category" style="border:none;background:transparent;color:#c8d0e0;padding:0;"></td>
+            </tr>
+            <tr>
+              <td style="color:#7c9ef7;font-weight:700;"><input type="text" class="field-input" placeholder="[Class Name]" style="border:none;background:transparent;color:#7c9ef7;padding:0;font-weight:700;"></td>
+              <td><input type="text" class="field-input" placeholder="" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+              <td><input type="text" class="field-input" placeholder="" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+              <td><input type="text" class="field-input" placeholder="" style="border:none;background:transparent;color:#c8d0e0;padding:0;"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="field-group">
+        <label class="field-label">7.2 Class Diagram</label>
+        <div class="diagram-placeholder">
+          <strong>Class Diagram</strong>
+          Draw classes as rectangles divided into 3 parts: Class Name | Attributes | Methods.<br>
+          Show inheritance (→), composition (◆), and association (—) relationships.<br>
+          <span style="color:#7c6ff7;font-size:11px;">Commit as docs/images/class_diagram.png</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 8. Sequence Diagrams -->
+    <div id="sequence" class="template-section">
+      <h2>8. Sequence Diagrams</h2>
+      <p style="font-size:12.5px;color:#a0a8c0;margin-bottom:14px;">
+        Draw 1–2 sequence diagrams for the most important user flows (e.g. login, main feature).
+        Show the exact order of method calls and messages between components.
+      </p>
+
+      <div class="field-group">
+        <label class="field-label">8.1 Sequence Diagram — Flow 1</label>
+        <input type="text" class="field-input" placeholder="Flow name: e.g. User Login Flow" style="margin-bottom:10px;">
+        <div class="diagram-placeholder">
+          <strong>Sequence Diagram — Flow 1</strong>
+          Participants (top): User → Browser/Frontend → Backend API → Database<br>
+          Show: each arrow = one message/call, with label. Show return messages too.<br>
+          <span style="color:#7c6ff7;font-size:11px;">Commit as docs/images/seq_login.png</span>
+        </div>
+        <textarea class="field-input" rows="3" style="margin-top:8px;" placeholder="Brief description of this flow. Example: User enters credentials → Frontend sends POST /login → Backend validates against DB → Returns JWT token → Frontend stores token and redirects to dashboard."></textarea>
+      </div>
+
+      <div class="field-group" style="margin-top:16px;">
+        <label class="field-label">8.2 Sequence Diagram — Flow 2 (Main Feature)</label>
+        <input type="text" class="field-input" placeholder="Flow name: e.g. Book Reservation Flow" style="margin-bottom:10px;">
+        <div class="diagram-placeholder">
+          <strong>Sequence Diagram — Flow 2</strong>
+          <span style="color:#7c6ff7;font-size:11px;">Commit as docs/images/seq_main_feature.png</span>
+        </div>
+        <textarea class="field-input" rows="3" style="margin-top:8px;" placeholder="Brief description of this flow."></textarea>
+      </div>
+    </div>
+
+    <!-- 9. UI Wireframes -->
+    <div id="ui" class="template-section">
+      <h2>9. User Interface Wireframes</h2>
+      <p style="font-size:12.5px;color:#a0a8c0;margin-bottom:14px;">
+        Show wireframes for 2–3 key screens. Hand-drawn, Figma, Excalidraw, or ASCII — any format is acceptable.
+        What matters is that the layout, key elements, and navigation are clearly shown.
+      </p>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;">
+        <div>
+          <label class="field-label">Screen 1 Name</label>
+          <input type="text" class="field-input" placeholder="e.g. Login Screen" style="margin-bottom:8px;">
+          <div class="diagram-placeholder" style="min-height:180px;">
+            <strong>Login Screen Wireframe</strong>
+            Show: header, form fields (email, password), submit button, error message area, links (register, forgot password)
+          </div>
+          <textarea class="field-input" rows="2" style="margin-top:8px;" placeholder="Key elements and interactions on this screen."></textarea>
+        </div>
+        <div>
+          <label class="field-label">Screen 2 Name</label>
+          <input type="text" class="field-input" placeholder="e.g. Dashboard / Main Screen" style="margin-bottom:8px;">
+          <div class="diagram-placeholder" style="min-height:180px;">
+            <strong>Dashboard Wireframe</strong>
+            Show: navigation, key content areas, primary actions
+          </div>
+          <textarea class="field-input" rows="2" style="margin-top:8px;" placeholder="Key elements and interactions on this screen."></textarea>
+        </div>
+        <div>
+          <label class="field-label">Screen 3 Name (Most Important Feature)</label>
+          <input type="text" class="field-input" placeholder="e.g. Book Search Results" style="margin-bottom:8px;">
+          <div class="diagram-placeholder" style="min-height:180px;">
+            <strong>Feature Screen Wireframe</strong>
+            Show: the main user action your product is built around
+          </div>
+          <textarea class="field-input" rows="2" style="margin-top:8px;" placeholder="Key elements and interactions on this screen."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- 10. RTM -->
+    <div id="rtm" class="template-section">
+      <h2>10. Requirements Traceability Matrix (RTM)</h2>
+      <div class="info-box" style="margin-bottom:14px;">
+        Every FR from T2 must appear here. If a requirement has no design component, it hasn't been designed yet — it cannot be coded.
+        Faculty will check this before approving the design gate.
+      </div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="width:65px;">FR ID</th>
+            <th style="width:200px;">Requirement (brief)</th>
+            <th style="width:120px;">Design Component</th>
+            <th style="width:100px;">DB Table(s)</th>
+            <th style="width:80px;">Class(es)</th>
+            <th style="width:70px;">TC ID(s)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="color:#7c9ef7;font-weight:700;">FR-01</td>
+            <td><input type="text" class="field-input" placeholder="User registration" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><input type="text" class="field-input" placeholder="Auth module" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><input type="text" class="field-input" placeholder="users" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><input type="text" class="field-input" placeholder="User" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><input type="text" class="field-input" placeholder="TC-01" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+          </tr>
+          <tr>
+            <td style="color:#7c9ef7;font-weight:700;">FR-02</td>
+            <td><input type="text" class="field-input" placeholder="User login" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><input type="text" class="field-input" placeholder="Auth module" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><input type="text" class="field-input" placeholder="users" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><input type="text" class="field-input" placeholder="User, AuthService" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><input type="text" class="field-input" placeholder="TC-02, TC-03" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+          </tr>
+          <tr>
+            <td style="color:#7c9ef7;font-weight:700;"><input type="text" class="field-input" placeholder="FR-03" style="border:none;background:transparent;color:#7c9ef7;padding:0;width:50px;font-weight:700;"></td>
+            <td><input type="text" class="field-input" placeholder="[Requirement]" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><input type="text" class="field-input" placeholder="" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><input type="text" class="field-input" placeholder="" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><input type="text" class="field-input" placeholder="" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><input type="text" class="field-input" placeholder="" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+          </tr>
+          <tr>
+            <td colspan="6" style="color:#5c6478;font-size:11px;font-style:italic;text-align:center;">Add one row per FR. All FRs from T2 must be covered here.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div style="margin-top:20px;background:#071f14;border:1px solid #065f46;border-radius:8px;padding:14px 16px;">
+        <div style="font-size:12px;font-weight:700;color:#6ee7b7;margin-bottom:8px;">DESIGN GATE — Faculty Checklist</div>
+        <div style="display:flex;flex-direction:column;gap:6px;font-size:12.5px;">
+          <label style="display:flex;align-items:center;gap:8px;"><input type="checkbox" style="accent-color:#10b981;"> Sections 1–10 all completed</label>
+          <label style="display:flex;align-items:center;gap:8px;"><input type="checkbox" style="accent-color:#10b981;"> Every FR from T2 appears in RTM</label>
+          <label style="display:flex;align-items:center;gap:8px;"><input type="checkbox" style="accent-color:#10b981;"> ER diagram covers all entities from FRD</label>
+          <label style="display:flex;align-items:center;gap:8px;"><input type="checkbox" style="accent-color:#10b981;"> Docker service map matches tech stack in T1</label>
+          <label style="display:flex;align-items:center;gap:8px;"><input type="checkbox" style="accent-color:#10b981;"> Design document committed to Git repo at docs/design.md</label>
+          <label style="display:flex;align-items:center;gap:8px;"><input type="checkbox" style="accent-color:#10b981;"> Faculty signature: ______________________ Date: __________</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Print / Word Document Guide ── -->
+    <div style="background:#120a2a;border:1px solid #3c1878;border-left:4px solid #8b5cf6;border-radius:12px;padding:20px 24px;margin-top:36px;">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#c4b5fd;margin-bottom:12px;">🖨️ Word / Print Submission — D3: Software Design Document</div>
+      <div style="font-size:12px;color:#a0a8c0;margin-bottom:10px;">
+        Document title on cover: <strong style="color:#c4b5fd;">"Software Design Document (SDD) — v1.0"</strong> &nbsp;&middot;&nbsp;
+        Cover page, Revision History &amp; ToC are standard for all docs — <a href="print_guide.html" style="color:#7c6ff7;">see Print Guide</a>
+      </div>
+      <div style="margin-bottom:14px;">
+        <div style="font-size:11px;font-weight:700;color:#a0a8c0;text-transform:uppercase;margin-bottom:8px;">Document-Specific Sections</div>
+        <ol style="margin-left:16px;font-size:12.5px;color:#c8d0e0;line-height:2.2;">
+          <li>System Overview + Context Diagram (Fig. 1)</li>
+          <li>Architecture — pattern, component table, Architecture Diagram (Fig. 2)</li>
+          <li>Docker Service Map + docker-compose snippet</li>
+          <li>Data Design — ER Diagram (Fig. 3, full page recommended)</li>
+          <li>Level-1 Data Flow Diagram (Fig. 4)</li>
+          <li>Class Diagram — key classes (Fig. 5)</li>
+          <li>Sequence Diagrams × 2 (Figs. 6–7)</li>
+          <li>UI Wireframes × 3 key screens (Figs. 8–10)</li>
+          <li>Requirements Traceability Matrix — all FRs mapped</li>
+          <li>Faculty Design Gate Sign-off</li>
+        </ol>
+      </div>
+
+    <!-- Navigation -->
+    <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;">
+      <a href="T2_FRD.html" class="btn btn-outline">← T2 FRD</a>
+      <a href="T4_SprintPlan.html" class="btn btn-primary">Next: T4 — Sprint Plan →</a>
+    </div>
+
+  </main>
+
+  <footer>
+    MCA Sem 4 · 13-Week Pilot · T3 — Software Design Document &nbsp;|&nbsp;
+    <a href="index.html" style="color:#7c6ff7;">← Pilot Hub</a>
+  </footer>
+
+</body>
+</html>

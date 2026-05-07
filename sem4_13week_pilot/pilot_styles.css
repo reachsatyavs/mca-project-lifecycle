@@ -1,0 +1,261 @@
+/* ==========================================================
+   Shared styles — MCA Sem 4 · 13-Week Pilot Programme
+   ========================================================== */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #0f0f1a;
+  color: #e8eaf0;
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+}
+
+/* ── Top nav bar ── */
+.topnav {
+  background: #12121e;
+  border-bottom: 1px solid #2c2c3a;
+  padding: 10px 24px;
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+}
+.topnav a {
+  color: #a0a8c0; text-decoration: none; font-size: 12.5px;
+  padding: 4px 10px; border-radius: 5px; transition: background 0.15s;
+}
+.topnav a:hover { background: #1e1e30; color: #e8eaf0; }
+.topnav a.active { background: #2a2050; color: #c4b5fd; font-weight: 700; }
+.topnav-sep { color: #3c3c50; }
+.pilot-badge {
+  margin-left: auto;
+  background: #451a03; color: #fb923c; border: 1px solid #c2410c;
+  font-size: 10px; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 1px; padding: 3px 10px; border-radius: 20px;
+}
+
+/* ── Page hero ── */
+.hero {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  padding: 44px 24px 36px;
+  text-align: center;
+  border-bottom: 1px solid #2c2c3a;
+}
+.hero-eyebrow {
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 2px; color: #fb923c; margin-bottom: 10px;
+}
+.hero h1 {
+  font-size: clamp(22px, 4vw, 36px); font-weight: 800;
+  color: #fff; line-height: 1.25; margin-bottom: 12px;
+}
+.hero h1 span { color: #7c6ff7; }
+.hero-sub {
+  font-size: 14px; color: #a0a8c0; max-width: 640px;
+  margin: 0 auto 20px; line-height: 1.7;
+}
+.tag-row {
+  display: flex; flex-wrap: wrap; gap: 7px; justify-content: center; margin-top: 16px;
+}
+.tag {
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px; padding: 3px 12px; font-size: 11px; color: #a0a8c0;
+}
+.tag.orange { background: rgba(251,146,60,0.12); border-color: rgba(251,146,60,0.3); color: #fb923c; }
+.tag.purple { background: rgba(124,111,247,0.12); border-color: rgba(124,111,247,0.3); color: #c4b5fd; }
+.tag.green  { background: rgba(16,185,129,0.12); border-color: rgba(16,185,129,0.3); color: #6ee7b7; }
+
+/* ── Main content area ── */
+.main { max-width: 1100px; margin: 0 auto; padding: 36px 24px 60px; width: 100%; flex: 1; }
+
+/* ── Section labels ── */
+.section-label {
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1.5px; color: #7c6ff7; margin: 36px 0 14px;
+}
+
+/* ── Info box ── */
+.info-box {
+  background: #12122a; border: 1px solid #3c3478;
+  border-left: 4px solid #7c6ff7;
+  border-radius: 10px; padding: 16px 20px; margin-bottom: 24px;
+  font-size: 13.5px; color: #c4b5fd; line-height: 1.7;
+}
+.info-box.orange {
+  background: #1f1408; border-color: #d97706;
+  border-left-color: #f59e0b; color: #fbbf24;
+}
+.info-box.green {
+  background: #071f14; border-color: #065f46;
+  border-left-color: #10b981; color: #6ee7b7;
+}
+
+/* ── Cards grid ── */
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+.card {
+  background: #1a1a2e; border: 1px solid #2c2c3a;
+  border-radius: 12px; padding: 18px 20px;
+  text-decoration: none; color: inherit;
+  transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+  display: block;
+}
+.card:hover {
+  transform: translateY(-2px); border-color: #5147A9;
+  box-shadow: 0 4px 20px rgba(124,111,247,0.15);
+}
+.card-label {
+  display: inline-block; font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.5px;
+  padding: 3px 10px; border-radius: 4px; margin-bottom: 9px;
+}
+.label-template { background: #1e2850; color: #7c9ef7; }
+.label-checklist { background: #071f14; color: #6ee7b7; }
+.label-standard { background: #1a3830; color: #34d399; }
+.label-resource { background: #2a1f0a; color: #fbbf24; }
+.card-title { font-size: 14.5px; font-weight: 700; color: #e8eaf0; margin-bottom: 5px; }
+.card-desc { font-size: 12px; color: #80889a; line-height: 1.6; }
+.card-arrow { float: right; color: #5147A9; font-size: 17px; }
+
+/* ── Schedule table ── */
+.schedule-table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-bottom: 32px; }
+.schedule-table th {
+  background: #1a1a2e; color: #a0a8c0; font-size: 10.5px;
+  text-transform: uppercase; letter-spacing: 0.8px;
+  padding: 10px 12px; border: 1px solid #2c2c3a; text-align: left;
+}
+.schedule-table td {
+  padding: 10px 12px; border: 1px solid #2c2c3a;
+  vertical-align: top; line-height: 1.55;
+}
+.schedule-table tr:hover td { background: rgba(255,255,255,0.02); }
+.week-badge {
+  display: inline-block; width: 28px; height: 28px;
+  border-radius: 50%; font-size: 11px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.phase-pill {
+  display: inline-block; font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.5px;
+  padding: 2px 9px; border-radius: 12px; white-space: nowrap;
+}
+/* Phase colors */
+.ph-kickoff  { background:#1e2850; color:#7c9ef7; }
+.ph-req      { background:#071f14; color:#6ee7b7; }
+.ph-design   { background:#1e1040; color:#c4b5fd; }
+.ph-sprint1  { background:#1f1408; color:#fbbf24; }
+.ph-sprint2  { background:#1f0e08; color:#fb923c; }
+.ph-sprint3  { background:#200808; color:#f87171; }
+.ph-harden   { background:#071a1a; color:#2dd4bf; }
+.ph-docs     { background:#12122a; color:#818cf8; }
+.ph-final    { background:#1a1708; color:#fde68a; }
+
+/* ── Template form styles ── */
+.template-section {
+  background: #1a1a2e; border: 1px solid #2c2c3a;
+  border-radius: 12px; padding: 24px 26px; margin-bottom: 20px;
+}
+.template-section h2 {
+  font-size: 16px; font-weight: 700; color: #c4b5fd;
+  margin-bottom: 14px; padding-bottom: 10px;
+  border-bottom: 1px solid #2c2c3a;
+}
+.template-section h3 {
+  font-size: 13px; font-weight: 700; color: #a0a8c0;
+  margin: 16px 0 8px; text-transform: uppercase; letter-spacing: 0.5px;
+}
+.field-group { margin-bottom: 14px; }
+.field-label {
+  display: block; font-size: 11px; font-weight: 700;
+  color: #a0a8c0; text-transform: uppercase; letter-spacing: 0.5px;
+  margin-bottom: 5px;
+}
+.field-input {
+  width: 100%; background: #0f0f1a; border: 1px solid #3c3c50;
+  border-radius: 6px; padding: 8px 12px; color: #e8eaf0;
+  font-size: 13px; font-family: inherit; resize: vertical;
+  transition: border-color 0.15s;
+}
+.field-input:focus { outline: none; border-color: #7c6ff7; }
+.placeholder-note {
+  color: #5c6478; font-size: 12px; font-style: italic; padding: 10px 0;
+}
+
+/* ── Data table (for FRD, RTM, etc.) ── */
+.data-table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin: 12px 0; }
+.data-table th {
+  background: #12121e; color: #a0a8c0; font-size: 11px;
+  text-transform: uppercase; letter-spacing: 0.5px;
+  padding: 9px 12px; border: 1px solid #2c2c3a; text-align: left;
+}
+.data-table td {
+  padding: 8px 12px; border: 1px solid #2c2c3a;
+  color: #c8d0e0; vertical-align: top; line-height: 1.5;
+}
+.data-table tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+
+/* ── Checklist ── */
+.checklist { list-style: none; padding: 0; }
+.checklist li {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 8px 0; border-bottom: 1px solid #1e1e30; font-size: 13px;
+}
+.checklist li:last-child { border-bottom: none; }
+.checklist input[type="checkbox"] { margin-top: 2px; accent-color: #7c6ff7; flex-shrink: 0; }
+.checklist .gate {
+  margin-left: auto; flex-shrink: 0;
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  padding: 2px 8px; border-radius: 4px;
+}
+.gate-pass { background: #071f14; color: #6ee7b7; border: 1px solid #065f46; }
+.gate-warn { background: #1f1408; color: #fbbf24; border: 1px solid #d97706; }
+
+/* ── Diagram placeholder box ── */
+.diagram-placeholder {
+  background: #12121e; border: 2px dashed #3c3c50;
+  border-radius: 8px; padding: 32px 20px;
+  text-align: center; color: #5c6478; font-size: 12.5px;
+  margin: 12px 0;
+}
+.diagram-placeholder strong { display: block; font-size: 14px; color: #a0a8c0; margin-bottom: 6px; }
+
+/* ── CTA button ── */
+.btn {
+  display: inline-block; padding: 9px 20px; border-radius: 7px;
+  font-size: 13px; font-weight: 700; text-decoration: none;
+  transition: opacity 0.15s;
+}
+.btn:hover { opacity: 0.85; }
+.btn-primary { background: linear-gradient(135deg, #5147A9, #7c6ff7); color: #fff; }
+.btn-outline { background: rgba(124,111,247,0.12); border: 1px solid #5147A9; color: #c4b5fd; }
+.btn-orange { background: linear-gradient(135deg, #c2410c, #f59e0b); color: #fff; }
+
+/* ── Git tree ── */
+.git-tree {
+  background: #0a0a14; border: 1px solid #2c2c3a; border-radius: 8px;
+  padding: 18px 20px; font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 12.5px; color: #6ee7b7; line-height: 1.8; overflow-x: auto;
+}
+.git-tree .dim { color: #3c4458; }
+.git-tree .file { color: #c4b5fd; }
+.git-tree .dir  { color: #7c9ef7; font-weight: 700; }
+.git-tree .docker-file { color: #fb923c; }
+
+/* ── Footer ── */
+footer {
+  background: #12121e; border-top: 1px solid #2c2c3a;
+  padding: 16px 24px; text-align: center;
+  font-size: 11.5px; color: #60687a;
+}
+
+/* ── Print ── */
+@media print {
+  body { background: #fff; color: #111; }
+  .topnav, footer { display: none; }
+  .template-section { border: 1px solid #ccc; page-break-inside: avoid; }
+  .field-input { border: 1px solid #999; }
+}
+
+@media (max-width: 640px) {
+  .main { padding: 24px 16px 40px; }
+  .schedule-table { font-size: 11px; }
+}

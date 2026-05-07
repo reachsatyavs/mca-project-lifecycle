@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>T5 — Final Product Documentation | MCA Sem 4 Pilot</title>
+  <link rel="stylesheet" href="pilot_styles.css">
+</head>
+<body>
+
+  <nav class="topnav">
+    <a href="../index.html">← Main Index</a>
+    <span class="topnav-sep">›</span>
+    <a href="index.html">Pilot Hub</a>
+    <span class="topnav-sep">›</span>
+    <a href="T4_SprintPlan.html">T4 Sprint</a>
+    <span class="topnav-sep">›</span>
+    <a href="T5_FinalProductDoc.html" class="active">T5 — Final Doc</a>
+    <span class="topnav-sep">›</span>
+    <a href="checklists.html">Checklists →</a>
+    <span class="pilot-badge">Weeks 12–13 · Final Submission</span>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-eyebrow">Template 5 of 5 · Weeks 12–13</div>
+    <h1>Final Product<br><span>Documentation</span></h1>
+    <p class="hero-sub">
+      The complete project record. Consolidates all artifacts from T1–T4, adds test results, deployment guide,
+      and lessons learned. Committed to Git as
+      <code style="background:rgba(255,255,255,0.1);padding:2px 8px;border-radius:4px;">docs/final-report.md</code>.
+      This is your final submission.
+    </p>
+    <div class="tag-row">
+      <span class="tag orange">Due: Week 13, Demo Day</span>
+      <span class="tag green">Git repo = final submission</span>
+      <span class="tag purple">App must run: docker compose up</span>
+    </div>
+  </div>
+
+  <main class="main">
+
+    <div class="info-box orange">
+      <strong>Submission rule:</strong> Your Git repository URL is your final submission.
+      The repo must contain all code + all documents. Faculty and consultant will clone the repo,
+      run <code style="background:#1a1a2e;padding:2px 6px;border-radius:4px;">docker compose up</code>, and the app must start. No other submission method is accepted.
+    </div>
+
+    <!-- Anchor nav -->
+    <div style="background:#1a1a2e;border:1px solid #2c2c3a;border-radius:10px;padding:14px 20px;margin-bottom:28px;display:flex;gap:12px;flex-wrap:wrap;font-size:12.5px;">
+      <strong style="color:#a0a8c0;">Jump to:</strong>
+      <a href="#cover" style="color:#7c6ff7;">Cover</a>
+      <a href="#abstract" style="color:#7c6ff7;">Abstract</a>
+      <a href="#scope-req" style="color:#7c6ff7;">Scope &amp; Req</a>
+      <a href="#design" style="color:#7c6ff7;">Design Summary</a>
+      <a href="#deployment" style="color:#7c6ff7;">Deployment Guide</a>
+      <a href="#testing" style="color:#7c6ff7;">Test Results</a>
+      <a href="#sprints" style="color:#7c6ff7;">Sprint Summary</a>
+      <a href="#known-issues" style="color:#7c6ff7;">Known Issues</a>
+      <a href="#lessons" style="color:#7c6ff7;">Lessons Learned</a>
+      <a href="#contributions" style="color:#7c6ff7;">Contributions</a>
+      <a href="#submission" style="color:#7c6ff7;">Submission Checklist</a>
+    </div>
+
+    <!-- 1. Cover -->
+    <div id="cover" class="template-section">
+      <h2>Cover Page</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div class="field-group">
+          <label class="field-label">Project Title</label>
+          <input type="text" class="field-input" placeholder="[Full Project Title]">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Final Version</label>
+          <input type="text" class="field-input" placeholder="Final — v1.0" value="Final — v1.0">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Team Name</label>
+          <input type="text" class="field-input" placeholder="[Team Name]">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Submission Date</label>
+          <input type="date" class="field-input">
+        </div>
+        <div class="field-group" style="grid-column:1/-1;">
+          <label class="field-label">Team Members</label>
+          <textarea class="field-input" rows="5" placeholder="1. [Name] — [Roll No] — [Module(s) owned]&#10;2. [Name] — [Roll No] — [Module(s) owned]&#10;3. [Name] — [Roll No] — [Module(s) owned]&#10;4. [Name] — [Roll No] — [Module(s) owned]"></textarea>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Faculty Mentor</label>
+          <input type="text" class="field-input" placeholder="[Name, Department]">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Git Repository URL</label>
+          <input type="url" class="field-input" placeholder="https://github.com/team/project">
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Abstract -->
+    <div id="abstract" class="template-section">
+      <h2>Abstract</h2>
+      <div class="field-group">
+        <p style="font-size:11.5px;color:#80889a;margin-bottom:6px;">150–200 words. Describe: the problem, your solution, key technologies, and one key outcome/result.</p>
+        <textarea class="field-input" rows="7" placeholder="[Write a 150–200 word abstract. Example structure:&#10;&#10;'The [Project Name] is a web application that solves [problem] for [target users]. &#10;Prior to this system, [describe the pain point]. &#10;Our solution provides [key features] using [technologies]. &#10;The system is built on [stack] and deployed as Docker containers, ensuring portability across environments. &#10;Key outcomes include [e.g. X user stories implemented, Y test cases passing, deployed and running in under 2 minutes on a fresh machine].'&#10;]"></textarea>
+      </div>
+    </div>
+
+    <!-- 3. Scope & Requirements Summary -->
+    <div id="scope-req" class="template-section">
+      <h2>1. Project Scope &amp; Requirements Summary</h2>
+      <p style="font-size:12px;color:#80889a;margin-bottom:14px;">Summarise from T1 and T2. Do not repeat everything — focus on what was achieved vs what was planned.</p>
+
+      <h3>1.1 Scope — Achieved vs Planned</h3>
+      <table class="data-table" style="margin-bottom:16px;">
+        <thead>
+          <tr><th>In-Scope Item (from T1)</th><th>Status</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input type="text" class="field-input" placeholder="e.g. User registration and login" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><span style="color:#6ee7b7;font-weight:700;">✅ Complete</span></td>
+            <td><input type="text" class="field-input" placeholder="" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+          </tr>
+          <tr>
+            <td><input type="text" class="field-input" placeholder="[scope item]" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td>
+              <select class="field-input" style="padding:3px 6px;font-size:11px;width:130px;">
+                <option>✅ Complete</option>
+                <option>⚠️ Partial</option>
+                <option>❌ Not done</option>
+              </select>
+            </td>
+            <td><input type="text" class="field-input" placeholder="Reason if partial/not done" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+          </tr>
+          <tr>
+            <td><input type="text" class="field-input" placeholder="[scope item]" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td>
+              <select class="field-input" style="padding:3px 6px;font-size:11px;width:130px;">
+                <option>✅ Complete</option><option>⚠️ Partial</option><option>❌ Not done</option>
+              </select>
+            </td>
+            <td><input type="text" class="field-input" placeholder="" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>1.2 Requirements Summary</h3>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+        <div style="background:#12121e;border:1px solid #2c2c3a;border-radius:8px;padding:12px 14px;text-align:center;">
+          <div style="font-size:28px;font-weight:800;color:#6ee7b7;margin-bottom:4px;"><input type="text" style="background:transparent;border:none;width:50px;text-align:center;font-size:28px;font-weight:800;color:#6ee7b7;" placeholder="12"></div>
+          <div style="font-size:11.5px;color:#a0a8c0;">Functional Requirements</div>
+          <div style="font-size:11px;color:#5c6478;">defined in T2</div>
+        </div>
+        <div style="background:#12121e;border:1px solid #2c2c3a;border-radius:8px;padding:12px 14px;text-align:center;">
+          <div style="font-size:28px;font-weight:800;color:#7c9ef7;margin-bottom:4px;"><input type="text" style="background:transparent;border:none;width:50px;text-align:center;font-size:28px;font-weight:800;color:#7c9ef7;" placeholder="11"></div>
+          <div style="font-size:11.5px;color:#a0a8c0;">FR Implemented</div>
+          <div style="font-size:11px;color:#5c6478;">of total FRs</div>
+        </div>
+        <div style="background:#12121e;border:1px solid #2c2c3a;border-radius:8px;padding:12px 14px;text-align:center;">
+          <div style="font-size:28px;font-weight:800;color:#fbbf24;margin-bottom:4px;"><input type="text" style="background:transparent;border:none;width:50px;text-align:center;font-size:28px;font-weight:800;color:#fbbf24;" placeholder="15"></div>
+          <div style="font-size:11.5px;color:#a0a8c0;">User Stories</div>
+          <div style="font-size:11px;color:#5c6478;">all in T2</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Design Summary -->
+    <div id="design" class="template-section">
+      <h2>2. Design Summary</h2>
+      <p style="font-size:12px;color:#80889a;margin-bottom:14px;">
+        Reference your T3 design doc. In this section, list the final architecture, tech stack used, and note any design decisions that changed during the build phase.
+      </p>
+
+      <h3>2.1 Final Architecture</h3>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div class="field-group">
+          <label class="field-label">Architecture Pattern Used</label>
+          <input type="text" class="field-input" placeholder="e.g. MVC with REST API">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Any Change from T3 Design?</label>
+          <textarea class="field-input" rows="2" placeholder="Yes/No. If yes, describe what changed and why. (e.g. 'Removed Redis caching — not needed for this scale')"></textarea>
+        </div>
+      </div>
+
+      <h3>2.2 Final Tech Stack</h3>
+      <table class="data-table" style="margin-bottom:16px;">
+        <thead>
+          <tr><th>Layer</th><th>Technology Used</th><th>Version</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Frontend</td><td><input type="text" class="field-input" placeholder="" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td><td><input type="text" class="field-input" placeholder="" style="border:none;background:transparent;color:#c8d0e0;padding:0;"></td></tr>
+          <tr><td>Backend</td><td><input type="text" class="field-input" placeholder="" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td><td><input type="text" class="field-input" placeholder="" style="border:none;background:transparent;color:#c8d0e0;padding:0;"></td></tr>
+          <tr><td>Database</td><td><input type="text" class="field-input" placeholder="" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td><td><input type="text" class="field-input" placeholder="" style="border:none;background:transparent;color:#c8d0e0;padding:0;"></td></tr>
+          <tr><td>Containerisation</td><td style="color:#fb923c;font-weight:700;">Docker + Docker Compose</td><td><input type="text" class="field-input" placeholder="e.g. Docker 25.x" style="border:none;background:transparent;color:#c8d0e0;padding:0;"></td></tr>
+          <tr><td>Version Control</td><td style="color:#fb923c;font-weight:700;">Git (GitHub / GitLab)</td><td></td></tr>
+        </tbody>
+      </table>
+
+      <h3>2.3 Diagram Index</h3>
+      <p style="font-size:11.5px;color:#80889a;margin-bottom:8px;">List all diagrams in the repo and confirm they are updated to match the final code.</p>
+      <table class="data-table">
+        <thead>
+          <tr><th>Diagram</th><th>File Path in Repo</th><th>Updated for Final?</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>ER Diagram</td><td><input type="text" class="field-input" placeholder="docs/images/er_diagram.png" style="border:none;background:transparent;color:#c8d0e0;padding:0;"></td><td><select class="field-input" style="padding:2px 5px;font-size:11px;width:60px;"><option>Yes</option><option>No</option></select></td></tr>
+          <tr><td>Architecture Diagram</td><td><input type="text" class="field-input" placeholder="docs/images/architecture.png" style="border:none;background:transparent;color:#c8d0e0;padding:0;"></td><td><select class="field-input" style="padding:2px 5px;font-size:11px;width:60px;"><option>Yes</option><option>No</option></select></td></tr>
+          <tr><td>Class Diagram</td><td><input type="text" class="field-input" placeholder="docs/images/class_diagram.png" style="border:none;background:transparent;color:#c8d0e0;padding:0;"></td><td><select class="field-input" style="padding:2px 5px;font-size:11px;width:60px;"><option>Yes</option><option>No</option></select></td></tr>
+          <tr><td>Sequence Diagram (Login)</td><td><input type="text" class="field-input" placeholder="docs/images/seq_login.png" style="border:none;background:transparent;color:#c8d0e0;padding:0;"></td><td><select class="field-input" style="padding:2px 5px;font-size:11px;width:60px;"><option>Yes</option><option>No</option></select></td></tr>
+          <tr><td>DFD Level 1</td><td><input type="text" class="field-input" placeholder="docs/images/dfd_level1.png" style="border:none;background:transparent;color:#c8d0e0;padding:0;"></td><td><select class="field-input" style="padding:2px 5px;font-size:11px;width:60px;"><option>Yes</option><option>No</option></select></td></tr>
+          <tr><td>UI Wireframes</td><td><input type="text" class="field-input" placeholder="docs/images/wireframes/" style="border:none;background:transparent;color:#c8d0e0;padding:0;"></td><td><select class="field-input" style="padding:2px 5px;font-size:11px;width:60px;"><option>Yes</option><option>No</option></select></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 5. Deployment Guide -->
+    <div id="deployment" class="template-section">
+      <h2>3. Deployment Guide</h2>
+      <div class="info-box green" style="margin-bottom:14px;">
+        This section must be complete and accurate. The evaluator will follow these exact steps to run your app.
+        If the app doesn't start, the demo fails.
+      </div>
+
+      <h3>3.1 Prerequisites</h3>
+      <textarea class="field-input" rows="3" placeholder="- Docker Desktop (or Docker Engine + Docker Compose) installed&#10;- Git installed&#10;- [Any other requirements, e.g. minimum 4GB RAM, port 3000 and 5432 must be free]"></textarea>
+
+      <h3>3.2 Clone &amp; Run (Step by Step)</h3>
+      <div class="git-tree" style="margin-top:8px;">
+<span class="dim"># Step 1: Clone the repository</span><br>
+<span class="dir">git clone </span><span class="file">[your-repo-url]</span><br>
+<span class="dir">cd </span><span class="file">[project-folder-name]</span><br>
+<br>
+<span class="dim"># Step 2: Create environment file</span><br>
+<span class="dir">cp </span><span class="docker-file">.env.example .env</span><br>
+<span class="dim"># (Edit .env if you need to change ports or passwords)</span><br>
+<br>
+<span class="dim"># Step 3: Start all containers</span><br>
+<span class="docker-file">docker compose up --build</span><br>
+<br>
+<span class="dim"># Step 4: Open in browser</span><br>
+<span class="file">http://localhost:3000</span><br>
+<br>
+<span class="dim"># Step 5 (optional): Stop</span><br>
+<span class="docker-file">docker compose down</span>
+      </div>
+      <p style="font-size:11.5px;color:#80889a;margin-top:8px;">Replace placeholders above with your actual commands. Add any additional steps if needed (e.g. running seed data).</p>
+
+      <h3>3.3 Environment Variables (.env.example)</h3>
+      <div class="field-group">
+        <textarea class="field-input" rows="6" style="font-family:monospace;" placeholder="NODE_ENV=production&#10;PORT=3000&#10;DB_HOST=db&#10;DB_PORT=5432&#10;DB_USER=appuser&#10;DB_PASSWORD=changeme&#10;DB_NAME=myappdb&#10;JWT_SECRET=changeme_in_production"></textarea>
+        <p style="font-size:11px;color:#5c6478;margin-top:4px;">Never commit real secrets. Only .env.example (with placeholder values) is committed.</p>
+      </div>
+
+      <h3>3.4 Default Test Credentials (for demo)</h3>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div class="field-group">
+          <label class="field-label">Test User</label>
+          <input type="text" class="field-input" placeholder="Email: test@demo.com / Password: Demo@1234">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Admin User (if applicable)</label>
+          <input type="text" class="field-input" placeholder="Email: admin@demo.com / Password: Admin@1234">
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. Test Results -->
+    <div id="testing" class="template-section">
+      <h2>4. Test Results Summary</h2>
+      <p style="font-size:12px;color:#80889a;margin-bottom:14px;">
+        Full test scripts are in <code>docs/test-plan.md</code>. This section shows the summary. All test cases from T2 must be executed and results recorded.
+      </p>
+
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px;">
+        <div style="background:#071f14;border:1px solid #065f46;border-radius:8px;padding:12px;text-align:center;">
+          <div style="font-size:24px;font-weight:800;color:#6ee7b7;"><input type="text" style="background:transparent;border:none;width:40px;text-align:center;font-size:24px;font-weight:800;color:#6ee7b7;" placeholder="18"></div>
+          <div style="font-size:11px;color:#a0a8c0;">Total TCs</div>
+        </div>
+        <div style="background:#071f14;border:1px solid #065f46;border-radius:8px;padding:12px;text-align:center;">
+          <div style="font-size:24px;font-weight:800;color:#6ee7b7;"><input type="text" style="background:transparent;border:none;width:40px;text-align:center;font-size:24px;font-weight:800;color:#6ee7b7;" placeholder="15"></div>
+          <div style="font-size:11px;color:#a0a8c0;">Passed ✅</div>
+        </div>
+        <div style="background:#1f1408;border:1px solid #d97706;border-radius:8px;padding:12px;text-align:center;">
+          <div style="font-size:24px;font-weight:800;color:#fbbf24;"><input type="text" style="background:transparent;border:none;width:40px;text-align:center;font-size:24px;font-weight:800;color:#fbbf24;" placeholder="2"></div>
+          <div style="font-size:11px;color:#a0a8c0;">Failed ❌</div>
+        </div>
+        <div style="background:#200808;border:1px solid #991b1b;border-radius:8px;padding:12px;text-align:center;">
+          <div style="font-size:24px;font-weight:800;color:#f87171;"><input type="text" style="background:transparent;border:none;width:40px;text-align:center;font-size:24px;font-weight:800;color:#f87171;" placeholder="1"></div>
+          <div style="font-size:11px;color:#a0a8c0;">Skipped</div>
+        </div>
+      </div>
+
+      <table class="data-table">
+        <thead>
+          <tr><th>TC ID</th><th>Description</th><th>Result</th><th>Notes / Bug Reference</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="color:#6ee7b7;">TC-01</td>
+            <td><input type="text" class="field-input" placeholder="Successful login" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><span style="color:#6ee7b7;font-weight:700;">Pass ✅</span></td>
+            <td><input type="text" class="field-input" placeholder="" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+          </tr>
+          <tr>
+            <td style="color:#6ee7b7;">TC-02</td>
+            <td><input type="text" class="field-input" placeholder="Login with wrong password" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td>
+              <select class="field-input" style="padding:2px 6px;font-size:11px;width:80px;">
+                <option>Pass ✅</option><option>Fail ❌</option><option>Skip</option>
+              </select>
+            </td>
+            <td><input type="text" class="field-input" placeholder="" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+          </tr>
+          <tr>
+            <td colspan="4" style="color:#5c6478;font-size:11px;font-style:italic;text-align:center;">Add all TC IDs from T2. Full steps and actual results in docs/test-plan.md</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 7. Sprint Summary -->
+    <div id="sprints" class="template-section">
+      <h2>5. Sprint Summary</h2>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
+        <div style="background:#12121e;border:1px solid #2c2c3a;border-top:3px solid #fbbf24;border-radius:10px;padding:14px 16px;">
+          <div style="font-size:11px;font-weight:700;color:#fbbf24;text-transform:uppercase;margin-bottom:8px;">Sprint 1 — Weeks 5–6</div>
+          <div class="field-group">
+            <label class="field-label">Goal achieved?</label>
+            <select class="field-input" style="padding:3px 6px;font-size:11px;"><option>Yes</option><option>Partially</option><option>No</option></select>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Key outcomes</label>
+            <textarea class="field-input" rows="3" placeholder="What was delivered?"></textarea>
+          </div>
+        </div>
+        <div style="background:#12121e;border:1px solid #2c2c3a;border-top:3px solid #fb923c;border-radius:10px;padding:14px 16px;">
+          <div style="font-size:11px;font-weight:700;color:#fb923c;text-transform:uppercase;margin-bottom:8px;">Sprint 2 — Weeks 7–8</div>
+          <div class="field-group">
+            <label class="field-label">Goal achieved?</label>
+            <select class="field-input" style="padding:3px 6px;font-size:11px;"><option>Yes</option><option>Partially</option><option>No</option></select>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Key outcomes</label>
+            <textarea class="field-input" rows="3" placeholder="What was delivered?"></textarea>
+          </div>
+        </div>
+        <div style="background:#12121e;border:1px solid #2c2c3a;border-top:3px solid #f87171;border-radius:10px;padding:14px 16px;">
+          <div style="font-size:11px;font-weight:700;color:#f87171;text-transform:uppercase;margin-bottom:8px;">Sprint 3 — Weeks 9–10</div>
+          <div class="field-group">
+            <label class="field-label">Goal achieved?</label>
+            <select class="field-input" style="padding:3px 6px;font-size:11px;"><option>Yes</option><option>Partially</option><option>No</option></select>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Key outcomes</label>
+            <textarea class="field-input" rows="3" placeholder="What was delivered?"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 8. Known Issues -->
+    <div id="known-issues" class="template-section">
+      <h2>6. Known Issues &amp; Limitations</h2>
+      <p style="font-size:12px;color:#80889a;margin-bottom:10px;">Be honest. Evaluators appreciate transparency. List anything that doesn't work perfectly or has known limitations.</p>
+      <table class="data-table">
+        <thead>
+          <tr><th>Issue / Limitation</th><th>Impact</th><th>Workaround (if any)</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input type="text" class="field-input" placeholder="e.g. No email notification for reservations" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><input type="text" class="field-input" placeholder="Low — out of scope" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><input type="text" class="field-input" placeholder="On-screen notification shown instead" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+          </tr>
+          <tr>
+            <td><input type="text" class="field-input" placeholder="[Issue]" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><input type="text" class="field-input" placeholder="" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><input type="text" class="field-input" placeholder="" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 9. Lessons Learned -->
+    <div id="lessons" class="template-section">
+      <h2>7. Lessons Learned</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div class="field-group">
+          <label class="field-label" style="color:#6ee7b7;">What we did well</label>
+          <textarea class="field-input" rows="5" placeholder="1. [Specific strength]&#10;2. [Specific strength]&#10;3. [e.g. 'Docker setup in Week 2 saved us hours of deployment pain in Week 11']"></textarea>
+        </div>
+        <div class="field-group">
+          <label class="field-label" style="color:#f87171;">What we would do differently</label>
+          <textarea class="field-input" rows="5" placeholder="1. [Specific change]&#10;2. [e.g. 'Start writing test cases earlier — we left them to Sprint 3']&#10;3. [e.g. 'Break tasks smaller — some tasks took 3 days instead of 1']"></textarea>
+        </div>
+        <div class="field-group" style="grid-column:1/-1;">
+          <label class="field-label" style="color:#fbbf24;">Key technical learnings</label>
+          <textarea class="field-input" rows="4" placeholder="What technical skills, tools, or concepts did the team learn during this project? Be specific — not 'we learned a lot' but 'we learned how Docker networking works, specifically the difference between host.docker.internal and container service names.'"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- 10. Individual Contributions -->
+    <div id="contributions" class="template-section">
+      <h2>8. Individual Contribution Matrix</h2>
+      <div class="info-box" style="margin-bottom:14px;">
+        Every team member must be listed. Contribution must be specific and verifiable in Git commit history.
+        "I did the frontend" is not acceptable — list specific features/modules/commits.
+      </div>
+      <table class="data-table">
+        <thead>
+          <tr><th>Team Member</th><th>Modules / Features Owned</th><th>Documents Authored</th><th>Git Contribution (approx %)</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input type="text" class="field-input" placeholder="[Name]" style="border:none;background:transparent;color:#c8d0e0;padding:0;font-weight:700;"></td>
+            <td><input type="text" class="field-input" placeholder="e.g. Authentication module, User management API" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><input type="text" class="field-input" placeholder="T1, T2 (FRD sections 1-3)" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><input type="text" class="field-input" placeholder="~30%" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:50px;"></td>
+          </tr>
+          <tr>
+            <td><input type="text" class="field-input" placeholder="[Name]" style="border:none;background:transparent;color:#c8d0e0;padding:0;font-weight:700;"></td>
+            <td><input type="text" class="field-input" placeholder="" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><input type="text" class="field-input" placeholder="" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><input type="text" class="field-input" placeholder="~25%" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:50px;"></td>
+          </tr>
+          <tr>
+            <td><input type="text" class="field-input" placeholder="[Name]" style="border:none;background:transparent;color:#c8d0e0;padding:0;font-weight:700;"></td>
+            <td><input type="text" class="field-input" placeholder="" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><input type="text" class="field-input" placeholder="" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><input type="text" class="field-input" placeholder="~25%" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:50px;"></td>
+          </tr>
+          <tr>
+            <td><input type="text" class="field-input" placeholder="[Name]" style="border:none;background:transparent;color:#c8d0e0;padding:0;font-weight:700;"></td>
+            <td><input type="text" class="field-input" placeholder="" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><input type="text" class="field-input" placeholder="" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><input type="text" class="field-input" placeholder="~20%" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:50px;"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Final Submission Checklist -->
+    <div id="submission" class="template-section">
+      <h2>Final Submission Checklist</h2>
+      <div class="info-box orange" style="margin-bottom:16px;">
+        Team Lead signs this checklist and commits it to the repo before submitting the Git link.
+        Consultant will verify this list during final week spot checks.
+      </div>
+      <ul class="checklist">
+        <li><input type="checkbox"> <span><strong>Git repo URL submitted</strong> — link shared with faculty and consultant</span> <span class="gate gate-pass">Gate</span></li>
+        <li><input type="checkbox"> <span>App starts with <code style="background:#1a1a2e;padding:1px 5px;border-radius:3px;">docker compose up</code> on a fresh machine with no extra config</span> <span class="gate gate-pass">Gate</span></li>
+        <li><input type="checkbox"> <span>README.md contains clear "How to Run" instructions (Step 1, Step 2, Step 3…)</span> <span class="gate gate-pass">Gate</span></li>
+        <li><input type="checkbox"> <span><code>docs/scope.md</code> (T1) committed</span></li>
+        <li><input type="checkbox"> <span><code>docs/frd.md</code> (T2) committed — all FRs, user stories, use cases</span></li>
+        <li><input type="checkbox"> <span><code>docs/design.md</code> (T3) committed — all 10 sections complete</span></li>
+        <li><input type="checkbox"> <span>All diagrams (ER, class, sequence, DFD) in <code>docs/images/</code></span></li>
+        <li><input type="checkbox"> <span>Diagrams updated to reflect final code (not just initial design)</span></li>
+        <li><input type="checkbox"> <span><code>docs/sprints/sprint1.md</code>, <code>sprint2.md</code>, <code>sprint3.md</code> committed</span></li>
+        <li><input type="checkbox"> <span><code>docs/test-plan.md</code> with all TC results filled in</span></li>
+        <li><input type="checkbox"> <span><code>docs/final-report.md</code> (T5 — this document) committed</span></li>
+        <li><input type="checkbox"> <span><code>.env.example</code> committed; real <code>.env</code> in <code>.gitignore</code></span> <span class="gate gate-pass">Gate</span></li>
+        <li><input type="checkbox"> <span>Individual contribution matrix filled in (section 8 above)</span></li>
+        <li><input type="checkbox"> <span>10-minute presentation prepared and rehearsed</span></li>
+      </ul>
+      <div style="margin-top:16px;display:flex;gap:20px;align-items:center;flex-wrap:wrap;">
+        <div>
+          <label class="field-label">Team Lead Signature</label>
+          <input type="text" class="field-input" placeholder="[Name + Date]" style="max-width:280px;">
+        </div>
+        <div>
+          <label class="field-label">Faculty Sign-off</label>
+          <input type="text" class="field-input" placeholder="[Faculty Name + Date]" style="max-width:280px;">
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Final Gate Checklist ── -->
+    <div style="background:#1a1708;border:1px solid #a16207;border-radius:12px;padding:20px 24px;margin-top:32px;">
+      <div style="font-size:13px;font-weight:800;color:#fde68a;margin-bottom:14px;">✅ Week 13 Final Gate — Before Demo Day</div>
+      <p style="font-size:12px;color:#a0a8c0;margin-bottom:12px;">Team lead completes this the morning of demo day. Git repo link is the final submission — consultant and faculty both verify.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 24px;margin-bottom:16px;">
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#eab308;margin-top:2px;flex-shrink:0;"> Git repo URL shared with faculty and consultant</label>
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#eab308;margin-top:2px;flex-shrink:0;"> App starts with <code style="background:#12121e;padding:1px 5px;border-radius:3px;">docker compose up</code> on a fresh machine</label>
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#eab308;margin-top:2px;flex-shrink:0;"> README.md has clear step-by-step deployment instructions</label>
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#eab308;margin-top:2px;flex-shrink:0;"> .env.example committed; real .env is in .gitignore</label>
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#eab308;margin-top:2px;flex-shrink:0;"> All docs (T1–T5) committed to docs/ folder in repo</label>
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#eab308;margin-top:2px;flex-shrink:0;"> All diagrams updated to reflect final code (not initial design)</label>
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#eab308;margin-top:2px;flex-shrink:0;"> All 3 sprint docs committed to docs/sprints/</label>
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#eab308;margin-top:2px;flex-shrink:0;"> Test results recorded in test-plan.md</label>
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#eab308;margin-top:2px;flex-shrink:0;"> Individual contribution matrix filled in and specific</label>
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#eab308;margin-top:2px;flex-shrink:0;"> 10-minute presentation rehearsed at least once as a team</label>
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#eab308;margin-top:2px;flex-shrink:0;"> Test login credentials noted for demo (email + password)</label>
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#eab308;margin-top:2px;flex-shrink:0;"> Printed D5 (hard bound) ready to hand over to panel</label>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;padding-top:10px;border-top:1px solid #2c2c3a;">
+        <div style="flex:1;min-width:160px;">
+          <div style="font-size:10px;color:#5c6478;margin-bottom:4px;">Team Lead Signature</div>
+          <input type="text" class="field-input" placeholder="Name + Date" style="font-size:12px;">
+        </div>
+        <div style="flex:1;min-width:160px;">
+          <div style="font-size:10px;color:#5c6478;margin-bottom:4px;">Faculty Sign-off</div>
+          <input type="text" class="field-input" placeholder="Faculty Name + Date" style="font-size:12px;">
+        </div>
+        <div style="flex:1;min-width:160px;">
+          <div style="font-size:10px;color:#5c6478;margin-bottom:4px;">Consultant Sign-off</div>
+          <input type="text" class="field-input" placeholder="Consultant Name + Date" style="font-size:12px;">
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Print / Word Document Guide ── -->
+    <div style="background:#14120a;border:1px solid #a16207;border-left:4px solid #eab308;border-radius:12px;padding:20px 24px;margin-top:36px;">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#fde68a;margin-bottom:12px;">🖨️ Word / Print Submission — D5: Final Product Documentation</div>
+      <div style="font-size:12px;color:#a0a8c0;margin-bottom:10px;">
+        Document title on cover: <strong style="color:#fde68a;">"Final Product Documentation — [Project Name]"</strong> &nbsp;&middot;&nbsp;
+        Cover page, Revision History &amp; ToC are standard for all docs — <a href="print_guide.html" style="color:#7c6ff7;">see Print Guide</a>
+      </div>
+      <div style="margin-bottom:14px;">
+        <div style="font-size:11px;font-weight:700;color:#a0a8c0;text-transform:uppercase;margin-bottom:8px;">Document-Specific Sections</div>
+        <ol style="margin-left:16px;font-size:12.5px;color:#c8d0e0;line-height:2.2;">
+          <li>Abstract (150–200 words, standalone page)</li>
+          <li>Project Scope — achieved vs planned table</li>
+          <li>Design Summary — final arch, tech stack, updated diagram index</li>
+          <li>Deployment Guide — step-by-step docker commands</li>
+          <li>Test Results Summary table</li>
+          <li>Sprint Summary — 3-column table</li>
+          <li>Known Issues &amp; Limitations</li>
+          <li>Lessons Learned — 3-column table</li>
+          <li>Individual Contribution Matrix</li>
+          <li>Final Submission Checklist (all items ticked)</li>
+          <li>Sign-off Page — team + faculty + consultant (industry expert)</li>
+        </ol>
+      </div>
+
+    <!-- Navigation -->
+    <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;">
+      <a href="T4_SprintPlan.html" class="btn btn-outline">← T4 Sprint Plan</a>
+      <a href="checklists.html" class="btn btn-primary">Next: Phase Checklists →</a>
+    </div>
+
+  </main>
+
+  <footer>
+    MCA Sem 4 · 13-Week Pilot · T5 — Final Product Documentation &nbsp;|&nbsp;
+    <a href="index.html" style="color:#7c6ff7;">← Pilot Hub</a>
+  </footer>
+
+</body>
+</html>

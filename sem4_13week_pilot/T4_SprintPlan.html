@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>T4 — Sprint Plan | MCA Sem 4 Pilot</title>
+  <link rel="stylesheet" href="pilot_styles.css">
+</head>
+<body>
+
+  <nav class="topnav">
+    <a href="../index.html">← Main Index</a>
+    <span class="topnav-sep">›</span>
+    <a href="index.html">Pilot Hub</a>
+    <span class="topnav-sep">›</span>
+    <a href="T3_DesignDocument.html">T3 Design</a>
+    <span class="topnav-sep">›</span>
+    <a href="T4_SprintPlan.html" class="active">T4 — Sprint Plan</a>
+    <span class="topnav-sep">›</span>
+    <a href="T5_FinalProductDoc.html">T5 Final Doc →</a>
+    <span class="pilot-badge">Weeks 5–10 · Use Once Per Sprint</span>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-eyebrow">Template 4 of 5 · Weeks 5–10 · Reuse × 3</div>
+    <h1>Sprint Plan<br><span>Sprint 1 / 2 / 3</span></h1>
+    <p class="hero-sub">
+      Use this template for each of the 3 sprints (Weeks 5–6, 7–8, 9–10).
+      Commit as <code style="background:rgba(255,255,255,0.1);padding:2px 8px;border-radius:4px;">docs/sprints/sprint1.md</code> (and sprint2.md, sprint3.md).
+    </p>
+    <div class="tag-row">
+      <span class="tag orange">Sprint 1: Weeks 5–6</span>
+      <span class="tag orange">Sprint 2: Weeks 7–8</span>
+      <span class="tag orange">Sprint 3: Weeks 9–10</span>
+      <span class="tag green">Demo at end of every sprint</span>
+    </div>
+  </div>
+
+  <main class="main">
+
+    <div class="info-box">
+      <strong>Sprint Rules:</strong>
+      (1) Tasks must be small enough to complete in 1–3 days. Break big tasks down.
+      (2) Code runs in Docker from day 1 — no "I'll dockerise later."
+      (3) Daily commits to Git — no big-bang commits on the last day.
+      (4) Every sprint ends with a <strong>live demo to faculty</strong>.
+    </div>
+
+    <!-- Sprint selector -->
+    <div style="background:#1a1a2e;border:1px solid #2c2c3a;border-radius:10px;padding:14px 20px;margin-bottom:28px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+      <span style="font-size:13px;color:#a0a8c0;font-weight:700;">This document is for:</span>
+      <label style="display:flex;align-items:center;gap:6px;font-size:13px;background:#1f1408;border:1px solid #d97706;border-radius:6px;padding:6px 14px;cursor:pointer;">
+        <input type="radio" name="sprint" style="accent-color:#f59e0b;"> <span style="color:#fbbf24;font-weight:700;">Sprint 1</span> <span style="color:#80889a;font-size:11px;">(Weeks 5–6)</span>
+      </label>
+      <label style="display:flex;align-items:center;gap:6px;font-size:13px;background:#1f0e08;border:1px solid #c2410c;border-radius:6px;padding:6px 14px;cursor:pointer;">
+        <input type="radio" name="sprint" style="accent-color:#fb923c;"> <span style="color:#fb923c;font-weight:700;">Sprint 2</span> <span style="color:#80889a;font-size:11px;">(Weeks 7–8)</span>
+      </label>
+      <label style="display:flex;align-items:center;gap:6px;font-size:13px;background:#200808;border:1px solid #991b1b;border-radius:6px;padding:6px 14px;cursor:pointer;">
+        <input type="radio" name="sprint" style="accent-color:#ef4444;"> <span style="color:#f87171;font-weight:700;">Sprint 3</span> <span style="color:#80889a;font-size:11px;">(Weeks 9–10)</span>
+      </label>
+    </div>
+
+    <!-- Sprint Header -->
+    <div class="template-section">
+      <h2>Sprint Header</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;">
+        <div class="field-group">
+          <label class="field-label">Sprint Number</label>
+          <input type="text" class="field-input" placeholder="1 / 2 / 3">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Start Date</label>
+          <input type="date" class="field-input">
+        </div>
+        <div class="field-group">
+          <label class="field-label">End Date (Demo Day)</label>
+          <input type="date" class="field-input">
+        </div>
+        <div class="field-group" style="grid-column:1/-1;">
+          <label class="field-label">Sprint Goal</label>
+          <p style="font-size:11.5px;color:#80889a;margin-bottom:5px;">One sentence: what will the team demonstrate at the end of this sprint? Be specific.</p>
+          <textarea class="field-input" rows="2" placeholder="Sprint 1: By end of Week 6, users can register, log in, and view the main dashboard. The app runs fully via docker compose up.&#10;Sprint 2: By end of Week 8, users can [core feature] and [secondary feature]. All modules are integrated.&#10;Sprint 3: App is feature-complete, all test cases pass, and the app deploys cleanly on a fresh machine."></textarea>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Velocity (estimated story points / tasks)</label>
+          <input type="text" class="field-input" placeholder="e.g. 12 tasks in 2 weeks">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Sprint Lead (rotates each sprint)</label>
+          <input type="text" class="field-input" placeholder="[Name]">
+        </div>
+      </div>
+    </div>
+
+    <!-- Sprint Backlog -->
+    <div class="template-section">
+      <h2>Sprint Backlog</h2>
+      <p style="font-size:12.5px;color:#a0a8c0;margin-bottom:14px;">
+        Break down the sprint goal into individual tasks. Each task = 1 day or less of work.
+        If a task takes more than 2 days, break it further. Status: <span style="color:#7c9ef7;">To Do</span> → <span style="color:#fbbf24;">In Progress</span> → <span style="color:#6ee7b7;">Done</span>
+      </p>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="width:65px;">Task ID</th>
+            <th>Task Description</th>
+            <th style="width:120px;">Module / Component</th>
+            <th style="width:100px;">Owner</th>
+            <th style="width:80px;">Estimate (hrs)</th>
+            <th style="width:90px;">Status</th>
+            <th style="width:140px;">Definition of Done</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="color:#fbbf24;font-weight:700;">SP1-01</td>
+            <td><input type="text" class="field-input" placeholder="Set up Express server with basic routing and health-check endpoint" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><input type="text" class="field-input" placeholder="Backend / API" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><input type="text" class="field-input" placeholder="[Name]" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:90px;"></td>
+            <td><input type="text" class="field-input" placeholder="4" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:40px;text-align:center;"></td>
+            <td>
+              <select class="field-input" style="padding:3px 6px;font-size:11px;width:80px;">
+                <option>To Do</option><option>In Progress</option><option selected>Done</option>
+              </select>
+            </td>
+            <td><input type="text" class="field-input" placeholder="GET /health returns 200. Runs in Docker." style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;font-size:11px;"></td>
+          </tr>
+          <tr>
+            <td style="color:#fbbf24;font-weight:700;">SP1-02</td>
+            <td><input type="text" class="field-input" placeholder="Create users table in PostgreSQL + run migration in Docker container" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><input type="text" class="field-input" placeholder="Database" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><input type="text" class="field-input" placeholder="[Name]" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:90px;"></td>
+            <td><input type="text" class="field-input" placeholder="3" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:40px;text-align:center;"></td>
+            <td>
+              <select class="field-input" style="padding:3px 6px;font-size:11px;width:80px;">
+                <option>To Do</option><option>In Progress</option><option>Done</option>
+              </select>
+            </td>
+            <td><input type="text" class="field-input" placeholder="Migration runs on docker compose up. Table visible in DB." style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;font-size:11px;"></td>
+          </tr>
+          <tr>
+            <td style="color:#fbbf24;font-weight:700;">SP1-03</td>
+            <td><input type="text" class="field-input" placeholder="Implement POST /register — accept email + password, hash password, save to DB" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><input type="text" class="field-input" placeholder="Auth / Backend" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><input type="text" class="field-input" placeholder="[Name]" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:90px;"></td>
+            <td><input type="text" class="field-input" placeholder="5" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:40px;text-align:center;"></td>
+            <td>
+              <select class="field-input" style="padding:3px 6px;font-size:11px;width:80px;">
+                <option>To Do</option><option selected>In Progress</option><option>Done</option>
+              </select>
+            </td>
+            <td><input type="text" class="field-input" placeholder="TC-01 passes. User row in DB with hashed password." style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;font-size:11px;"></td>
+          </tr>
+          <tr>
+            <td style="color:#fbbf24;font-weight:700;">SP1-04</td>
+            <td><input type="text" class="field-input" placeholder="[Add your task]" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><input type="text" class="field-input" placeholder="" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><input type="text" class="field-input" placeholder="" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:90px;"></td>
+            <td><input type="text" class="field-input" placeholder="" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:40px;text-align:center;"></td>
+            <td><select class="field-input" style="padding:3px 6px;font-size:11px;width:80px;"><option selected>To Do</option><option>In Progress</option><option>Done</option></select></td>
+            <td><input type="text" class="field-input" placeholder="" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;font-size:11px;"></td>
+          </tr>
+          <tr>
+            <td colspan="7" style="color:#5c6478;font-size:11px;font-style:italic;text-align:center;">Continue adding tasks. Each sprint typically has 8–15 tasks for a 4-person team over 2 weeks.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Blockers -->
+    <div class="template-section">
+      <h2>Blockers &amp; Risks Log</h2>
+      <p style="font-size:12.5px;color:#a0a8c0;margin-bottom:10px;">
+        Record blockers as soon as they arise. Don't wait until the sprint ends. If blocked for more than 1 day, escalate to faculty.
+        If blocked for more than 2 days, consultant is notified.
+      </p>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="width:80px;">Date</th>
+            <th style="width:80px;">Task ID</th>
+            <th>Blocker Description</th>
+            <th style="width:100px;">Owner</th>
+            <th style="width:130px;">Resolution / Action</th>
+            <th style="width:90px;">Resolved Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input type="date" class="field-input" style="border:none;background:transparent;color:#c8d0e0;padding:0;"></td>
+            <td><input type="text" class="field-input" placeholder="SP1-03" style="border:none;background:transparent;color:#c8d0e0;padding:0;"></td>
+            <td><input type="text" class="field-input" placeholder="bcrypt module throws error inside Docker container" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><input type="text" class="field-input" placeholder="[Name]" style="border:none;background:transparent;color:#c8d0e0;padding:0;"></td>
+            <td><input type="text" class="field-input" placeholder="Added build dependencies in Dockerfile" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><input type="date" class="field-input" style="border:none;background:transparent;color:#c8d0e0;padding:0;"></td>
+          </tr>
+          <tr>
+            <td><input type="date" class="field-input" style="border:none;background:transparent;color:#c8d0e0;padding:0;"></td>
+            <td><input type="text" class="field-input" placeholder="" style="border:none;background:transparent;color:#c8d0e0;padding:0;"></td>
+            <td><input type="text" class="field-input" placeholder="[Describe blocker]" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><input type="text" class="field-input" placeholder="" style="border:none;background:transparent;color:#c8d0e0;padding:0;"></td>
+            <td><input type="text" class="field-input" placeholder="" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:100%;"></td>
+            <td><input type="date" class="field-input" style="border:none;background:transparent;color:#c8d0e0;padding:0;"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Weekly Status -->
+    <div class="template-section">
+      <h2>Weekly Status Update</h2>
+      <p style="font-size:12.5px;color:#a0a8c0;margin-bottom:14px;">
+        Submit one status update per week (mid-sprint and end-of-sprint). Keep it to 3 lines each.
+        Faculty reads these every Monday. Consultant reviews Monday morning.
+      </p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div>
+          <div style="background:#12121e;border:1px solid #2c2c3a;border-radius:8px;padding:14px 16px;">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#7c9ef7;margin-bottom:10px;">Week [N] Status (Mid-Sprint)</div>
+            <div class="field-group">
+              <label class="field-label" style="color:#6ee7b7;">✅ Done this week</label>
+              <textarea class="field-input" rows="2" placeholder="What was completed? (link to commits if possible)"></textarea>
+            </div>
+            <div class="field-group">
+              <label class="field-label" style="color:#fbbf24;">🔄 In progress</label>
+              <textarea class="field-input" rows="2" placeholder="What is actively being worked on?"></textarea>
+            </div>
+            <div class="field-group">
+              <label class="field-label" style="color:#f87171;">🚧 Blocked</label>
+              <textarea class="field-input" rows="2" placeholder="Any blockers? None if nothing is blocked."></textarea>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div style="background:#12121e;border:1px solid #2c2c3a;border-radius:8px;padding:14px 16px;">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#fb923c;margin-bottom:10px;">Week [N+1] Status (End-of-Sprint)</div>
+            <div class="field-group">
+              <label class="field-label" style="color:#6ee7b7;">✅ Done this week</label>
+              <textarea class="field-input" rows="2" placeholder="What was completed?"></textarea>
+            </div>
+            <div class="field-group">
+              <label class="field-label" style="color:#fbbf24;">🔄 In progress / carried over</label>
+              <textarea class="field-input" rows="2" placeholder="What carries into next sprint? Why was it not completed?"></textarea>
+            </div>
+            <div class="field-group">
+              <label class="field-label" style="color:#f87171;">🚧 Blocked</label>
+              <textarea class="field-input" rows="2" placeholder="Any blockers?"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Demo Checklist -->
+    <div class="template-section">
+      <h2>End-of-Sprint Demo Checklist</h2>
+      <div class="info-box orange" style="margin-bottom:16px;">
+        Complete this checklist <strong>before</strong> the demo. A demo that fails due to setup issues is a failed demo.
+        Practice the demo at least once as a team before showing faculty.
+      </div>
+      <ul class="checklist">
+        <li><input type="checkbox"> <span>App starts with <code style="background:#1a1a2e;padding:1px 5px;border-radius:3px;">docker compose up</code> — no manual steps needed</span> <span class="gate gate-pass">Gate</span></li>
+        <li><input type="checkbox"> <span>Sprint goal user flow works end-to-end (demonstrated, not just described)</span> <span class="gate gate-pass">Gate</span></li>
+        <li><input type="checkbox"> <span>No hardcoded credentials or secrets in code (use .env)</span> <span class="gate gate-pass">Gate</span></li>
+        <li><input type="checkbox"> <span>All sprint backlog tasks updated to Done / In Progress / Carried Over</span></li>
+        <li><input type="checkbox"> <span>Blockers log updated — all open blockers have owners and action plans</span></li>
+        <li><input type="checkbox"> <span>Git commits are regular (not one big commit on demo day)</span></li>
+        <li><input type="checkbox"> <span>Sprint plan committed to <code style="background:#1a1a2e;padding:1px 5px;border-radius:3px;">docs/sprints/sprint[N].md</code></span></li>
+        <li><input type="checkbox"> <span>Team can answer: "What did you not build yet? Why?" without hesitation</span></li>
+      </ul>
+
+      <!-- Sprint Retrospective -->
+      <h3 style="margin-top:20px;">Sprint Retrospective (fill immediately after demo)</h3>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:10px;">
+        <div>
+          <label class="field-label" style="color:#6ee7b7;">What went well?</label>
+          <textarea class="field-input" rows="4" placeholder="What practices, tools, or teamwork patterns worked well this sprint?"></textarea>
+        </div>
+        <div>
+          <label class="field-label" style="color:#f87171;">What went wrong?</label>
+          <textarea class="field-input" rows="4" placeholder="What caused delays, bugs, or confusion? Be honest."></textarea>
+        </div>
+        <div>
+          <label class="field-label" style="color:#fbbf24;">What will we do differently?</label>
+          <textarea class="field-input" rows="4" placeholder="Concrete actions for next sprint. Not vague ('communicate better') — specific ('daily 10-min standup at 9am')."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Sprint Gate Checklist ── -->
+    <div style="background:#1a1a2e;border:1px solid #2c2c3a;border-radius:12px;padding:20px 24px;margin-top:32px;">
+      <div style="font-size:13px;font-weight:800;color:#fbbf24;margin-bottom:14px;">✅ End-of-Sprint Gate — Faculty Sign-off (repeat for each sprint)</div>
+      <p style="font-size:12px;color:#a0a8c0;margin-bottom:12px;">Complete this gate at the end of Sprint 1, Sprint 2, and Sprint 3. Team cannot move to next sprint without faculty sign-off.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 24px;margin-bottom:16px;">
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#f59e0b;margin-top:2px;flex-shrink:0;"> Sprint plan committed to docs/sprints/sprint[N].md</label>
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#f59e0b;margin-top:2px;flex-shrink:0;"> App starts via <code style="background:#12121e;padding:1px 5px;border-radius:3px;">docker compose up</code> — no manual steps</label>
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#f59e0b;margin-top:2px;flex-shrink:0;"> Sprint goal demonstrated live to faculty (not screenshots)</label>
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#f59e0b;margin-top:2px;flex-shrink:0;"> No hardcoded credentials or secrets in committed code</label>
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#f59e0b;margin-top:2px;flex-shrink:0;"> Weekly status reports submitted for both weeks</label>
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#f59e0b;margin-top:2px;flex-shrink:0;"> Regular commits throughout sprint (not a single end-of-sprint dump)</label>
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#f59e0b;margin-top:2px;flex-shrink:0;"> All backlog tasks updated (Done / In Progress / Carried Over)</label>
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#f59e0b;margin-top:2px;flex-shrink:0;"> Sprint retrospective completed</label>
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;border:1px solid rgba(248,113,113,0.3);border-radius:6px;padding:6px 8px;background:rgba(200,8,8,0.05);"><input type="checkbox" style="accent-color:#f87171;margin-top:2px;flex-shrink:0;"> <strong style="color:#f87171;">Sprint 2 only:</strong> all modules integrated — no isolated modules</label>
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;border:1px solid rgba(248,113,113,0.3);border-radius:6px;padding:6px 8px;background:rgba(200,8,8,0.05);"><input type="checkbox" style="accent-color:#f87171;margin-top:2px;flex-shrink:0;"> <strong style="color:#f87171;">Sprint 3 only:</strong> code freeze — no new features from this point</label>
+      </div>
+      <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding-top:10px;border-top:1px solid #2c2c3a;">
+        <div style="flex:1;min-width:140px;">
+          <div style="font-size:10px;color:#5c6478;margin-bottom:4px;">Sprint Number</div>
+          <select class="field-input" style="font-size:12px;">
+            <option>Sprint 1 — Weeks 5–6</option>
+            <option>Sprint 2 — Weeks 7–8</option>
+            <option>Sprint 3 — Weeks 9–10</option>
+          </select>
+        </div>
+        <div style="flex:1;min-width:160px;">
+          <div style="font-size:10px;color:#5c6478;margin-bottom:4px;">Faculty Signature</div>
+          <input type="text" class="field-input" placeholder="Faculty Name + Date" style="font-size:12px;">
+        </div>
+        <div style="flex:1;min-width:160px;">
+          <div style="font-size:10px;color:#5c6478;margin-bottom:4px;">Gate Status</div>
+          <select class="field-input" style="font-size:12px;">
+            <option>✅ Passed — team may proceed</option>
+            <option>⚠️ Failed — recovery plan required</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Print / Word Document Guide ── -->
+    <div style="background:#1a0f08;border:1px solid #d97706;border-left:4px solid #f59e0b;border-radius:12px;padding:20px 24px;margin-top:36px;">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#fbbf24;margin-bottom:12px;">🖨️ Word / Print Submission — D4: Combined Sprint Log</div>
+      <div style="font-size:12px;color:#a0a8c0;margin-bottom:10px;">
+        Document title on cover: <strong style="color:#fbbf24;">"Combined Sprint Log — Sprints 1, 2 &amp; 3"</strong> &nbsp;·&nbsp;
+        Cover page, Revision History &amp; Table of Contents are standard for all docs — <a href="print_guide.html" style="color:#7c6ff7;">see Print Guide</a>
+      </div>
+      <div style="margin-bottom:14px;">
+        <div style="font-size:11px;font-weight:700;color:#a0a8c0;text-transform:uppercase;margin-bottom:8px;">Document-Specific Sections</div>
+        <ol style="margin-left:16px;font-size:12.5px;color:#c8d0e0;line-height:2.2;">
+          <li>Sprint Summary Overview table (all 3 sprints at a glance)</li>
+          <li>Sprint 1 (Weeks 5–6) — goal, backlog, blockers, status, retrospective, demo sign-off</li>
+          <li>Sprint 2 (Weeks 7–8) — same structure as Sprint 1</li>
+          <li>Sprint 3 (Weeks 9–10) — same + code freeze &amp; test execution note</li>
+          <li>Faculty sign-off confirming all 3 sprint demos were conducted</li>
+        </ol>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+        <span style="background:#1e1040;color:#c4b5fd;font-size:11px;padding:3px 10px;border-radius:4px;">Est. 10–12 pages</span>
+        <span style="background:#071f14;color:#6ee7b7;font-size:11px;padding:3px 10px;border-radius:4px;">A4, spiral bound</span>
+        <span style="background:#1f1408;color:#fbbf24;font-size:11px;padding:3px 10px;border-radius:4px;">Due: Week 10 (end of Sprint 3)</span>
+        <a href="print_guide.html" class="btn btn-outline" style="font-size:11px;padding:5px 12px;margin-left:auto;">Full Print Guide →</a>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;">
+      <a href="T3_DesignDocument.html" class="btn btn-outline">← T3 Design</a>
+      <a href="T5_FinalProductDoc.html" class="btn btn-primary">Next: T5 — Final Product Doc →</a>
+    </div>
+
+  </main>
+
+  <footer>
+    MCA Sem 4 · 13-Week Pilot · T4 — Sprint Plan &nbsp;|&nbsp;
+    <a href="index.html" style="color:#7c6ff7;">← Pilot Hub</a>
+  </footer>
+
+</body>
+</html>
