@@ -2,6 +2,7 @@
 
 A complete 4-semester MCA software project reference, using an **Online Food Delivery System** as the worked example throughout.
 
+[MCA Project Lifecycle](https://reachsatyavs.github.io/mca-project-lifecycle/)
 ---
 
 ## What's inside
