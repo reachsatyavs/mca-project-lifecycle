@@ -5,7 +5,7 @@ A complete 4-semester MCA software project reference, using an **Online Food Del
 🌐 **Live site:** [reachsatyavs.github.io/mca-project-lifecycle](https://reachsatyavs.github.io/mca-project-lifecycle/)
 
 📊 **Concept slides (show these to students):** [Software Engineering — The Whole Story in Simple Slides](https://reachsatyavs.github.io/mca-project-lifecycle/sem4_13week_pilot/concepts_slides.html)
-&nbsp;·&nbsp; local file: [`sem4_13week_pilot/concepts_slides.html`](sem4_13week_pilot/concepts_slides.html)
+
 
 A 20-slide, beginner-friendly walkthrough — Software Engineering, SDLC, FRD, User Stories, Use Cases, Test Cases, Architecture, ER / Class / Flow / Sequence diagrams, coding in VS Code, Docker, and GitHub — all followed end-to-end through a single **Login** feature. Open in a browser and use the arrow keys.
 ---
