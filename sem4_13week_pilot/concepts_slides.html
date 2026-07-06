@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Software Engineering — Concepts in Simple Slides</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/theme/black.min.css" id="theme" />
+<style>
+  :root {
+    --accent: #6ee7b7;
+    --accent2: #60a5fa;
+    --warn: #f87171;
+    --ink: #e5e7eb;
+    --muted: #9ca3af;
+    --panel: #111827;
+    --panel2: #0b1220;
+  }
+  .reveal { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  .reveal h1, .reveal h2, .reveal h3 { color: var(--accent); text-transform: none; letter-spacing: 0; font-weight: 700; }
+  .reveal h1 { font-size: 2.1em; }
+  .reveal h2 { font-size: 1.5em; }
+  .reveal section { text-align: left; }
+  .reveal .center { text-align: center; }
+  .tag {
+    display: inline-block; font-size: 0.42em; letter-spacing: 2px; text-transform: uppercase;
+    color: #0b1220; background: var(--accent); padding: 4px 12px; border-radius: 999px; font-weight: 700;
+    margin-bottom: 14px;
+  }
+  .def {
+    background: var(--panel); border-left: 4px solid var(--accent2);
+    padding: 14px 20px; border-radius: 8px; font-size: 0.82em; line-height: 1.45;
+  }
+  .def b { color: var(--accent2); }
+  .ex {
+    background: var(--panel2); border-left: 4px solid var(--accent);
+    padding: 14px 20px; border-radius: 8px; font-size: 0.74em; line-height: 1.5; margin-top: 16px;
+  }
+  .ex .lbl { color: var(--accent); font-weight: 700; letter-spacing: 1px; font-size: 0.85em; text-transform: uppercase; }
+  .reveal code { color: var(--accent); background: #0b1220; padding: 1px 6px; border-radius: 5px; font-size: 0.9em; }
+  .reveal pre { box-shadow: none; width: 100%; }
+  .reveal pre code { font-size: 0.62em; line-height: 1.35; max-height: 560px; border-radius: 8px; }
+  .mermaid { background: #0b1220; border-radius: 10px; padding: 12px; }
+  .mermaid svg { max-height: 540px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+  .pill { display:inline-block; background:#0b1220; border:1px solid #253046; color:var(--muted);
+          padding:4px 10px; border-radius:8px; font-size:0.6em; margin:3px 4px 0 0;}
+  .small { font-size: 0.62em; color: var(--muted); }
+  .reveal ul { font-size: 0.78em; }
+  .footer { position: fixed; bottom: 8px; right: 14px; font-size: 12px; color: #4b5563; z-index: 30; }
+  .kicker { color: var(--muted); font-size: 0.6em; margin-top: -6px; }
+  table.mini { font-size: 0.58em; border-collapse: collapse; width: 100%; }
+  table.mini th, table.mini td { border: 1px solid #253046; padding: 6px 9px; text-align: left; }
+  table.mini th { background: #0b1220; color: var(--accent); }
+  .reveal a { color: var(--accent2); }
+</style>
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+
+  <!-- 1. TITLE -->
+  <section data-auto-animate>
+    <div class="center">
+      <span class="tag">MCA Sem 4 · Project Programme</span>
+      <h1>Software Engineering<br/>The Whole Story in Simple Slides</h1>
+      <p class="kicker">From an idea → to a deployed, containerised product</p>
+      <p class="small" style="margin-top:26px">One feature followed end-to-end: the <b style="color:var(--accent)">Login</b> of a Student Course Registration System — from requirement all the way to code.</p>
+      <p class="small">Use ← → arrows or Space to move. Press <code>F</code> for fullscreen, <code>O</code> for overview.</p>
+    </div>
+  </section>
+
+  <!-- 2. THE MAP -->
+  <section>
+    <span class="tag">The Big Picture</span>
+    <h2>How the pieces fit together</h2>
+    <div class="mermaid">
+flowchart LR
+    A[Idea] --> B[Requirements<br/>FRD · Stories · Use Cases]
+    B --> C[Design<br/>Architecture · ER · Class · Flow · Sequence]
+    C --> D[Build<br/>Code in VS Code · Docker]
+    D --> E[Test<br/>Test cases]
+    E --> F[Ship<br/>docker compose up]
+    B -.-> T[(GitHub<br/>code + docs)]
+    C -.-> T
+    D -.-> T
+    E -.-> T
+    F -.-> T
+    style A fill:#1a3a1a,color:#6ee7b7
+    style F fill:#1a3a1a,color:#6ee7b7
+    style T fill:#0b1220,color:#60a5fa,stroke:#60a5fa
+    </div>
+    <p class="small center">Each of the next slides zooms into one box.</p>
+  </section>
+
+  <!-- 3. SOFTWARE ENGINEERING -->
+  <section>
+    <span class="tag">01 · Foundation</span>
+    <h2>What is Software Engineering?</h2>
+    <div class="def">
+      <b>Definition:</b> Software engineering is the <b>disciplined way of building software</b> — not just writing code, but planning it, designing it, testing it, and maintaining it so a <b>team</b> can deliver something reliable, on time, that other people can use and improve.
+    </div>
+    <div class="ex">
+      <span class="lbl">Example</span><br/>
+      Anyone can write a script that checks one password. <b>Software engineering</b> is what turns that into a real login system: it works for 500 students at once, stores passwords safely, locks out attackers, is tested, runs on any machine, and a teammate can understand your code six months later.
+    </div>
+  </section>
+
+  <!-- 4. SDLC -->
+  <section>
+    <span class="tag">02 · Process</span>
+    <h2>What is SDLC?</h2>
+    <div class="def">
+      <b>SDLC = Software Development Life Cycle.</b> The <b>ordered set of phases</b> every project passes through, from idea to shipped product. It stops teams from jumping straight to coding and getting lost.
+    </div>
+    <div style="margin-top:16px">
+      <div class="ex" style="margin-top:0">
+        <span class="lbl">The 5 phases</span>
+        <ol style="font-size:1em;margin:8px 0 0 0">
+          <li><b>Requirements</b> — what to build</li>
+          <li><b>Design</b> — how to build it</li>
+          <li><b>Build (code)</b> — actually build it</li>
+          <li><b>Test</b> — check it works</li>
+          <li><b>Deploy &amp; Maintain</b> — ship &amp; keep alive</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4b. FIVE QUESTIONS -->
+  <section>
+    <span class="tag">03 · Requirements</span>
+    <h2>Before You Build: 5 Questions</h2>
+    <div class="def" style="font-size:0.72em">
+      Every requirements artifact answers one plain question about the feature. Get these five right and you know <b>what</b> to build, <b>for whom</b>, and how you'll <b>prove</b> it works — before writing any code.
+    </div>
+    <div class="ex" style="margin-top:14px">
+      <span class="lbl">The five questions — Login feature</span>
+      <table class="mini" style="margin-top:8px">
+        <tr><th>Question</th><th>Answered by</th><th>Login example</th></tr>
+        <tr><td><b>Why?</b> — why does it matter?</td><td>Project goal / story's "so that"</td><td>So students access courses without queuing.</td></tr>
+        <tr><td><b>What?</b> — what must it do?</td><td>FRD</td><td>FR-01: log in with email &amp; password.</td></tr>
+        <tr><td><b>Who?</b> — who is it for?</td><td>User Story</td><td>As a student…</td></tr>
+        <tr><td><b>How?</b> — how does it work?</td><td>Use Case</td><td>Enter credentials → validate → session → dashboard.</td></tr>
+        <tr><td><b>Validate?</b> — how do we know?</td><td>Test Case</td><td>Wrong password → "Invalid email or password".</td></tr>
+      </table>
+      <p style="margin:10px 0 0 0" class="small">The <b style="color:var(--accent)">user story</b> is the only one that answers two at once — <b>who</b> and <b>why</b> — which is why it's so compact.</p>
+    </div>
+  </section>
+
+  <!-- 5. FRD -->
+  <section>
+    <span class="tag">03 · Requirements</span>
+    <h2>Functional Requirements Document (FRD)</h2>
+    <div class="def">
+      <b>Definition:</b> A numbered list of <b>exactly what the system must do</b> — each item is testable. <b>Functional</b> = features (what it does). <b>Non-functional</b> = qualities (how well: speed, security).
+    </div>
+    <div class="ex">
+      <span class="lbl">Example</span>
+      <table class="mini" style="margin-top:8px">
+        <tr><th>ID</th><th>Requirement</th></tr>
+        <tr><td>FR-01</td><td>A user shall log in with a registered email and password.</td></tr>
+        <tr><td>FR-02</td><td>The system shall lock the account for 15 min after 5 wrong attempts.</td></tr>
+        <tr><td>FR-03</td><td>On a correct password, the system shall start a session and open the dashboard.</td></tr>
+      </table>
+      <p style="margin:10px 0 0 0"><b style="color:var(--accent2)">Non-functional:</b> login must respond in under 2 seconds; passwords must be stored hashed — never as plain text.</p>
+    </div>
+  </section>
+
+  <!-- 6. USER STORIES -->
+  <section>
+    <span class="tag">03 · Requirements</span>
+    <h2>User Stories</h2>
+    <div class="def">
+      <b>Definition:</b> A requirement written from the <b>user's point of view</b> in one plain sentence, using the template:<br/>
+      <code>As a &lt;role&gt;, I want &lt;goal&gt;, so that &lt;benefit&gt;.</code><br/>
+      Each story gets <b>acceptance criteria</b> — the conditions that prove it's done.
+    </div>
+    <div class="ex">
+      <span class="lbl">Example</span>
+      <p style="margin:8px 0 0 0"><b>As a</b> student, <b>I want</b> to log in with my email and password, <b>so that</b> I can securely access my courses.</p>
+      <p style="margin:10px 0 0 0" class="small"><b style="color:var(--accent)">Acceptance criteria:</b> wrong password shows "Invalid email or password" · 5 failed tries locks the account for 15 min · a correct login opens the dashboard.</p>
+    </div>
+  </section>
+
+  <!-- 7. USE CASES -->
+  <section>
+    <span class="tag">03 · Requirements</span>
+    <h2>Use Cases</h2>
+    <div class="def">
+      <b>Definition:</b> A step-by-step description of <b>how an actor interacts with the system</b> to achieve a goal — including what happens when things go wrong (alternate flows). More detailed than a user story.
+    </div>
+    <div class="ex">
+      <span class="lbl">Example — "Log in"</span>
+      <p style="margin:8px 0 0 0" class="small">
+      <b>Actor:</b> Student &nbsp;·&nbsp; <b>Pre-condition:</b> student has a registered account<br/>
+      <b>Main flow:</b> 1) student enters email + password → 2) clicks Login → 3) system checks the password → 4) system creates a session → 5) dashboard is shown.<br/>
+      <b>Alternate flow:</b> at step 3, if the password is wrong → system shows "Invalid email or password" and stays on the login page.
+      </p>
+    </div>
+  </section>
+
+  <!-- 8. TEST CASES -->
+  <section>
+    <span class="tag">04 · Testing</span>
+    <h2>Test Cases</h2>
+    <div class="def">
+      <b>Definition:</b> A concrete check with <b>input → expected output</b> that proves a requirement works. Every FR should trace to at least one test case.
+    </div>
+    <div class="ex">
+      <span class="lbl">Example — testing FR-01 / FR-02 (login)</span>
+      <table class="mini" style="margin-top:8px">
+        <tr><th>ID</th><th>Steps</th><th>Expected result</th></tr>
+        <tr><td>TC-01a</td><td>Enter valid email + correct password</td><td>Dashboard opens; session created</td></tr>
+        <tr><td>TC-01b</td><td>Enter valid email + wrong password</td><td>Blocked; "Invalid email or password"</td></tr>
+        <tr><td>TC-01c</td><td>Enter a wrong password 5 times</td><td>Account locked for 15 minutes</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- 8b. REQUIREMENTS ARTIFACTS COMPARED -->
+  <section>
+    <span class="tag">03 · Requirements — Recap</span>
+    <h2>FRD vs User Story vs Use Case vs Test Case</h2>
+    <div class="def" style="font-size:0.72em">
+      <b>Same feature, four lenses:</b> the requirement says <b>what</b>, the story says <b>who &amp; why</b>, the use case says <b>how</b> (step by step), and the test case <b>proves</b> it works.
+    </div>
+    <div class="ex" style="margin-top:14px">
+      <span class="lbl">All four for the Login feature</span>
+      <table class="mini" style="margin-top:8px">
+        <tr><th>Artifact</th><th>Answers</th><th>Login example</th></tr>
+        <tr><td><b>FRD</b> (requirement)</td><td>What must the system do?</td><td>FR-01: A user shall log in with email &amp; password.</td></tr>
+        <tr><td><b>User Story</b></td><td>Who needs it, and why?</td><td>As a student, I want to log in, so I can access my courses.</td></tr>
+        <tr><td><b>Use Case</b></td><td>How does it happen, step by step?</td><td>Enter credentials → validate → create session → dashboard (else: error).</td></tr>
+        <tr><td><b>Test Case</b></td><td>How do we prove it works?</td><td>TC-01b: wrong password → "Invalid email or password".</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- 9. ARCHITECTURE -->
+  <section>
+    <span class="tag">05 · Design</span>
+    <h2>Architecture</h2>
+    <div class="def">
+      <b>Definition:</b> The <b>high-level shape</b> of the system — its big parts and how they talk. You choose a proven <b>pattern</b> (e.g. Client–Server, MVC, Microservices) and justify why.
+    </div>
+    <div class="grid2" style="margin-top:12px">
+      <div class="mermaid" style="margin-top:0">
+flowchart TD
+    U[Browser<br/>UI] -->|HTTP| S[REST API<br/>business logic]
+    S -->|SQL| DB[(Database)]
+    S --> M[Email Service]
+    style U fill:#0b1220,color:#60a5fa
+    style S fill:#1a3a1a,color:#6ee7b7
+    style DB fill:#0b1220,color:#e5e7eb
+      </div>
+      <div class="ex" style="margin-top:0">
+        <span class="lbl">Example</span>
+        <p style="margin:8px 0 0 0">A <b>3-tier client–server</b> app: the browser (client) talks to a REST API (server) which talks to a database. In Docker, each tier is a <b>container</b>: <code>web</code>, <code>api</code>, <code>db</code>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9b. DESIGN DIAGRAMS COMPARED -->
+  <section>
+    <span class="tag">05 · Design — Map</span>
+    <h2>ER vs Class vs Flow vs Sequence</h2>
+    <div class="def" style="font-size:0.72em">
+      <b>Four diagrams, four questions.</b> Two describe <b>structure</b> (what things exist) — two describe <b>behaviour</b> (what happens, in what order).
+    </div>
+    <div class="ex" style="margin-top:14px">
+      <span class="lbl">When to use which — Login feature</span>
+      <table class="mini" style="margin-top:8px">
+        <tr><th>Diagram</th><th>Shows</th><th>Answers</th><th>Login example</th></tr>
+        <tr><td><b>ER</b></td><td>Database tables &amp; relationships</td><td>How is data stored?</td><td>USER — SESSION — LOGIN_ATTEMPT</td></tr>
+        <tr><td><b>Class</b></td><td>Code classes: fields &amp; methods</td><td>How is code organised?</td><td>User · AuthService · Session</td></tr>
+        <tr><td><b>Flow</b></td><td>Steps &amp; decisions in a process</td><td>What is the logic?</td><td>Password correct? → session / error</td></tr>
+        <tr><td><b>Sequence</b></td><td>Messages between parts over time</td><td>What talks to what, and when?</td><td>Browser → API → DB → back</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- 10. ER DIAGRAM -->
+  <section>
+    <span class="tag">05 · Design</span>
+    <h2>ER Diagram <span class="kicker">(Entity–Relationship)</span></h2>
+    <div class="def" style="font-size:0.72em">
+      <b>Definition:</b> A picture of your <b>database</b> — the <b>entities</b> (tables), their <b>attributes</b> (columns), and the <b>relationships</b> between them (one-to-many, etc.).
+    </div>
+    <div class="mermaid">
+erDiagram
+    USER {
+        int    user_id PK
+        string email
+        string password_hash
+        bool   is_locked
+        int    failed_attempts
+    }
+    SESSION {
+        int      session_id PK
+        int      user_id FK
+        string   token
+        datetime created_at
+        datetime expires_at
+    }
+    LOGIN_ATTEMPT {
+        int      attempt_id PK
+        int      user_id FK
+        datetime attempted_at
+        bool     success
+    }
+    USER ||--o{ SESSION       : "has"
+    USER ||--o{ LOGIN_ATTEMPT : "records"
+    </div>
+  </section>
+
+  <!-- 11. CLASS DIAGRAM -->
+  <section>
+    <span class="tag">05 · Design</span>
+    <h2>Class Diagram</h2>
+    <div class="def" style="font-size:0.72em">
+      <b>Definition:</b> A picture of your <b>code's structure</b> — the <b>classes</b>, their <b>attributes</b> and <b>methods</b>, and how they relate (inheritance, "has-many"). It's the blueprint the programmer follows.
+    </div>
+    <div class="mermaid">
+classDiagram
+    class User {
+        +int userId
+        +string email
+        +string passwordHash
+        +bool isLocked
+        +verifyPassword(pwd) bool
+    }
+    class AuthService {
+        +login(email, pwd) Session
+        +logout(token) void
+    }
+    class Session {
+        +int sessionId
+        +string token
+        +datetime expiresAt
+        +isValid() bool
+    }
+    AuthService --> User    : authenticates
+    AuthService --> Session : creates
+    User "1" --> "many" Session : has
+    </div>
+  </section>
+
+  <!-- 12. FLOW DIAGRAM -->
+  <section>
+    <span class="tag">05 · Design</span>
+    <h2>Flow Diagram <span class="kicker">(process / data flow)</span></h2>
+    <div class="def" style="font-size:0.72em">
+      <b>Definition:</b> A map of a <b>process step-by-step</b>, with <b>decision points</b> (diamonds) that branch based on yes/no conditions. Great for showing logic before you code it.
+    </div>
+    <div class="mermaid">
+flowchart TD
+    A([Enter email &amp; password]) --> B{Email exists?}
+    B -->|No| E[Error: Invalid email or password]
+    B -->|Yes| C{Account locked?}
+    C -->|Yes| G[Error: Account locked, try later]
+    C -->|No| D{Password correct?}
+    D -->|No| H[Count failed attempt]
+    H --> E
+    D -->|Yes| J[Create session]
+    J --> M([Dashboard shown])
+    E --> A
+    style A fill:#1a3a1a,color:#6ee7b7
+    style M fill:#1a3a1a,color:#6ee7b7
+    style E fill:#3a1a1a,color:#f87171
+    style G fill:#3a1a1a,color:#f87171
+    </div>
+  </section>
+
+  <!-- 13. SEQUENCE DIAGRAM -->
+  <section>
+    <span class="tag">05 · Design</span>
+    <h2>Sequence Diagram</h2>
+    <div class="def" style="font-size:0.72em">
+      <b>Definition:</b> Shows the <b>order of messages</b> between parts of the system over time for <b>one specific flow</b>. Time flows top-to-bottom; each vertical line is a component.
+    </div>
+    <div class="mermaid">
+sequenceDiagram
+    actor Student
+    participant Browser
+    participant API as REST API
+    participant Auth as Auth Service
+    participant DB as Database
+    Student->>Browser: Enter email + password, click Login
+    Browser->>API: POST /auth/login {email, password}
+    API->>Auth: validateCredentials(email, password)
+    Auth->>DB: SELECT * FROM users WHERE email = ?
+    DB-->>Auth: user record (password_hash)
+    Auth->>Auth: verify password vs hash
+    Auth->>DB: INSERT session (user_id, token)
+    DB-->>Auth: session_id = 88
+    Auth-->>API: JWT token
+    API-->>Browser: 200 OK {token}
+    Browser-->>Student: Dashboard shown
+    </div>
+  </section>
+
+  <!-- 14. CODING / VS CODE -->
+  <section>
+    <span class="tag">06 · Build</span>
+    <h2>Coding in a Dev Environment</h2>
+    <div class="def">
+      <b>Definition:</b> You write code in an <b>IDE</b> (Integrated Development Environment) — an editor plus tools that help you write, run, and debug. <b>VS Code</b> is the popular free choice.
+    </div>
+    <div class="ex">
+      <span class="lbl">Example — writing the login endpoint in VS Code</span>
+      <pre style="margin:8px 0 0 0"><code>def login(email, password):
+    user = db.find_user(email)                  # FR-01
+    if not user or user.is_locked:              # FR-02
+        return error("Invalid email or password")
+    if not bcrypt.verify(password, user.password_hash):
+        user.failed_attempts += 1               # FR-02
+        return error("Invalid email or password")
+    session = create_session(user.id)           # FR-03
+    return ok({ "token": session.token })</code></pre>
+      <div style="margin-top:8px">
+        <span class="pill">Extension: Python / ESLint</span>
+        <span class="pill">Extension: Docker</span>
+        <span class="pill">Extension: Mermaid Preview</span>
+        <span class="pill">Integrated Terminal + breakpoints</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 15. DOCKER -->
+  <section>
+    <span class="tag">07 · Deploy</span>
+    <h2>Docker for Deployment</h2>
+    <div class="def">
+      <b>Definition:</b> Docker packs your app <b>plus everything it needs</b> (runtime, libraries, config) into a <b>container</b> — a box that runs the same on any machine. No more "but it works on my laptop."
+    </div>
+    <div class="grid2" style="margin-top:14px">
+      <div class="ex" style="margin-top:0">
+        <span class="lbl">Key words</span>
+        <p style="margin:8px 0 0 0" class="small"><b>Dockerfile</b> = recipe to build one container.<br/>
+        <b>Image</b> = the built package.<br/>
+        <b>Container</b> = a running copy of the image.<br/>
+        <b>docker-compose.yml</b> = runs many containers together (app + db + email).</p>
+      </div>
+      <div class="ex" style="margin-top:0">
+        <span class="lbl">Example — run the whole app</span>
+        <pre style="margin:8px 0 0 0"><code>docker compose up</code></pre>
+        <p style="margin:8px 0 0 0" class="small">Starts <code>web</code>, <code>api</code> and <code>db</code> together. Your final demo is exactly this — one command on a fresh machine.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 16. GITHUB -->
+  <section>
+    <span class="tag">08 · Collaborate</span>
+    <h2>GitHub for Code + Documentation</h2>
+    <div class="def">
+      <b>Definition:</b> <b>Git</b> tracks every change to your files; <b>GitHub</b> stores that history online so the whole team shares <b>one source of truth</b>. Code <b>and</b> docs live together — no email, no WhatsApp submissions.
+    </div>
+    <div class="ex">
+      <span class="lbl">Example — your standard repo structure</span>
+      <pre style="margin:8px 0 0 0"><code>your-project-name/
+├── README.md            # how to run the project
+├── Dockerfile           # app container definition
+├── docker-compose.yml   # all services (app + db)
+├── src/                 # all application source code
+└── docs/                # all project documentation
+    ├── scope.md         # T1 — Charter &amp; Scope
+    ├── frd.md           # T2 — Requirements
+    ├── design.md        # T3 — ER, class, sequence...
+    ├── test-plan.md     # test cases &amp; results
+    └── final-report.md  # T5 — Final Product Doc</code></pre>
+      <p class="small" style="margin:8px 0 0 0">Bonus: GitHub <b>renders Mermaid diagrams automatically</b> — commit the <code>.md</code> and your ER/class/sequence diagrams just appear.</p>
+    </div>
+  </section>
+
+  <!-- 17. RECAP -->
+  <section>
+    <span class="tag">Recap</span>
+    <h2>The whole story, end to end</h2>
+    <div class="mermaid">
+flowchart LR
+    subgraph Define
+      R[FRD · User Stories · Use Cases]
+    end
+    subgraph Design
+      D[Architecture · ER · Class · Flow · Sequence]
+    end
+    subgraph Build
+      C[VS Code] --> DK[Docker]
+    end
+    subgraph Verify
+      T[Test cases]
+    end
+    R --> D --> C
+    DK --> T --> SHIP([docker compose up 🚀])
+    GH[(GitHub: code + docs)]
+    R -.-> GH
+    D -.-> GH
+    DK -.-> GH
+    T -.-> GH
+    style SHIP fill:#1a3a1a,color:#6ee7b7
+    style GH fill:#0b1220,color:#60a5fa,stroke:#60a5fa
+    </div>
+    <p class="center small">Same example the whole way: the <b style="color:var(--accent)">Student Course Registration System</b>. Now go build yours.</p>
+  </section>
+
+  </div>
+</div>
+
+<div class="footer">MCA Sem 4 · Concepts Deck</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: 'dark',
+    securityLevel: 'loose',
+    themeVariables: {
+      fontSize: '15px',
+      primaryColor: '#0b1220',
+      primaryTextColor: '#e5e7eb',
+      primaryBorderColor: '#60a5fa',
+      lineColor: '#6ee7b7',
+      secondaryColor: '#111827',
+      tertiaryColor: '#0b1220'
+    }
+  });
+
+  // Render mermaid before Reveal measures slide sizes.
+  (async () => {
+    const blocks = document.querySelectorAll('.mermaid');
+    for (let i = 0; i < blocks.length; i++) {
+      const el = blocks[i];
+      const code = el.textContent.trim();
+      try {
+        const { svg } = await mermaid.render('mmd-' + i, code);
+        el.innerHTML = svg;
+      } catch (e) {
+        el.innerHTML = '<pre style="color:#f87171">Diagram error: ' + (e.message || e) + '</pre>';
+      }
+    }
+    Reveal.initialize({
+      hash: true,
+      slideNumber: 'c/t',
+      controls: true,
+      progress: true,
+      width: 1200,
+      height: 720,
+      margin: 0.05,
+      transition: 'slide'
+    });
+  })();
+</script>
+</body>
+</html>

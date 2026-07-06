@@ -28,32 +28,17 @@
     <h1>End-to-End in <span>13 Weeks</span><br>Student Project Programme</h1>
     <p class="hero-sub">
       A complete project-only semester — from idea to deployed, containerised product.
-      No theory classes. Every week has a deliverable, a gate, and a consultant checkpoint.
+      No theory classes. Every week has a deliverable and a gate.
     </p>
     <div class="tag-row">
-      <span class="tag orange">Consultant: 2 h/week</span>
       <span class="tag purple">Docker from Day 1</span>
       <span class="tag green">Git = single source of truth</span>
       <span class="tag">13 Weeks · Project Only</span>
       <span class="tag">3 × 2-Week Sprints</span>
-      <span class="tag">2 Consultant Sessions</span>
     </div>
   </div>
 
   <main class="main">
-
-    <!-- ── Consultant model ── -->
-    <div class="info-box orange">
-      <strong style="font-size:14px;color:#fff;display:block;margin-bottom:10px;">Consultant Engagement Model — BIMA MCA Sem 4</strong>
-      <ul style="list-style:disc;padding:0 0 0 18px;margin:0;display:flex;flex-direction:column;gap:4px;">
-        <li style="font-size:12.5px;padding:3px 0;"><strong>2 hours/week</strong></li>
-        <li style="font-size:12.5px;padding:3px 0;">Review weekly status reports, flag at-risk teams</li>
-        <li style="font-size:12.5px;padding:3px 0;">Spot-check 1–2 project artifacts or attend sprint demo</li>
-        <li style="font-size:12.5px;padding:3px 0;">Jump in if a team misses 2+ deadlines in a row</li>
-        <li style="font-size:12.5px;padding:3px 0;"><strong>Faculty:</strong> day-to-day execution, demos, grading</li>
-        <li style="font-size:12.5px;padding:3px 0;"><strong>Consultant:</strong> process standards, guide and recovery</li>
-      </ul>
-    </div>
 
     <!-- ── Standards ── -->
     <div class="info-box green">
@@ -89,15 +74,6 @@
     <!-- ── 13-Week Schedule ── -->
     <div class="section-label">13-Week Master Schedule</div>
 
-    <!-- Ownership legend -->
-    <div style="display:flex;gap:14px;margin-bottom:14px;align-items:center;flex-wrap:wrap;">
-      <span style="font-size:12px;color:#80889a;text-transform:uppercase;letter-spacing:.08em;">Ownership legend:</span>
-      <span style="background:#1a2540;border:1px solid #3b5bdb;color:#93c5fd;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;">Faculty</span>
-      <span style="font-size:12px;color:#80889a;">Day-to-day delivery, gate sign-off, grading</span>
-      <span style="background:#2a1a08;border:1px solid #d97706;color:#fbbf24;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;">Consultant</span>
-      <span style="font-size:12px;color:#80889a;">Standards, spot-reviews, sessions, final gate</span>
-    </div>
-
     <table class="schedule-table">
       <thead>
         <tr>
@@ -105,8 +81,6 @@
           <th style="width:110px;">Phase</th>
           <th>Student Deliverables</th>
           <th style="width:190px;">Template</th>
-          <th style="width:190px;background:#0f1e38;color:#93c5fd;">Faculty Owns</th>
-          <th style="width:190px;background:#241508;color:#fbbf24;">Consultant Owns</th>
         </tr>
       </thead>
       <tbody>
@@ -118,24 +92,13 @@
           </td>
           <td><span class="phase-pill ph-kickoff">T1 — Kickoff &amp; Scope</span></td>
           <td>
-            • Form teams (3–4 students), agree on project topic, get faculty approval<br>
+            • Form teams (3–4 students), agree on project topic<br>
             • Write Project Charter &amp; Scope doc; create Git repo with standard folder structure<br>
             • Add <code style="font-size:11px;background:#1a1a2e;padding:1px 5px;border-radius:3px;">Dockerfile</code> stub and <code style="font-size:11px;background:#1a1a2e;padding:1px 5px;border-radius:3px;">docker-compose.yml</code> placeholder<br>
             • Define risk register (top 3 risks + mitigation)<br>
             • <strong>Commit:</strong> <code style="font-size:11px;background:#1a1a2e;padding:1px 5px;border-radius:3px;">docs/scope.md</code> + <code style="font-size:11px;background:#1a1a2e;padding:1px 5px;border-radius:3px;">README.md</code>
           </td>
           <td><a href="T1_ProjectCharter.html" class="btn btn-outline" style="font-size:11px;padding:5px 10px;">T1 — Project Charter →</a></td>
-          <td style="color:#93c5fd;font-size:12px;">
-            ✅ Topic approved by end of Week 1<br>
-            ✅ Git repo URL collected from each team<br>
-            ✅ Scope doc committed &amp; legible<br>
-            ✅ Sign off T1 gate checklist
-          </td>
-          <td style="color:#fbbf24;font-size:12px;">
-            • Spot-check select scope docs — based on faculty or student queries<br>
-            • Reject scopes too broad or vague<br>
-            • Approve only realistic 13-week deliverables
-          </td>
         </tr>
 
         <!-- T2 — Week 2 -->
@@ -150,21 +113,9 @@
             • Write Use Cases: actor, pre-conditions, main flow, alt flow<br>
             • Write Acceptance Criteria for each story<br>
             • Set up Docker skeleton: <code style="font-size:11px;background:#1a1a2e;padding:1px 5px;border-radius:3px;">docker-compose.yml</code> — app + DB containers defined (no code yet)<br>
-            • <strong>Commit:</strong> <code style="font-size:11px;background:#1a1a2e;padding:1px 5px;border-radius:3px;">docs/frd.md</code><br>
-            <span style="display:inline-block;margin-top:6px;background:#2a1a08;border:1px solid #d97706;color:#fbbf24;font-size:11px;padding:3px 8px;border-radius:6px;">Consultant: Docker Orientation Session — containers, images, Dockerfile, docker-compose, .env basics</span>
+            • <strong>Commit:</strong> <code style="font-size:11px;background:#1a1a2e;padding:1px 5px;border-radius:3px;">docs/frd.md</code>
           </td>
           <td><a href="T2_FRD.html" class="btn btn-outline" style="font-size:11px;padding:5px 10px;">T2 — FRD →</a></td>
-          <td style="color:#93c5fd;font-size:12px;">
-            ✅ ≥10 User Stories with acceptance criteria<br>
-            ✅ All FRs numbered (FR-01…)<br>
-            ✅ docker-compose.yml committed<br>
-            ✅ Sign off T2 gate checklist
-          </td>
-          <td style="color:#fbbf24;font-size:12px;">
-            • Spot-check 2 FRDs — no generic "system shall…"; must reflect actual product<br>
-            • Flag teams missing acceptance criteria<br>
-            • <strong>Deliver Docker Orientation Session</strong>
-          </td>
         </tr>
 
         <!-- T3 — Weeks 3–4 -->
@@ -189,17 +140,6 @@
             • <strong>Commit:</strong> <code style="font-size:11px;background:#1a1a2e;padding:1px 5px;border-radius:3px;">docs/design.md</code> (complete) + <code style="font-size:11px;background:#1a1a2e;padding:1px 5px;border-radius:3px;">docs/test-plan.md</code>
           </td>
           <td><a href="T3_DesignDocument.html" class="btn btn-outline" style="font-size:11px;padding:5px 10px;">T3 — Design Doc →</a></td>
-          <td style="color:#93c5fd;font-size:12px;">
-            ✅ Architecture pattern justified<br>
-            ✅ ER diagram covers all FRD entities<br>
-            ✅ RTM complete — every FR has a row<br>
-            ✅ <strong>Faculty signs off Design Gate — no team codes without this</strong>
-          </td>
-          <td style="color:#fbbf24;font-size:12px;">
-            • Check ER diagrams — complete? trace back to FRD?<br>
-            • <strong>GATE (end W4):</strong> Spot-review RTMs — based on faculty or student doubts; no FR may be left unmapped<br>
-            • Approve or hold each team before sprint starts
-          </td>
         </tr>
 
         <!-- T4 — Weeks 5–10 -->
@@ -215,25 +155,11 @@
             <strong>Sprint 2 (W7–8) — secondary features + integration:</strong> All modules talking to each other; run test cases<br>
             <strong>Sprint 3 (W9–10) — polish + stability:</strong> No new features. Fix bugs, run full test suite, validate <code style="font-size:11px;background:#1a1a2e;padding:1px 5px;border-radius:3px;">docker compose up</code> on a clean machine. <strong>CODE FREEZE end of W10.</strong><br>
             <br>
-            Each sprint: daily commits, weekly status (done / doing / blocked), end-of-sprint demo to faculty
+            Each sprint: daily commits, weekly status (done / doing / blocked), end-of-sprint demo
           </td>
           <td>
             <a href="T4_SprintPlan.html" class="btn btn-outline" style="font-size:11px;padding:5px 10px;">T4 — Sprint Plan →</a><br>
             <span style="font-size:10px;color:#80889a;">(covers all 3 sprints)</span>
-          </td>
-          <td style="color:#93c5fd;font-size:12px;">
-            ✅ Sprint 1 demo: ≥1 working user flow<br>
-            ✅ Sprint 2 demo: full end-to-end flow<br>
-            ✅ Sprint 3: code freeze, all tests run<br>
-            ✅ Retrospective committed after each sprint<br>
-            ✅ Sign off each end-of-sprint gate checklist
-          </td>
-          <td style="color:#fbbf24;font-size:12px;">
-            • Read weekly status reports<br>
-            • Flag blocked teams immediately<br>
-            • Attend/spot-check 1–2 sprint demos per sprint<br>
-            • Enforce code freeze (W10) — no exceptions without consultant approval<br>
-            • Spot-check test results table (W10)
           </td>
         </tr>
 
@@ -254,10 +180,10 @@
             • Complete all sections of T5 Final Product Doc — commit to Git<br>
             • Update all diagrams to reflect final code<br>
             • Write Lessons Learned + Individual Contribution matrix<br>
-            • Prepare 10-minute presentation; dry run with faculty<br>
+            • Prepare 10-minute presentation; do a dry run<br>
             <br>
             <strong>Week 13 — Final Demo Day:</strong><br>
-            • 10-min demo to panel (faculty + consultant + HOD)<br>
+            • 10-min demo to the evaluation panel<br>
             • Live demo: <code style="font-size:11px;background:#1a1a2e;padding:1px 5px;border-radius:3px;">docker compose up</code> on evaluator's machine<br>
             • Submit Git repo link — all docs + code in repo<br>
             • Commit final retrospective
@@ -265,19 +191,6 @@
           <td>
             <a href="T5_FinalProductDoc.html" class="btn btn-outline" style="font-size:11px;padding:5px 10px;">T5 — Final Doc →</a><br>
             <a href="checklists.html#final" class="btn btn-orange" style="font-size:11px;padding:5px 10px;margin-top:6px;">Final Checklist →</a>
-          </td>
-          <td style="color:#93c5fd;font-size:12px;">
-            ✅ Deployment guide in README committed<br>
-            ✅ .env.example committed<br>
-            ✅ T5 doc complete in repo<br>
-            ✅ Diagrams updated to match final code<br>
-            ✅ Dry run demo completed (W12)<br>
-            ✅ Git repo link submitted (W13)
-          </td>
-          <td style="color:#fbbf24;font-size:12px;">
-            • Spot-check 2 deployment guides (W11)<br>
-            • Attend 1–2 dry run demos (W12)<br>
-            • Evaluate 2–3 projects in depth
           </td>
         </tr>
 
@@ -324,9 +237,9 @@
     <div class="cards">
       <a href="checklists.html" class="card">
         <span class="card-arrow">→</span>
-        <div class="card-label label-checklist">Faculty + Student</div>
+        <div class="card-label label-checklist">Student</div>
         <div class="card-title">Phase Checklists (5 Gates)</div>
-        <div class="card-desc">One checklist per phase. Pass/fail gates. Faculty uses to approve progression. Consultant uses for spot checks.</div>
+        <div class="card-desc">One checklist per phase. Pass/fail gates you must clear before moving to the next phase.</div>
       </a>
       <a href="print_guide.html" class="card">
         <span class="card-arrow">→</span>

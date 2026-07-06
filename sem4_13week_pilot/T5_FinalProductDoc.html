@@ -41,7 +41,7 @@
 
     <div class="info-box orange">
       <strong>Submission rule:</strong> Your Git repository URL is your final submission.
-      The repo must contain all code + all documents. Faculty and consultant will clone the repo,
+      The repo must contain all code + all documents. The evaluation panel will clone the repo,
       run <code style="background:#1a1a2e;padding:2px 6px;border-radius:4px;">docker compose up</code>, and the app must start. No other submission method is accepted.
     </div>
 
@@ -86,7 +86,7 @@
           <textarea class="field-input" rows="5" placeholder="1. [Name] — [Roll No] — [Module(s) owned]&#10;2. [Name] — [Roll No] — [Module(s) owned]&#10;3. [Name] — [Roll No] — [Module(s) owned]&#10;4. [Name] — [Roll No] — [Module(s) owned]"></textarea>
         </div>
         <div class="field-group">
-          <label class="field-label">Faculty Mentor</label>
+          <label class="field-label">Project Guide</label>
           <input type="text" class="field-input" placeholder="[Name, Department]">
         </div>
         <div class="field-group">
@@ -446,10 +446,9 @@
       <h2>Final Submission Checklist</h2>
       <div class="info-box orange" style="margin-bottom:16px;">
         Team Lead signs this checklist and commits it to the repo before submitting the Git link.
-        Consultant will verify this list during final week spot checks.
       </div>
       <ul class="checklist">
-        <li><input type="checkbox"> <span><strong>Git repo URL submitted</strong> — link shared with faculty and consultant</span> <span class="gate gate-pass">Gate</span></li>
+        <li><input type="checkbox"> <span><strong>Git repo URL submitted</strong> — link ready to share with the panel</span> <span class="gate gate-pass">Gate</span></li>
         <li><input type="checkbox"> <span>App starts with <code style="background:#1a1a2e;padding:1px 5px;border-radius:3px;">docker compose up</code> on a fresh machine with no extra config</span> <span class="gate gate-pass">Gate</span></li>
         <li><input type="checkbox"> <span>README.md contains clear "How to Run" instructions (Step 1, Step 2, Step 3…)</span> <span class="gate gate-pass">Gate</span></li>
         <li><input type="checkbox"> <span><code>docs/scope.md</code> (T1) committed</span></li>
@@ -470,8 +469,8 @@
           <input type="text" class="field-input" placeholder="[Name + Date]" style="max-width:280px;">
         </div>
         <div>
-          <label class="field-label">Faculty Sign-off</label>
-          <input type="text" class="field-input" placeholder="[Faculty Name + Date]" style="max-width:280px;">
+          <label class="field-label">Project Guide Sign-off</label>
+          <input type="text" class="field-input" placeholder="[Guide Name + Date]" style="max-width:280px;">
         </div>
       </div>
     </div>
@@ -479,9 +478,9 @@
     <!-- ── Final Gate Checklist ── -->
     <div style="background:#1a1708;border:1px solid #a16207;border-radius:12px;padding:20px 24px;margin-top:32px;">
       <div style="font-size:13px;font-weight:800;color:#fde68a;margin-bottom:14px;">✅ Week 13 Final Gate — Before Demo Day</div>
-      <p style="font-size:12px;color:#a0a8c0;margin-bottom:12px;">Team lead completes this the morning of demo day. Git repo link is the final submission — consultant and faculty both verify.</p>
+      <p style="font-size:12px;color:#a0a8c0;margin-bottom:12px;">Team lead completes this the morning of demo day. Git repo link is the final submission — the panel verifies it.</p>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 24px;margin-bottom:16px;">
-        <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#eab308;margin-top:2px;flex-shrink:0;"> Git repo URL shared with faculty and consultant</label>
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#eab308;margin-top:2px;flex-shrink:0;"> Git repo URL ready to share with the panel</label>
         <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#eab308;margin-top:2px;flex-shrink:0;"> App starts with <code style="background:#12121e;padding:1px 5px;border-radius:3px;">docker compose up</code> on a fresh machine</label>
         <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#eab308;margin-top:2px;flex-shrink:0;"> README.md has clear step-by-step deployment instructions</label>
         <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#eab308;margin-top:2px;flex-shrink:0;"> .env.example committed; real .env is in .gitignore</label>
@@ -500,12 +499,8 @@
           <input type="text" class="field-input" placeholder="Name + Date" style="font-size:12px;">
         </div>
         <div style="flex:1;min-width:160px;">
-          <div style="font-size:10px;color:#5c6478;margin-bottom:4px;">Faculty Sign-off</div>
-          <input type="text" class="field-input" placeholder="Faculty Name + Date" style="font-size:12px;">
-        </div>
-        <div style="flex:1;min-width:160px;">
-          <div style="font-size:10px;color:#5c6478;margin-bottom:4px;">Consultant Sign-off</div>
-          <input type="text" class="field-input" placeholder="Consultant Name + Date" style="font-size:12px;">
+          <div style="font-size:10px;color:#5c6478;margin-bottom:4px;">Project Guide Sign-off</div>
+          <input type="text" class="field-input" placeholder="Guide Name + Date" style="font-size:12px;">
         </div>
       </div>
     </div>
@@ -530,7 +525,7 @@
           <li>Lessons Learned — 3-column table</li>
           <li>Individual Contribution Matrix</li>
           <li>Final Submission Checklist (all items ticked)</li>
-          <li>Sign-off Page — team + faculty + consultant (industry expert)</li>
+          <li>Sign-off Page — team + Project Guide</li>
         </ol>
       </div>
 

@@ -43,7 +43,7 @@
       (1) Tasks must be small enough to complete in 1–3 days. Break big tasks down.
       (2) Code runs in Docker from day 1 — no "I'll dockerise later."
       (3) Daily commits to Git — no big-bang commits on the last day.
-      (4) Every sprint ends with a <strong>live demo to faculty</strong>.
+      (4) Every sprint ends with a <strong>live demo</strong>.
     </div>
 
     <!-- Sprint selector -->
@@ -171,8 +171,8 @@
     <div class="template-section">
       <h2>Blockers &amp; Risks Log</h2>
       <p style="font-size:12.5px;color:#a0a8c0;margin-bottom:10px;">
-        Record blockers as soon as they arise. Don't wait until the sprint ends. If blocked for more than 1 day, escalate to faculty.
-        If blocked for more than 2 days, consultant is notified.
+        Record blockers as soon as they arise. Don't wait until the sprint ends. If blocked for more than 1 day, raise it with your team.
+        If blocked for more than 2 days, escalate it early so it can be resolved.
       </p>
       <table class="data-table">
         <thead>
@@ -211,7 +211,7 @@
       <h2>Weekly Status Update</h2>
       <p style="font-size:12.5px;color:#a0a8c0;margin-bottom:14px;">
         Submit one status update per week (mid-sprint and end-of-sprint). Keep it to 3 lines each.
-        Faculty reads these every Monday. Consultant reviews Monday morning.
+        Review progress together as a team every Monday.
       </p>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
         <div>
@@ -256,7 +256,7 @@
       <h2>End-of-Sprint Demo Checklist</h2>
       <div class="info-box orange" style="margin-bottom:16px;">
         Complete this checklist <strong>before</strong> the demo. A demo that fails due to setup issues is a failed demo.
-        Practice the demo at least once as a team before showing faculty.
+        Practice the demo at least once as a team before demo day.
       </div>
       <ul class="checklist">
         <li><input type="checkbox"> <span>App starts with <code style="background:#1a1a2e;padding:1px 5px;border-radius:3px;">docker compose up</code> — no manual steps needed</span> <span class="gate gate-pass">Gate</span></li>
@@ -289,12 +289,12 @@
 
     <!-- ── Sprint Gate Checklist ── -->
     <div style="background:#1a1a2e;border:1px solid #2c2c3a;border-radius:12px;padding:20px 24px;margin-top:32px;">
-      <div style="font-size:13px;font-weight:800;color:#fbbf24;margin-bottom:14px;">✅ End-of-Sprint Gate — Faculty Sign-off (repeat for each sprint)</div>
-      <p style="font-size:12px;color:#a0a8c0;margin-bottom:12px;">Complete this gate at the end of Sprint 1, Sprint 2, and Sprint 3. Team cannot move to next sprint without faculty sign-off.</p>
+      <div style="font-size:13px;font-weight:800;color:#fbbf24;margin-bottom:14px;">✅ End-of-Sprint Gate — Team Sign-off (repeat for each sprint)</div>
+      <p style="font-size:12px;color:#a0a8c0;margin-bottom:12px;">Complete this gate at the end of Sprint 1, Sprint 2, and Sprint 3. Team cannot move to next sprint without clearing this gate.</p>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 24px;margin-bottom:16px;">
         <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#f59e0b;margin-top:2px;flex-shrink:0;"> Sprint plan committed to docs/sprints/sprint[N].md</label>
         <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#f59e0b;margin-top:2px;flex-shrink:0;"> App starts via <code style="background:#12121e;padding:1px 5px;border-radius:3px;">docker compose up</code> — no manual steps</label>
-        <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#f59e0b;margin-top:2px;flex-shrink:0;"> Sprint goal demonstrated live to faculty (not screenshots)</label>
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#f59e0b;margin-top:2px;flex-shrink:0;"> Sprint goal demonstrated live (not screenshots)</label>
         <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#f59e0b;margin-top:2px;flex-shrink:0;"> No hardcoded credentials or secrets in committed code</label>
         <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#f59e0b;margin-top:2px;flex-shrink:0;"> Weekly status reports submitted for both weeks</label>
         <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#f59e0b;margin-top:2px;flex-shrink:0;"> Regular commits throughout sprint (not a single end-of-sprint dump)</label>
@@ -313,8 +313,8 @@
           </select>
         </div>
         <div style="flex:1;min-width:160px;">
-          <div style="font-size:10px;color:#5c6478;margin-bottom:4px;">Faculty Signature</div>
-          <input type="text" class="field-input" placeholder="Faculty Name + Date" style="font-size:12px;">
+          <div style="font-size:10px;color:#5c6478;margin-bottom:4px;">Team sign-off</div>
+          <input type="text" class="field-input" placeholder="Name + Date" style="font-size:12px;">
         </div>
         <div style="flex:1;min-width:160px;">
           <div style="font-size:10px;color:#5c6478;margin-bottom:4px;">Gate Status</div>
@@ -340,7 +340,7 @@
           <li>Sprint 1 (Weeks 5–6) — goal, backlog, blockers, status, retrospective, demo sign-off</li>
           <li>Sprint 2 (Weeks 7–8) — same structure as Sprint 1</li>
           <li>Sprint 3 (Weeks 9–10) — same + code freeze &amp; test execution note</li>
-          <li>Faculty sign-off confirming all 3 sprint demos were conducted</li>
+          <li>Team sign-off confirming all 3 sprint demos were conducted</li>
         </ol>
       </div>
       <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">

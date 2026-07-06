@@ -24,12 +24,12 @@
     <h1>Project Charter &amp; <span>Scope Document</span></h1>
     <p class="hero-sub">
       Fill this document as a team in Week 1. Commit as <code style="background:rgba(255,255,255,0.1);padding:2px 8px;border-radius:4px;">docs/scope.md</code>
-      in your Git repo. Faculty must approve this before Week 2 begins.
+      in your Git repo. Lock down this scope before Week 2 begins.
     </p>
     <div class="tag-row">
       <span class="tag orange">Due: Week 1, Friday</span>
       <span class="tag green">Commit to Git</span>
-      <span class="tag">Faculty Approval Required</span>
+      <span class="tag">Scope Gate</span>
     </div>
   </div>
 
@@ -79,11 +79,11 @@
           <textarea class="field-input" rows="4" placeholder="1. [Name] — [Roll No]&#10;2. [Name] — [Roll No]&#10;3. [Name] — [Roll No]&#10;4. [Name] — [Roll No]"></textarea>
         </div>
         <div class="field-group">
-          <label class="field-label">Faculty Mentor</label>
-          <input type="text" class="field-input" placeholder="[Faculty Name, Department]">
+          <label class="field-label">Project Guide</label>
+          <input type="text" class="field-input" placeholder="[Guide Name, Department]">
         </div>
         <div class="field-group">
-          <label class="field-label">Faculty Approval Date</label>
+          <label class="field-label">Scope Approved Date</label>
           <input type="date" class="field-input">
         </div>
       </div>
@@ -225,7 +225,7 @@
             <td><input type="text" class="field-input" placeholder="e.g. Scope creep" style="border:none;background:transparent;color:#c8d0e0;padding:0;"></td>
             <td><input type="text" class="field-input" placeholder="High" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:80px;"></td>
             <td><input type="text" class="field-input" placeholder="High" style="border:none;background:transparent;color:#c8d0e0;padding:0;width:60px;"></td>
-            <td><input type="text" class="field-input" placeholder="Refer to scope doc; any addition needs faculty approval." style="border:none;background:transparent;color:#c8d0e0;padding:0;"></td>
+            <td><input type="text" class="field-input" placeholder="Refer to scope doc; any addition needs a change request." style="border:none;background:transparent;color:#c8d0e0;padding:0;"></td>
           </tr>
           <tr>
             <td><input type="text" class="field-input" placeholder="[Add your project-specific risks]" style="border:none;background:transparent;color:#c8d0e0;padding:0;"></td>
@@ -321,7 +321,7 @@
         <div class="field-group">
           <label class="field-label">Visibility</label>
           <select class="field-input">
-            <option>Private (share link with faculty + consultant)</option>
+            <option>Private (share link with your guide)</option>
             <option>Public</option>
           </select>
         </div>
@@ -349,8 +349,8 @@
 
     <!-- ── Week 1 Gate Checklist ── -->
     <div style="background:#071f14;border:1px solid #065f46;border-radius:12px;padding:20px 24px;margin-top:32px;">
-      <div style="font-size:13px;font-weight:800;color:#6ee7b7;margin-bottom:14px;">✅ Week 1 Gate — Scope Approval Checklist</div>
-      <p style="font-size:12px;color:#a0a8c0;margin-bottom:12px;">Faculty checks all items before signing off. Team cannot start FRD (T2) until this gate is passed.</p>
+      <div style="font-size:13px;font-weight:800;color:#6ee7b7;margin-bottom:14px;">✅ Week 1 Gate — Scope Checklist</div>
+      <p style="font-size:12px;color:#a0a8c0;margin-bottom:12px;">Check all items as a team before moving on. Your team cannot start FRD (T2) until this gate is passed.</p>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 24px;margin-bottom:16px;">
         <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#10b981;margin-top:2px;flex-shrink:0;"> Git repo created with standard folder structure</label>
         <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#10b981;margin-top:2px;flex-shrink:0;"> README.md committed with project name and team</label>
@@ -363,12 +363,12 @@
         <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#10b981;margin-top:2px;flex-shrink:0;"> Scope is realistic for 13 weeks (not too big)</label>
         <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#10b981;margin-top:2px;flex-shrink:0;"> Tech stack and Docker service map defined</label>
         <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#10b981;margin-top:2px;flex-shrink:0;"> Risk register has at least 3 risks with mitigations</label>
-        <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#10b981;margin-top:2px;flex-shrink:0;"> Git repo URL submitted to faculty</label>
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:4px 0;"><input type="checkbox" style="accent-color:#10b981;margin-top:2px;flex-shrink:0;"> Git repo URL ready to share</label>
       </div>
       <div style="display:flex;gap:20px;flex-wrap:wrap;">
         <div style="flex:1;min-width:180px;">
-          <div style="font-size:10px;color:#5c6478;margin-bottom:4px;">Faculty Signature</div>
-          <input type="text" class="field-input" placeholder="Faculty Name + Date" style="font-size:12px;">
+          <div style="font-size:10px;color:#5c6478;margin-bottom:4px;">Team sign-off</div>
+          <input type="text" class="field-input" placeholder="Name + Date" style="font-size:12px;">
         </div>
         <div style="flex:1;min-width:180px;">
           <div style="font-size:10px;color:#5c6478;margin-bottom:4px;">Gate Status</div>
@@ -396,7 +396,7 @@
           <li>Constraints, Assumptions &amp; Risk Register</li>
           <li>Technology Stack &amp; Docker Architecture map</li>
           <li>Git Repository details &amp; folder structure</li>
-          <li>Signatures Page (team lead + all members + faculty)</li>
+          <li>Signatures Page (team lead + all members + Project Guide)</li>
         </ol>
       </div>
 
